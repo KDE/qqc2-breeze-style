@@ -1,0 +1,5 @@
+module org.kde.breeze
+plugin qqc2breezestyleplugin
+classname QQC2BreezeStylePlugin
+depends QtQuick.Controls @QQC2_VERSION@
+designersupported
