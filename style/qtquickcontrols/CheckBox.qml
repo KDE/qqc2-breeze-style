@@ -1,7 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Templates 2.12 as T
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.12 as Controls
 import QtQuick.Controls.impl 2.12
+import org.kde.kirigami 2.14 as Kirigami
+import "private"
 
 T.CheckBox {
     id: control
@@ -15,36 +17,10 @@ T.CheckBox {
     padding: 6
     spacing: 6
 
+    palette: Kirigami.Theme.palette
+
     // keep in sync with CheckDelegate.qml (shared CheckIndicator.qml was removed for performance reasons)
-    indicator: Rectangle {
-        implicitWidth: 28
-        implicitHeight: 28
-
-        x: control.text ? (control.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
-        y: control.topPadding + (control.availableHeight - height) / 2
-
-        color: control.down ? control.palette.light : control.palette.base
-        border.width: control.visualFocus ? 2 : 1
-        border.color: control.visualFocus ? control.palette.highlight : control.palette.mid
-
-        ColorImage {
-            x: (parent.width - width) / 2
-            y: (parent.height - height) / 2
-            defaultColor: "#353637"
-            color: control.palette.text
-            source: "qrc:/qt-project.org/imports/QtQuick/Controls.2/images/check.png"
-            visible: control.checkState === Qt.Checked
-        }
-
-        Rectangle {
-            x: (parent.width - width) / 2
-            y: (parent.height - height) / 2
-            width: 16
-            height: 3
-            color: control.palette.text
-            visible: control.checkState === Qt.PartiallyChecked
-        }
-    }
+    indicator: CheckIndicator {}
 
     contentItem: CheckLabel {
         leftPadding: control.indicator && !control.mirrored ? control.indicator.width + control.spacing : 0
@@ -52,6 +28,6 @@ T.CheckBox {
 
         text: control.text
         font: control.font
-        color: control.palette.windowText
+        color: Kirigami.Theme.textColor
     }
 }

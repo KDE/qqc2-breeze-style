@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.12 as Controls
 import QtQuick.Templates 2.12 as T
 
 T.StackView {

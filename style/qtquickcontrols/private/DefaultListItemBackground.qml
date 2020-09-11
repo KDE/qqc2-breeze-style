@@ -7,9 +7,9 @@
 
 
 import QtQuick 2.1
-import org.kde.kirigami 2.4 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 
-Rectangle {
+Kirigami.ShadowedRectangle {
     id: background
     color: highlighted || (controlRoot.pressed && !controlRoot.checked && !controlRoot.sectionDelegate) ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor
 

@@ -1,7 +1,9 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.12 as Controls
 import QtQuick.Controls.impl 2.12
 import QtQuick.Templates 2.12 as T
+import org.kde.kirigami 2.14 as Kirigami
+import "private"
 
 T.ToolButton {
     id: control
@@ -11,29 +13,33 @@ T.ToolButton {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    padding: 6
-    spacing: 6
+    flat: true
 
-    icon.width: 24
-    icon.height: 24
-    icon.color: visualFocus ? control.palette.highlight : control.palette.buttonText
+    palette: Kirigami.Theme.palette
+    Kirigami.Theme.colorSet: Kirigami.Theme.Button
+    Kirigami.Theme.inherit: flat
 
-    contentItem: IconLabel {
-        spacing: control.spacing
-        mirrored: control.mirrored
-        display: control.display
+    hoverEnabled: true
 
-        icon: control.icon
-        text: control.text
-        font: control.font
-        color: control.visualFocus ? control.palette.highlight : control.palette.buttonText
+    padding: Math.round(Math.abs(implicitBackgroundHeight - implicitContentHeight)/2)
+    spacing: 4
+
+    icon.width: 16
+    icon.height: 16
+
+    Kirigami.MnemonicData.enabled: control.enabled && control.visible
+    Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
+    Kirigami.MnemonicData.label: control.display !== T.Button.IconOnly ? control.text : ""
+    Shortcut {
+        //in case of explicit & the button manages it by itself
+        enabled: !(RegExp(/\&[^\&]/).test(control.text))
+        sequence: control.Kirigami.MnemonicData.sequence
+        onActivated: control.clicked()
     }
 
-    background: Rectangle {
-        implicitWidth: 40
-        implicitHeight: 40
-
-        opacity: control.down ? 1.0 : 0.5
-        color: control.down || control.checked || control.highlighted ? control.palette.mid : control.palette.button
+    contentItem: IconLabelContent {
+        labelText: control.Kirigami.MnemonicData.richTextLabel
     }
+
+    background: ButtonBackground {}
 }
