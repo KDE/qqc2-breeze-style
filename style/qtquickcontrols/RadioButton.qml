@@ -6,63 +6,61 @@
 */
 
 
-import QtQuick 2.6
+import QtQuick 2.12
 import QtQuick.Templates 2.12 as T
-import QtQuick.Controls 2.12
-import org.kde.kirigami 2.4 as Kirigami
+import QtQuick.Controls 2.12 as Controls
+import org.kde.kirigami 2.14 as Kirigami
 import "private"
 
 T.RadioButton {
-    id: controlRoot
+    id: control
 
     palette: Kirigami.Theme.palette
-    implicitWidth: Math.max(background ? background.implicitWidth : 0,
-                            contentItem.implicitWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(background ? background.implicitHeight : 0,
-                             Math.max(contentItem.implicitHeight,
-                                      indicator ? indicator.implicitHeight : 0) + topPadding + bottomPadding)
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding,
+                             implicitIndicatorHeight + topPadding + bottomPadding)
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
-    spacing: indicator && typeof indicator.pixelMetric === "function" ? indicator.pixelMetric("ratiobuttonlabelspacing") : Kirigami.Units.smallSpacing
+    spacing: Kirigami.Units.smallSpacing
 
     hoverEnabled: true
 
-    indicator: CheckIndicator {
-        LayoutMirroring.enabled: controlRoot.mirrored
-        LayoutMirroring.childrenInherit: true
-        anchors {
-            left: parent.left
-            verticalCenter: parent.verticalCenter
-        }
-        control: controlRoot
+    indicator: RadioIndicator {
+        control: control
     }
 
-    Kirigami.MnemonicData.enabled: controlRoot.enabled && controlRoot.visible
+    Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
-    Kirigami.MnemonicData.label: controlRoot.text
+    Kirigami.MnemonicData.label: control.text
     Shortcut {
         //in case of explicit & the button manages it by itself
-        enabled: !(RegExp(/\&[^\&]/).test(controlRoot.text))
-        sequence: controlRoot.Kirigami.MnemonicData.sequence
-        onActivated: controlRoot.checked = true
+        enabled: !(RegExp(/\&[^\&]/).test(control.text))
+        sequence: control.Kirigami.MnemonicData.sequence
+        onActivated: control.checked = true
     }
 
-    contentItem: Label {
-        readonly property int indicatorEffectiveWidth: controlRoot.indicator && typeof controlRoot.indicator.pixelMetric === "function"
-            ? controlRoot.indicator.pixelMetric("exclusiveindicatorwidth") : controlRoot.indicator.width
+    contentItem: Controls.Label {
+        leftPadding: control.indicator && !control.mirrored ? control.indicator.width + control.spacing : 0
+        rightPadding: control.indicator && control.mirrored ? control.indicator.width + control.spacing : 0
 
-        leftPadding: controlRoot.indicator && !controlRoot.mirrored ? indicatorEffectiveWidth + controlRoot.spacing : 0
-        rightPadding: controlRoot.indicator && controlRoot.mirrored ? indicatorEffectiveWidth + controlRoot.spacing : 0
-        opacity: controlRoot.enabled ? 1 : 0.6
-        text: controlRoot.Kirigami.MnemonicData.richTextLabel
-        font: controlRoot.font
+        text: control.Kirigami.MnemonicData.richTextLabel
+        font: control.font
         elide: Text.ElideRight
-        visible: controlRoot.text
+        visible: control.text
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
 
-        FocusRect {
-            //control: controlRoot
+        Rectangle {
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+            }
+            width: contentItem.contentWidth
+            height: 1
+            visible: control.visualFocus
+            color: Kirigami.Theme.highlightColor
         }
     }
 }

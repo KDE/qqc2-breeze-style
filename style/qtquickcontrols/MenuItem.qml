@@ -6,9 +6,10 @@
 */
 
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.2
+import QtQuick 2.12
+import QtQuick.Layouts 1.12
 import QtQuick.Templates 2.12 as T
+import QtQuick.Controls 2.12 as Controls
 import org.kde.kirigami 2.14 as Kirigami
 import "private"
 
@@ -61,7 +62,7 @@ T.MenuItem {
             Layout.preferredHeight: Math.max(Kirigami.Units.fontMetrics.roundedIconSize(label.height), Kirigami.Units.iconSizes.small)
             Layout.preferredWidth: Layout.preferredHeight
         }
-        Label {
+        Controls.Label {
             id: label
             Layout.alignment: Qt.AlignVCenter
             Layout.fillWidth: true
@@ -74,16 +75,16 @@ T.MenuItem {
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
         }
-        Label {
+        Controls.Label {
             id: shortcut
             Layout.alignment: Qt.AlignVCenter
             visible: controlRoot.action && controlRoot.action.hasOwnProperty("shortcut") && controlRoot.action.shortcut !== undefined
-            
+
             Shortcut {
                 id: itemShortcut
                 sequence: (parent.visible && controlRoot.action !== null) ? controlRoot.action.shortcut : ""
             }
-            
+
             text: visible ? itemShortcut.nativeText : ""
             font: controlRoot.font
             color: label.color
@@ -95,8 +96,7 @@ T.MenuItem {
         }
     }
 
-//we can't use arrow: on old qqc2 releases
-   arrow: Kirigami.Icon {
+    arrow: Kirigami.Icon {
        x: controlRoot.mirrored ? controlRoot.padding : controlRoot.width - width - controlRoot.padding
        y: controlRoot.topPadding + (controlRoot.availableHeight - height) / 2
        source: controlRoot.mirrored ? "go-next-symbolic-rtl" : "go-next-symbolic"

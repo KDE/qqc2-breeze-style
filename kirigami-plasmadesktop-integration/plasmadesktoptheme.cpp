@@ -38,15 +38,29 @@ public:
         KColorScheme scheme;
     };
 
-    explicit StyleSingleton() : QObject()
+    explicit StyleSingleton()
+        : QObject()
+        , buttonScheme(QPalette::Active, KColorScheme::ColorSet::Button)
+        , viewScheme(QPalette::Active, KColorScheme::ColorSet::View)
     {
         connect(qGuiApp, &QGuiApplication::paletteChanged,
                 this, &StyleSingleton::refresh);
+
+        // Use DBus in order to listen for kdeglobals changes directly, as the
+        // QApplication doesn't expose the font variants we're looking for,
+        // namely smallFont.
+        QDBusConnection::sessionBus().connect( QString(),
+        QStringLiteral( "/KGlobalSettings" ),
+        QStringLiteral( "org.kde.KGlobalSettings" ),
+        QStringLiteral( "notifyChange" ), this, SIGNAL(configurationChanged()));
     }
 
     void refresh()
     {
         m_cache.clear();
+        buttonScheme = KColorScheme(QPalette::Active, KColorScheme::ColorSet::Button);
+        viewScheme = KColorScheme(QPalette::Active, KColorScheme::ColorSet::View);
+
         Q_EMIT paletteChanged();
     }
 
@@ -115,7 +129,11 @@ public:
         return ret;
     }
 
+    KColorScheme buttonScheme;
+    KColorScheme viewScheme;
+
 Q_SIGNALS:
+    void configurationChanged();
     void paletteChanged();
 
 private:
@@ -152,14 +170,6 @@ PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
                 });
     }
 
-    // Use DBus in order to listen for kdeglobals changes directly, as the
-    // QApplication doesn't expose the font variants we're looking for,
-    // namely smallFont.
-    QDBusConnection::sessionBus().connect( QString(),
-        QStringLiteral( "/KGlobalSettings" ),
-        QStringLiteral( "org.kde.KGlobalSettings" ),
-        QStringLiteral( "notifyChange" ), this, SLOT(configurationChanged()));
-
     //TODO: correct? depends from https://codereview.qt-project.org/206889
     connect(qGuiApp, &QGuiApplication::fontDatabaseChanged, this, [this]() {setDefaultFont(qApp->font());});
     configurationChanged();
@@ -171,6 +181,9 @@ PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
 
     connect(s_style->data(), &StyleSingleton::paletteChanged,
             this, &PlasmaDesktopTheme::syncColors);
+
+    connect(s_style->data(), &StyleSingleton::configurationChanged,
+            this, &PlasmaDesktopTheme::configurationChanged);
 
     syncColors();
 }
@@ -251,7 +264,67 @@ void PlasmaDesktopTheme::syncColors()
     setHoverColor(colors.scheme.decoration(KColorScheme::HoverColor).color());
     setFocusColor(colors.scheme.decoration(KColorScheme::FocusColor).color());
 
+    //legacy stuff
+    m_buttonTextColor = (*s_style)->buttonScheme.foreground(KColorScheme::NormalText).color();
+    m_buttonBackgroundColor = (*s_style)->buttonScheme.background(KColorScheme::NormalBackground).color();
+    m_buttonHoverColor = (*s_style)->buttonScheme.decoration(KColorScheme::HoverColor).color();
+    m_buttonFocusColor = (*s_style)->buttonScheme.decoration(KColorScheme::FocusColor).color();
+
+    m_viewTextColor = (*s_style)->viewScheme.foreground(KColorScheme::NormalText).color();
+    m_viewBackgroundColor = (*s_style)->viewScheme.background(KColorScheme::NormalBackground).color();
+    m_viewHoverColor = (*s_style)->viewScheme.decoration(KColorScheme::HoverColor).color();
+    m_viewFocusColor = (*s_style)->viewScheme.decoration(KColorScheme::FocusColor).color();
+
     emit colorsChanged();
+}
+
+QColor PlasmaDesktopTheme::buttonTextColor() const
+{
+    qWarning() << "WARNING: buttonTextColor is deprecated, use textColor with colorSet: Theme.Button instead";
+    return m_buttonTextColor;
+}
+
+QColor PlasmaDesktopTheme::buttonBackgroundColor() const
+{
+    qWarning() << "WARNING: buttonBackgroundColor is deprecated, use backgroundColor with colorSet: Theme.Button instead";
+    return m_buttonBackgroundColor;
+}
+
+QColor PlasmaDesktopTheme::buttonHoverColor() const
+{
+    qWarning() << "WARNING: buttonHoverColor is deprecated, use backgroundColor with colorSet: Theme.Button instead";
+    return m_buttonHoverColor;
+}
+
+QColor PlasmaDesktopTheme::buttonFocusColor() const
+{
+    qWarning() << "WARNING: buttonFocusColor is deprecated, use backgroundColor with colorSet: Theme.Button instead";
+    return m_buttonFocusColor;
+}
+
+
+QColor PlasmaDesktopTheme::viewTextColor() const
+{
+    qWarning()<<"WARNING: viewTextColor is deprecated, use backgroundColor with colorSet: Theme.View instead";
+    return m_viewTextColor;
+}
+
+QColor PlasmaDesktopTheme::viewBackgroundColor() const
+{
+    qWarning() << "WARNING: viewBackgroundColor is deprecated, use backgroundColor with colorSet: Theme.View instead";
+    return m_viewBackgroundColor;
+}
+
+QColor PlasmaDesktopTheme::viewHoverColor() const
+{
+    qWarning() << "WARNING: viewHoverColor is deprecated, use backgroundColor with colorSet: Theme.View instead";
+    return m_viewHoverColor;
+}
+
+QColor PlasmaDesktopTheme::viewFocusColor() const
+{
+    qWarning() << "WARNING: viewFocusColor is deprecated, use backgroundColor with colorSet: Theme.View instead";
+    return m_viewFocusColor;
 }
 
 #include "plasmadesktoptheme.moc"

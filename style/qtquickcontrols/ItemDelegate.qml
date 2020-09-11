@@ -6,9 +6,10 @@
 */
 
 
-import QtQuick 2.5
+import QtQuick 2.12
 import QtQuick.Templates 2.12 as T
-import org.kde.kirigami 2.4 as Kirigami
+import QtQuick.Controls 2.12 as Controls
+import org.kde.kirigami 2.14 as Kirigami
 import "private"
 
 T.ItemDelegate {
@@ -28,7 +29,7 @@ T.ItemDelegate {
     rightPadding: padding*2
     bottomPadding: padding
 
-    contentItem: Label {
+    contentItem: Controls.Label {
         leftPadding: controlRoot.mirrored ? (controlRoot.indicator ? controlRoot.indicator.width : 0) + controlRoot.spacing : 0
         rightPadding: !controlRoot.mirrored ? (controlRoot.indicator ? controlRoot.indicator.width : 0) + controlRoot.spacing : 0
 

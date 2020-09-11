@@ -11,16 +11,16 @@ T.ToolBar {
                             contentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
-    
-//     padding: 4
+
+    horizontalPadding: 4
 
     background: Rectangle {
         implicitHeight: 40
         color: Kirigami.Theme.backgroundColor
         Controls.ToolSeparator {
             orientation: Qt.Horizontal
-            readonly property bool isHeader: control.position == T.ToolBar.Header || (control.parent.header && control.parent.header == control)
-            readonly property bool isFooter: control.position == T.ToolBar.Footer || (control.parent.footer && control.parent.footer == control)
+            readonly property bool isHeader: control.position == T.ToolBar.Header
+            readonly property bool isFooter: control.position == T.ToolBar.Footer
             visible: isHeader || isFooter
             anchors {
                 left: parent.left

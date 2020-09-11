@@ -24,8 +24,10 @@ T.ToolButton {
     padding: Math.round(Math.abs(implicitBackgroundHeight - implicitContentHeight)/2)
     spacing: 4
 
-    icon.width: 16
-    icon.height: 16
+    readonly property int defaultIconSize: Kirigami.Units.fontMetrics.roundedIconSize(Kirigami.Units.gridUnit)
+
+    icon.width: defaultIconSize
+    icon.height: defaultIconSize
 
     Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
@@ -38,8 +40,11 @@ T.ToolButton {
     }
 
     contentItem: IconLabelContent {
+        control: control
         labelText: control.Kirigami.MnemonicData.richTextLabel
     }
 
-    background: ButtonBackground {}
+    background: ButtonBackground {
+        control: control
+    }
 }

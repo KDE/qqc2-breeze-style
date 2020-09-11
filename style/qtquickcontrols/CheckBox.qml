@@ -13,21 +13,49 @@ T.CheckBox {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
+    baselineOffset: contentItem.y + contentItem.baselineOffset
 
-    padding: 6
-    spacing: 6
+//     padding: 6
+    spacing: Kirigami.Units.smallSpacing
 
     palette: Kirigami.Theme.palette
 
-    // keep in sync with CheckDelegate.qml (shared CheckIndicator.qml was removed for performance reasons)
-    indicator: CheckIndicator {}
+    hoverEnabled: true
+
+    indicator: CheckIndicator {
+        control: control
+    }
+
+    Kirigami.MnemonicData.enabled: control.enabled && control.visible
+    Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
+    Kirigami.MnemonicData.label: control.text
+    Shortcut {
+        //in case of explicit & the button manages it by itself
+        enabled: !(RegExp(/\&[^\&]/).test(control.text))
+        sequence: control.Kirigami.MnemonicData.sequence
+        onActivated: control.checked = true
+    }
 
     contentItem: CheckLabel {
         leftPadding: control.indicator && !control.mirrored ? control.indicator.width + control.spacing : 0
         rightPadding: control.indicator && control.mirrored ? control.indicator.width + control.spacing : 0
 
-        text: control.text
+        text: control.Kirigami.MnemonicData.richTextLabel
         font: control.font
-        color: Kirigami.Theme.textColor
+        elide: Text.ElideRight
+        visible: control.text
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignVCenter
+
+        Rectangle {
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+            }
+            width: contentItem.contentWidth
+            height: 1
+            visible: control.visualFocus
+            color: Kirigami.Theme.highlightColor
+        }
     }
 }

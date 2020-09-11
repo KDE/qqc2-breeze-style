@@ -12,7 +12,7 @@ import org.kde.kirigami 2.14 as Kirigami
 GridLayout {
     id: root
 
-    readonly property alias control: root.parent
+    property alias control: root.parent
     
     property string labelText: ""
     

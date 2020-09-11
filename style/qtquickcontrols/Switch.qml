@@ -6,32 +6,28 @@
 */
 
 
-import QtQuick 2.6
+import QtQuick 2.12
 import QtQuick.Templates 2.12 as T
-import org.kde.kirigami 2.4 as Kirigami
+import QtQuick.Controls 2.12 as Controls
+import org.kde.kirigami 2.14 as Kirigami
+import "private"
 
 T.CheckBox {
     id: control
 
     palette: Kirigami.Theme.palette
-    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: Math.max(contentItem.implicitHeight,
-                                      indicator ? indicator.implicitHeight : 0) + topPadding + bottomPadding
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding,
+                             implicitIndicatorHeight + topPadding + bottomPadding)
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
-    padding: 1
     spacing: Kirigami.Units.smallSpacing
 
     hoverEnabled: true
 
     indicator: SwitchIndicator {
-        LayoutMirroring.enabled: control.mirrored
-        LayoutMirroring.childrenInherit: true
-        height: 22
-        anchors {
-            left: parent.left
-            verticalCenter: parent.verticalCenter
-        }
         control: control
     }
 
@@ -45,16 +41,26 @@ T.CheckBox {
         onActivated: control.toggle();
     }
 
-    contentItem: Label {
+    contentItem: Controls.Label {
         leftPadding: control.indicator && !control.mirrored ? control.indicator.width + control.spacing : 0
         rightPadding: control.indicator && control.mirrored ? control.indicator.width + control.spacing : 0
-        opacity: control.enabled ? 1 : 0.6
+
         text: control.Kirigami.MnemonicData.richTextLabel
         font: control.font
-        color: Kirigami.Theme.textColor
         elide: Text.ElideRight
         visible: control.text
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
+
+        Rectangle {
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+            }
+            width: contentItem.contentWidth
+            height: 1
+            visible: control.visualFocus
+            color: Kirigami.Theme.highlightColor
+        }
     }
 }

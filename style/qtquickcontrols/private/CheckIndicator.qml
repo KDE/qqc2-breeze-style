@@ -5,7 +5,9 @@ import org.kde.kirigami 2.14 as Kirigami
 
 Kirigami.ShadowedRectangle {
     id: root
+
     property alias control: root.parent
+
     implicitWidth: Kirigami.Units.gridUnit
     implicitHeight: Kirigami.Units.gridUnit
 
@@ -14,32 +16,82 @@ Kirigami.ShadowedRectangle {
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
-    color: control.checked ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    color: control.down || control.checked ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+
     radius: 3
 
     border {
         width: 1
         color: control.down || control.checked || control.highlighted || control.visualFocus || control.hovered ?
                 Kirigami.Theme.highlightColor :
-                Color.blend(indicator.color, Kirigami.Theme.textColor, 0.3)
+                Color.blend(root.color, Kirigami.Theme.textColor, 0.3)
     }
-    
+
     shadow {
         color: Qt.rgba(0,0,0,0.2)
         size: control.down ? 0 : 2
         yOffset: 1
     }
 
-    Kirigami.Icon {
+    Item {
+        id: checkmark
         anchors.centerIn: parent
-        width: 16
-        height: 16
-        source: control.checkState === Qt.PartiallyChecked ? "view-more-horizontal-symbolic" : "checkmark"
-        visible: (control.checkState === Qt.Checked || control.checkState === Qt.PartiallyChecked)
+        width: 12
+        height: 12
+        Rectangle {
+            id: lineClBc
+            antialiasing: true
+            rotation: 45
+            anchors.left: parent.left
+            y: 7
+            width: 5
+            height: 2
+            color: Kirigami.Theme.textColor
+        }
+        Rectangle {
+            id: lineBcTr
+            antialiasing: true
+            rotation: -45
+            anchors.right: parent.right
+            y: 5
+            width: 10
+            height: 2
+            color: Kirigami.Theme.textColor
+        }
+        visible: control.checkState === Qt.Checked
+    }
+
+    Item {
+        id: partialCheckmark
+        visible: control.checkState === Qt.PartiallyChecked
+        anchors.centerIn: parent
+        width: 12
+        height: 2
+
+        Rectangle {
+            anchors.left: parent.left
+            height: parent.height
+            width: height
+            color: Kirigami.Theme.textColor
+        }
+
+        Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: parent.height
+            width: height
+            color: Kirigami.Theme.textColor
+        }
+
+        Rectangle {
+            anchors.right: parent.right
+            height: parent.height
+            width: height
+            color: Kirigami.Theme.textColor
+        }
     }
 
     FocusRect {
-        baseRadius: indicator.radius
+        baseRadius: root.radius
         visible: control.visualFocus
     }
 }

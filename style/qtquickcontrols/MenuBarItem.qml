@@ -6,10 +6,12 @@
 */
 
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.2
+import QtQuick 2.12
+import QtQuick.Layouts 1.12
 import QtQuick.Templates 2.12 as T
-import org.kde.kirigami 2.4 as Kirigami
+import QtQuick.Controls 2.12 as Controls
+import org.kde.kirigami 2.14 as Kirigami
+import "private"
 
 T.MenuBarItem {
     id: controlRoot
@@ -37,7 +39,7 @@ T.MenuBarItem {
         onActivated: controlRoot.clicked();
     }
 
-    contentItem: Label {
+    contentItem: Controls.Label {
         text: controlRoot.Kirigami.MnemonicData.richTextLabel
         font: controlRoot.font
         color: controlRoot.hovered && !controlRoot.pressed ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor

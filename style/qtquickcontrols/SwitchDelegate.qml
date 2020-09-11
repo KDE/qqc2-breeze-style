@@ -6,18 +6,21 @@
 */
 
 
-import QtQuick 2.5
-import org.kde.kirigami 2.4 as Kirigami
+import QtQuick 2.12
 import QtQuick.Templates 2.12 as T
+import QtQuick.Controls 2.12 as Controls
+import org.kde.kirigami 2.14 as Kirigami
 import "private"
 
 T.SwitchDelegate {
     id: controlRoot
 
     palette: Kirigami.Theme.palette
-    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: Math.max(contentItem.implicitHeight,
-                                      indicator ? indicator.implicitHeight : 0) + topPadding + bottomPadding
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding,
+                             implicitIndicatorHeight + topPadding + bottomPadding)
     hoverEnabled: true
 
     padding: Kirigami.Settings.tabletMode ? Kirigami.Units.largeSpacing : Kirigami.Units.smallSpacing
@@ -28,7 +31,7 @@ T.SwitchDelegate {
     rightPadding: padding*2
     bottomPadding: padding
 
-    contentItem: Label {
+    contentItem: Controls.Label {
         leftPadding: controlRoot.mirrored ? (controlRoot.indicator ? controlRoot.indicator.width : 0) + controlRoot.spacing : 0
         rightPadding: !controlRoot.mirrored ? (controlRoot.indicator ? controlRoot.indicator.width : 0) + controlRoot.spacing : 0
 
