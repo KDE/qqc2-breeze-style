@@ -1,69 +1,127 @@
+/*
+    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
+    SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+
+    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
+*/
+
+
 import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.impl 2.12
+import QtQuick.Layouts 1.12
 import QtQuick.Templates 2.12 as T
+import QtQuick.Controls 2.12 as Controls
+import org.kde.kirigami 2.14 as Kirigami
+import "private"
 
 T.MenuItem {
-    id: control
+    id: controlRoot
 
-    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                             implicitContentHeight + topPadding + bottomPadding,
-                             implicitIndicatorHeight + topPadding + bottomPadding)
+    palette: Kirigami.Theme.palette
+    implicitWidth: Math.max(background ? background.implicitWidth : 0,
+                            contentItem.implicitWidth + leftPadding + rightPadding + (arrow ? arrow.implicitWidth : 0))
+    implicitHeight: visible ? Math.max(background ? background.implicitHeight : 0,
+                             Math.max(contentItem.implicitHeight,
+                                      indicator ? indicator.implicitHeight : 0) + topPadding + bottomPadding) : 0
+    baselineOffset: contentItem.y + contentItem.baselineOffset
 
-    padding: 6
-    spacing: 6
+    width: parent ? parent.width : implicitWidth
 
-    icon.width: 24
-    icon.height: 24
-    icon.color: control.palette.windowText
+    Layout.fillWidth: true
+    padding: Kirigami.Units.smallSpacing
+    leftPadding: Kirigami.Units.largeSpacing
+    rightPadding: Kirigami.Units.largeSpacing
+    hoverEnabled: !Kirigami.Settings.isMobile
 
-    contentItem: IconLabel {
-        readonly property real arrowPadding: control.subMenu && control.arrow ? control.arrow.width + control.spacing : 0
-        readonly property real indicatorPadding: control.checkable && control.indicator ? control.indicator.width + control.spacing : 0
-        leftPadding: !control.mirrored ? indicatorPadding : arrowPadding
-        rightPadding: control.mirrored ? indicatorPadding : arrowPadding
-
-        spacing: control.spacing
-        mirrored: control.mirrored
-        display: control.display
-        alignment: Qt.AlignLeft
-
-        icon: control.icon
-        text: control.text
-        font: control.font
-        color: control.palette.windowText
+    Kirigami.MnemonicData.enabled: controlRoot.enabled && controlRoot.visible
+    Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.MenuItem
+    Kirigami.MnemonicData.label: controlRoot.text
+    Shortcut {
+        //in case of explicit & the button manages it by itself
+        enabled: !(RegExp(/\&[^\&]/).test(controlRoot.text))
+        sequence: controlRoot.Kirigami.MnemonicData.sequence
+        onActivated: {
+            if (controlRoot.checkable) {
+                controlRoot.toggle();
+            } else {
+                controlRoot.clicked();
+            }
+        }
     }
 
-    indicator: ColorImage {
-        x: control.mirrored ? control.width - width - control.rightPadding : control.leftPadding
-        y: control.topPadding + (control.availableHeight - height) / 2
+    contentItem: RowLayout {
+        Item {
+           Layout.preferredWidth: (controlRoot.ListView.view && controlRoot.ListView.view.hasCheckables) || controlRoot.checkable ? controlRoot.indicator.width : Kirigami.Units.smallSpacing
+        }
+        Kirigami.Icon {
+            Layout.alignment: Qt.AlignVCenter
+            visible: (controlRoot.ListView.view && controlRoot.ListView.view.hasIcons) || (controlRoot.icon != undefined && (controlRoot.icon.name.length > 0 || controlRoot.icon.source.length > 0))
+            source: controlRoot.icon ? (controlRoot.icon.name || controlRoot.icon.source) : ""
+            color: controlRoot.icon ? controlRoot.icon.color : "transparent"
+            //hovered is for retrocompatibility
+            selected: (controlRoot.highlighted || controlRoot.hovered)
+            Layout.preferredHeight: Math.max(Kirigami.Units.fontMetrics.roundedIconSize(label.height), Kirigami.Units.iconSizes.small)
+            Layout.preferredWidth: Layout.preferredHeight
+        }
+        Controls.Label {
+            id: label
+            Layout.alignment: Qt.AlignVCenter
+            Layout.fillWidth: true
 
-        visible: control.checked
-        source: control.checkable ? "qrc:/qt-project.org/imports/QtQuick/Controls.2/images/check.png" : ""
-        color: control.palette.windowText
-        defaultColor: "#353637"
+            text: controlRoot.Kirigami.MnemonicData.richTextLabel
+            font: controlRoot.font
+            color: (controlRoot.highlighted || controlRoot.hovered) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+            elide: Text.ElideRight
+            visible: controlRoot.text
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+        }
+        Controls.Label {
+            id: shortcut
+            Layout.alignment: Qt.AlignVCenter
+            visible: controlRoot.action && controlRoot.action.hasOwnProperty("shortcut") && controlRoot.action.shortcut !== undefined
+
+            Shortcut {
+                id: itemShortcut
+                sequence: (parent.visible && controlRoot.action !== null) ? controlRoot.action.shortcut : ""
+            }
+
+            text: visible ? itemShortcut.nativeText : ""
+            font: controlRoot.font
+            color: label.color
+            horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignVCenter
+        }
+        Item {
+           Layout.preferredWidth: Kirigami.Units.smallSpacing
+        }
     }
 
-    arrow: ColorImage {
-        x: control.mirrored ? control.leftPadding : control.width - width - control.rightPadding
-        y: control.topPadding + (control.availableHeight - height) / 2
+    arrow: Kirigami.Icon {
+       x: controlRoot.mirrored ? controlRoot.padding : controlRoot.width - width - controlRoot.padding
+       y: controlRoot.topPadding + (controlRoot.availableHeight - height) / 2
+       source: controlRoot.mirrored ? "go-next-symbolic-rtl" : "go-next-symbolic"
+       selected: controlRoot.highlighted
+       width: Math.max(Kirigami.Units.fontMetrics.roundedIconSize(label.height), Kirigami.Units.iconSizes.small)
+       height: width
+       visible: controlRoot.subMenu
+   }
 
-        visible: control.subMenu
-        mirror: control.mirrored
-        source: control.subMenu ? "qrc:/qt-project.org/imports/QtQuick/Controls.2/images/arrow-indicator.png" : ""
-        color: control.palette.windowText
-        defaultColor: "#353637"
+    indicator: CheckIndicator {
+        x: controlRoot.mirrored ? controlRoot.width - width - controlRoot.rightPadding : controlRoot.leftPadding
+        y: controlRoot.topPadding + (controlRoot.availableHeight - height) / 2
+
+        visible: controlRoot.checkable
+        control: controlRoot
     }
 
-    background: Rectangle {
-        implicitWidth: 200
-        implicitHeight: 40
-        x: 1
-        y: 1
-        width: control.width - 2
-        height: control.height - 2
-        color: control.down ? control.palette.midlight : control.highlighted ? control.palette.light : "transparent"
+    background: Item {
+        anchors.fill: parent
+        implicitWidth: Kirigami.Units.gridUnit * 8
+
+        Rectangle {
+            anchors.fill: parent
+            color: Kirigami.Theme.highlightColor
+            opacity: (controlRoot.highlighted || controlRoot.hovered) ? 1 : 0
+        }
     }
 }

@@ -1,24 +1,35 @@
-import QtQuick 2.12
+/*
+    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
+    SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+
+    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
+*/
+
+
+import QtQuick 2.6
 import QtQuick.Templates 2.12 as T
+import org.kde.kirigami 2.4 as Kirigami
 
 T.DialogButtonBox {
     id: control
 
-    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            (control.count === 1 ? implicitContentWidth * 2 : implicitContentWidth) + leftPadding + rightPadding)
-    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                             implicitContentHeight + topPadding + bottomPadding)
-    contentWidth: contentItem.contentWidth
+    palette: Kirigami.Theme.palette
+    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
+    implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
 
-    spacing: 1
-    padding: 12
-    alignment: count === 1 ? Qt.AlignRight : undefined
+    spacing: Kirigami.Units.smallSpacing
+    padding: Kirigami.Units.smallSpacing
+    alignment: Qt.AlignRight
 
     delegate: Button {
-        width: control.count === 1 ? control.availableWidth / 2 : undefined
+        width: Math.min(implicitWidth, control.width / control.count - control.padding - control.spacing * control.count)
+        Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.DialogButton
     }
 
     contentItem: ListView {
+        implicitWidth: contentWidth
+        implicitHeight: 32
+
         model: control.contentModel
         spacing: control.spacing
         orientation: ListView.Horizontal
@@ -26,11 +37,5 @@ T.DialogButtonBox {
         snapMode: ListView.SnapToItem
     }
 
-    background: Rectangle {
-        implicitHeight: 40
-        x: 1; y: 1
-        width: parent.width - 2
-        height: parent.height - 2
-        color: control.palette.window
-    }
+    background: Item {}
 }

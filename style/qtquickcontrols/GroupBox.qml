@@ -1,38 +1,45 @@
+/*
+    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
+    SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+
+    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
+*/
+
+
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Controls.impl 2.12
 import QtQuick.Templates 2.12 as T
+import QtQuick.Controls 2.12 as Controls
+import org.kde.kirigami 2.14 as Kirigami
 
 T.GroupBox {
     id: control
 
-    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            contentWidth + leftPadding + rightPadding,
-                            implicitLabelWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                             contentHeight + topPadding + bottomPadding)
+    palette: Kirigami.Theme.palette
+    implicitWidth: contentWidth + leftPadding + rightPadding
+    implicitHeight: contentHeight + topPadding + bottomPadding
 
-    spacing: 6
-    padding: 12
-    topPadding: padding + (implicitLabelWidth > 0 ? implicitLabelHeight + spacing : 0)
+    contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
+    contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
 
-    label: Text {
+    padding: 8
+    topPadding: padding + (label && label.implicitWidth > 0 ? label.implicitHeight + spacing : 0)
+
+    label: Controls.Label {
         x: control.leftPadding
         width: control.availableWidth
 
         text: control.title
         font: control.font
-        color: control.palette.windowText
+        color: Kirigami.Theme.textColor
         elide: Text.ElideRight
+        horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
     }
 
-    background: Rectangle {
-        y: control.topPadding - control.bottomPadding
-        width: parent.width
-        height: parent.height - control.topPadding + control.bottomPadding
-
+    /*background: Rectangle {
         color: "transparent"
-        border.color: control.palette.mid
-    }
+        property color borderColor: Kirigami.Theme.textColor
+        border.color: Qt.rgba(borderColor.r, borderColor.g, borderColor.b, 0.3)
+    }*/
 }

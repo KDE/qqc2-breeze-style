@@ -1,22 +1,21 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.12 as Controls
 import QtQuick.Controls.impl 2.12
 import QtQuick.Templates 2.12 as T
+import org.kde.kirigami 2.14 as Kirigami
 
 T.ToolSeparator {
     id: control
+    palette: Kirigami.Theme.palette
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    padding: vertical ? 6 : 2
-    verticalPadding: vertical ? 2 : 6
-
     contentItem: Rectangle {
-        implicitWidth: vertical ? 1 : 30
-        implicitHeight: vertical ? 30 : 1
-        color: control.palette.mid
+        implicitWidth: vertical ? 1 : 32
+        implicitHeight: vertical ? 32 : 1
+        color: Color.blend(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.2);
     }
 }

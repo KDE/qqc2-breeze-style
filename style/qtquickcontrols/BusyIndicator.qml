@@ -1,27 +1,45 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.impl 2.12
+/*
+    SPDX-FileCopyrightText: 2018 Oleg Chernovskiy <adonai@xaker.ru>
+    SPDX-FileCopyrightText: 2018 The Qt Company Ltd.
+
+    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
+*/
+
+
+import QtQuick 2.6
+import org.kde.kirigami 2.4 as Kirigami
 import QtQuick.Templates 2.12 as T
 
 T.BusyIndicator {
-    id: control
+    id: controlRoot
 
-    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                             implicitContentHeight + topPadding + bottomPadding)
+    palette: Kirigami.Theme.palette
+    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
+    implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
 
     padding: 6
+    spacing: Kirigami.Units.smallSpacing
 
-    contentItem: BusyIndicatorImpl {
-        implicitWidth: 48
-        implicitHeight: 48
+    hoverEnabled: true
 
-        pen: control.palette.dark
-        fill: control.palette.dark
+    contentItem: Kirigami.Icon {
+        source: "view-refresh"
+        opacity: controlRoot.running ? 1 : 0
+        smooth: true
 
-        running: control.running
-        opacity: control.running ? 1 : 0
-        Behavior on opacity { OpacityAnimator { duration: 250 } }
+        // appearing/fading opacity change
+        Behavior on opacity {
+            OpacityAnimator { duration: 250 }
+        }
+
+        // rotating loading icon
+        RotationAnimator {
+            target: controlRoot.contentItem
+            running: controlRoot.visible && controlRoot.running
+            from: 0
+            to: 360
+            loops: Animation.Infinite
+            duration: 2000
+        }
     }
 }

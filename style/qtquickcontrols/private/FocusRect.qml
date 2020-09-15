@@ -7,20 +7,20 @@
 
 
 import QtQuick 2.6
-import org.kde.breeze.private 1.0 as StylePrivate
+import org.kde.kirigami 2.14 as Kirigami
 
-StylePrivate.StyleItem {
-    elementType: "focusrect"
-    // those random numbers come from QQC1 desktop style
+Rectangle {
+    id: root
+    property real baseRadius: 0
     anchors {
-        top: parent.top
-        bottom: parent.bottom
-        topMargin: parent.topPadding - 1
-        bottomMargin: parent.bottomPadding - 1
+        fill: parent
+        margins: -border.width
     }
-    // this is explicitly not using left anchor for auto mirroring
-    // since the label's leftPadding/rightPadding already accounts for that
-    x: parent.leftPadding - 2
-    width: parent.implicitWidth - parent.leftPadding - parent.rightPadding + 3
-    visible: control.activeFocus
+    color: "transparent"
+    radius: root.baseRadius > 0 ? root.baseRadius + border.width : 0
+    border.color: Qt.rgba(Kirigami.Theme.highlightColor.r,
+                            Kirigami.Theme.highlightColor.g,
+                            Kirigami.Theme.highlightColor.b,
+                            0.33)
+    border.width: 2
 }

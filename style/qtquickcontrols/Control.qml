@@ -8,4 +8,6 @@ T.Control {
                             implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
+
+//     palette: Kirigami.Theme.palette
 }
