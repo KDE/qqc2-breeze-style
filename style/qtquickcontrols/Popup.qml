@@ -7,45 +7,43 @@
 
 
 import QtQuick 2.6
-import QtQuick.Templates 2.12 as T
-import org.kde.kirigami 2.12 as Kirigami
+import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.14 as Kirigami
 
 T.Popup {
     id: control
 
     palette: Kirigami.Theme.palette
-    implicitWidth: Math.max(background ? background.implicitWidth : 0,
-                            contentWidth > 0 ? contentWidth + leftPadding + rightPadding : 0)
-    implicitHeight: Math.max(background ? background.implicitHeight : 0,
-                             contentWidth > 0 ? contentHeight + topPadding + bottomPadding : 0)
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            contentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             contentHeight + topPadding + bottomPadding)
 
-    contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
-    contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
+//     contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
+//     contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
 
-    padding: 12
-    clip: true
+    padding: Kirigami.Units.largeSpacing
+//     clip: true
 
     enter: Transition {
-        NumberAnimation {
-            property: "opacity"
+        OpacityAnimator {
+            //property: "opacity"
             from: 0
             to: 1
             easing.type: Easing.InOutQuad
-            duration: 250
+            duration: Kirigami.Units.shortDuration
         }
     }
 
     exit: Transition {
-        NumberAnimation {
-            property: "opacity"
+        OpacityAnimator {
+            //property: "opacity"
             from: 1
             to: 0
             easing.type: Easing.InOutQuad
-            duration: 250
+            duration: Kirigami.Units.shortDuration
         }
     }
-
-    contentItem: Item { }
 
     background: Kirigami.ShadowedRectangle {
         radius: 2

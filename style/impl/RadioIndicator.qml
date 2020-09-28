@@ -1,6 +1,6 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls.impl 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
 Kirigami.ShadowedRectangle {
@@ -10,6 +10,9 @@ Kirigami.ShadowedRectangle {
 
     implicitWidth: Kirigami.Units.gridUnit
     implicitHeight: Kirigami.Units.gridUnit
+
+    x: control.mirrored ? control.width - width - control.rightPadding : control.leftPadding
+    y: (control.height - height) / 2
 
     radius: width / 2
 
@@ -21,7 +24,7 @@ Kirigami.ShadowedRectangle {
         width: 1
         color: control.down || control.checked || control.highlighted || control.visualFocus || control.hovered ?
                 Kirigami.Theme.focusColor :
-                Color.blend(root.color, Kirigami.Theme.textColor, 0.3)
+                Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
     }
 
     shadow {

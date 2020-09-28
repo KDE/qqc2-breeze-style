@@ -1,13 +1,21 @@
-import QtQuick 2.12
-import QtQuick.Templates 2.12 as T
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
+/*
+    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
+    SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+
+    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
+*/
+
+
+import QtQuick 2.15
+import QtQuick.Templates 2.15 as T
+import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "private"
+import "impl"
 
 T.CheckBox {
     id: control
 
+    palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
@@ -15,10 +23,7 @@ T.CheckBox {
                              implicitIndicatorHeight + topPadding + bottomPadding)
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
-//     padding: 6
     spacing: Kirigami.Units.smallSpacing
-
-    palette: Kirigami.Theme.palette
 
     hoverEnabled: true
 
@@ -36,7 +41,7 @@ T.CheckBox {
         onActivated: control.checked = true
     }
 
-    contentItem: CheckLabel {
+    contentItem: Controls.Label {
         leftPadding: control.indicator && !control.mirrored ? control.indicator.width + control.spacing : 0
         rightPadding: control.indicator && control.mirrored ? control.indicator.width + control.spacing : 0
 

@@ -1,6 +1,6 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls.impl 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
 Kirigami.ShadowedRectangle {
@@ -8,11 +8,11 @@ Kirigami.ShadowedRectangle {
 
     property alias control: root.parent
 
+    x: control.mirrored ? control.width - width - control.rightPadding : control.leftPadding
+    y: (control.height - height) / 2
+
     implicitWidth: Kirigami.Units.gridUnit
     implicitHeight: Kirigami.Units.gridUnit
-
-    x: control.text ? (control.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
-    y: control.topPadding + (control.availableHeight - height) / 2
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
@@ -24,7 +24,7 @@ Kirigami.ShadowedRectangle {
         width: 1
         color: control.down || control.checked || control.highlighted || control.visualFocus || control.hovered ?
                 Kirigami.Theme.highlightColor :
-                Color.blend(root.color, Kirigami.Theme.textColor, 0.3)
+                Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
     }
 
     shadow {
@@ -42,7 +42,7 @@ Kirigami.ShadowedRectangle {
             id: lineClBc
             antialiasing: true
             rotation: 45
-            anchors.left: parent.left
+            x: 0
             y: 7
             width: 5
             height: 2
@@ -52,7 +52,7 @@ Kirigami.ShadowedRectangle {
             id: lineBcTr
             antialiasing: true
             rotation: -45
-            anchors.right: parent.right
+            x: 2
             y: 5
             width: 10
             height: 2

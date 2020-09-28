@@ -6,122 +6,120 @@
 */
 
 
-import QtQuick 2.12
+import QtQuick 2.15
 import QtQuick.Layouts 1.12
-import QtQuick.Templates 2.12 as T
-import QtQuick.Controls 2.12 as Controls
+import QtQuick.Templates 2.15 as T
+import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "private"
+import "impl"
 
 T.MenuItem {
-    id: controlRoot
+    id: control
 
     palette: Kirigami.Theme.palette
-    implicitWidth: Math.max(background ? background.implicitWidth : 0,
-                            contentItem.implicitWidth + leftPadding + rightPadding + (arrow ? arrow.implicitWidth : 0))
-    implicitHeight: visible ? Math.max(background ? background.implicitHeight : 0,
-                             Math.max(contentItem.implicitHeight,
-                                      indicator ? indicator.implicitHeight : 0) + topPadding + bottomPadding) : 0
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding,
+                             implicitIndicatorHeight + topPadding + bottomPadding)
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
-    width: parent ? parent.width : implicitWidth
+//     width: parent ? parent.width : implicitWidth
+
+    icon.width: Kirigami.Units.iconSizes.defaultSize
+    icon.height: Kirigami.Units.iconSizes.defaultSize
 
     Layout.fillWidth: true
+    
+    spacing: Kirigami.Units.smallSpacing
     padding: Kirigami.Units.smallSpacing
-    leftPadding: Kirigami.Units.largeSpacing
-    rightPadding: Kirigami.Units.largeSpacing
+//     leftPadding: Kirigami.Units.largeSpacing
+//     rightPadding: Kirigami.Units.largeSpacing
     hoverEnabled: !Kirigami.Settings.isMobile
 
-    Kirigami.MnemonicData.enabled: controlRoot.enabled && controlRoot.visible
+    Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.MenuItem
-    Kirigami.MnemonicData.label: controlRoot.text
+    Kirigami.MnemonicData.label: control.text
     Shortcut {
         //in case of explicit & the button manages it by itself
-        enabled: !(RegExp(/\&[^\&]/).test(controlRoot.text))
-        sequence: controlRoot.Kirigami.MnemonicData.sequence
+        enabled: !(RegExp(/\&[^\&]/).test(control.text))
+        sequence: control.Kirigami.MnemonicData.sequence
         onActivated: {
-            if (controlRoot.checkable) {
-                controlRoot.toggle();
+            if (control.checkable) {
+                control.toggle();
             } else {
-                controlRoot.clicked();
+                control.clicked();
             }
         }
     }
 
     contentItem: RowLayout {
+        spacing: control.spacing
         Item {
-           Layout.preferredWidth: (controlRoot.ListView.view && controlRoot.ListView.view.hasCheckables) || controlRoot.checkable ? controlRoot.indicator.width : Kirigami.Units.smallSpacing
+            //visible: width > 0
+            Layout.preferredWidth: (control.ListView.view && control.ListView.view.hasCheckables)
+            || (control.checkable && control.indicator) ?
+                control.indicator.width : 0
         }
         Kirigami.Icon {
+            id: iconContent
             Layout.alignment: Qt.AlignVCenter
-            visible: (controlRoot.ListView.view && controlRoot.ListView.view.hasIcons) || (controlRoot.icon != undefined && (controlRoot.icon.name.length > 0 || controlRoot.icon.source.length > 0))
-            source: controlRoot.icon ? (controlRoot.icon.name || controlRoot.icon.source) : ""
-            color: controlRoot.icon ? controlRoot.icon.color : "transparent"
-            //hovered is for retrocompatibility
-            selected: (controlRoot.highlighted || controlRoot.hovered)
-            Layout.preferredHeight: Math.max(Kirigami.Units.fontMetrics.roundedIconSize(label.height), Kirigami.Units.iconSizes.small)
-            Layout.preferredWidth: Layout.preferredHeight
+            visible: control.icon != undefined && (control.icon.name.length > 0 || control.icon.source.length > 0)
+            source: control.icon.name
+            color: control.icon.color
+            Layout.preferredHeight: control.icon.height > 0 ? control.icon.width : Kirigami.Units.iconSizes.defaultSize
+            Layout.preferredWidth: control.icon.width > 0 ? control.icon.width : Kirigami.Units.iconSizes.defaultSize
         }
         Controls.Label {
-            id: label
+            id: labelContent
+            leftPadding: !iconContent.visible && control.ListView.view && control.ListView.view.hasIcons ? Kirigami.Units.iconSizes.defaultSize + control.spacing : 0
             Layout.alignment: Qt.AlignVCenter
             Layout.fillWidth: true
 
-            text: controlRoot.Kirigami.MnemonicData.richTextLabel
-            font: controlRoot.font
-            color: (controlRoot.highlighted || controlRoot.hovered) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+            text: control.Kirigami.MnemonicData.richTextLabel
+            font: control.font
+            color: Kirigami.Theme.textColor
             elide: Text.ElideRight
-            visible: controlRoot.text
+            visible: control.text
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
         }
         Controls.Label {
             id: shortcut
             Layout.alignment: Qt.AlignVCenter
-            visible: controlRoot.action && controlRoot.action.hasOwnProperty("shortcut") && controlRoot.action.shortcut !== undefined
+            visible: control.action && control.action.hasOwnProperty("shortcut") && control.action.shortcut !== undefined
 
             Shortcut {
                 id: itemShortcut
-                sequence: (parent.visible && controlRoot.action !== null) ? controlRoot.action.shortcut : ""
+                sequence: (shortcut.visible && control.action !== null) ? control.action.shortcut : ""
             }
 
             text: visible ? itemShortcut.nativeText : ""
-            font: controlRoot.font
-            color: label.color
+            font: control.font
+            color: labelContent.color
             horizontalAlignment: Text.AlignRight
             verticalAlignment: Text.AlignVCenter
         }
         Item {
-           Layout.preferredWidth: Kirigami.Units.smallSpacing
+            //visible: width > 0
+            Layout.preferredWidth: control.subMenu && control.arrow ?
+                control.arrow.width : 0
         }
     }
 
     arrow: Kirigami.Icon {
-       x: controlRoot.mirrored ? controlRoot.padding : controlRoot.width - width - controlRoot.padding
-       y: controlRoot.topPadding + (controlRoot.availableHeight - height) / 2
-       source: controlRoot.mirrored ? "go-next-symbolic-rtl" : "go-next-symbolic"
-       selected: controlRoot.highlighted
-       width: Math.max(Kirigami.Units.fontMetrics.roundedIconSize(label.height), Kirigami.Units.iconSizes.small)
-       height: width
-       visible: controlRoot.subMenu
+       x: control.mirrored ? control.padding : control.width - width - control.padding
+       y: (control.height - height) / 2
+       source: control.mirrored ? "arrow-left" : "arrow-right"
+       implicitWidth: Kirigami.Units.iconSizes.defaultSize
+       implicitHeight: width
+       visible: control.subMenu
    }
 
     indicator: CheckIndicator {
-        x: controlRoot.mirrored ? controlRoot.width - width - controlRoot.rightPadding : controlRoot.leftPadding
-        y: controlRoot.topPadding + (controlRoot.availableHeight - height) / 2
-
-        visible: controlRoot.checkable
-        control: controlRoot
+        visible: control.checkable
+        control: control
     }
 
-    background: Item {
-        anchors.fill: parent
-        implicitWidth: Kirigami.Units.gridUnit * 8
-
-        Rectangle {
-            anchors.fill: parent
-            color: Kirigami.Theme.highlightColor
-            opacity: (controlRoot.highlighted || controlRoot.hovered) ? 1 : 0
-        }
-    }
+    //background: DelegateBackground { control: control }
 }

@@ -41,6 +41,11 @@ QtObject {
      * * desktop
      */
     property QtObject iconSizes: QtObject {
+        // Breeze
+        property int defaultSize: fontMetrics.roundedIconSize(gridUnit)
+        property int tiny: fontMetrics.roundedIconSize(8 * devicePixelRatio)
+        property int tinySmall: fontMetrics.roundedIconSize(12 * devicePixelRatio)
+        // Breeze
         property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio)
         property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio)
         property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio)
@@ -49,21 +54,51 @@ QtObject {
         property int enormous: 128 * devicePixelRatio
     }
 
+    //BEGIN Breeze Units
+    property int smallBorder: devicePixelRatio
+    property int mediumBorder: smallBorder*2
+    property int largeBorder: smallBorder*4
+    
+    property int smallRadius: 3 * devicePixelRatio
+    property int largeRadius: 6 * devicePixelRatio
+    
+    /*property int smallControlHeight: Math.max(
+        iconSizes.defaultSize,
+        fontMetrics.blockHeight
+    ) + units.smallSpacing*2*/
+    property int mediumControlHeight: Math.max(
+        iconSizes.defaultSize,
+        fontMetrics.blockHeight
+    ) + units.largeSpacing*2
+
+    function controlPadding(bgHeight, contHeight) {
+        return Math.round(Math.abs(bgHeight - contHeight) / 2)
+    }
+    //END Breeze Units
+
     /**
-     * units.smallSpacing is the amount of spacing that should be used around smaller UI elements,
+     * Units.smallSpacing is the amount of spacing that should be used around smaller UI elements,
      * for example as spacing in Columns. Internally, this size depends on the size of
      * the default font as rendered on the screen, so it takes user-configured font size and DPI
      * into account.
      */
-    property int smallSpacing: Math.floor(gridUnit/4)
+    property int smallSpacing: 4 * devicePixelRatio
 
     /**
-     * units.largeSpacing is the amount of spacing that should be used inside bigger UI elements,
+     * Units.largeSpacing is the amount of spacing that should be used inside bigger UI elements,
      * for example between an icon and the corresponding text. Internally, this size depends on
      * the size of the default font as rendered on the screen, so it takes user-configured font
      * size and DPI into account.
      */
-    property int largeSpacing: smallSpacing * 2
+    property int largeSpacing: 8 * devicePixelRatio
+
+    /**
+     * Units.hugeSpacing is the amount of spacing that should be used inside bigger UI elements,
+     * for example between an icon and the corresponding text. Internally, this size depends on
+     * the size of the default font as rendered on the screen, so it takes user-configured font
+     * size and DPI into account.
+     */
+    property int hugeSpacing: 12 * devicePixelRatio
 
     /**
      * The ratio between physical and device-independent pixels. This value does not depend on the \
@@ -72,24 +107,30 @@ QtObject {
      * The devicePixelRatio follows the definition of "device independent pixel" by Microsoft.
      */
     property real devicePixelRatio: Math.max(1, ((fontMetrics.font.pixelSize*0.75) / fontMetrics.font.pointSize))
-
+    
     /**
-     * units.veryLongDuration should be used for specialty animations that benefit
-     * from being even longer than longDuration.
+     * units.shortDuration should be used for short animations, such as accentuating a UI event,
+     * hover events, etc..
      */
-    property int veryLongDuration: 500
-
-    /**
-     * units.longDuration should be used for longer, screen-covering animations, for opening and
-     * closing of dialogs and other "not too small" animations
-     */
-    property int longDuration: 250
+    property int tinyDuration: 50
 
     /**
      * units.shortDuration should be used for short animations, such as accentuating a UI event,
      * hover events, etc..
      */
-    property int shortDuration: 150
+    property int shortDuration: 100
+
+    /**
+     * units.longDuration should be used for longer, screen-covering animations, for opening and
+     * closing of dialogs and other "not too small" animations
+     */
+    property int longDuration: 200
+
+    /**
+     * units.veryLongDuration should be used for specialty animations that benefit
+     * from being even longer than longDuration.
+     */
+    property int veryLongDuration: 400
 
     /**
      * time in ms by which the display of tooltips will be delayed.
@@ -98,19 +139,31 @@ QtObject {
      */
     property int toolTipDelay: 700
 
-    //readonly property QtObject __styleItem: QtQuickControlsPrivate.StyleItem {elementType: "frame" }
-
     /**
      * How much the mouse scroll wheel scrolls, expressed in lines of text.
      * Note: this is strictly for classical mouse wheels, touchpads 2 figer scrolling won't be affected
      */
-    readonly property int wheelScrollLines: 3//__styleItem.styleHint("wheelScrollLines")
+    readonly property int wheelScrollLines: 3
 
     /**
      * metrics used by the default font
      */
-    property variant fontMetrics: TextMetrics {
-        text: "M"
+    property variant fontMetrics: FontMetrics {
+        /** Height of a capital letter
+         * 
+         * QFontEngine (private, used by QFontMetricsF) uses an 'H' to
+         * calculate capHeight(), so the behavior should match the behavior
+         * of QFontMetricsF::capHeight().
+         * 
+         * WARNING: Very Eurocentric. Be kind to your translators and use it
+         * carefully. Don't make areas with text that are too small to look
+         * good with or at least contain non-European languages.
+         */
+        property real capHeight: fontMetrics.tightBoundingRect("H").height
+
+        /// Height of a full block character
+        property int blockHeight: fontMetrics.tightBoundingRect('█').height
+
         function roundedIconSize(size) {
             if (size < 16) {
                 return size;

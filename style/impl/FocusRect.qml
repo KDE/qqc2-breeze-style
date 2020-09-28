@@ -22,5 +22,5 @@ Rectangle {
                             Kirigami.Theme.highlightColor.g,
                             Kirigami.Theme.highlightColor.b,
                             0.33)
-    border.width: 2
+    border.width: Kirigami.Units.mediumBorder
 }

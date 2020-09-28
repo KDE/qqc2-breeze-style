@@ -1,7 +1,8 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
-import QtQuick.Templates 2.12 as T
+import QtQuick 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.14 as Kirigami
 
 T.SwipeDelegate {
     id: control
@@ -36,7 +37,7 @@ T.SwipeDelegate {
     background: Rectangle {
         implicitWidth: 100
         implicitHeight: 40
-        color: Color.blend(control.down ? control.palette.midlight : control.palette.light,
+        color: Kirigami.ColorUtils.tintWithAlpha(control.down ? control.palette.midlight : control.palette.light,
                                           control.palette.highlight, control.visualFocus ? 0.15 : 0.0)
     }
 }

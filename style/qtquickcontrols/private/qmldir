@@ -1,8 +1,0 @@
-singleton MobileTextActionsToolBar 1.0 MobileTextActionsToolBar.qml
-ButtonBackground 1.0 ButtonBackground.qml
-BackgroundGradient 1.0 BackgroundGradient.qml
-CheckIndicator 1.0 CheckIndicator.qml
-DefaultListItemBackground 1.0 DefaultListItemBackground.qml
-FocusRect 1.0 FocusRect.qml
-IconLabelContent 1.0 IconLabelContent.qml
-MobileCursor 1.0 MobileCursor.qml

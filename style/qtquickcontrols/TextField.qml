@@ -1,9 +1,9 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
-import QtQuick.Templates 2.12 as T
+import QtQuick 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "private"
+import "impl"
 
 T.TextField {
     id: control
@@ -14,8 +14,15 @@ T.TextField {
                              contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
-//     padding: 8
-//     leftPadding: padding + 4
+    padding: Kirigami.Units.controlPadding(
+        implicitBackgroundHeight,
+        Math.max(contentHeight, placeholder.implicitHeight)
+    )
+    /*Math.round(
+        Math.abs(
+            implicitBackgroundHeight - Math.max(contentHeight, placeholder.implicitHeight)
+        ) / 2
+    )*/
 
     palette: Kirigami.Theme.palette
     Kirigami.Theme.colorSet: Kirigami.Theme.View
@@ -43,22 +50,7 @@ T.TextField {
         renderType: control.renderType
     }
 
-    background: Rectangle {
+    background: TextEditBackground {
         implicitWidth: 200
-        implicitHeight: 32
-        radius: 3
-        color: Kirigami.Theme.backgroundColor
-        border {
-            width: 1
-            color: control.highlighted || control.activeFocus || control.hovered ?
-                    Kirigami.Theme.highlightColor :
-                    Color.blend(background.color, Kirigami.Theme.textColor, 0.3)
-        }
-
-        FocusRect {
-            // control.visualFocus seems to not work
-            visible: control.activeFocus && (control.focusReason == Qt.TabFocusReason || control.focusReason == Qt.BacktabFocusReason)
-            baseRadius: background.radius
-        }
     }
 }

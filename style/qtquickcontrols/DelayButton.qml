@@ -1,7 +1,8 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
-import QtQuick.Templates 2.12 as T
+import QtQuick 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.14 as Kirigami
 
 T.DelayButton {
     id: control
@@ -55,7 +56,7 @@ T.DelayButton {
     background: Rectangle {
         implicitWidth: 100
         implicitHeight: 40
-        color: Color.blend(control.palette.button, control.palette.mid, control.down ? 0.5 : 0.0)
+        color: Kirigami.ColorUtils.tintWithAlpha(control.palette.button, control.palette.mid, control.down ? 0.5 : 0.0)
         border.color: control.palette.highlight
         border.width: control.visualFocus ? 2 : 0
 
@@ -63,7 +64,7 @@ T.DelayButton {
             padding: control.visualFocus ? 2 : 0
             width: control.progress * parent.width
             height: parent.height
-            color: Color.blend(control.palette.dark, control.palette.mid, control.down ? 0.5 : 0.0)
+            color: Kirigami.ColorUtils.tintWithAlpha(control.palette.dark, control.palette.mid, control.down ? 0.5 : 0.0)
         }
     }
 }

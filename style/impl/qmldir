@@ -1,0 +1,21 @@
+module org.kde.breeze.impl
+#plugin qqc2breezestyleplugin
+#classname QQC2BreezeStylePlugin
+depends QtQuick.Controls 2.15
+depends org.kde.kirigami 2.14
+# Make sure the style works with Qt Quick Designer
+designersupported
+
+BackgroundGradient 2.0 BackgroundGradient.qml
+ButtonBackground 2.0 ButtonBackground.qml
+CheckIndicator 2.0 CheckIndicator.qml
+DelegateBackground 2.0 DelegateBackground.qml
+FocusRect 2.0 FocusRect.qml
+IconLabelContent 2.0 IconLabelContent.qml
+IconLabelShortcutContent 2.0 IconLabelShortcutContent.qml
+ListViewHighlight 2.0 ListViewHighlight.qml
+MobileCursor 2.0 MobileCursor.qml
+singleton MobileTextActionsToolBar 2.0 MobileTextActionsToolBar.qml
+RadioIndicator 2.0 RadioIndicator.qml
+SliderHandle 2.0 SliderHandle.qml
+SwitchIndicator 2.0 SwitchIndicator.qml

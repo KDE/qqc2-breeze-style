@@ -6,41 +6,41 @@
 */
 
 
-import QtQuick 2.7
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
-import QtQuick.Templates 2.12 as T
-import org.kde.kirigami 2.12 as Kirigami
+import QtQuick 2.15
+import QtQuick.Layouts 1.12
+import QtQuick.Window 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.14 as Kirigami
+import "impl"
 
 T.Menu {
     id: control
 
-palette: Kirigami.Theme.palette
-    implicitWidth: Math.max(background ? background.implicitWidth : 0,
-                            contentItem ? contentItem.implicitWidth + leftPadding + rightPadding : 0)
-    implicitHeight: Math.max(background ? background.implicitHeight : 0,
-                             contentItem ? contentItem.implicitHeight : 0) + topPadding + bottomPadding
+    palette: Kirigami.Theme.palette
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            contentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             contentHeight + topPadding + bottomPadding)
 
     margins: 0
     overlap: 1
 
-   delegate: Controls.MenuItem { onImplicitWidthChanged: control.contentItem.contentItem.childrenChanged() }
+    delegate: Controls.MenuItem {}
 
     contentItem: ListView {
         implicitHeight: contentHeight
         property bool hasCheckables: false
         property bool hasIcons: false
         model: control.contentModel
+        highlightMoveDuration: -1
+        highlightMoveVelocity: -1
+        highlight: ListViewHighlight {}
 
-        implicitWidth: {
-            var maxWidth = 0;
-            for (var i = 0; i < contentItem.children.length; ++i) {
-                maxWidth = Math.max(maxWidth, contentItem.children[i].implicitWidth);
-            }
-            return maxWidth;
-        }
-        interactive: ApplicationWindow.window ? contentHeight > ApplicationWindow.window.height : false
+        interactive: Window.window
+                        ? contentHeight + control.topPadding + control.bottomPadding > Window.window.height
+                        : false
         clip: true
         currentIndex: control.currentIndex || 0
         keyNavigationEnabled: true
@@ -67,31 +67,35 @@ palette: Kirigami.Theme.palette
     }
 
     enter: Transition {
-        NumberAnimation {
-            property: "opacity"
-            from: 0
-            to: 1
-            easing.type: Easing.InOutQuad
-            duration: 150
+        ParallelAnimation {
+            NumberAnimation {
+                property: "opacity"
+                from: 0
+                to: 1
+                easing.type: Easing.OutQuad
+                duration: Kirigami.Units.shortDuration
+            }
         }
     }
 
     exit: Transition {
-        NumberAnimation {
-            property: "opacity"
-            from: 1
-            to: 0
-            easing.type: Easing.InOutQuad
-            duration: 150
+        ParallelAnimation {
+            NumberAnimation {
+                property: "opacity"
+                from: 1
+                to: 0
+                easing.type: Easing.OutQuad
+                duration: Kirigami.Units.shortDuration
+            }
         }
     }
 
     background: Kirigami.ShadowedRectangle {
         radius: 3
-        implicitWidth: Kirigami.Units.gridUnit * 8
+        implicitWidth: Kirigami.Units.gridUnit * 12
         color: Kirigami.Theme.backgroundColor
 
-        border.color: Color.blend(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.3);
+        border.color: Kirigami.ColorUtils.tintWithAlpha(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.3);
         border.width: 1
 
         shadow.xOffset: 0

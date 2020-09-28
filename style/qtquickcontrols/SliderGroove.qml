@@ -1,8 +1,8 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
-import QtQuick.Controls.Fusion 2.12
-import QtQuick.Controls.Fusion.impl 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls.impl 2.15
+import QtQuick.Controls.Fusion 2.15
+import QtQuick.Controls.Fusion.impl 2.15
 
 Rectangle {
     id: groove

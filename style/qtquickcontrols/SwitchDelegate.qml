@@ -6,14 +6,14 @@
 */
 
 
-import QtQuick 2.12
-import QtQuick.Templates 2.12 as T
-import QtQuick.Controls 2.12 as Controls
+import QtQuick 2.15
+import QtQuick.Templates 2.15 as T
+import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "private"
+import "impl"
 
 T.SwitchDelegate {
-    id: controlRoot
+    id: control
 
     palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
@@ -25,31 +25,29 @@ T.SwitchDelegate {
 
     padding: Kirigami.Settings.tabletMode ? Kirigami.Units.largeSpacing : Kirigami.Units.smallSpacing
 
-    leftPadding: padding*2
-    topPadding: padding
+    //leftPadding: padding*2
+    //topPadding: padding
 
-    rightPadding: padding*2
-    bottomPadding: padding
+    //rightPadding: padding*2
+    //bottomPadding: padding
 
     contentItem: Controls.Label {
-        leftPadding: controlRoot.mirrored ? (controlRoot.indicator ? controlRoot.indicator.width : 0) + controlRoot.spacing : 0
-        rightPadding: !controlRoot.mirrored ? (controlRoot.indicator ? controlRoot.indicator.width : 0) + controlRoot.spacing : 0
+        leftPadding: control.mirrored ? (control.indicator ? control.indicator.width : 0) + control.spacing : 0
+        rightPadding: !control.mirrored ? (control.indicator ? control.indicator.width : 0) + control.spacing : 0
 
-        text: controlRoot.text
-        font: controlRoot.font
-        color: (controlRoot.pressed && !controlRoot.checked && !controlRoot.sectionDelegate) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+        text: control.text
+        font: control.font
+        color: (control.pressed && !control.checked && !control.sectionDelegate) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
         elide: Text.ElideRight
-        visible: controlRoot.text
+        visible: control.text
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
     }
 
     indicator: SwitchIndicator {
-        x: controlRoot.mirrored ? controlRoot.leftPadding : controlRoot.width - width - controlRoot.rightPadding
-        y: controlRoot.topPadding + (controlRoot.availableHeight - height) / 2
-
-        control: controlRoot
+        x: control.mirrored ? control.leftPadding : control.width - width - control.rightPadding
+        control: control
     }
 
-    background: DefaultListItemBackground {}
+    //background: DelegateBackground {}
 }

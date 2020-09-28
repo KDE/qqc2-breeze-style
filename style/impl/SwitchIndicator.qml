@@ -1,6 +1,6 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as Controls
-import QtQuick.Controls.impl 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls.impl 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
 Item {
@@ -10,6 +10,9 @@ Item {
 
     implicitWidth: implicitHeight*2
     implicitHeight: Kirigami.Units.gridUnit
+
+    x: control.mirrored ? control.width - width - control.rightPadding : control.leftPadding
+    y: (control.height - height) / 2
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
@@ -24,7 +27,7 @@ Item {
             width: 1
             color: control.down || control.checked || control.highlighted ?
                 Kirigami.Theme.focusColor :
-                Color.blend(background.color, Kirigami.Theme.textColor, 0.3)
+                Kirigami.ColorUtils.tintWithAlpha(background.color, Kirigami.Theme.textColor, 0.3)
         }
     }
 
@@ -35,8 +38,6 @@ Item {
             top: parent.top
             bottom: parent.bottom
         }
-//         x: Math.max(0, Math.min(parent.width - width, root.control.visualPosition * parent.width - (width / 2)))
-        //y: (parent.height - height) / 2
         width: height
         radius: height / 2
         color: Kirigami.Theme.backgroundColor
@@ -44,7 +45,7 @@ Item {
             width: 1
             color: control.down || control.highlighted || control.visualFocus || control.hovered ?
                 Kirigami.Theme.focusColor :
-                Color.blend(handle.color, Kirigami.Theme.textColor, 0.3)
+                Kirigami.ColorUtils.tintWithAlpha(handle.color, Kirigami.Theme.textColor, 0.3)
         }
 
         shadow {
@@ -74,8 +75,8 @@ Item {
     transitions: [
         Transition {
             AnchorAnimation {
-                duration: 100
-                easing.type: Easing.InOutQuad
+                duration: Kirigami.Units.shortDuration
+                easing.type: Easing.OutCubic
             }
         }
     ]

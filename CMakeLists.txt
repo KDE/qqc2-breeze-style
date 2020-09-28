@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(KF5_VERSION "5.75.0") # handled by release scripts
+#set(KF5_VERSION "5.75.0") # handled by release scripts
 set(KF5_DEP_VERSION "5.74.0") # handled by release scripts
 
-project(qqc2-breeze-style VERSION ${KF5_VERSION})
+project(qqc2-breeze-style VERSION 1.0)
 
 set(REQUIRED_QT_VERSION 5.15.0)
 
@@ -32,7 +32,7 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
-find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Quick Gui QuickControls2 DBus)
+find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 DBus)
 
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Config Kirigami2)
 
@@ -88,7 +88,8 @@ ecm_setup_version(PROJECT
 add_definitions(-DQT_NO_FOREACH)
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050d00)
 add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x054900)
-add_subdirectory(plugin)
+
+add_subdirectory(style)
 
 if (KF5IconThemes_FOUND AND KF5WidgetsAddons_FOUND)
 add_subdirectory(kirigami-plasmadesktop-integration)
@@ -98,7 +99,24 @@ endif(KF5IconThemes_FOUND AND KF5WidgetsAddons_FOUND)
 # something to discover what's the latest qqc2 version available
 # Since 5.12, QQC2 version is sync with Qt's minor version:
 # https://github.com/qt/qtquickcontrols2/commit/3c7bfc156797b2f3ef08a8cf620b79da80e4b061
-set(QQC2_VERSION "2.${Qt5QuickControls2_VERSION_MINOR}")
+if (Qt5QuickControls2_VERSION_MINOR LESS 12)
+    math(EXPR QQC2_VERSION_MINOR "${Qt5QuickControls2_VERSION_MINOR} - 7")
+else()
+    set(QQC2_VERSION_MINOR "${Qt5QuickControls2_VERSION_MINOR}")
+endif()
+set(QQC2_VERSION "2.${QQC2_VERSION_MINOR}")
+
+if (QQC2_VERSION_MINOR LESS 3)
+    set(DISABLE_UNDER_QQC2_2_3 "//Needs QtQuick.Controls 2.3 ")
+else()
+    set(DISABLE_UNDER_QQC2_2_3 "")
+endif()
+
+if (QQC2_VERSION_MINOR LESS 4)
+    set(DISABLE_UNDER_QQC2_2_4 "//Needs QtQuick.Controls 2.4 ")
+else()
+    set(DISABLE_UNDER_QQC2_2_4 "")
+endif()
 
 if (Qt5Qml_VERSION_STRING VERSION_GREATER_EQUAL 5.14)
     set(DISABLE_UNDER_QT_5_14 "")
@@ -113,8 +131,8 @@ endif()
 # set(KIRIGAMI_VERSION "2.${KF5_DEP_VERSION_MINOR}")
 
 # Find all the source qml files
-FILE(GLOB_RECURSE inFiles RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "${CMAKE_CURRENT_SOURCE_DIR}/style/*")
+
+FILE(GLOB_RECURSE inFiles RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.qml")
 
 #for each file, replace @QQC2_VERSION@ with the version we found
 FOREACH(infileName ${inFiles})
@@ -122,27 +140,24 @@ FOREACH(infileName ${inFiles})
         "${CMAKE_CURRENT_SOURCE_DIR}/${infileName}"
         "${CMAKE_CURRENT_BINARY_DIR}/${infileName}"
         INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
-        PATH_VARS  QQC2_VERSION
+        PATH_VARS  QQC2_VERSION DISABLE_UNDER_QQC2_2_3
+        DISABLE_UNDER_QQC2_2_4
     )
 ENDFOREACH(infileName)
 
 # TODO: Automate Kirigami version
 # This code doesn't work yet
 #for each file, replace @KIRIGAMI_VERSION@ with the version we found
-#FOREACH(infileName ${inFiles})
-    #configure_package_config_file(
-        #"${CMAKE_CURRENT_SOURCE_DIR}/${infileName}"
-        #"${CMAKE_CURRENT_BINARY_DIR}/${infileName}"
-        #INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
-        #PATH_VARS KIRIGAMI_VERSION
-    #)
-#ENDFOREACH(infileName)
-
-file(GLOB_RECURSE qtquickcontrolsFiles LIST_DIRECTORIES true "${CMAKE_CURRENT_SOURCE_DIR}/style/qtquickcontrols/*")
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/style/qtquickcontrols/ DESTINATION ${KDE_INSTALL_QMLDIR}/QtQuick/Controls.2/org.kde.breeze)
-
-file(GLOB_RECURSE kirigamiFiles LIST_DIRECTORIES true "${CMAKE_CURRENT_SOURCE_DIR}/style/kirigami/*")
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/style/kirigami/ DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/kirigami.2/styles/org.kde.breeze)
+#[[
+FOREACH(infileName ${inFiles})
+    configure_package_config_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/${infileName}"
+        "${CMAKE_CURRENT_BINARY_DIR}/${infileName}"
+        INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+        PATH_VARS KIRIGAMI_VERSION
+    )
+ENDFOREACH(infileName)
+]]
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
