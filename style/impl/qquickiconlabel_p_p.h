@@ -49,10 +49,10 @@
 //
 
 #include <QtQuick/private/qquickitem_p.h>
-#include <QtQuickControls2Impl/private/qtquickcontrols2implglobal_p.h>
-#include <QtQuickControls2Impl/private/qquickiconlabel_p.h>
+#include "qqc2breezeglobal_p.h"
+#include "qquickiconlabel_p.h"
 
-QT_BEGIN_NAMESPACE
+BEGIN_NAMESPACE_QQC2Breeze
 
 class QQuickIconImage;
 class QQuickMnemonicLabel;
@@ -106,6 +106,6 @@ public:
     QQuickMnemonicLabel *label = nullptr;
 };
 
-QT_END_NAMESPACE
+END_NAMESPACE
 
 #endif // QQUICKICONLABEL_P_P_H

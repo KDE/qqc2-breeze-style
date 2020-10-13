@@ -6,6 +6,8 @@
  */
 
 #include "qqc2breezestyleplugin.h"
+#include "impl/qqc2breezeglobal_p.h"
+// #include "impl/qquickiconlabel_p.h"
 
 #include <QQmlEngine>
 #include <QQmlFile>
@@ -30,6 +32,7 @@ void QQC2BreezeStylePlugin::registerTypes(const char *uri)
 
     //BEGIN org.kde.breeze
     qmlRegisterModule(uri, 2, 0);
+//     qmlRegisterType<QQuickIconLabel>(uri, 2, 3, "IconLabel");
     //END
 
     // Prevent additional types from being added.

@@ -33,17 +33,17 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
+#include "qqc2breezeglobal_p.h"
 #include "qquickiconlabel_p.h"
 #include "qquickiconlabel_p_p.h"
-#include "qquickiconimage_p.h"
-#include "qquickmnemoniclabel_p.h"
 
 #include <QtGui/private/qguiapplication_p.h>
 #include <QtQuick/private/qquickitem_p.h>
 #include <QtQuick/private/qquicktext_p.h>
+#include <QtQuickControls2/private/qquickiconimage_p.h>
+#include <QtQuickControls2/private/qquickmnemoniclabel_p.h>
 
-QT_BEGIN_NAMESPACE
+BEGIN_NAMESPACE_QQC2Breeze
 
 static void beginClass(QQuickItem *item)
 {
@@ -639,4 +639,4 @@ void QQuickIconLabel::geometryChange(const QRectF &newGeometry, const QRectF &ol
     d->layout();
 }
 
-QT_END_NAMESPACE
+END_NAMESPACE

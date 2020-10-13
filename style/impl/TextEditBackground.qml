@@ -7,7 +7,7 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
-Kirigami.ShadowedRectangle {
+Rectangle {
     id: mainBackground
 
     property alias control: mainBackground.parent
@@ -24,10 +24,5 @@ Kirigami.ShadowedRectangle {
                 Kirigami.Theme.focusColor :
                 Kirigami.ColorUtils.tintWithAlpha(mainBackground.color, Kirigami.Theme.textColor, 0.3)
         width: Kirigami.Units.smallBorder
-    }
-    shadow {
-        color: Qt.rgba(0,0,0,0.2)
-        size: !control.enabled ? 0 : 2
-        yOffset: 1
     }
 }

@@ -49,14 +49,14 @@
 //
 
 #include <QtQuick/qquickitem.h>
-#include <QtQuickControls2Impl/private/qtquickcontrols2implglobal_p.h>
+#include "qqc2breezeglobal_p.h"
 #include <QtQuickTemplates2/private/qquickicon_p.h>
 
-QT_BEGIN_NAMESPACE
+BEGIN_NAMESPACE_QQC2Breeze
 
 class QQuickIconLabelPrivate;
 
-class Q_QUICKCONTROLS2_PRIVATE_EXPORT QQuickIconLabel : public QQuickItem
+class QQuickIconLabel : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QQuickIcon icon READ icon WRITE setIcon FINAL)
@@ -72,7 +72,6 @@ class Q_QUICKCONTROLS2_PRIVATE_EXPORT QQuickIconLabel : public QQuickItem
     Q_PROPERTY(qreal rightPadding READ rightPadding WRITE setRightPadding RESET resetRightPadding FINAL)
     Q_PROPERTY(qreal bottomPadding READ bottomPadding WRITE setBottomPadding RESET resetBottomPadding FINAL)
     QML_NAMED_ELEMENT(IconLabel)
-    QML_ADDED_IN_VERSION(2, 3)
 
 public:
     enum Display {
@@ -128,15 +127,15 @@ public:
 
 protected:
     void componentComplete() override;
-    void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+    void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) /*override*/;
 
 private:
     Q_DISABLE_COPY(QQuickIconLabel)
     Q_DECLARE_PRIVATE(QQuickIconLabel)
 };
 
-QT_END_NAMESPACE
+END_NAMESPACE
 
-QML_DECLARE_TYPE(QQuickIconLabel)
+// QML_DECLARE_TYPE(QQuickIconLabel)
 
 #endif // QQUICKICONLABEL_P_H

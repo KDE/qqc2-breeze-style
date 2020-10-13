@@ -15,7 +15,7 @@ ecm_qt_declare_logging_category(qqc2breezestyle_SRCS
 ]]
 
 add_library(qqc2breezestyleplugin SHARED ${qqc2breezestyle_SRCS})
-target_link_libraries(qqc2breezestyleplugin Qt5::Core Qt5::Qml Qt5::Quick Qt5::Gui KF5::ConfigCore KF5::Kirigami2)
+target_link_libraries(qqc2breezestyleplugin Qt5::Core Qt5::Qml Qt5::Quick Qt5::QuickPrivate Qt5::QuickControls2 Qt5::QuickControls2Private Qt5::QuickTemplates2 Qt5::QuickTemplates2Private Qt5::Gui KF5::ConfigCore KF5::Kirigami2)
 
 if(KF5ConfigWidgets_FOUND)
     target_link_libraries(qqc2breezestyleplugin

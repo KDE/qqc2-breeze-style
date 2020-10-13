@@ -49,14 +49,14 @@
 //
 
 #include <QtQuick/private/qquickimage_p_p.h>
-#include <QtQuickControls2Impl/private/qtquickcontrols2implglobal_p.h>
+#include "qqc2breezeglobal_p.h"
 #include <QtGui/private/qiconloader_p.h>
 
-QT_BEGIN_NAMESPACE
+BEGIN_NAMESPACE_QQC2Breeze
 
-class Q_QUICKCONTROLS2_PRIVATE_EXPORT QQuickIconImagePrivate : public QQuickImagePrivate
+class QQuickIconImagePrivate : public QQuickImagePrivate
 {
-    Q_DECLARE_PUBLIC(QQuickIconImage)
+//     Q_DECLARE_PUBLIC(QQuickIconImage)
 
 public:
     void updateIcon();
@@ -72,6 +72,6 @@ public:
     bool updatingFillMode = false;
 };
 
-QT_END_NAMESPACE
+END_NAMESPACE
 
 #endif // QQUICKICONIMAGE_P_P_H

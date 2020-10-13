@@ -51,17 +51,16 @@
 #include <QtQuick/private/qquickimage_p.h>
 #include "qqc2breezeglobal_p.h"
 
-QT_BEGIN_NAMESPACE
+BEGIN_NAMESPACE_QQC2Breeze
 
 class QQuickIconImagePrivate;
 
-class Q_QUICKCONTROLS2_PRIVATE_EXPORT QQuickIconImage : public QQuickImage
+class QQuickIconImage : public QQuickImage
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged FINAL)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged FINAL)
     QML_NAMED_ELEMENT(IconImage)
-    QML_ADDED_IN_VERSION(2, 3)
 
 public:
     explicit QQuickIconImage(QQuickItem *parent = nullptr);
@@ -80,7 +79,7 @@ Q_SIGNALS:
 
 protected:
     void componentComplete() override;
-    void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+    void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry);
     void itemChange(ItemChange change, const ItemChangeData &value) override;
     void pixmapChange() override;
 
@@ -89,8 +88,8 @@ private:
     Q_DECLARE_PRIVATE(QQuickIconImage)
 };
 
-QT_END_NAMESPACE
+END_NAMESPACE
 
-QML_DECLARE_TYPE(QQuickIconImage)
+// QML_DECLARE_TYPE(QQuickIconImage)
 
 #endif // QQUICKICONIMAGE_P_H

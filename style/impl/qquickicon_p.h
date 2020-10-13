@@ -3,11 +3,11 @@
 
 #include "qqc2breezeglobal_p.h"
 
-#include <QtCore/qurl.h>
-#include <QtCore/qstring.h>
+#include <QUrl>
+#include <QString>
 #include <QtCore/qobjectdefs.h>
-#include <QtCore/qshareddata.h>
-#include <QtGui/qcolor.h>
+#include <QSharedData>
+#include <QColor>
 #include <QtQml/qqml.h>
 
 BEGIN_NAMESPACE_QQC2Breeze

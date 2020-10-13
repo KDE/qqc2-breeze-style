@@ -40,7 +40,7 @@
 #include <QtCore/qmath.h>
 #include <QtQuick/private/qquickimagebase_p_p.h>
 
-QT_BEGIN_NAMESPACE
+BEGIN_NAMESPACE_QQC2Breeze
 
 bool QQuickIconImagePrivate::updateDevicePixelRatio(qreal targetDevicePixelRatio)
 {
@@ -179,7 +179,7 @@ void QQuickIconImage::componentComplete()
 void QQuickIconImage::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     Q_D(QQuickIconImage);
-    QQuickImage::geometryChange(newGeometry, oldGeometry);
+//     QQuickImage::geometryChange(newGeometry, oldGeometry);
     if (isComponentComplete() && newGeometry.size() != oldGeometry.size())
         d->updateIcon();
 }
@@ -210,4 +210,4 @@ void QQuickIconImage::pixmapChange()
     }
 }
 
-QT_END_NAMESPACE
+END_NAMESPACE

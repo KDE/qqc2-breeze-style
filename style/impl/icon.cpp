@@ -6,7 +6,7 @@
  */
 
 #include "icon.h"
-#include "libkirigami/platformtheme.h"
+#include <Kirigami2/PlatformTheme>
 #include "scenegraph/managedtexturenode.h"
 
 #include <QSGSimpleTextureNode>
