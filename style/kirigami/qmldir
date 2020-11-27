@@ -1,0 +1,15 @@
+module org.kde.breeze.kirigami
+#plugin qqc2breezestyleplugin
+#classname QQC2BreezeStylePlugin
+depends QtQuick.Controls 2.15
+depends org.kde.kirigami 2.14
+depends org.kde.breeze.impl 2.0
+# Make sure the style works with Qt Quick Designer
+designersupported
+
+SwipeListIte 2.0 SwipeListItem.qml
+singleton Theme 2.0 Theme.qml
+singleton Units 2.0 Units.qml
+AbstractApplicationHeader 2.0 AbstractApplicationHeader.qml
+ApplicationWindow 2.0 ApplicationWindow.qml
+AbstractListIte 2.0 AbstractListItem.qml
