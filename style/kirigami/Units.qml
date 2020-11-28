@@ -73,6 +73,18 @@ QtObject {
     // Used for tabs and items in sidebars
     property int highlightLine: smallRadius
 
+    property int grooveHeight: {
+        let h = Math.floor(gridUnit/3);
+        h += h % 2;
+        return h;
+    }
+
+    property int thickGrooveHeight: {
+        let h = Math.floor(gridUnit/1.5);
+        h += h % 2;
+        return h;
+    }
+
     /// For things like checkboxes/radiobuttons/switches/slider handles
     property int inlineControlHeight: gridUnit
 
