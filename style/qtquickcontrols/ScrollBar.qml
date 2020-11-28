@@ -13,7 +13,7 @@ T.ScrollBar {
                              implicitContentHeight + topPadding + bottomPadding)
 
     padding: control.interactive ? Kirigami.Units.mediumSpacing : Kirigami.Units.verySmallSpacing
-    leftPadding: horizontalPadding + separator.width
+    leftPadding: horizontalPadding + separator.thickness
 
     visible: control.policy !== T.ScrollBar.AlwaysOff
     minimumSize: horizontal ? height / width : width / height
@@ -55,10 +55,12 @@ T.ScrollBar {
         color: Kirigami.Theme.backgroundColor
         Kirigami.Separator {
             id: separator
+            property int thickness: Math.min(width, height)
             anchors {
                 left: parent.left
+                right: control.horizontal ? parent.right : undefined
                 top: parent.top
-                bottom: parent.bottom
+                bottom: control.vertical ? parent.bottom : undefined
             }
         }
     }
