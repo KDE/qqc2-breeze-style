@@ -55,7 +55,7 @@ Item {
     /* For some reason, if I try to turn the handle into a reusable component
      * like a SliderHandle, the fillEffectRect can't anchor to the handle:
      * "Cannot anchor to an item that isn't a parent or sibling."
-     * Except, it is a sibling. Even if I set `parent: root` on the animation
+     * Except, it is a sibling. Even if I set `parent: root` on the fillEffectRect
      * and the handle, I get the error. (╯°□°）╯︵ ┻━┻
      */
     Rectangle {
