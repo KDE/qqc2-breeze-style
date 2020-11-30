@@ -4,7 +4,6 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
 
@@ -13,6 +12,12 @@ Rectangle {
 
     property alias control: root.parent
     property int checkState: control.checkState
+    property int symbolSize: {
+        let s = Math.min(root.height, root.width)
+        s = s - s%6
+        s = s - s/3
+        return s
+    }
 
     visible: control.checkable
 
@@ -46,11 +51,7 @@ Rectangle {
         id: checkmark
         anchors.centerIn: parent
         // Should reliably create pixel aligned checkmarks that don't get cut off on the sides.
-        height: {
-            let h = root.height - root.height%6
-            h = h - h/3 + penWidth
-            return h
-        }
+        height: root.symbolSize + penWidth
         width: height
         color: Kirigami.Theme.textColor
         symbolType: PaintedSymbol.Checkmark
@@ -76,11 +77,7 @@ Rectangle {
         id: partialCheckmark
         visible: root.checkState === Qt.PartiallyChecked
         anchors.centerIn: parent
-        width: {
-            let w = root.width - root.width%6
-            w = w - w/3
-            return w
-        }
+        width: root.symbolSize
         height: 2
 
         Rectangle {
@@ -110,23 +107,31 @@ Rectangle {
         }
     }
 
+    FocusRect {
+        baseRadius: root.radius
+        visible: control.visualFocus
+    }
+
     Rectangle {
         id: sidewaysRevealRect
         anchors {
-            right: root.right
-            top: root.top
-            bottom: root.bottom
-            margins: root.border.width
+            right: checkmark.right
+            top: checkmark.top
+            bottom: checkmark.bottom
         }
         width: 0
         visible: width > 0
         color: root.color
-        radius: root.radius - root.border.width
     }
 
-    FocusRect {
-        baseRadius: root.radius
-        visible: control.visualFocus
+    NumberAnimation {
+        id: sidewaysRevealAnimation
+        target: sidewaysRevealRect
+        property: "width"
+        from: checkmark.width
+        to: 0
+        duration: Kirigami.Units.shortDuration
+        //Intentionally not using an easing curve
     }
 
     states: [
@@ -144,30 +149,17 @@ Rectangle {
         }
     ]
 
-    NumberAnimation {
-        id: sidewaysRevealAnimation
-        target: sidewaysRevealRect
-        property: "width"
-        from: root.width - root.border.width*2
-        to: 0
-        duration: Kirigami.Units.shortDuration
-        //Intentionally not using an easing curve
-    }
-
-    transitions: [
-        /* Using `from: "state,state"` instead of `from: "*"` prevents the
-         * transition from running when the parent control is created.
+    /* I'm using this instead of transitions because I couldn't reliably
+     * trigger the animation when going from the partiallychecked state to the
+     * checked state.
+     */
+    onStateChanged: {
+        /* Prevents the transition from running when the parent control is created.
          * This can reduce resource usage spikes on pages that have way too many checkboxes.
          */
-        Transition {
-            from: "unchecked,partiallychecked"
-            to: "checked"
-            animations: sidewaysRevealAnimation
-        },
-        Transition {
-            from: "unchecked,checked"
-            to: "partiallychecked"
-            animations: sidewaysRevealAnimation
+        if (state == "checked" || state == "partiallychecked") {
+            // equivalent to stop(), then start()
+            sidewaysRevealAnimation.restart()
         }
-    ]
+    }
 }
