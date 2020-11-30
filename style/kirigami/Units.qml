@@ -89,22 +89,13 @@ QtObject {
     property int inlineControlHeight: gridUnit
 
     // For small controls with a small amount of vertical padding
-    property int smallControlHeight: Math.max(
-        iconSizes.auto,
-        gridUnit
-    ) + units.smallSpacing*2
+    property int smallControlHeight: gridUnit + units.smallSpacing*2
 
     // For medium controls with a medium amount of vertical padding
-    property int mediumControlHeight: Math.max(
-        iconSizes.auto,
-        gridUnit
-    ) + units.mediumSpacing*2
+    property int mediumControlHeight: gridUnit + units.mediumSpacing*2
 
     // For large controls with a large amount of vertical padding
-    property int largeControlHeight: Math.max(
-        iconSizes.defaultSize,
-        gridUnit
-    ) + units.largeSpacing*2
+    property int largeControlHeight: gridUnit + units.largeSpacing*2
 
     property real horizontalPaddingRatio: Math.max(fontMetrics.height/fontMetrics.fullWidthCharWidth, 1)
 
@@ -123,16 +114,19 @@ QtObject {
          * I got 1.21875 by looking at "█ph|" (96pt Noto Sans), counting the heights in pixels
          * and then dividing the block height by the pixel size of the text.
          */
-        return Math.max(iconHeight, Math.floor(pointSize / 0.75 * 1.21875)) + totalVerticalPadding;
+        return Math.max(iconHeight, units.estimatedBoundingRectHeight(pointSize)) + totalVerticalPadding;
     }
 
     function dynamicControlPadding(iconHeight, pointSize) {
-        let result = Math.round(Math.max(iconHeight, Math.floor(pointSize / 0.75 * 1.21875)) / 2);
-        return result;
+        return Math.round(Math.max(iconHeight, units.estimatedBoundingRectHeight(pointSize)) / 2);
     }
 
     function estimatedBoundingRectHeight(pointSize) {
         return Math.floor(pointSize / 0.75 * 1.3671875);
+    }
+
+    function estimatedBlockHeight(pointSize) {
+        return Math.floor(pointSize / 0.75 * 1.21875);
     }
     //END Breeze Units
 
@@ -261,9 +255,6 @@ QtObject {
     property real pixelSizeBoundingRectHeightRatio: __boundingRectRatioFontMetrics.font.pixelSize / __boundingRectRatioFontMetrics.height
 
     property variant __boundingRectRatioFontMetrics: FontMetrics {
-        font {
-            pointSize: -1
-            pixelSize: 128
-        }
+        font.pointSize: 96
     }
 }
