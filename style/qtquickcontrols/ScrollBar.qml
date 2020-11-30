@@ -1,8 +1,11 @@
-// NOTE: replace this
+/* SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
+ */
+
 import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
+import "impl"
 
 T.ScrollBar {
     id: control
@@ -15,47 +18,24 @@ T.ScrollBar {
     padding: control.interactive ? Kirigami.Units.mediumSpacing : Kirigami.Units.verySmallSpacing
     leftPadding: horizontalPadding + separator.thickness
 
-    visible: control.policy !== T.ScrollBar.AlwaysOff
+    visible: control.size < 1 && control.policy !== T.ScrollBar.AlwaysOff
     minimumSize: horizontal ? height / width : width / height
 
-    policy: Kirigami.Settings.isMobile ? ScrollBar.AsNeeded : T.ScrollBar.AlwaysOn
+    interactive: !Kirigami.Settings.hasTransientTouchInput
 
-    contentItem: Rectangle {
-        implicitWidth: Kirigami.Units.grooveHeight
-        implicitHeight: implicitWidth
+    policy: Kirigami.Settings.isMobile || !control.interactive ? T.ScrollBar.AsNeeded : T.ScrollBar.AlwaysOn
 
-        radius: width / 2
-        color: control.pressed ? Kirigami.Theme.highlightColor : Kirigami.Theme.separatorColor
-        opacity: Kirigami.Settings.isMobile ? 0 : 1
-
-        states: State {
-            name: "active"
-            when: control.policy === T.ScrollBar.AlwaysOn || (control.active && control.size < 1.0)
-            PropertyChanges {
-                target: control.contentItem
-                opacity: Kirigami.Settings.isMobile ? 0.75 : 1
-            }
-        }
-
-        transitions: Transition {
-            from: "active"
-            SequentialAnimation {
-                PauseAnimation { duration: 450 }
-                OpacityAnimator {
-                    //target: control.contentItem
-                    duration: Kirigami.Units.longDuration
-//                     property: "opacity"
-                    to: 0.0
-                }
-            }
-        }
+    contentItem: ScrollHandle {
+        control: control
     }
 
     background: Rectangle {
+        visible: control.policy === T.ScrollBar.AlwaysOn
         color: Kirigami.Theme.backgroundColor
         Kirigami.Separator {
             id: separator
-            property int thickness: Math.min(width, height)
+            property int thickness: parent.visible ? Math.min(width, height) : 0
+            weight: Kirigami.Separator.Weight.Light
             anchors {
                 left: parent.left
                 right: control.horizontal ? parent.right : undefined
@@ -64,5 +44,4 @@ T.ScrollBar {
             }
         }
     }
-    
 }
