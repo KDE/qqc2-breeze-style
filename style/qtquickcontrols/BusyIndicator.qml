@@ -59,7 +59,7 @@ T.BusyIndicator {
 
         fromAngle: 0
         toAngle: 360
-        thickness: Kirigami.Units.smallRadius * 2
+        thickness: Math.max(Kirigami.Units.smallRadius * 2, Math.floor(Math.min(width, height)/6))
         filled: false
         //smoothEnds: true // Turns the segments into aesthetically pleasing round dots, but breaks the connected appearance when the ends meet :(
 
