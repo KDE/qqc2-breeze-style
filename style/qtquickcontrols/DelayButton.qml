@@ -1,10 +1,11 @@
-// NOTE: replace this
+/* SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
+ */
 
 import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
+import "impl"
 
 T.DelayButton {
     id: control
@@ -12,10 +13,16 @@ T.DelayButton {
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                             implicitContentHeight + topPadding + bottomPadding)
+                             implicitContentHeight + topPadding + bottomPadding,
+                             implicitIndicatorHeight + topPadding + bottomPadding)
 
-    padding: 6
-    horizontalPadding: padding + 2
+    palette: Kirigami.Theme.palette
+    Kirigami.Theme.colorSet: control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button
+    Kirigami.Theme.inherit: false
+
+    padding: Kirigami.Units.mediumSpacing
+    horizontalPadding: Kirigami.Units.mediumHorizontalPadding
+    spacing: Kirigami.Units.mediumSpacing
 
     transition: Transition {
         NumberAnimation {
@@ -23,50 +30,48 @@ T.DelayButton {
         }
     }
 
-    contentItem: ItemGroup {
-        ClippedText {
-            clip: control.progress > 0
-            clipX: -control.leftPadding + control.progress * control.width
-            clipWidth: (1.0 - control.progress) * control.width
-            visible: control.progress < 1
+    icon.width: Kirigami.Units.iconSizes.auto
+    icon.height: Kirigami.Units.iconSizes.auto
 
-            text: control.text
-            font: control.font
-            opacity: enabled ? 1 : 0.3
-            color: control.palette.buttonText
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            elide: Text.ElideRight
-        }
-
-        ClippedText {
-            clip: control.progress > 0
-            clipX: -control.leftPadding
-            clipWidth: control.progress * control.width
-            visible: control.progress > 0
-
-            text: control.text
-            font: control.font
-            opacity: enabled ? 1 : 0.3
-            color: control.palette.brightText
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            elide: Text.ElideRight
-        }
+    Kirigami.MnemonicData.enabled: control.enabled && control.visible
+    Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
+    Kirigami.MnemonicData.label: control.display !== T.Button.IconOnly ? control.text : ""
+    Shortcut {
+        //in case of explicit & the button manages it by itself
+        enabled: !(RegExp(/\&[^\&]/).test(control.text))
+        sequence: control.Kirigami.MnemonicData.sequence
+        onActivated: control.clicked()
     }
 
-    background: Rectangle {
-        implicitWidth: 100
-        implicitHeight: 40
-        color: Kirigami.ColorUtils.tintWithAlpha(control.palette.button, control.palette.mid, control.down ? 0.5 : 0.0)
-        border.color: control.palette.highlight
-        border.width: control.visualFocus ? 2 : 0
+    contentItem: IconLabelContent {
+        control: control
+        text: control.Kirigami.MnemonicData.richTextLabel
+    }
 
-        PaddedRectangle {
-            padding: control.visualFocus ? 2 : 0
-            width: control.progress * parent.width
+    background: ButtonBackground {
+        control: control
+        color: control.palette.button
+
+        Kirigami.ShadowedRectangle {
+            id: progressFillRect
+            property real visualProgress: control.mirrored ? 1 - control.progress : control.progress
+            property real radiusThreshold: parent.width - leftRadius
+            property real leftRadius: Kirigami.Units.smallRadius
+            property real rightRadius: width > radiusThreshold ? width - radiusThreshold : 0
+            corners {
+                topLeftRadius: control.mirrored ? rightRadius : leftRadius
+                topRightRadius: control.mirrored ? leftRadius : rightRadius
+                bottomLeftRadius: control.mirrored ? rightRadius : leftRadius
+                bottomRightRadius: control.mirrored ? leftRadius : rightRadius
+            }
             height: parent.height
-            color: Kirigami.ColorUtils.tintWithAlpha(control.palette.dark, control.palette.mid, control.down ? 0.5 : 0.0)
+            x: control.mirrored ? (1 - control.progress) * parent.width : 0
+            width: control.progress * parent.width
+            color: Kirigami.Theme.alternateBackgroundColor
+            border {
+                color: Kirigami.Theme.highlightColor
+                width: parent.border.width
+            }
         }
     }
 }
