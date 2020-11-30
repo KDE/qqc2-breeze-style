@@ -1,89 +1,59 @@
-// NOTE: change this
-/*
-    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
-    SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
-
-    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
-*/
+/* SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+ * SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later OR LicenseRef-KDE-Accepted-LGPL OR LicenseRef-KFQF-Accepted-GPL
+ */
 
 
 import QtQuick 2.6
 import QtQuick.Controls 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.4 as Kirigami
+import "impl"
 
 T.RangeSlider {
     id: control
 
     palette: Kirigami.Theme.palette
-    implicitWidth: Math.max(background ? background.implicitWidth : 0,
-        Math.max(first.handle ? first.handle.implicitWidth : 0,
-                 second.handle ? second.handle.implicitWidth : 0) + leftPadding + rightPadding)
-    implicitHeight: Math.max(background ? background.implicitHeight : 0,
-        Math.max(first.handle ? first.handle.implicitHeight : 0,
-                 second.handle ? second.handle.implicitHeight : 0) + topPadding + bottomPadding)
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            Math.max(first.implicitHandleWidth,
+                                     second.implicitHandleWidth) + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             Math.max(first.implicitHandleHeight,
+                                      second.implicitHandleHeight) + topPadding + bottomPadding)
 
-    padding: 6
+    Kirigami.Theme.colorSet: Kirigami.Theme.Button
+    Kirigami.Theme.inherit: false
 
-    first.handle: Rectangle {
-        property bool horizontal: control.orientation === Qt.Horizontal
-        x: control.leftPadding + (horizontal ? control.first.visualPosition * (control.availableWidth - width) : (control.availableWidth - width) / 2)
-        y: control.topPadding + (horizontal ? (control.availableHeight - height) / 2 : control.first.visualPosition * (control.availableHeight - height))
-        implicitWidth: 18
-        implicitHeight: 18
-        radius: width / 2
-        property color borderColor: Kirigami.Theme.textColor
-        border.color: control.activeFocus ? Kirigami.Theme.highlightColor : Qt.rgba(borderColor.r, borderColor.g, borderColor.b, 0.3)
-        color: Kirigami.Theme.backgroundColor
-        Rectangle {
-            z: -1
-            x: 1
-            y: 1
-            width: parent.width
-            height: parent.height
-            radius: width / 2
-            color: Qt.rgba(0, 0, 0, 0.15)
-        }
+    padding: Kirigami.Settings.tabletMode ? Kirigami.Units.mediumSpacing : 0
+    
+    property bool __hasHandle: Boolean(control.handle)
+    property real __preInset: Math.max(
+    (__hasHandle ?
+        handle.width : Kirigami.Units.inlineControlHeight) - implicitBackgroundWidth,
+    (__hasHandle ?
+        handle.height : Kirigami.Units.inlineControlHeight) - implicitBackgroundHeight
+    )/2
+    leftInset: __preInset + leftPadding
+    rightInset: __preInset + rightPadding
+    topInset: __preInset + topPadding
+    bottomInset: __preInset + bottomPadding
+
+    first.handle: SliderHandle {
+        control: control
+        position: control.first.position
+        visualPosition: control.first.visualPosition
     }
 
-    second.handle: Rectangle {
-        property bool horizontal: control.orientation === Qt.Horizontal
-        x: control.leftPadding + (horizontal ? control.second.visualPosition * (control.availableWidth - width) : (control.availableWidth - width) / 2)
-        y: control.topPadding + (horizontal ? (control.availableHeight - height) / 2 : control.second.visualPosition * (control.availableHeight - height))
-        implicitWidth: 18
-        implicitHeight: 18
-        radius: width / 2
-        property color borderColor: Kirigami.Theme.textColor
-        border.color: control.activeFocus ? Kirigami.Theme.highlightColor : Qt.rgba(borderColor.r, borderColor.g, borderColor.b, 0.3)
-        color: Kirigami.Theme.backgroundColor
-        Rectangle {
-            z: -1
-            x: 1
-            y: 1
-            width: parent.width
-            height: parent.height
-            radius: width / 2
-            color: Qt.rgba(0, 0, 0, 0.15)
-        }
+    second.handle: SliderHandle {
+        control: control
+        position: control.second.position
+        visualPosition: control.second.visualPosition
     }
 
-    background: Rectangle {
-        readonly property bool horizontal: control.orientation === Qt.Horizontal
-        implicitWidth: horizontal ? 200 : 6
-        implicitHeight: horizontal ? 6 : 200
-        width: horizontal ? control.availableWidth : implicitWidth
-        height: horizontal ? implicitHeight : control.availableHeight
-        radius: Math.round(Math.min(width/2, height/2))
-        property color bgColor: Kirigami.Theme.textColor
-        color: Qt.rgba(bgColor.r, bgColor.g, bgColor.b, 0.3)
-        anchors.centerIn: parent
-
-        Rectangle {
-            x: parent.horizontal ? control.first.position * parent.width : 0
-            y: parent.horizontal ? 0 : control.second.visualPosition * parent.height + 6
-            width: parent.horizontal ? control.second.position * parent.width - control.first.position * parent.width - 6 : 6
-            height: parent.horizontal ? 6 : control.second.position * parent.height - control.first.position * parent.height - 6
-            color: Kirigami.Theme.highlightColor
-        }
+    background: SliderGroove {
+        control: control
+        startPosition: first.position
+        endPosition: second.position
+        endVisualPosition: second.visualPosition
     }
 }

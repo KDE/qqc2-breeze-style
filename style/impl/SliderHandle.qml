@@ -11,65 +11,73 @@ Rectangle {
     id: root
 
     property alias control: root.parent
+    property real position: control.position
+    property real visualPosition: control.visualPosition
+
     property bool usePreciseHandle: false
 
-    implicitHeight: Kirigami.Units.gridUnit
     implicitWidth: implicitHeight
-    width: height
+    implicitHeight: Kirigami.Units.inlineControlHeight
+
+    // It's not necessary here. Not sure if it would swap leftPadding with
+    // rightPadding in the x position calculation, but there's no risk to
+    // being safe here.
+    LayoutMirroring.enabled: false
+
+    // It's necessary to use x and y positions instead of anchors so that the handle position can be dragged
+    x: {
+        let xPos = 0
+        if (control.horizontal) {
+            xPos = root.visualPosition * (control.availableWidth - width)
+        } else {
+            xPos = (control.availableWidth - width) / 2
+        }
+        return xPos + control.leftPadding
+    }
+    y: {
+        let yPos = 0
+        if (control.vertical) {
+            yPos = root.visualPosition * (control.availableHeight - height)
+        } else {
+            yPos = (control.availableHeight - height) / 2
+        }
+        return yPos + control.topPadding
+    }
+
+    rotation: root.vertical && usePreciseHandle ? -90 : 0
+
     radius: height / 2
     color: Kirigami.Theme.backgroundColor
     border {
         width: Kirigami.Units.smallBorder
-        color: control.pressed || control.visualFocus || control.hovered ?
+        color: (control.down || control.highlighted || control.visualFocus || control.hovered) && control.enabled ?
             Kirigami.Theme.highlightColor : Kirigami.Theme.separatorColor
-            //Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
+    }
+
+    /* TODO: These animations run sometimes when a page with Sliders is loaded.
+     * I should find a way to prevent that from happening.
+     */
+    Behavior on x {
+        enabled: !Kirigami.Settings.hasTransientTouchInput
+        SmoothedAnimation {
+            duration: Kirigami.Units.longDuration
+            velocity: control.implicitBackgroundWidth*4
+            //SmoothedAnimations have a hardcoded InOutQuad easing
+        }
+    }
+    Behavior on y {
+        enabled: !Kirigami.Settings.hasTransientTouchInput
+        SmoothedAnimation {
+            duration: Kirigami.Units.longDuration
+            velocity: control.implicitBackgroundHeight*4
+        }
     }
 
     SmallShadow {
         id: shadow
+        visible: !control.flat && !control.down && control.enabled
+        z: -1
         radius: parent.radius
-    }
-
-    Rectangle {
-        id: pointyBit
-
-        visible: usePreciseHandle
-        x: (parent.width - width)/2
-        // HACK ?: this happens to have a value that works good enough when parent.height == 18
-        y: (parent.height - height)/2 + parent.height/3
-
-        // HACK ?: this happens to have a value that works good enough when parent.height == 18
-        height: (parent.height + root.border.width) / 2
-
-        width: height
-        antialiasing: true
-        rotation: 45
-        color: root.color
-
-        Rectangle {
-            id: rightLine
-            antialiasing: true
-            color: root.border.color
-            anchors {
-                right: parent.right
-                top: parent.top
-//                 topMargin: width/2
-                bottom: parent.bottom
-            }
-            width: root.border.width
-        }
-        Rectangle {
-            id: leftLine
-            antialiasing: true
-            color: root.border.color
-            anchors {
-                left: parent.left
-//                 leftMargin: height/2
-                right: parent.right
-                bottom: parent.bottom
-            }
-            height: root.border.width
-        }
     }
 
     FocusRect {
