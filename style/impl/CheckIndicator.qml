@@ -149,6 +149,11 @@ Rectangle {
         }
     ]
 
+    property bool loaded: false
+    Component.onCompleted: {
+        loaded = true
+    }
+
     /* I'm using this instead of transitions because I couldn't reliably
      * trigger the animation when going from the partiallychecked state to the
      * checked state.
@@ -157,7 +162,7 @@ Rectangle {
         /* Prevents the transition from running when the parent control is created.
          * This can reduce resource usage spikes on pages that have way too many checkboxes.
          */
-        if (state == "checked" || state == "partiallychecked") {
+        if (root.loaded && (state == "checked" || state == "partiallychecked")) {
             // equivalent to stop(), then start()
             sidewaysRevealAnimation.restart()
         }

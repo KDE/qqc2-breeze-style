@@ -82,13 +82,8 @@ Item {
         }
 
         Behavior on x {
-            enabled: !Kirigami.Settings.hasTransientTouchInput
-            /* Using SmoothedAnimation because the fill effect is anchored to the handle.
-             * 
-             * This animation runs sometimes when a page with Switches is loaded.
-             * I should find a way to prevent that from happening.
-             * At least it's unlikely that a single page will have a ridiculous amount of Switches.
-             */
+            enabled: handle.loaded// && !Kirigami.Settings.hasTransientTouchInput
+            // Using SmoothedAnimation because the fill effect is anchored to the handle.
             SmoothedAnimation {
                 duration: Kirigami.Units.shortDuration
                 //SmoothedAnimations have a hardcoded InOutQuad easing
@@ -105,6 +100,12 @@ Item {
         FocusRect {
             baseRadius: handle.radius
             visible: control.visualFocus
+        }
+
+        // Prevents animations from running when loaded
+        property bool loaded: false
+        Component.onCompleted: {
+            loaded = true
         }
     }
 }

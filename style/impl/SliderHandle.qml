@@ -54,11 +54,8 @@ Rectangle {
             Kirigami.Theme.highlightColor : Kirigami.Theme.separatorColor
     }
 
-    /* TODO: These animations run sometimes when a page with Sliders is loaded.
-     * I should find a way to prevent that from happening.
-     */
     Behavior on x {
-        enabled: !Kirigami.Settings.hasTransientTouchInput
+        enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
             duration: Kirigami.Units.longDuration
             velocity: control.implicitBackgroundWidth*4
@@ -66,7 +63,7 @@ Rectangle {
         }
     }
     Behavior on y {
-        enabled: !Kirigami.Settings.hasTransientTouchInput
+        enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
             duration: Kirigami.Units.longDuration
             velocity: control.implicitBackgroundHeight*4
@@ -83,5 +80,17 @@ Rectangle {
     FocusRect {
         baseRadius: root.radius
         visible: control.visualFocus
+    }
+
+    // Prevents animations from running when loaded
+    // HACK: for some reason, this won't work without a 1ms timer
+    property bool loaded: false
+    Timer {
+        id: awfulHackTimer
+        interval: 1
+        onTriggered: root.loaded = true
+    }
+    Component.onCompleted: {
+        awfulHackTimer.start()
     }
 }
