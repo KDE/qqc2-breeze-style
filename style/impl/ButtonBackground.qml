@@ -53,7 +53,7 @@ Rectangle {
     FocusRect {
         id: focRect
         baseRadius: mainBackground.radius
-        visible: control.visualFocus || control.highlighted
+        visible: control.visualFocus
     }
 
     BackgroundGradient {
