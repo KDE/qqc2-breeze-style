@@ -31,24 +31,24 @@ Item {
         color: Kirigami.Theme.backgroundColor
         border {
             width: Kirigami.Units.smallBorder
-            color: control.down || control.checked || control.highlighted ?
-                Kirigami.Theme.highlightColor : Kirigami.Theme.separatorColor
+            color: Kirigami.Theme.separatorColor
         }
     }
 
-    // Using ShadowedRectangle because it fills the background slighly better than Rectangle.
-    // However, it does very slightly overlap with the background border. Give and take.
-    Kirigami.ShadowedRectangle {
+    Rectangle {
         id: fillEffectRect
-        visible: width > handle.width/2 - anchors.margins
+        visible: width > handle.width/2
         color: Kirigami.Theme.alternateBackgroundColor
+        border {
+            width: Kirigami.Units.smallBorder
+            color: Kirigami.Theme.highlightColor
+        }
         radius: height/2
         anchors {
             left: background.left
             right: handle.horizontalCenter
             top: background.top
             bottom: background.bottom
-            margins: background.border.width
         }
     }
 
@@ -82,6 +82,7 @@ Item {
         }
 
         Behavior on x {
+            enabled: !Kirigami.Settings.hasTransientTouchInput
             /* Using SmoothedAnimation because the fill effect is anchored to the handle.
              * 
              * This animation runs sometimes when a page with Switches is loaded.
