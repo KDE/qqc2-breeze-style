@@ -74,7 +74,7 @@ void PaintedSymbolItem::setPenWidth(const qreal penWidth)
 
     this->m_penWidth = penWidth == 1 ? 1.001 : penWidth;
     m_pen.setWidthF(m_penWidth);
-    update();
+//     update();
     emit penWidthChanged();
 }
 
