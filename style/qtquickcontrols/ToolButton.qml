@@ -19,21 +19,14 @@ T.ToolButton {
 
     flat: true
 
-    Kirigami.Theme.colorSet: control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button
-    Kirigami.Theme.inherit: control.flat && !control.down && !control.checked
-// NOTE: For some reason, Kirigami apps override the colorSet even when inherit == false
-//     property int colorSet: Kirigami.Theme.colorSet
-//     onColorSetChanged: {
-//         console.log("colorSet: " + Kirigami.Theme.colorSet)
-//         colorSet = Qt.binding(() => control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button)
-//         Kirigami.Theme.colorSet = Qt.binding(() =>colorSet)
-//     }
-//     property bool inherit: Kirigami.Theme.inherit
-//     onInheritChanged: {
-//         console.log("inherit: " + Kirigami.Theme.inherit)
-//         inherit = Qt.binding(() => control.flat && !(control.down || control.checked))
-//         Kirigami.Theme.inherit = Qt.binding(() => inherit)
-//     }
+    Kirigami.Theme.colorSet: /*control.highlighted ? Kirigami.Theme.Selection :*/ Kirigami.Theme.Button
+    Kirigami.Theme.inherit: false//control.flat && !control.down && !control.checked
+    // Absolutely terrible HACK:
+    // For some reason, ActionToolBar overrides the colorSet and inherit attached properties
+    Component.onCompleted: {
+        Kirigami.Theme.colorSet = Kirigami.Theme.Button/*Qt.binding(() => control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button)*/
+        Kirigami.Theme.inherit = false//Qt.binding(() => control.flat && !(control.down || control.checked))
+    }
 
     padding: Kirigami.Units.mediumSpacing
     horizontalPadding: Kirigami.Units.mediumHorizontalPadding
