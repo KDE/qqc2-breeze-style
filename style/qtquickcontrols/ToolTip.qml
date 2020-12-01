@@ -25,7 +25,9 @@ T.ToolTip {
     contentWidth: Math.ceil(
         Math.min(
             paintedWidthSource.paintedWidth,
-            implicitContentWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
+            implicitContentWidth ||
+                // Account for the existance of paintedWidthSource
+                (contentChildren.length === 2 ? contentChildren[1].implicitWidth : 0)
         )
     )
 
@@ -60,17 +62,19 @@ T.ToolTip {
         text: control.text
         font: control.font
         wrapMode: Text.WordWrap
-        rightPadding: -1// HACK to prevent the right side from sometimes having an unnecessary amount of padding
-        // This code looks ugly, but I can't think of anything less ugly that is just as reliable.
-        Text {
-            id: paintedWidthSource
-            visible: false
-            width: Screen.pixelDensity * 63.5 * Screen.devicePixelRatio // 180pt | 2.5in | 63.5mm
-            text: contentItem.text
-            font: contentItem.font
-            wrapMode: contentItem.wrapMode
-            renderType: contentItem.renderType
-        }
+        // HACK to prevent the right side from sometimes having an unnecessary amount of padding
+        rightPadding: -1
+    }
+
+    // This code looks ugly, but I can't think of anything less ugly
+    // that is just as reliable. TextMetrics doesn't support WordWrap.
+    Text {
+        id: paintedWidthSource
+        visible: false
+        width: Screen.pixelDensity * 63.5 * Screen.devicePixelRatio // 180pt | 2.5in | 63.5mm
+        text: control.text
+        font: control.font
+        wrapMode: Text.WordWrap
     }
 
     background: Rectangle {
@@ -87,14 +91,4 @@ T.ToolTip {
         border.width: 1
         border.color: Kirigami.Theme.separatorColor
     }
-
-//     TextMetrics {
-//         id: textMetrics
-//         text: control.text
-//         font: control.font
-//     }
-
-    //Behavior on horizontalPadding {
-        //NumberAnimation { easing.type: Easing.OutQuad; duration: 100 }
-    //}
 }
