@@ -26,7 +26,7 @@ IconLabelContent {
         Layout.rightMargin: root.rightPadding
         Layout.topMargin: label.visible && root.vertical ? 0 : root.topPadding
         Layout.bottomMargin: root.bottomPadding
-        visible: control.action && control.action.hasOwnProperty("shortcut") && control.action.shortcut !== undefined && root.display !== Controls.AbstractButton.IconOnly
+        visible: Qt.styleHints.showShortcutsInContextMenus && control.action && control.action.hasOwnProperty("shortcut") && control.action.shortcut !== undefined && root.display !== Controls.AbstractButton.IconOnly
 
         Shortcut {
             id: itemShortcut
