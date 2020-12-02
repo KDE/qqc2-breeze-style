@@ -98,6 +98,13 @@ T.ComboBox {
 
         selectByMouse: !Kirigami.Settings.tabletMode
         cursorDelegate: Kirigami.Settings.tabletMode ? mobileCursor : null
+        
+        Component {
+            id: mobileCursor
+            MobileCursor {
+                target: control
+            }
+        }
 
         font: control.font
         horizontalAlignment: Text.AlignLeft
