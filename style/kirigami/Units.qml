@@ -231,6 +231,13 @@ QtObject {
         property real blockHeight: fontMetrics.tightBoundingRect('█').height
 
         property real verticalBarHeight: fontMetrics.tightBoundingRect('|').height
+        
+        /* Can be used to guess the font's stroke width.
+         * It's not always exactly the same as letter stroke widths.
+         * In fonts where 'l' is just a straight line, 'l' is more accurate,
+         * but 'l' isn't always just a straight line.
+         */
+        property real verticalBarWidth: fontMetrics.tightBoundingRect('|').width
 
         property real emWidth: fontMetrics.boundingRect('M').width
         property real fullWidthCharWidth: fontMetrics.tightBoundingRect('＿').width
