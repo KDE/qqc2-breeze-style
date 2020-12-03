@@ -18,25 +18,25 @@ QtObject {
     property color highlightColor: palette.highlight
     property color highlightedTextColor: palette.highlightedText
     property color backgroundColor: palette.window
-    property color alternateBackgroundColor: Qt.darker(palette.window, 1.05)
+    property color alternateBackgroundColor: hsvValueMix(theme.highlightColor, theme.backgroundColor)
     property color activeTextColor: palette.highlight
     property color activeBackgroundColor: palette.highlight
-    property color linkColor: "#2980B9"
-    property color linkBackgroundColor: "#552980B9"
-    property color visitedLinkColor: "#7F8C8D"
-    property color visitedLinkBackgroundColor: "#557F8C8D"
+    property color linkColor: palette.link
+    property color linkBackgroundColor: hsvValueMix(theme.linkColor, theme.backgroundColor)
+    property color visitedLinkColor: palette.linkVisited
+    property color visitedLinkBackgroundColor: hsvValueMix(theme.visitedLinkColor, theme.backgroundColor)
     property color hoverColor: palette.highlight
     property color focusColor: palette.highlight
     property color negativeTextColor: "#DA4453"
-    property color negativeBackgroundColor: "#55DA4453"
+    property color negativeBackgroundColor: hsvValueMix(theme.negativeTextColor, theme.backgroundColor)
     property color neutralTextColor: "#F67400"
-    property color neutralBackgroundColor: "#55F67400"
+    property color neutralBackgroundColor: hsvValueMix(theme.neutralTextColor, theme.backgroundColor)
     property color positiveTextColor: "#27AE60"
-    property color positiveBackgroundColor: "#5527AE60"
+    property color positiveBackgroundColor: hsvValueMix(theme.positiveTextColor, theme.backgroundColor)
 
     property color buttonTextColor: palette.buttonText
     property color buttonBackgroundColor: palette.button
-    property color buttonAlternateBackgroundColor: Qt.darker(palette.button, 1.05)
+    property color buttonAlternateBackgroundColor: hsvValueMix(theme.buttonFocusColor, theme.buttonBackgroundColor)
     property color buttonHoverColor: palette.highlight
     property color buttonFocusColor: palette.highlight
 
@@ -48,13 +48,13 @@ QtObject {
 
     property color selectionTextColor: palette.highlightedText
     property color selectionBackgroundColor: palette.highlight
-    property color selectionAlternateBackgroundColor: Qt.darker(palette.highlight, 1.05)
+    property color selectionAlternateBackgroundColor: hsvValueMix(theme.selectionBackgroundColor, theme.backgroundColor)
     property color selectionHoverColor: palette.highlight
     property color selectionFocusColor: palette.highlight
 
-    property color tooltipTextColor: palette.base
-    property color tooltipBackgroundColor: palette.text
-    property color tooltipAlternateBackgroundColor: Qt.darker(palette.text, 1.05)
+    property color tooltipTextColor: palette.toolTipText
+    property color tooltipBackgroundColor: palette.toolTipBase
+    property color tooltipAlternateBackgroundColor: palette.window
     property color tooltipHoverColor: palette.highlight
     property color tooltipFocusColor: palette.highlight
 
@@ -101,4 +101,13 @@ QtObject {
     function __propagateBackgroundColor(object, color) {}
     function __propagatePrimaryColor(object, color) {}
     function __propagateAccentColor(object, color) {}
+    
+    function hsvValueMix(color1, color2) {
+        return Qt.hsva(
+            color1.hsvHue,
+            color1.hsvSaturation,
+            (color1.hsvValue + color2.hsvValue)/2,
+            1.0
+        )
+    }
 }
