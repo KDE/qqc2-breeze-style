@@ -176,13 +176,19 @@ QtObject {
      * units.shortDuration should be used for short animations, such as accentuating a UI event,
      * hover events, etc..
      */
-    property int tinyDuration: 50
+    property int veryShortDuration: 50
 
     /**
      * units.shortDuration should be used for short animations, such as accentuating a UI event,
      * hover events, etc..
      */
     property int shortDuration: 100
+    
+    /**
+     * units.shortDuration should be used for short animations, such as accentuating a UI event,
+     * hover events, etc..
+     */
+    property int mediumDuration: 150
 
     /**
      * units.longDuration should be used for longer, screen-covering animations, for opening and
