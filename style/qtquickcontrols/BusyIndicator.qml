@@ -23,10 +23,11 @@ T.BusyIndicator {
         id: pieModel
         dynamicRoles: true
 
-        property color oddColor: Kirigami.Theme.highlightColor
+        property color oddColor: Kirigami.Theme.focusColor
         property color evenColor: "transparent"
 
-        // The ends periodically appear to connect, forming a six sided asterisk-like shape
+        // The ends periodically appear to connect,
+        // forming a six sided asterisk-like shape with no center area
 
         Component.onCompleted: {
             append({ value: 1, color: oddColor })

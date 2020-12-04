@@ -77,7 +77,7 @@ T.DelayButton {
 
             color: Kirigami.Theme.alternateBackgroundColor
             border {
-                color: Kirigami.Theme.highlightColor
+                color: Kirigami.Theme.focusColor
                 width: parent.border.width
             }
 
