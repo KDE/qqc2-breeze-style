@@ -12,13 +12,14 @@ T.RadioButton {
     id: control
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding,
+                            implicitIndicatorWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Settings.tabletMode ? Kirigami.Units.mediumSpacing : 0
-    horizontalPadding: 0
+    padding: Kirigami.Units.verySmallSpacing
+    horizontalPadding: Kirigami.Units.mediumSpacing
 
     spacing: Kirigami.Units.mediumSpacing
 
