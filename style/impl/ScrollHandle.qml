@@ -14,7 +14,7 @@ Rectangle {
     implicitHeight: implicitWidth
 
     radius: width / 2
-    color: control.pressed ? Kirigami.Theme.highlightColor : Kirigami.Theme.separatorColor
+    color: control.pressed ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     opacity: control.policy === Controls.ScrollBar.AsNeeded ? 0 : 1
 
     states: State {

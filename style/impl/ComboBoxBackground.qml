@@ -36,7 +36,7 @@ Rectangle {
 
     border {
         color: control.down || control.checked || control.visualFocus || control.hovered ?
-            Kirigami.Theme.highlightColor : Kirigami.Theme.separatorColor
+            Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
 //             Kirigami.ColorUtils.tintWithAlpha(mainBackground.color, Kirigami.Theme.textColor, 0.3)
         width: Kirigami.Units.smallBorder
     }

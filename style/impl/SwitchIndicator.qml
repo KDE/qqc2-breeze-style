@@ -41,7 +41,7 @@ Item {
         color: Kirigami.Theme.alternateBackgroundColor
         border {
             width: Kirigami.Units.smallBorder
-            color: Kirigami.Theme.highlightColor
+            color: Kirigami.Theme.focusColor
         }
         radius: height/2
         anchors {
@@ -78,7 +78,7 @@ Item {
         border {
             width: Kirigami.Units.smallBorder
             color: (control.down || control.highlighted || control.visualFocus || control.hovered) && control.enabled ?
-                Kirigami.Theme.highlightColor : Kirigami.Theme.separatorColor
+                Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
         }
 
         Behavior on x {

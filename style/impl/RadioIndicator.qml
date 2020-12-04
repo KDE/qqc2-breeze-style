@@ -27,7 +27,7 @@ Rectangle {
     border {
         width: Kirigami.Units.smallBorder
         color: control.down || control.checked || control.highlighted || control.visualFocus || control.hovered && control.enabled ?
-            Kirigami.Theme.highlightColor : Kirigami.Theme.separatorColor
+            Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     }
 
     SmallShadow {

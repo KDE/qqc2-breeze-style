@@ -43,7 +43,7 @@ Rectangle {
         color: Kirigami.Theme.alternateBackgroundColor
         border {
             width: Kirigami.Units.smallBorder
-            color: Kirigami.Theme.highlightColor
+            color: Kirigami.Theme.focusColor
         }
 
         Behavior on x {

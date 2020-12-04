@@ -29,7 +29,7 @@ Rectangle {
     border {
         color: {
             if (control.enabled && control.down || control.checked || control.highlighted || control.visualFocus || control.hovered) {
-                return Kirigami.Theme.highlightColor
+                return Kirigami.Theme.focusColor
 //             } else if (control.flat) {
                 //return "transparent"
             } else {
