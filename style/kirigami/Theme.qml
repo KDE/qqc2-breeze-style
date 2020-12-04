@@ -58,11 +58,11 @@ QtObject {
     property color tooltipHoverColor: palette.highlight
     property color tooltipFocusColor: palette.highlight
 
-    property color complementaryTextColor: palette.base
-    property color complementaryBackgroundColor: palette.text
-    property color complementaryAlternateBackgroundColor: Qt.darker(palette.text, 1.05)
-    property color complementaryHoverColor: palette.highlight
-    property color complementaryFocusColor: palette.highlight
+    property color complementaryTextColor: hslLightnessInvert(theme.textColor)
+    property color complementaryBackgroundColor: hslLightnessInvert(theme.backgroundColor)
+    property color complementaryAlternateBackgroundColor: hslLightnessInvert(theme.alternateBackgroundColor)
+    property color complementaryHoverColor: hslLightnessInvert(theme.hoverColor)
+    property color complementaryFocusColor: hslLightnessInvert(theme.focusColor)
 
     property color headerTextColor: palette.text
     property color headerBackgroundColor: palette.base
@@ -107,7 +107,16 @@ QtObject {
             color1.hsvHue,
             color1.hsvSaturation,
             (color1.hsvValue + color2.hsvValue)/2,
-            1.0
+            color1.a
+        )
+    }
+
+    function hslLightnessInvert(color) {
+        return Qt.hsla(
+            color1.hslHue,
+            color1.hslSaturation,
+            1-color1.hslLightness,
+            color.a
         )
     }
 }
