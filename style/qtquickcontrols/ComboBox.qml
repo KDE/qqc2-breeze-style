@@ -13,7 +13,8 @@ T.ComboBox {
     id: control
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding,
+                            implicitIndicatorWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
@@ -33,6 +34,9 @@ T.ComboBox {
         font.weight: control.currentIndex === index ? Font.DemiBold : Font.Normal
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
+        __reserveSpaceForIndicator: false
+        __reserveSpaceForIcon: false
+        __reserveSpaceForArrow: false
     }
 
     indicator: Kirigami.Icon {
@@ -189,7 +193,7 @@ T.ComboBox {
                 cacheBuffer: 1
                 clip: true
                 implicitHeight: contentHeight
-                model: control.delegateModel
+                model: control.delegateModel // Why isn't this in the ComboBox documentation?
                 currentIndex: control.highlightedIndex
                 highlightMoveDuration: -1
                 highlightMoveVelocity: -1
