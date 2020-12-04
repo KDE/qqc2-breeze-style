@@ -18,6 +18,10 @@ import "impl"
 
 T.Menu {
     id: control
+    
+    property bool __hasIndicators: false
+    property bool __hasIcons: false
+    property bool __hasArrows: false
 
     palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
@@ -29,45 +33,52 @@ T.Menu {
     overlap: background.border.width
 
     delegate: Controls.MenuItem {
-        //background: contentItem && contentItem.highlight ? null : undefined
+        __reserveSpaceForIndicator: control.__hasIndicators
+        __reserveSpaceForIcon: control.__hasIcons
+        __reserveSpaceForArrow: control.__hasArrows
     }
 
     contentItem: ListView {
         implicitHeight: contentHeight
-        property bool hasCheckables: false
-        property bool hasIcons: false
         model: control.contentModel
-        highlightMoveDuration: -1
-        highlightMoveVelocity: -1
-        highlight: ListViewHighlight {}
+        highlightMoveDuration: Kirigami.Units.shortDuration
+//         highlightMoveVelocity: contentHeight
+        highlight: ListViewHighlight {
+            currentIndex: control.currentIndex
+            count: control.count
+        }
+        // For some reason, `keyNavigationEnabled: true` isn't needed and
+        // using it causes separators and disabled items to be highlighted
+        keyNavigationWraps: true
 
         interactive: Window.window
                         ? contentHeight + control.topPadding + control.bottomPadding > Window.window.height
                         : false
         clip: true
         currentIndex: control.currentIndex || 0
-        keyNavigationEnabled: true
-        keyNavigationWraps: true
 
         ScrollBar.vertical: Controls.ScrollBar {}
     }
 
-    Connections {
-        target: control.contentItem.contentItem
+    //Connections {
+        //target: control.contentItem.contentItem
 
-        function onChildrenChanged()
-        {
-            for (var i in control.contentItem.contentItem.children) {
-                var child = control.contentItem.contentItem.children[i];
-                if (child.checkable) {
-                    control.contentItem.hasCheckables = true;
-                }
-                if (child.icon && child.icon.hasOwnProperty("name") && (child.icon.name.length > 0 || child.icon.source.length > 0)) {
-                    control.contentItem.hasIcons = true;
-                }
-            }
-        }
-    }
+        //function onChildrenChanged()
+        //{
+            //for (var i in control.contentItem.contentItem.children) {
+                //var child = control.contentItem.contentItem.children[i];
+                //if (child.indicator && child.indicator.visible) {
+                    //control.__hasIndicators = true;
+                //}
+                //if (child.contentItem && child.contentItem.iconVisible) {
+                    //control.__hasIcons = true;
+                //}
+                //if (child.arrow && child.arrow.visible) {
+                    //control.__hasArrows = true
+                //}
+            //}
+        //}
+    //}
 
     enter: Transition {
         ParallelAnimation {
@@ -95,8 +106,8 @@ T.Menu {
 
     background: Rectangle {
         radius: Kirigami.Units.smallRadius
-        implicitHeight: Kirigami.Units.smallControlHeight
-        implicitWidth: Kirigami.Units.gridUnit * 12
+        implicitHeight: Kirigami.Units.mediumControlHeight
+        implicitWidth: Kirigami.Units.gridUnit * 15
         color: Kirigami.Theme.backgroundColor
 
         border {

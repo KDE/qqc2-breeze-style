@@ -13,8 +13,12 @@ GridLayout {
 
     property alias control: root.parent
     property alias icon: contentIcon
+    property alias iconVisible: contentIcon.visible
     property alias label: contentLabel
+    property alias labelVisible: contentLabel.visible
+    property bool reserveSpaceForIndicator: false
     property bool reserveSpaceForIcon: false
+    property bool reserveSpaceForArrow: false
     readonly property bool hasValidIconSize: control.icon.width && control.icon.height
 
     //BEGIN These exist for compatibility with Qt's IconLabel
@@ -31,7 +35,7 @@ GridLayout {
         if (
             (root.display === Controls.AbstractButton.TextBesideIcon
                 && icon.visible && label.visible)
-            || control.indicator//!(control instanceof Controls.Button)
+            || (control.indicator && control.indicator.visible)//!(control instanceof Controls.Button)
         ) {
             halignment = Text.AlignLeft
         } else {
@@ -59,11 +63,14 @@ GridLayout {
             return lpad
         }
         */
-        if (reserveSpaceForIcon && !icon.visible) {
-            lpad += control.icon.width + root.spacing
-        }
-        if (control.indicator && control.indicator.width > 0) {
+        if (control.indicator
+            && (control.indicator.visible || reserveSpaceForIndicator)
+            && control.indicator.width > 0
+        ) {
             lpad += control.indicator.width + root.spacing
+        }
+        if (reserveSpaceForIcon && !icon.visible && control.icon.width > 0) {
+            lpad += control.icon.width + root.spacing
         }
         return lpad
     }
@@ -78,8 +85,8 @@ GridLayout {
             rpad += control.icon.width + root.spacing
         }
         */
-        if (control.arrow && control.arrow.width > 0) {
-            rpad += control.arrow.width// + root.spacing // NOTE: It just looked a bit better without the spacing
+        if (control.arrow && (control.arrow.visible || reserveSpaceForArrow) && control.arrow.width > 0) {
+            rpad += control.arrow.width + root.spacing
         }
         return rpad
     }

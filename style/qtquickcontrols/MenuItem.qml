@@ -16,10 +16,15 @@ import "impl"
 
 T.MenuItem {
     id: control
+    
+    property bool __reserveSpaceForIndicator: true
+    property bool __reserveSpaceForIcon: false
+    property bool __reserveSpaceForArrow: true
 
     palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding,
+                            implicitIndicatorWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
@@ -34,8 +39,7 @@ T.MenuItem {
 
     spacing: Kirigami.Units.mediumSpacing
     padding: Kirigami.Units.mediumSpacing
-    horizontalPadding: Kirigami.Units.mediumHorizontalPadding
-    hoverEnabled: !Kirigami.Settings.isMobile
+    leftPadding: !contentItem.icon.visible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
 
     Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.MenuItem
@@ -74,10 +78,13 @@ T.MenuItem {
     contentItem: IconLabelShortcutContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
+        alignment: Text.AlignLeft
+        reserveSpaceForIndicator: control.__reserveSpaceForIndicator
+        reserveSpaceForIcon: control.__reserveSpaceForIcon
+        reserveSpaceForArrow: control.__reserveSpaceForArrow
     }
 
-    background: DelegateBackground {
-        control: control
-//         visible: !control.ListView.view.highlight
-    }
+    //background: DelegateBackground {
+        //control: control
+    //}
 }
