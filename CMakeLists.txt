@@ -6,7 +6,7 @@ set(KF5_DEP_VERSION "5.76.0") # handled by release scripts
 project(qqc2-breeze-style VERSION 1.0)
 
 # QT_VERSION >= 5.15.2 is required for Layout margins with working support for LayoutMirroring
-set(REQUIRED_QT_VERSION 5.15.2)
+set(REQUIRED_QT_VERSION 5.15.0)
 
 ################# Disallow in-source build #################
 
