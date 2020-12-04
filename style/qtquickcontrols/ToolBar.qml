@@ -9,8 +9,8 @@ import org.kde.kirigami 2.14 as Kirigami
 T.ToolBar {
     id: control
 
-    readonly property bool isHeader: control.position === T.ToolBar.Header
-    readonly property bool isFooter: control.position === T.ToolBar.Footer
+    readonly property bool __isHeader: control.position === T.ToolBar.Header
+    readonly property bool __isFooter: control.position === T.ToolBar.Footer
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding)
@@ -20,8 +20,11 @@ T.ToolBar {
     spacing: Kirigami.Units.smallSpacing
 
     padding: Kirigami.Units.smallSpacing
-    topPadding: isFooter ? 1 : 0 // Add space for the separator above the footer
-    bottomPadding: isHeader ? 1 : 0 // Add space for the separator below the header
+    topPadding: __isFooter ? 1 : 0 // Add space for the separator above the footer
+    bottomPadding: __isHeader ? 1 : 0 // Add space for the separator below the header
+
+    Kirigami.Theme.inherit: !__isHeader
+    Kirigami.Theme.colorSet: Kirigami.Theme.Header
 
     background: Rectangle {
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
@@ -29,11 +32,11 @@ T.ToolBar {
         color: Kirigami.Theme.backgroundColor
         Kirigami.Separator {
             id: separator
-            visible: control.isHeader || control.isFooter
+            visible: control.__isHeader || control.__isFooter
             anchors {
                 left: parent.left
                 right: parent.right
-                verticalCenter: control.isFooter ? parent.top : parent.bottom
+                verticalCenter: control.__isFooter ? parent.top : parent.bottom
             }
         }
     }
