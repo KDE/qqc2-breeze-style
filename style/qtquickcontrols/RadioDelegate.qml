@@ -12,29 +12,36 @@ T.RadioDelegate {
     id: control
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding,
+                            implicitIndicatorWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
     padding: Kirigami.Units.mediumSpacing
-    horizontalPadding: Kirigami.Units.mediumHorizontalPadding
+    leftPadding: !contentItem.iconVisible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    rightPadding: contentItem.labelVisible ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
 
     spacing: Kirigami.Units.mediumSpacing
 
     icon.width: Kirigami.Units.iconSizes.auto
     icon.height: Kirigami.Units.iconSizes.auto
+    
+    Kirigami.Theme.colorSet: control.highlighted || control.down ? Kirigami.Theme.Selection : parent.Kirigami.Theme.colorSet
+    Kirigami.Theme.inherit: !(control.highlighted || control.down)
 
     contentItem: IconLabelContent {
         control: control
         text: control.text
-        label.horizontalAlignment: Text.AlignLeft
-//         label.color: (control.pressed && !control.checked && !control.sectionDelegate) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+        alignment: Text.AlignLeft
+        //color: (control.pressed && !control.checked && !control.sectionDelegate) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
     }
 
     indicator: RadioIndicator {
         control: control
     }
 
-    //background: DelegateBackground {}
+    background: DelegateBackground {
+        control: control
+    }
 }

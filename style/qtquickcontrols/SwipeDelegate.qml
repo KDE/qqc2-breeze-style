@@ -1,45 +1,45 @@
-// NOTE: replace this
+/* SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
+ */
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
+import "impl"
 
 T.SwipeDelegate {
     id: control
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding,
+                            implicitIndicatorWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    padding: 12
-    spacing: 12
+    padding: Kirigami.Units.mediumSpacing
+    leftPadding: !contentItem.iconVisible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    rightPadding: contentItem.labelVisible ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
 
-    icon.width: 24
-    icon.height: 24
-    icon.color: control.palette.text
+    spacing: Kirigami.Units.mediumSpacing
+
+    icon.width: Kirigami.Units.iconSizes.auto
+    icon.height: Kirigami.Units.iconSizes.auto
+
+    Kirigami.Theme.colorSet: control.highlighted || control.down ? Kirigami.Theme.Selection : parent.Kirigami.Theme.colorSet
+    Kirigami.Theme.inherit: !(control.highlighted || control.down)
 
     swipe.transition: Transition { SmoothedAnimation { velocity: 3; easing.type: Easing.InOutCubic } }
 
-    contentItem: IconLabel {
-        spacing: control.spacing
-        mirrored: control.mirrored
-        display: control.display
-        alignment: control.display === IconLabel.IconOnly || control.display === IconLabel.TextUnderIcon ? Qt.AlignCenter : Qt.AlignLeft
-
-        icon: control.icon
+    contentItem: IconLabelContent {
+        control: control
         text: control.text
-        font: control.font
-        color: control.palette.text
+        //color: (control.pressed && !control.checked && !control.sectionDelegate) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
     }
 
-    background: Rectangle {
-        implicitWidth: 100
-        implicitHeight: 40
-        color: Kirigami.ColorUtils.tintWithAlpha(control.down ? control.palette.midlight : control.palette.light,
-                                          control.palette.highlight, control.visualFocus ? 0.15 : 0.0)
+    background: DelegateBackground {
+        control: control
     }
 }
