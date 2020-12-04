@@ -12,7 +12,8 @@ T.ToolButton {
     id: control
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding,
+                            implicitIndicatorWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
@@ -24,12 +25,16 @@ T.ToolButton {
     // Absolutely terrible HACK:
     // For some reason, ActionToolBar overrides the colorSet and inherit attached properties
     Component.onCompleted: {
+        //console.log("colorSet: " + Kirigami.Theme.colorSet)
+        //console.log("inherit: " + Kirigami.Theme.inherit)
         Kirigami.Theme.colorSet = Kirigami.Theme.Button/*Qt.binding(() => control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button)*/
         Kirigami.Theme.inherit = false//Qt.binding(() => control.flat && !(control.down || control.checked))
     }
 
     padding: Kirigami.Units.mediumSpacing
-    horizontalPadding: Kirigami.Units.mediumHorizontalPadding
+    leftPadding: !contentItem.icon.visible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    rightPadding: contentItem.label.visible ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+
     spacing: Kirigami.Units.mediumSpacing
 
     icon.width: Kirigami.Units.iconSizes.auto

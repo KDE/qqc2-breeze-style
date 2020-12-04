@@ -13,7 +13,8 @@ T.Button {
     id: control
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding,
+                            implicitIndicatorWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
@@ -32,7 +33,9 @@ T.Button {
     }
 
     padding: Kirigami.Units.mediumSpacing
-    horizontalPadding: Kirigami.Units.mediumHorizontalPadding
+    leftPadding: !contentItem.iconVisible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    rightPadding: contentItem.labelVisible ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+
     spacing: Kirigami.Units.mediumSpacing
 
     icon.width: Kirigami.Units.iconSizes.auto
