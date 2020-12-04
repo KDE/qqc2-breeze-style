@@ -9,20 +9,24 @@ import org.kde.kirigami 2.14 as Kirigami
 Rectangle {
     id: root
     property alias control: root.parent
+    // Makes this work for ScrollBar and ScrollIndicator
+    property int policy: Controls.ScrollBar.AsNeeded
+
+    visible: control.size < 1 && root.policy !== Controls.ScrollBar.AlwaysOff
 
     implicitWidth: Kirigami.Units.grooveHeight
     implicitHeight: implicitWidth
 
     radius: width / 2
     color: control.pressed ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
-    opacity: control.policy === Controls.ScrollBar.AsNeeded ? 0 : 1
+    opacity: root.policy === Controls.ScrollBar.AsNeeded ? 0 : 1
 
     states: State {
         name: "active"
-        when: control.policy === Controls.ScrollBar.AlwaysOn || (control.active && control.size < 1.0)
+        when: root.policy === Controls.ScrollBar.AlwaysOn || (control.active && control.size < 1.0)
         PropertyChanges {
-            target: control.contentItem
-            opacity: control.policy === Controls.ScrollBar.AsNeeded ? 0.75 : 1
+            target: root
+            opacity: root.policy === Controls.ScrollBar.AsNeeded ? 0.75 : 1
         }
     }
 

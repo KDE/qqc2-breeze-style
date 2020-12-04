@@ -1,8 +1,11 @@
-// NOTE: replace this
+/* SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
+ */
+
 import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.14 as Kirigami
+import "impl"
 
 T.ScrollIndicator {
     id: control
@@ -12,30 +15,13 @@ T.ScrollIndicator {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    padding: 2
+    visible: control.size < 1
 
-    contentItem: Rectangle {
-        implicitWidth: 2
-        implicitHeight: 2
+    minimumSize: horizontal ? height / width : width / height
 
-        color: control.palette.mid
-        visible: control.size < 1.0
-        opacity: 0.0
+    padding: Kirigami.Units.verySmallSpacing
 
-        states: State {
-            name: "active"
-            when: control.active
-            PropertyChanges { target: control.contentItem; opacity: 0.75 }
-        }
-
-        transitions: [
-            Transition {
-                from: "active"
-                SequentialAnimation {
-                    PauseAnimation { duration: 450 }
-                    NumberAnimation { target: control.contentItem; duration: 200; property: "opacity"; to: 0.0 }
-                }
-            }
-        ]
+    contentItem: ScrollHandle {
+        control: control
     }
 }

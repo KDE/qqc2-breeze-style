@@ -27,6 +27,7 @@ T.ScrollBar {
 
     contentItem: ScrollHandle {
         control: control
+        policy: control.policy
     }
 
     background: Rectangle {
