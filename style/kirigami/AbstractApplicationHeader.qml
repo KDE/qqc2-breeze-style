@@ -5,7 +5,7 @@
  */
 
 import QtQuick 2.15
-import org.kde.kirigami 2.14
+import org.kde.kirigami 2.14 as Kirigami
 import QtQuick.Controls 2.15 as Controls
 import "../../templates" as T
 
@@ -27,17 +27,22 @@ T.AbstractApplicationHeader {
     readonly property bool isHeader: root.position == Controls.ToolBar.Header
     readonly property bool isFooter: root.position == Controls.ToolBar.Footer
 
-    Theme.inherit: false
-    Theme.colorSet: Theme.Header
+    Kirigami.Theme.inherit: false
+    Kirigami.Theme.colorSet: Kirigami.Theme.Header
 
     topPadding: isFooter ? 1 : 0 // Add space for the separator above the footer
     bottomPadding: isHeader ? 1 : 0 // Add space for the separator below the header
 
-    background: Rectangle {
+    background: Kirigami.ShadowedRectangle {
         color: Theme.backgroundColor
-        Separator {
+        shadow {
+            color: Qt.rgba(0,0,0,0.2)
+            size: Kirigami.Settings.isMobile ? 3 : 0
+            yOffset: 1
+        }
+        Kirigami.Separator {
             id: separator
-            visible: root.isHeader || root.isFooter
+            visible: (root.isHeader || root.isFooter) && !Kirigami.Settings.isMobile
             anchors {
                 left: parent.left
                 right: parent.right
