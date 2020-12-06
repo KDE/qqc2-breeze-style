@@ -8,6 +8,7 @@ import QtQuick.Controls 2.15 as Controls
 import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
+import "impl"
 
 T.TextArea {
     id: control
@@ -20,11 +21,14 @@ T.TextArea {
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
     padding: Kirigami.Units.mediumSpacing
+    property real horizontalPadding: Kirigami.Units.mediumHorizontalPadding
+    leftPadding: horizontalPadding
+    rightPadding: horizontalPadding
 
-    color: control.palette.text
-    placeholderTextColor: Color.transparent(control.color, 0.5)
-    selectionColor: control.palette.highlight
-    selectedTextColor: control.palette.highlightedText
+    color: Kirigami.Theme.textColor
+    selectionColor: Kirigami.Theme.highlightColor
+    selectedTextColor: Kirigami.Theme.highlightedTextColor
+    placeholderTextColor: Kirigami.Theme.disabledTextColor
 
     PlaceholderText {
         id: placeholder
@@ -40,5 +44,10 @@ T.TextArea {
         visible: !control.length && !control.preeditText && (!control.activeFocus || control.horizontalAlignment !== Qt.AlignHCenter)
         elide: Text.ElideRight
         renderType: control.renderType
+    }
+
+    background: TextEditBackground {
+        control: control
+        implicitWidth: 200
     }
 }
