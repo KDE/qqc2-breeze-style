@@ -4,7 +4,7 @@
  *  SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
-import QtQuick 2.4
+import QtQuick 2.15
 
 pragma Singleton
 
@@ -21,9 +21,9 @@ QtObject {
     property color alternateBackgroundColor: hsvValueMix(theme.highlightColor, theme.backgroundColor)
     property color activeTextColor: palette.highlight
     property color activeBackgroundColor: palette.highlight
-    property color linkColor: palette.link
+    property color linkColor: hsvValueMix(theme.highlightColor, theme.textColor)
     property color linkBackgroundColor: hsvValueMix(theme.linkColor, theme.backgroundColor)
-    property color visitedLinkColor: palette.linkVisited
+    property color visitedLinkColor: "#9b59b6"
     property color visitedLinkBackgroundColor: hsvValueMix(theme.visitedLinkColor, theme.backgroundColor)
     property color hoverColor: palette.highlight
     property color focusColor: palette.highlight
@@ -52,8 +52,8 @@ QtObject {
     property color selectionHoverColor: palette.highlight
     property color selectionFocusColor: palette.highlight
 
-    property color tooltipTextColor: palette.toolTipText
-    property color tooltipBackgroundColor: palette.toolTipBase
+    property color tooltipTextColor: palette.buttonText
+    property color tooltipBackgroundColor: palette.button
     property color tooltipAlternateBackgroundColor: palette.window
     property color tooltipHoverColor: palette.highlight
     property color tooltipFocusColor: palette.highlight
@@ -113,9 +113,9 @@ QtObject {
 
     function hslLightnessInvert(color) {
         return Qt.hsla(
-            color1.hslHue,
-            color1.hslSaturation,
-            1-color1.hslLightness,
+            color.hslHue,
+            color.hslSaturation,
+            1-color.hslLightness,
             color.a
         )
     }
