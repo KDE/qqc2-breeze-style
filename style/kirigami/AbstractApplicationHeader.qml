@@ -73,7 +73,7 @@ T.AbstractApplicationHeader {
         }
         Kirigami.Separator {
             id: separator
-            visible: (root.__isHeader || root.__isFooter) && !Kirigami.Settings.isMobile
+            visible: root.separatorVisible
             anchors {
                 left: parent.left
                 right: parent.right
