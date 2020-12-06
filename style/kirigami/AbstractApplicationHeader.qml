@@ -25,17 +25,17 @@ import "../../private" as KP
 T.AbstractApplicationHeader {
     id: root
 
-    readonly property bool isHeader: root.position == Controls.ToolBar.Header
-    readonly property bool isFooter: root.position == Controls.ToolBar.Footer
+    readonly property bool __isHeader: root.position == Controls.ToolBar.Header
+    readonly property bool __isFooter: root.position == Controls.ToolBar.Footer
 
     Kirigami.Theme.inherit: false
     Kirigami.Theme.colorSet: Kirigami.Theme.Header
 
-    topPadding: isFooter ? 1 : 0 // Add space for the separator above the footer
-    bottomPadding: isHeader ? 1 : 0 // Add space for the separator below the header
+    topPadding: __isFooter ? 1 : 0 // Add space for the separator above the footer
+    bottomPadding: __isHeader ? 1 : 0 // Add space for the separator below the header
 
     background: Rectangle {
-        color: Theme.backgroundColor
+        color: Kirigami.Theme.backgroundColor
         Rectangle {
             id: shadow
             visible: root.separatorVisible && Kirigami.Settings.isMobile
@@ -66,24 +66,24 @@ T.AbstractApplicationHeader {
             opacity: (!root.page.header || root.page.header.toString().indexOf("ToolBar") === -1)
             Behavior on opacity {
                 OpacityAnimator {
-                    duration: Units.longDuration
+                    duration: Kirigami.Units.longDuration
                     easing.type: Easing.InOutQuad
                 }
             }
         }
         Kirigami.Separator {
             id: separator
-            visible: (root.isHeader || root.isFooter) && !Kirigami.Settings.isMobile
+            visible: (root.__isHeader || root.__isFooter) && !Kirigami.Settings.isMobile
             anchors {
                 left: parent.left
                 right: parent.right
-                verticalCenter: root.isFooter ? parent.top : parent.bottom
+                verticalCenter: root.__isFooter ? parent.top : parent.bottom
                 //verticalCenter: root.y <= 0 ? root.bottom : root.top
             }
         }
         Behavior on opacity {
             OpacityAnimator {
-                duration: Units.longDuration
+                duration: Kirigami.Units.longDuration
                 easing.type: Easing.InOutQuad
             }
         }
