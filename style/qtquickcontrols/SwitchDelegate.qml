@@ -33,7 +33,6 @@ T.SwitchDelegate {
     contentItem: IconLabelContent {
         control: control
         text: control.text
-        alignment: Text.AlignLeft
         //color: (control.pressed && !control.checked && !control.sectionDelegate) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
     }
 

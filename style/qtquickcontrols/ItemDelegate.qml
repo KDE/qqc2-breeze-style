@@ -33,7 +33,6 @@ T.ItemDelegate {
     contentItem: IconLabelContent {
         control: control
         text: control.text
-        alignment: Text.AlignLeft
     }
 
     background: DelegateBackground {
