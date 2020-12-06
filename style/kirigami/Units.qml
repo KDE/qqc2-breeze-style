@@ -4,8 +4,9 @@
  *  SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
-import QtQuick 2.4
-import QtQuick.Window 2.2
+import QtQuick 2.15
+import QtQuick.Window 2.15
+import org.kde.kirigami 2.14
 
 pragma Singleton
 
@@ -43,16 +44,23 @@ QtObject {
     property QtObject iconSizes: QtObject {
         // Breeze
         property int defaultSize: units.iconSizes.auto
-        property int auto: fontMetrics.roundedIconSize(gridUnit)
+        property int auto: fontMetrics.roundedIconSize(gridUnit * (Settings.isMobile ? 1.5 : 1))
         property int tiny: fontMetrics.roundedIconSize(8 * devicePixelRatio)
         property int tinySmall: fontMetrics.roundedIconSize(12 * devicePixelRatio)
         // Breeze
-        property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio)
-        property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio)
-        property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio)
-        property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio)
-        property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio)
-        property int enormous: 128 * devicePixelRatio
+        property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
+        property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
+        property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
+        property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
+        property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
+        property int enormous: 128 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1)
+        // TODO: Using larger sizes on mobile because that's what Kirigami normally does. Maybe don't do this in the future.
+        //property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio)
+        //property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio)
+        //property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio)
+        //property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio)
+        //property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio)
+        //property int enormous: 128 * devicePixelRatio
     }
 
     //BEGIN Breeze Units
