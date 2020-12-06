@@ -8,6 +8,7 @@ import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
 import QtQuick.Controls 2.15 as Controls
 import "../../templates" as T
+import "../../private" as KP
 
 
 /**
@@ -33,12 +34,42 @@ T.AbstractApplicationHeader {
     topPadding: isFooter ? 1 : 0 // Add space for the separator above the footer
     bottomPadding: isHeader ? 1 : 0 // Add space for the separator below the header
 
-    background: Kirigami.ShadowedRectangle {
+    background: Rectangle {
         color: Theme.backgroundColor
-        shadow {
-            color: Qt.rgba(0,0,0,0.2)
-            size: Kirigami.Settings.isMobile ? 3 : 0
-            yOffset: 1
+        Rectangle {
+            id: shadow
+            visible: root.separatorVisible && Kirigami.Settings.isMobile
+            anchors {
+                right: parent.right
+                left: parent.left
+                top: parent.bottom
+            }
+            height: Kirigami.Units.gridUnit
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.0
+                    color: Qt.rgba(0, 0, 0, 0.25)
+                }
+                GradientStop {
+                    position: 0.20
+                    color: Qt.rgba(0, 0, 0, 0.1)
+                }
+                GradientStop {
+                    position: 0.35
+                    color: Qt.rgba(0, 0, 0, 0.02)
+                }
+                GradientStop {
+                    position: 1.0
+                    color:  "transparent"
+                }
+            }
+            opacity: (!root.page.header || root.page.header.toString().indexOf("ToolBar") === -1)
+            Behavior on opacity {
+                OpacityAnimator {
+                    duration: Units.longDuration
+                    easing.type: Easing.InOutQuad
+                }
+            }
         }
         Kirigami.Separator {
             id: separator
@@ -48,6 +79,12 @@ T.AbstractApplicationHeader {
                 right: parent.right
                 verticalCenter: root.isFooter ? parent.top : parent.bottom
                 //verticalCenter: root.y <= 0 ? root.bottom : root.top
+            }
+        }
+        Behavior on opacity {
+            OpacityAnimator {
+                duration: Units.longDuration
+                easing.type: Easing.InOutQuad
             }
         }
     }
