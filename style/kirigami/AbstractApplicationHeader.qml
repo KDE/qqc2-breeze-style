@@ -44,22 +44,18 @@ T.AbstractApplicationHeader {
                 left: parent.left
                 top: parent.bottom
             }
-            height: Kirigami.Units.gridUnit
+            height: Kirigami.Units.smallSpacing
             gradient: Gradient {
                 GradientStop {
                     position: 0.0
-                    color: Qt.rgba(0, 0, 0, 0.25)
+                    color: Qt.rgba(0, 0, 0, 0.20)
                 }
                 GradientStop {
-                    position: 0.20
-                    color: Qt.rgba(0, 0, 0, 0.1)
+                    position: 0.368 // 1/e 
+                    color: Qt.rgba(0, 0, 0, 0.074) // 0.2/e
                 }
                 GradientStop {
-                    position: 0.35
-                    color: Qt.rgba(0, 0, 0, 0.02)
-                }
-                GradientStop {
-                    position: 1.0
+                    position: 1
                     color:  "transparent"
                 }
             }
@@ -73,7 +69,7 @@ T.AbstractApplicationHeader {
         }
         Kirigami.Separator {
             id: separator
-            visible: root.separatorVisible
+            visible: root.separatorVisible && !Kirigami.Settings.isMobile
             anchors {
                 left: parent.left
                 right: parent.right
