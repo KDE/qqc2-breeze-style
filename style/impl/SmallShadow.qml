@@ -10,10 +10,15 @@ Kirigami.ShadowedRectangle {
     anchors.fill: parent
     z: -1
     radius: Kirigami.Units.smallRadius
-    color: shadow.color
+    color: "transparent"//shadow.color
     shadow {
         color: Qt.rgba(0,0,0,0.2)
         size: 3
         yOffset: 1
+    }
+    Component.onCompleted: {
+        if (Kirigami.Theme.lowPowerHardware) {
+            root.visible = false
+        }
     }
 }
