@@ -32,8 +32,8 @@ T.ToolButton {
     }
 
     padding: Kirigami.Units.mediumSpacing
-    leftPadding: !contentItem.icon.visible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
-    rightPadding: contentItem.label.visible ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    leftPadding: !contentItem.iconVisible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    rightPadding: contentItem.labelVisible ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
 
     spacing: Kirigami.Units.mediumSpacing
 
