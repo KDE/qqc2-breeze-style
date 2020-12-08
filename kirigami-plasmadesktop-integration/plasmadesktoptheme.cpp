@@ -318,7 +318,7 @@ void PlasmaDesktopTheme::syncColors()
 
     // Breeze QQC2 style colors
     auto separatorColor = [](const QColor &bg, const QColor &fg, const qreal baseRatio = 0.2) {
-        return bg.lightnessF() > 0.5 ? KColorUtils::mix(bg, fg, baseRatio) : KColorUtils::mix(bg, fg, baseRatio/2);
+        return KColorUtils::luma(bg) > 0.5 ? KColorUtils::mix(bg, fg, baseRatio) : KColorUtils::mix(bg, fg, baseRatio/2);
     };
 
     switch (colorSet()) {
