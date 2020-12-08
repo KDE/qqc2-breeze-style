@@ -114,6 +114,7 @@ Rectangle {
 
     Rectangle {
         id: sidewaysRevealRect
+        antialiasing: true
         anchors {
             right: checkmark.right
             top: checkmark.top
@@ -162,7 +163,10 @@ Rectangle {
         /* Prevents the transition from running when the parent control is created.
          * This can reduce resource usage spikes on pages that have way too many checkboxes.
          */
-        if (root.loaded && (state == "checked" || state == "partiallychecked")) {
+        if (root.loaded
+            && (state == "checked" || state == "partiallychecked")
+            && !Kirigami.Settings.isMobile //TODO: make the animation look better on mobile
+        ) {
             // equivalent to stop(), then start()
             sidewaysRevealAnimation.restart()
         }
