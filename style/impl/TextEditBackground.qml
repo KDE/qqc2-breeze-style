@@ -14,13 +14,18 @@ Rectangle {
     implicitWidth: implicitHeight
     implicitHeight: Kirigami.Units.mediumControlHeight
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.View
-    Kirigami.Theme.inherit: false
     color: Kirigami.Theme.backgroundColor
     radius: Kirigami.Units.smallRadius
-    border {
-        color: control.activeFocus || control.hovered ?
-                Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
-        width: Kirigami.Units.smallBorder
+    Rectangle {
+        Kirigami.Theme.colorSet: Kirigami.Theme.Button
+        Kirigami.Theme.inherit: false
+        radius: parent.radius
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            color: control.activeFocus || control.hovered ?
+                    Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+            width: Kirigami.Units.smallBorder
+        }
     }
 }
