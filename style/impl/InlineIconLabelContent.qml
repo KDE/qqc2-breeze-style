@@ -16,7 +16,7 @@ IconLabelContent {
             right: parent.right
             bottom: parent.bottom
         }
-        height: 1
+        height: Kirigami.Units.focusUnderlineThickness
         visible: control.visualFocus
         color: Kirigami.Theme.focusColor
     }

@@ -77,9 +77,9 @@ QtObject {
     property int largeRadius: smallRadius * 2
 
     // Used to underline checkbox labels
-    property int focusUnderline: smallBorder
+    property int focusUnderlineThickness: smallBorder
     // Used for tabs and items in sidebars
-    property int highlightLine: smallRadius
+    property int highlightLineThickness: smallRadius
 
     property int grooveHeight: {
         let h = Math.floor(gridUnit/3);
