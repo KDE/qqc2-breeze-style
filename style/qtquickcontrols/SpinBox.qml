@@ -1,24 +1,41 @@
-// NOTE: replace this
+/* SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
+ */
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.14 as Kirigami
+import "impl"
 
 T.SpinBox {
     id: control
+    property real __downIndicatorWidth: down.indicator ? down.indicator.width : 0
+    property real __upIndicatorWidth: up.indicator ? up.indicator.width : 0
+    property real __leftIndicatorWidth: control.mirrored ? __upIndicatorWidth : __downIndicatorWidth
+    property real __rightIndicatorWidth: control.mirrored ? __downIndicatorWidth : __upIndicatorWidth
 
-    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            contentItem.implicitWidth + 2 * padding +
-                            up.implicitIndicatorWidth +
-                            down.implicitIndicatorWidth)
-    implicitHeight: Math.max(implicitContentHeight + topPadding + bottomPadding,
-                             implicitBackgroundHeight,
-                             up.implicitIndicatorHeight,
-                             down.implicitIndicatorHeight)
+    implicitWidth: Math.max(
+        implicitBackgroundWidth + leftInset + rightInset,
+        Math.max(implicitContentWidth + leftPadding + rightPadding, down.implicitIndicatorWidth-2)
+            + up.implicitIndicatorWidth
+            + down.implicitIndicatorWidth
+    )
+    implicitHeight: Math.max(
+        implicitBackgroundHeight + topInset + bottomInset,
+        implicitContentHeight + topPadding + bottomPadding,
+        up.implicitIndicatorHeight,
+        down.implicitIndicatorHeight
+    )
 
-    padding: 6
-    leftPadding: padding + (control.mirrored ? (up.indicator ? up.indicator.width : 0) : (down.indicator ? down.indicator.width : 0))
-    rightPadding: padding + (control.mirrored ? (down.indicator ? down.indicator.width : 0) : (up.indicator ? up.indicator.width : 0))
+    Kirigami.Theme.colorSet: control.editable ? Kirigami.Theme.View : Kirigami.Theme.Button
+    Kirigami.Theme.inherit: !Boolean(background)
+
+    editable: true
+    inputMethodHints: Qt.ImhDigitsOnly
+
+    padding: Kirigami.Units.mediumSpacing
+    spacing: Kirigami.Units.mediumSpacing
 
     validator: IntValidator {
         locale: control.locale.name
@@ -26,75 +43,40 @@ T.SpinBox {
         top: Math.max(control.from, control.to)
     }
 
+    down.indicator: SpinBoxIndicator {
+        button: control.down
+        alignment: Qt.AlignLeft
+        mirrored: control.mirrored
+    }
+
     contentItem: TextInput {
         z: 2
+        anchors {
+            fill: parent
+            leftMargin: control.__leftIndicatorWidth
+            rightMargin: control.__rightIndicatorWidth
+        }
         text: control.displayText
-
         font: control.font
-        color: control.palette.text
-        selectionColor: control.palette.highlight
-        selectedTextColor: control.palette.highlightedText
+        color: Kirigami.Theme.textColor
+        selectionColor: Kirigami.Theme.highlightColor
+        selectedTextColor: Kirigami.Theme.highlightedTextColor
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
 
         readOnly: !control.editable
         validator: control.validator
         inputMethodHints: control.inputMethodHints
-
-        Rectangle {
-            x: -6 - (control.down.indicator ? 1 : 0)
-            y: -6
-            width: control.width - (control.up.indicator ? control.up.indicator.width - 1 : 0) - (control.down.indicator ? control.down.indicator.width - 1 : 0)
-            height: control.height
-            visible: control.activeFocus
-            color: "transparent"
-            border.color: control.palette.highlight
-            border.width: 2
-        }
+        selectByMouse: true // Should this be disabled for mobile?
     }
 
-    up.indicator: Rectangle {
-        x: control.mirrored ? 0 : parent.width - width
-        height: parent.height
-        implicitWidth: 40
-        implicitHeight: 40
-        color: control.up.pressed ? control.palette.mid : control.palette.button
-
-        Rectangle {
-            x: (parent.width - width) / 2
-            y: (parent.height - height) / 2
-            width: parent.width / 3
-            height: 2
-            color: enabled ? control.palette.buttonText : control.palette.mid
-        }
-        Rectangle {
-            x: (parent.width - width) / 2
-            y: (parent.height - height) / 2
-            width: 2
-            height: parent.width / 3
-            color: enabled ? control.palette.buttonText : control.palette.mid
-        }
+    up.indicator: SpinBoxIndicator {
+        button: control.up
+        alignment: Qt.AlignRight
+        mirrored: control.mirrored
     }
 
-    down.indicator: Rectangle {
-        x: control.mirrored ? parent.width - width : 0
-        height: parent.height
-        implicitWidth: 40
-        implicitHeight: 40
-        color: control.down.pressed ? control.palette.mid : control.palette.button
-
-        Rectangle {
-            x: (parent.width - width) / 2
-            y: (parent.height - height) / 2
-            width: parent.width / 3
-            height: 2
-            color: enabled ? control.palette.buttonText : control.palette.mid
-        }
-    }
-
-    background: Rectangle {
-        implicitWidth: 140
-        color: enabled ? control.palette.base : control.palette.button
-        border.color: control.palette.button
+    background: TextEditBackground {
+        control: control
     }
 }
