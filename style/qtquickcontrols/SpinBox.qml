@@ -49,8 +49,18 @@ T.SpinBox {
         mirrored: control.mirrored
     }
 
-    contentItem: TextInput {
+    /* NOTE: There is a flaw in QQC2 SpinBox with how focus is handled.
+     * Unless you make the TextInput unfocusable (not what you want),
+     * you can't detect whether or not a spinbox has activeFocus or visualFocus.
+     * This is because the TextInput takes the focus.
+     * In order to detect if a SpinBox is focused, you must trust that the
+     * contentItem will be the part that takes the focus.
+     */
+
+    contentItem: T.TextField {
         z: 2
+        // Intentionally using anchors so that left/right
+        // control padding can be used like it normally would
         anchors {
             fill: parent
             leftMargin: control.__leftIndicatorWidth
@@ -78,5 +88,11 @@ T.SpinBox {
 
     background: TextEditBackground {
         control: control
+        // Work around SpinBox focus handling flaw
+        visualFocus: control.visualFocus || (control.contentItem.activeFocus && (
+            control.contentItem.focusReason == Qt.TabFocusReason ||
+            control.contentItem.focusReason == Qt.BacktabFocusReason ||
+            control.contentItem.focusReason == Qt.ShortcutFocusReason
+        ))
     }
 }
