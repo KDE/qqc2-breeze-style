@@ -7,9 +7,14 @@ import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
 Rectangle {
-    id: mainBackground
+    id: root
 
-    property alias control: mainBackground.parent
+    property alias control: root.parent
+    property bool visualFocus: control.activeFocus && (
+        control.focusReason == Qt.TabFocusReason ||
+        control.focusReason == Qt.BacktabFocusReason ||
+        control.focusReason == Qt.ShortcutFocusReason
+    )
 
     implicitWidth: implicitHeight
     implicitHeight: Kirigami.Units.mediumControlHeight
@@ -27,5 +32,10 @@ Rectangle {
                     Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
             width: Kirigami.Units.smallBorder
         }
+    }
+
+    FocusRect {
+        visible: root.visualFocus
+        baseRadius: parent.radius
     }
 }
