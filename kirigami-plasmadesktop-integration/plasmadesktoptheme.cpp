@@ -317,14 +317,16 @@ void PlasmaDesktopTheme::syncColors()
     m_viewFocusColor = (*s_style)->viewScheme.decoration(KColorScheme::FocusColor).color();
 
     // Breeze QQC2 style colors
-    auto separatorColor = [](const QColor &bg, const QColor &fg) {
-        return bg.lightnessF() > 0.5 ? KColorUtils::mix(bg, fg, 0.3) : KColorUtils::mix(bg, fg, 0.15);
+    auto separatorColor = [](const QColor &bg, const QColor &fg, const qreal baseRatio = 0.2) {
+        return bg.lightnessF() > 0.5 ? KColorUtils::mix(bg, fg, baseRatio) : KColorUtils::mix(bg, fg, baseRatio/2);
     };
 
     switch (colorSet()) {
 //     case ColorSet::View:
 //     case ColorSet::Window:
-//     case ColorSet::Button:
+    case ColorSet::Button:
+        m_separatorColor = separatorColor(backgroundColor(), textColor(), 0.3);
+        break;
     case ColorSet::Selection:
         m_separatorColor = focusColor();
         break;
