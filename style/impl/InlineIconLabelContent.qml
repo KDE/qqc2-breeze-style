@@ -9,13 +9,12 @@ import org.kde.kirigami 2.14 as Kirigami
 
 
 IconLabelContent {
+    id: root
     Rectangle {
-        parent: label
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
+        z: -1
+        x: root.labelRect.x
+        y: root.labelRect.y + root.labelRect.height - height
+        width: root.labelRect.width//root.hasIcon && root.hasLabel ? root.availableWidth - root.icon.width - root.spacing : root.availableWidth
         height: Kirigami.Units.focusUnderlineThickness
         visible: control.visualFocus
         color: Kirigami.Theme.focusColor

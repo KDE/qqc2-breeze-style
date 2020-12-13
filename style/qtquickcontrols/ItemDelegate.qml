@@ -19,8 +19,8 @@ T.ItemDelegate {
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
     padding: Kirigami.Units.mediumSpacing
-    leftPadding: !contentItem.iconVisible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
-    rightPadding: contentItem.labelVisible ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    leftPadding: !contentItem.hasIcon && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    rightPadding: contentItem.hasLabel ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
 
     spacing: Kirigami.Units.mediumSpacing
 

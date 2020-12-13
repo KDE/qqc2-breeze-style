@@ -70,7 +70,7 @@ T.Menu {
                 //if (child.indicator && child.indicator.visible) {
                     //control.__hasIndicators = true;
                 //}
-                //if (child.contentItem && child.contentItem.iconVisible) {
+                //if (child.contentItem && child.contentItem.hasIcon) {
                     //control.__hasIcons = true;
                 //}
                 //if (child.arrow && child.arrow.visible) {

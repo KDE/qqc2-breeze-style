@@ -8,6 +8,7 @@
 #include "qqc2breezestyleplugin.h"
 #include "impl/qqc2breezeglobal_p.h"
 #include "impl/paintedsymbolitem.h"
+#include "impl/iconlabellayout.h"
 
 #include <QQmlEngine>
 #include <QQmlFile>
@@ -34,6 +35,7 @@ void QQC2BreezeStylePlugin::registerTypes(const char *uri)
     //BEGIN org.kde.breeze
     qmlRegisterModule(uri, 1, 0);
     qmlRegisterType<PaintedSymbolItem>(uri, 1, 0, "PaintedSymbol");
+    qmlRegisterType<IconLabelLayout>(uri, 1, 0, "IconLabelLayout");
     //END
 
     // Prevent additional types from being added.

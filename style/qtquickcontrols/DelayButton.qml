@@ -21,8 +21,8 @@ T.DelayButton {
     Kirigami.Theme.inherit: false
 
     padding: Kirigami.Units.mediumSpacing
-    leftPadding: !contentItem.icon.visible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
-    rightPadding: contentItem.label.visible ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    leftPadding: !contentItem.hasIcon && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    rightPadding: contentItem.hasLabel ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
 
     spacing: Kirigami.Units.mediumSpacing
 

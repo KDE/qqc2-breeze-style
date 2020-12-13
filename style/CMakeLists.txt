@@ -3,6 +3,8 @@ project(qqc2breezestyle)
 set(qqc2breezestyle_SRCS
     qqc2breezestyleplugin.cpp
     impl/paintedsymbolitem.cpp
+    impl/iconlabellayout.cpp
+    impl/qquickicon.cpp
 )
 
 #[[ I don't actually know if this would work.

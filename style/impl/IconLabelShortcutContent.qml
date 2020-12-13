@@ -11,22 +11,10 @@ IconLabelContent {
     id: root
     Controls.Label {
         id: shortcutLabel
-        Layout.alignment: {
-            let halignment = root.alignment & Qt.AlignHorizontal_Mask
-            let valignment = root.alignment & Qt.AlignVertical_Mask
-            if (halignment & Qt.AlignLeft) {
-                halignment = Qt.AlignRight
-            }
-            if (valignment & Qt.AlignTop) {
-                valignment = Qt.AlignBottom
-            }
-            return halignment | valignment
-        }
-        Layout.leftMargin: label.visible && root.horizontal ? 0 : root.leftPadding
-        Layout.rightMargin: root.rightPadding
-        Layout.topMargin: label.visible && root.vertical ? 0 : root.topPadding
-        Layout.bottomMargin: root.bottomPadding
-        visible: Qt.styleHints.showShortcutsInContextMenus && control.action && control.action.hasOwnProperty("shortcut") && control.action.shortcut !== undefined && root.display !== Controls.AbstractButton.IconOnly
+        x: root.width - shortcutLabel.width - (root.mirrored ? root.leftPadding : root.rightPadding)
+        y: root.labelRect.y
+        width: Math.min(shortcutLabel.contentWidth, Math.max(0, root.width - root.implicitWidth - root.spacing))
+        visible: Qt.styleHints.showShortcutsInContextMenus && control.action && control.action.hasOwnProperty("shortcut") && control.action.shortcut !== undefined && !root.iconOnly
 
         Shortcut {
             id: itemShortcut
@@ -34,9 +22,9 @@ IconLabelContent {
         }
 
         text: itemShortcut.nativeText
-        font: control.font
-        color: label.color
-        horizontalAlignment: label.horizontalAlignment === Text.AlignLeft ? Text.AlignRight : label.horizontalAlignment
-        verticalAlignment: label.verticalAlignment === Text.AlignTop ? Text.AlignBottom : label.verticalAlignment
+        font: root.font
+        color: root.color
+        horizontalAlignment: root.textUnderIcon ? Text.AlignHCenter : Text.AlignRight
+        verticalAlignment: Text.AlignVCenter
     }
 }
