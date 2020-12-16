@@ -249,11 +249,12 @@ void IconLabelLayout::Private::layout()
         }
         if (labelItem) {
             labelItem->setSize(labelRect.size());
-            labelItem->setOpacity(0);
-            labelItem->setY(iconRect.y() + iconRect.height());
-            labelItem->setProperty("opacity", 1);
-            labelItem->setX(labelRect.x()); // Not animating X so that the text will only slide vertically
-            labelItem->setProperty("y", labelRect.y());
+            labelItem->setPosition(labelRect.topLeft());
+//             labelItem->setOpacity(0);
+//             labelItem->setY(iconRect.y() + iconRect.height());
+//             labelItem->setProperty("opacity", 1);
+//             labelItem->setX(labelRect.x()); // Not animating X so that the text will only slide vertically
+//             labelItem->setProperty("y", labelRect.y());
         }
         break;
     }
@@ -287,11 +288,12 @@ void IconLabelLayout::Private::layout()
         }
         if (labelItem) {
             labelItem->setSize(labelRect.size());
-            labelItem->setOpacity(0);
-            labelItem->setX(iconRect.x() + (mirrored ? -labelRect.width() : iconRect.width()));
-            labelItem->setProperty("opacity", 1);
-            labelItem->setProperty("x", labelRect.x());
-            labelItem->setY(labelRect.y()); // Not animating Y so that the text will only slide horizontally
+            labelItem->setPosition(labelRect.topLeft());
+//             labelItem->setOpacity(0);
+//             labelItem->setX(iconRect.x() + (mirrored ? -labelRect.width() : iconRect.width()));
+//             labelItem->setProperty("opacity", 1);
+//             labelItem->setProperty("x", labelRect.x());
+//             labelItem->setY(labelRect.y()); // Not animating Y so that the text will only slide horizontally
         }
         break;
     }
@@ -635,10 +637,11 @@ void IconLabelLayout::setAlignment(Qt::Alignment alignment)
     }
 
     d->alignment = static_cast<Qt::Alignment>(align);
-//     if (d->labelItem) {
-//         d->labelItem->setVAlign(valign);
-//         d->labelItem->setHAlign(halign);
-//     }
+    if (d->labelItem) {
+        d->labelItem->setProperty("horizontalAlignment", halign);
+        d->labelItem->setProperty("verticalAlignment", valign);
+
+    }
     emit alignmentChanged();
     if (isComponentComplete()) {
         d->layout();
