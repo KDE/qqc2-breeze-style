@@ -27,7 +27,6 @@ public:
     void registerTypes(const char *uri) override;
 
 private:
-    // I'm doing this just because that's what QQuickStylePlugin does
     Q_DISABLE_COPY(QQC2BreezeStylePlugin)
 };
 

@@ -5,6 +5,7 @@ set(qqc2breezestyle_SRCS
     impl/paintedsymbolitem.cpp
     impl/iconlabellayout.cpp
     impl/qquickicon.cpp
+    impl/kcolorutilssingleton.cpp
 )
 
 #[[ I don't actually know if this would work.
@@ -18,7 +19,17 @@ ecm_qt_declare_logging_category(qqc2breezestyle_SRCS
 ]]
 
 add_library(qqc2breezestyleplugin SHARED ${qqc2breezestyle_SRCS})
-target_link_libraries(qqc2breezestyleplugin Qt5::Core Qt5::Gui Qt5::Qml Qt5::Quick Qt5::QuickControls2 Qt5::QuickTemplates2 KF5::ConfigCore KF5::Kirigami2)
+target_link_libraries(qqc2breezestyleplugin
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Qml
+    Qt5::Quick
+    Qt5::QuickControls2
+    Qt5::QuickTemplates2
+    KF5::ConfigCore
+    KF5::Kirigami2
+    KF5::GuiAddons
+)
 
 if(KF5ConfigWidgets_FOUND)
     target_link_libraries(qqc2breezestyleplugin

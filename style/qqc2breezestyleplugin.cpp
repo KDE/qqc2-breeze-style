@@ -9,6 +9,7 @@
 #include "impl/qqc2breezeglobal_p.h"
 #include "impl/paintedsymbolitem.h"
 #include "impl/iconlabellayout.h"
+#include "impl/kcolorutilssingleton.h"
 
 #include <QQmlEngine>
 #include <QQmlFile>
@@ -18,7 +19,8 @@
 BEGIN_NAMESPACE_QQC2Breeze
 
 QQC2BreezeStylePlugin::QQC2BreezeStylePlugin(QObject *parent) : QQmlExtensionPlugin(parent)
-{}
+{
+}
 
 QQC2BreezeStylePlugin::~QQC2BreezeStylePlugin()
 {}
@@ -36,6 +38,10 @@ void QQC2BreezeStylePlugin::registerTypes(const char *uri)
     qmlRegisterModule(uri, 1, 0);
     qmlRegisterType<PaintedSymbolItem>(uri, 1, 0, "PaintedSymbol");
     qmlRegisterType<IconLabelLayout>(uri, 1, 0, "IconLabelLayout");
+    // KColorUtilsSingleton only has invocable functions.
+    // Would this be better off being a SingletonInstance?
+    qmlRegisterSingletonType<KColorUtilsSingleton>(uri, 1, 0, "KColorUtils",
+        [] (QQmlEngine*, QJSEngine*) -> QObject* { return new KColorUtilsSingleton; });
     //END
 
     // Prevent additional types from being added.
