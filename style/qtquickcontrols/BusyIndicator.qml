@@ -46,73 +46,107 @@ T.BusyIndicator {
         }
     }
 
-    contentItem: Charts.PieChart {
-        implicitWidth: Kirigami.Units.gridUnit
-        implicitHeight: Kirigami.Units.gridUnit
+    contentItem: Loader {
+        sourceComponent: Kirigami.Theme.lowPowerHardware || GraphicsInfo.api == GraphicsInfo.Software ?
+            lowPowerSpinnerComponent : fancySpinnerComponent
+    }
 
-        opacity: control.visible && control.enabled && control.running ? 1 : 0
-        Behavior on opacity {
-            NumberAnimation { duration: Kirigami.Units.shortDuration }
-        }
+    Component {
+        id: lowPowerSpinnerComponent
+        Kirigami.Icon {
+            id: lowPowerSpinner
+            implicitWidth: Kirigami.Units.iconSizes.fromTextSize
+            implicitHeight: Kirigami.Units.iconSizes.fromTextSize
+            source: "view-refresh"
 
-        valueSources: Charts.ModelSource { roleName: "value"; model: pieModel }
-        colorSource: Charts.ModelSource { roleName: "color"; model: pieModel }
-
-        fromAngle: 0
-        toAngle: 360
-        thickness: Math.max(Kirigami.Units.smallRadius * 2, Math.floor(Math.min(width, height)/6))
-        filled: false
-        //smoothEnds: true // Turns the segments into aesthetically pleasing round dots, but breaks the connected appearance when the ends meet :(
-
-        ParallelAnimation {
-            running: control.visible && control.enabled && control.running
-            SequentialAnimation {
-                loops: Animation.Infinite
-                NumberAnimation {
-                    target: contentItem
-                    property: "toAngle"
-                    from: 0
-                    to: 360
-                    duration: 1000
-                }
-                PauseAnimation {
-                    duration: 1000
-                }
-                NumberAnimation {
-                    target: contentItem
-                    property: "fromAngle"
-                    from: 0
-                    to: 360
-                    duration: 1000
-                }
-                PropertyAction {
-                    target: contentItem
-                    properties: "fromAngle,toAngle"
-                    value: 0
-                }
+            opacity: control.visible && control.enabled && control.running ? 1 : 0
+            Behavior on opacity {
+                OpacityAnimator { duration: Kirigami.Units.shortDuration }
             }
-            SequentialAnimation {
+
+            smooth: true
+            RotationAnimator {
+                target: lowPowerSpinner
+                running: control.visible && control.enabled && control.running
+                from: 0
+                to: 360
                 loops: Animation.Infinite
-                RotationAnimator {
-                    target: control.contentItem
-                    from: 0
-                    to: 30
-                    duration: 1000
+                duration: 1500
+            }
+        }
+    }
+
+    Component {
+        id: fancySpinnerComponent
+        Charts.PieChart {
+            id: fancySpinner
+            implicitWidth: Kirigami.Units.gridUnit
+            implicitHeight: Kirigami.Units.gridUnit
+
+            opacity: control.visible && control.enabled && control.running ? 1 : 0
+            Behavior on opacity {
+                OpacityAnimator { duration: Kirigami.Units.shortDuration }
+            }
+
+            valueSources: Charts.ModelSource { roleName: "value"; model: pieModel }
+            colorSource: Charts.ModelSource { roleName: "color"; model: pieModel }
+
+            fromAngle: 0
+            toAngle: 360
+            thickness: Math.max(Kirigami.Units.smallRadius * 2, Math.floor(Math.min(width, height)/6))
+            filled: false
+            //smoothEnds: true // Turns the segments into aesthetically pleasing round dots, but breaks the connected appearance when the ends meet :(
+
+            ParallelAnimation {
+                running: control.visible && control.enabled && control.running
+                SequentialAnimation {
+                    loops: Animation.Infinite
+                    NumberAnimation {
+                        target: fancySpinner
+                        property: "toAngle"
+                        from: 0
+                        to: 360
+                        duration: 1000
+                    }
+                    PauseAnimation {
+                        duration: 1000
+                    }
+                    NumberAnimation {
+                        target: fancySpinner
+                        property: "fromAngle"
+                        from: 0
+                        to: 360
+                        duration: 1000
+                    }
+                    PropertyAction {
+                        target: fancySpinner
+                        properties: "fromAngle,toAngle"
+                        value: 0
+                    }
                 }
-                // This is meant to appear to rotate at the same rate as the other 2 animations.
-                // In order to achieve this, the actual rotation rate has to be much higher than the other 2 animimations.
-                // This is because the pie angles aren't being animated while this animation is running.
-                RotationAnimator {
-                    target: control.contentItem
-                    from: 30
-                    to: 330
-                    duration: 1000
-                }
-                RotationAnimator {
-                    target: control.contentItem
-                    from: 330
-                    to: 360
-                    duration: 1000
+                SequentialAnimation {
+                    loops: Animation.Infinite
+                    RotationAnimator {
+                        target: fancySpinner
+                        from: 0
+                        to: 30
+                        duration: 1000
+                    }
+                    // This is meant to appear to rotate at the same rate as the other 2 animations.
+                    // In order to achieve this, the actual rotation rate has to be much higher than the other 2 animimations.
+                    // This is because the pie angles aren't being animated while this animation is running.
+                    RotationAnimator {
+                        target: fancySpinner
+                        from: 30
+                        to: 330
+                        duration: 1000
+                    }
+                    RotationAnimator {
+                        target: fancySpinner
+                        from: 330
+                        to: 360
+                        duration: 1000
+                    }
                 }
             }
         }
