@@ -43,5 +43,6 @@ T.CheckBox {
     contentItem: InlineIconLabelContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
+        alignment: Qt.AlignLeft | Qt.AlignVCenter
     }
 }
