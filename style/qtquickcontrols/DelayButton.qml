@@ -21,8 +21,22 @@ T.DelayButton {
     Kirigami.Theme.inherit: false
 
     padding: Kirigami.Units.mediumSpacing
-    leftPadding: !contentItem.hasIcon && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
-    rightPadding: contentItem.hasLabel ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    leftPadding: {
+        if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
+            || display == T.AbstractButton.TextOnly
+            || display == T.AbstractButton.TextUnderIcon) {
+            return Kirigami.Units.mediumHorizontalPadding
+        } else {
+            return control.horizontalPadding
+        }
+    }
+    rightPadding: {
+        if (contentItem.hasLabel && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
+            return Kirigami.Units.mediumHorizontalPadding
+        } else {
+            return control.horizontalPadding
+        }
+    }
 
     spacing: Kirigami.Units.mediumSpacing
 

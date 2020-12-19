@@ -32,8 +32,22 @@ T.ToolButton {
     }
 
     padding: Kirigami.Units.mediumSpacing
-    horizontalPadding: contentItem.hasLabel && !contentItem.hasIcon ?
-        Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    leftPadding: {
+        if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
+            || display == T.AbstractButton.TextOnly
+            || display == T.AbstractButton.TextUnderIcon) {
+            return Kirigami.Units.mediumHorizontalPadding
+        } else {
+            return control.horizontalPadding
+        }
+    }
+    rightPadding: {
+        if (contentItem.hasLabel && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
+            return Kirigami.Units.mediumHorizontalPadding
+        } else {
+            return control.horizontalPadding
+        }
+    }
 
     spacing: Kirigami.Units.mediumSpacing
 
