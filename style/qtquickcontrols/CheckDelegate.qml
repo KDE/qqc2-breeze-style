@@ -19,25 +19,50 @@ T.CheckDelegate {
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
     padding: Kirigami.Units.mediumSpacing
-    leftPadding: !contentItem.hasIcon && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
-    rightPadding: contentItem.hasLabel ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    leftPadding: {
+        if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
+            || display == T.AbstractButton.TextOnly
+            || display == T.AbstractButton.TextUnderIcon) {
+            return Kirigami.Units.mediumHorizontalPadding
+        } else {
+            return control.horizontalPadding
+        }
+    }
+    rightPadding: {
+        if (!control.indicator.visible
+            && contentItem.hasLabel
+            && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
+            return Kirigami.Units.mediumHorizontalPadding
+        } else {
+            return control.horizontalPadding
+        }
+    }
 
     spacing: Kirigami.Units.mediumSpacing
 
     icon.width: Kirigami.Units.iconSizes.auto
     icon.height: Kirigami.Units.iconSizes.auto
-    
-    Kirigami.Theme.colorSet: control.highlighted || control.down ? Kirigami.Theme.Selection : parent.Kirigami.Theme.colorSet
-    Kirigami.Theme.inherit: !(control.highlighted || control.down)
+
+    Kirigami.Theme.colorSet: {
+        if (control.down) {
+            return Kirigami.Theme.Button
+        } else if (control.highlighted) {
+            return Kirigami.Theme.Selection
+        } else {
+            return Kirigami.Theme.View
+        }
+    }
+    Kirigami.Theme.inherit: !control.highlighted && !control.down
 
     contentItem: IconLabelContent {
         control: control
-        text: control.text
+        alignment: Qt.AlignLeft | Qt.AlignVCenter
         //color: (control.pressed && !control.checked && !control.sectionDelegate) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
     }
 
     indicator: CheckIndicator {
         control: control
+        mirrored: !control.mirrored
     }
 
     background: DelegateBackground {
