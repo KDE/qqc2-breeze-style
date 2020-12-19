@@ -15,6 +15,9 @@ IconLabelLayout {
     property bool reserveSpaceForIndicator: false
     property bool reserveSpaceForIcon: false
     property bool reserveSpaceForArrow: false
+    property bool oppositeSideIndicator: control instanceof Controls.CheckDelegate
+        || control instanceof Controls.RadioDelegate
+        || control instanceof Controls.SwitchDelegate
 
     icon: control.icon
     text: control.text
@@ -26,13 +29,7 @@ IconLabelLayout {
     property real verticalPadding: padding
     leftPadding: {
         let lpad = horizontalPadding
-        /*
-        // Not needed since Qt 5.15.2
-        if (root.mirrored) {
-            return lpad
-        }
-        */
-        if (control.indicator
+        if (!oppositeSideIndicator && control.indicator
             && (control.indicator.visible || reserveSpaceForIndicator)
             && control.indicator.width > 0
         ) {
@@ -45,15 +42,12 @@ IconLabelLayout {
     }
     rightPadding: {
         let rpad = horizontalPadding
-        /*
-        // Not needed since Qt 5.15.2
-        if (!root.mirrored) {
-            return rpad
+        if (oppositeSideIndicator && control.indicator
+            && (control.indicator.visible || reserveSpaceForIndicator)
+            && control.indicator.width > 0
+        ) {
+            rpad += control.indicator.width + root.spacing
         }
-        if (reserveSpaceForIcon && !icon.visible) {
-            rpad += control.icon.width + root.spacing
-        }
-        */
         if (control.arrow && (control.arrow.visible || reserveSpaceForArrow) && control.arrow.width > 0) {
             rpad += control.arrow.width + root.spacing
         }
