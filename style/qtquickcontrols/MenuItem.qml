@@ -16,7 +16,7 @@ import "impl"
 
 T.MenuItem {
     id: control
-    
+
     property bool __reserveSpaceForIndicator: true
     property bool __reserveSpaceForIcon: false
     property bool __reserveSpaceForArrow: true
@@ -39,7 +39,25 @@ T.MenuItem {
 
     spacing: Kirigami.Units.mediumSpacing
     padding: Kirigami.Units.mediumSpacing
-    leftPadding: !contentItem.icon.visible && !control.indicator ? Kirigami.Units.mediumHorizontalPadding : control.horizontalPadding
+    leftPadding: {
+        if (!control.indicator.visible // TODO move to right padding
+            && ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
+                || display == T.AbstractButton.TextOnly
+                || display == T.AbstractButton.TextUnderIcon)) {
+            return Kirigami.Units.mediumHorizontalPadding
+        } else {
+            return control.horizontalPadding
+        }
+    }
+    rightPadding: {
+        if (!control.arrow.visible
+            && contentItem.hasLabel // False if contentItem has been replaced
+            && display != T.AbstractButton.IconOnly) {
+            return Kirigami.Units.mediumHorizontalPadding
+        } else {
+            return control.horizontalPadding
+        }
+    }
 
     Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.MenuItem
@@ -78,7 +96,7 @@ T.MenuItem {
     contentItem: IconLabelShortcutContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
-        alignment: Text.AlignLeft
+        alignment: Qt.AlignLeft | Qt.AlignVCenter
         reserveSpaceForIndicator: control.__reserveSpaceForIndicator
         reserveSpaceForIcon: control.__reserveSpaceForIcon
         reserveSpaceForArrow: control.__reserveSpaceForArrow
