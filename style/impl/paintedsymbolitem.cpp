@@ -5,8 +5,6 @@
 #include "paintedsymbolitem.h"
 #include <QPainter>
 
-BEGIN_NAMESPACE_QQC2Breeze
-
 PaintedSymbolItem::PaintedSymbolItem(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
 }
@@ -94,5 +92,3 @@ void PaintedSymbolItem::setSymbolType(const SymbolType symbolType)
     update();
     emit symbolTypeChanged();
 }
-
-END_NAMESPACE

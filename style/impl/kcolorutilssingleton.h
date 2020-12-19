@@ -7,9 +7,6 @@
 
 #include <QObject>
 #include <qqml.h>
-#include "qqc2breezeglobal_p.h"
-
-BEGIN_NAMESPACE_QQC2Breeze
 
 class KColorUtilsSingleton : public QObject
 {
@@ -30,7 +27,5 @@ public:
     Q_INVOKABLE QColor tint(const QColor &base, const QColor &color, qreal amount = 0.3);
     Q_INVOKABLE QColor mix(const QColor &color1, const QColor &color2, qreal bias = 0.5);
 };
-
-END_NAMESPACE
 
 #endif // KCOLORUTILSSINGLETON_H

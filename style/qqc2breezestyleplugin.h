@@ -7,11 +7,7 @@
 #ifndef QQC2BREEZESTYLEPLUGIN_H
 #define QQC2BREEZESTYLEPLUGIN_H
 
-#include "impl/qqc2breezeglobal_p.h"
-
 #include <QQmlExtensionPlugin>
-
-BEGIN_NAMESPACE_QQC2Breeze
 
 class QQC2BreezeStylePlugin : public QQmlExtensionPlugin
 {
@@ -30,5 +26,4 @@ private:
     Q_DISABLE_COPY(QQC2BreezeStylePlugin)
 };
 
-END_NAMESPACE
 #endif

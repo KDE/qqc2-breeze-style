@@ -6,8 +6,6 @@
 
 #include "qquickicon_p.h"
 
-BEGIN_NAMESPACE_QQC2Breeze
-
 class QQuickIconPrivate : public QSharedData
 {
 public:
@@ -239,5 +237,3 @@ QQuickIcon QQuickIcon::resolve(const QQuickIcon &other) const
 
     return resolved;
 }
-
-END_NAMESPACE

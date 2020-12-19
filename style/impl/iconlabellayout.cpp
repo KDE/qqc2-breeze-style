@@ -11,8 +11,6 @@
 #include <unordered_map>
 #include <cmath>
 
-BEGIN_NAMESPACE_QQC2Breeze
-
 void IconLabelLayout::Private::setInitialIconItemProperties()
 {
     initialIconItemProperties = {
@@ -724,5 +722,3 @@ void IconLabelLayout::geometryChanged(const QRectF& newGeometry, const QRectF& o
     }
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
 }
-
-END_NAMESPACE

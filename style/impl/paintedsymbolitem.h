@@ -5,10 +5,7 @@
 #ifndef PAINTEDSYMBOLITEM_H
 #define PAINTEDSYMBOLITEM_H
 
-#include "qqc2breezeglobal_p.h"
 #include <QtQuick>
-
-BEGIN_NAMESPACE_QQC2Breeze
 
 class PaintedSymbolItem : public QQuickPaintedItem
 {
@@ -48,7 +45,5 @@ private:
 
     QPen m_pen = QPen(m_color, m_penWidth, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
 };
-
-END_NAMESPACE
 
 #endif

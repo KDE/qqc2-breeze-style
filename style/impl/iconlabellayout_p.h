@@ -8,8 +8,6 @@
 
 #include "iconlabellayout.h"
 
-BEGIN_NAMESPACE_QQC2Breeze
-
 class IconLabelLayout::Private
 {
     friend class IconLabelLayout;
@@ -86,7 +84,5 @@ public:
     bool firstLayoutCompleted = false;
     int layoutCount = 0;
 };
-
-END_NAMESPACE
 
 #endif

@@ -6,12 +6,9 @@
 #ifndef ICONLABELLAYOUT_H
 #define ICONLABELLAYOUT_H
 
-#include "qqc2breezeglobal_p.h"
 #include "qquickicon_p.h"
 #include <memory>
 #include <QQuickItem>
-
-BEGIN_NAMESPACE_QQC2Breeze
 
 /**
  * An item that is meant to show, hide and position an icon item and a label item based on an AbstractButton's display property.
@@ -227,8 +224,6 @@ private:
     Q_DISABLE_COPY(IconLabelLayout)
 };
 
-END_NAMESPACE
-
-QML_DECLARE_TYPE(QQC2Breeze::IconLabelLayout)
+QML_DECLARE_TYPE(IconLabelLayout)
 
 #endif

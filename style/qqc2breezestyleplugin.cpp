@@ -6,7 +6,6 @@
  */
 
 #include "qqc2breezestyleplugin.h"
-#include "impl/qqc2breezeglobal_p.h"
 #include "impl/paintedsymbolitem.h"
 #include "impl/iconlabellayout.h"
 #include "impl/kcolorutilssingleton.h"
@@ -15,8 +14,6 @@
 #include <QQmlFile>
 #include <QQmlContext>
 #include <QQuickWindow>
-
-BEGIN_NAMESPACE_QQC2Breeze
 
 QQC2BreezeStylePlugin::QQC2BreezeStylePlugin(QObject *parent) : QQmlExtensionPlugin(parent)
 {
@@ -47,7 +44,5 @@ void QQC2BreezeStylePlugin::registerTypes(const char *uri)
     // Prevent additional types from being added.
     qmlProtectModule(uri, 2);
 }
-
-END_NAMESPACE
 
 #include "moc_qqc2breezestyleplugin.cpp"

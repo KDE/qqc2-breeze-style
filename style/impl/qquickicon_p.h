@@ -7,16 +7,12 @@
 #ifndef QQUICKICON_P_H
 #define QQUICKICON_P_H
 
-#include "qqc2breezeglobal_p.h"
-
 #include <QtCore/qurl.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qobjectdefs.h>
 #include <QtCore/qshareddata.h>
 #include <QtGui/qcolor.h>
 #include <QtQml/qqml.h>
-
-BEGIN_NAMESPACE_QQC2Breeze
 
 class QQuickIconPrivate;
 
@@ -73,7 +69,5 @@ public:
 private:
     QExplicitlySharedDataPointer<QQuickIconPrivate> d;
 };
-
-END_NAMESPACE
 
 #endif // QQUICKICON_P_H

@@ -5,8 +5,6 @@
 #include "kcolorutilssingleton.h"
 #include <KColorUtils>
 
-BEGIN_NAMESPACE_QQC2Breeze
-
 KColorUtilsSingleton::KColorUtilsSingleton(QObject* parent) : QObject(parent)
 {
 }
@@ -60,5 +58,3 @@ QColor KColorUtilsSingleton::mix(const QColor& color1, const QColor& color2, qre
 {
     return KColorUtils::mix(color1, color2, bias);
 }
-
-END_NAMESPACE
