@@ -18,10 +18,12 @@ Rectangle {
         s = s - s/3
         return s
     }
+    property bool mirrored: control.mirrored
+    readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 
     visible: control.checkable
 
-    x: control.text || control.icon.name ? (control.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
+    x: controlHasContent ? (root.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
     y: control.topPadding + (control.availableHeight - height) / 2
 
     implicitWidth: implicitHeight
