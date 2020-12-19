@@ -205,7 +205,7 @@ void IconLabelLayout::Private::layout()
             q->setIconRect(alignedRect(mirrored, alignment,
                                         QSizeF(qMin(iconItem->implicitWidth(), q->availableWidth()),
                                                 qMin(iconItem->implicitHeight(), q->availableHeight())),
-                                        QRectF(leftPadding, topPadding, q->availableWidth(), q->availableHeight())));
+                                        QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight())));
             iconItem->setSize(iconRect.size());
             iconItem->setPosition(iconRect.topLeft()); // Not animating icon positions because it tends to look wrong
         }
@@ -215,7 +215,7 @@ void IconLabelLayout::Private::layout()
             q->setLabelRect(alignedRect(mirrored, alignment,
                                         QSizeF(qMin(labelItem->implicitWidth(), q->availableWidth()),
                                                 qMin(labelItem->implicitHeight(), q->availableHeight())),
-                                        QRectF(leftPadding, topPadding, q->availableWidth(), q->availableHeight())));
+                                        QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight())));
             labelItem->setSize(labelRect.size());
             labelItem->setPosition(labelRect.topLeft()); // Not animating when text only because the text tends to clip outside
         }
@@ -240,7 +240,7 @@ void IconLabelLayout::Private::layout()
         QRectF combinedRect = alignedRect(mirrored, alignment,
                                           QSizeF(qMax(iconSize.width(), textSize.width()),
                                                  iconSize.height() + effectiveSpacing + textSize.height()),
-                                          QRectF(leftPadding, topPadding, q->availableWidth(), q->availableHeight()));
+                                          QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight()));
         q->setIconRect(alignedRect(mirrored, Qt::AlignHCenter | Qt::AlignTop, iconSize, combinedRect));
         q->setLabelRect(alignedRect(mirrored, Qt::AlignHCenter | Qt::AlignBottom, textSize, combinedRect));
         if (iconItem) {
@@ -279,7 +279,7 @@ void IconLabelLayout::Private::layout()
         const QRectF combinedRect = alignedRect(mirrored, alignment,
                                                 QSizeF(iconSize.width() + effectiveSpacing + textSize.width(),
                                                        qMax(iconSize.height(), textSize.height())),
-                                                QRectF(leftPadding, topPadding, q->availableWidth(), q->availableHeight()));
+                                                QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight()));
         q->setIconRect(alignedRect(mirrored, Qt::AlignLeft | Qt::AlignVCenter, iconSize, combinedRect));
         q->setLabelRect(alignedRect(mirrored, Qt::AlignRight | Qt::AlignVCenter, textSize, combinedRect));
         if (iconItem) {
