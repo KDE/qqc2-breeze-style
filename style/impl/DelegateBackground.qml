@@ -17,7 +17,7 @@ Kirigami.ShadowedRectangle {
 
     implicitHeight: Kirigami.Units.mediumControlHeight
 
-    radius: Kirigami.Units.smallRadius
+//     radius: Kirigami.Units.smallRadius
 //     readonly property real topRadius: root.isCurrentItem && root.currentIndex == 0 ? Kirigami.Units.smallRadius : 0
     //readonly property real bottomRadius: root.isCurrentItem && root.currentIndex == root.count-1 ? Kirigami.Units.smallRadius : 0
 
@@ -33,12 +33,32 @@ Kirigami.ShadowedRectangle {
     color: {
         if (control.down) {
             return Kirigami.Theme.alternateBackgroundColor
+        } else if (control.highlighted) {
+            return Kirigami.Theme.highlightColor
         } else {
-            return Kirigami.Theme.backgroundColor
+            return "transparent"
         }
     }
-    border {
-        width: Kirigami.Units.smallBorder
+//     border {
+//         width: Kirigami.Units.smallBorder
+//         color: Kirigami.Theme.focusColor
+//     }
+    Rectangle {
+        height: Kirigami.Units.smallBorder
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+        }
+        color: Kirigami.Theme.focusColor
+    }
+    Rectangle {
+        height: Kirigami.Units.smallBorder
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
         color: Kirigami.Theme.focusColor
     }
 }
