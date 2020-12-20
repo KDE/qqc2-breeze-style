@@ -11,50 +11,42 @@
 #include <unordered_map>
 #include <cmath>
 
-void IconLabelLayout::Private::setInitialIconItemProperties()
+bool IconLabelLayoutPrivate::createIconItem()
 {
-    initialIconItemProperties = {
-        {QStringLiteral("source"), icon.nameOrSource()},
-        {QStringLiteral("implicitWidth"), icon.width()},
-        {QStringLiteral("implicitHeight"), icon.height()},
-        {QStringLiteral("color"), icon.color()},
-        {QStringLiteral("cache"), icon.cache()}
-    };
-}
-
-bool IconLabelLayout::Private::createIconItem()
-{
+    Q_Q(IconLabelLayout);
     if (iconItem)
         return false;
 
-    //setInitialIconItemProperties();
-    // Using createWithInitialProperties() causes an invalid address segfault;
     iconItem = qobject_cast<QQuickItem*>(iconComponent->create());
     iconItem->setParentItem(q);
     iconItem->setObjectName(QStringLiteral("iconItem"));
-    syncIconItem();
+    iconItem->setProperty("source", icon.nameOrSource());
+    iconItem->setProperty("implicitWidth", icon.width());
+    iconItem->setProperty("implicitHeight", icon.height());
+    iconItem->setProperty("color", icon.color());
+    iconItem->setProperty("cache", icon.cache());
     return true;
 }
 
-bool IconLabelLayout::Private::destroyIconItem()
+bool IconLabelLayoutPrivate::destroyIconItem()
 {
     if (!iconItem)
         return false;
 
-//     unwatchChanges(iconItem);
-    iconItem->deleteLater();
+    delete iconItem;
     iconItem = nullptr;
     return true;
 }
 
-bool IconLabelLayout::Private::updateIconItem()
+bool IconLabelLayoutPrivate::updateIconItem()
 {
+    Q_Q(IconLabelLayout);
     if (!q->hasIcon())
         return destroyIconItem();
     return createIconItem();
 }
 
-void IconLabelLayout::Private::syncIconItem()
+void IconLabelLayoutPrivate::syncIconItem()
 {
     if (!iconItem || icon.isEmpty())
         return;
@@ -66,8 +58,9 @@ void IconLabelLayout::Private::syncIconItem()
     iconItem->setProperty("cache", icon.cache());
 }
 
-void IconLabelLayout::Private::updateOrSyncIconItem()
+void IconLabelLayoutPrivate::updateOrSyncIconItem()
 {
+    Q_Q(IconLabelLayout);
     if (updateIconItem()) {
         if (q->isComponentComplete()) {
             updateImplicitSize();
@@ -78,66 +71,54 @@ void IconLabelLayout::Private::updateOrSyncIconItem()
     }
 }
 
-void IconLabelLayout::Private::setInitialLabelItemProperties()
+bool IconLabelLayoutPrivate::createLabelItem()
 {
-    const int halign = alignment & Qt::AlignHorizontal_Mask;
-    const int valign = alignment & Qt::AlignVertical_Mask;
-    initialLabelItemProperties = {
-        {QStringLiteral("text"), text},
-        {QStringLiteral("font"), font},
-        {QStringLiteral("color"), color},
-        {QStringLiteral("horizontalAlignment"), halign},
-        {QStringLiteral("verticalAlignment"), valign}
-    };
-}
-
-bool IconLabelLayout::Private::createLabelItem()
-{
+    Q_Q(IconLabelLayout);
     if (labelItem)
         return false;
 
-    setInitialLabelItemProperties();
-    labelItem = qobject_cast<QQuickItem*>(labelComponent->createWithInitialProperties(initialLabelItemProperties));
+    labelItem = qobject_cast<QQuickItem*>(labelComponent->create());
     labelItem->setParentItem(q);
     labelItem->setObjectName(QStringLiteral("labelItem"));
-//     syncLabelItem();
+    labelItem->setProperty("text", text);
+    labelItem->setProperty("font", font);
+    labelItem->setProperty("color", color);
+    const int halign = alignment & Qt::AlignHorizontal_Mask;
+    labelItem->setProperty("horizontalAlignment", halign);
+    const int valign = alignment & Qt::AlignVertical_Mask;
+    labelItem->setProperty("verticalAlignment", valign);
     return true;
 }
 
-bool IconLabelLayout::Private::destroyLabelItem()
+bool IconLabelLayoutPrivate::destroyLabelItem()
 {
     if (!labelItem)
         return false;
 
-//     unwatchChanges(labelItem);
-    labelItem->deleteLater();
+    delete labelItem;
     labelItem = nullptr;
     return true;
 }
 
-bool IconLabelLayout::Private::updateLabelItem()
+bool IconLabelLayoutPrivate::updateLabelItem()
 {
+    Q_Q(IconLabelLayout);
     if (!q->hasLabel())
         return destroyLabelItem();
     return createLabelItem();
 }
 
-void IconLabelLayout::Private::syncLabelItem()
+void IconLabelLayoutPrivate::syncLabelItem()
 {
     if (!labelItem)
         return;
 
     labelItem->setProperty("text", text);
-//     labelItem->setProperty("font", font);
-//     labelItem->setProperty("color", color);
-//     const int halign = alignment & Qt::AlignHorizontal_Mask;
-//     labelItem->setProperty("horizontalAlignment", halign);
-//     const int valign = alignment & Qt::AlignVertical_Mask;
-//     labelItem->setProperty("verticalAlignment", valign);
 }
 
-void IconLabelLayout::Private::updateOrSyncLabelItem()
+void IconLabelLayoutPrivate::updateOrSyncLabelItem()
 {
+    Q_Q(IconLabelLayout);
     if (updateLabelItem()) {
         if (q->isComponentComplete()) {
             updateImplicitSize();
@@ -148,8 +129,9 @@ void IconLabelLayout::Private::updateOrSyncLabelItem()
     }
 }
 
-void IconLabelLayout::Private::updateImplicitSize()
+void IconLabelLayoutPrivate::updateImplicitSize()
 {
+    Q_Q(IconLabelLayout);
     bool showIcon = iconItem && q->hasIcon();
     bool showLabel = labelItem && q->hasLabel();
 
@@ -159,9 +141,9 @@ void IconLabelLayout::Private::updateImplicitSize()
     const qreal labelImplicitWidth = showLabel ? std::ceil(labelItem->implicitWidth()) : 0;
     const qreal labelImplicitHeight = showLabel ? std::ceil(labelItem->implicitHeight()) : 0;
     const qreal effectiveSpacing = showLabel && showIcon && iconItem->implicitWidth() > 0 ? spacing : 0;
-    contentWidth = display == Display::TextBesideIcon ?
+    contentWidth = display == IconLabelLayout::TextBesideIcon ?
         iconImplicitWidth + labelImplicitWidth + effectiveSpacing : qMax(iconImplicitWidth, labelImplicitWidth);
-    contentHeight = display == Display::TextUnderIcon ?
+    contentHeight = display == IconLabelLayout::TextUnderIcon ?
         iconImplicitHeight + labelImplicitHeight + effectiveSpacing : qMax(iconImplicitHeight, labelImplicitHeight);
     q->setImplicitSize(contentWidth + leftPadding + rightPadding, contentHeight + topPadding + bottomPadding);
     q->setAvailableWidth();
@@ -191,13 +173,14 @@ static QRectF alignedRect(bool mirrored, Qt::Alignment alignment, const QSizeF &
     return QRectF(x, y, w, h);
 }
 
-void IconLabelLayout::Private::layout()
+void IconLabelLayoutPrivate::layout()
 {
+    Q_Q(IconLabelLayout);
     if (!q->isComponentComplete())
         return;
 
     switch (display) {
-    case Display::IconOnly:
+    case IconLabelLayout::IconOnly:
         if (iconItem) {
             // Icons should always be pixel aligned, so convert to QRect
             q->setIconRect(alignedRect(mirrored, alignment,
@@ -208,7 +191,7 @@ void IconLabelLayout::Private::layout()
             iconItem->setPosition(iconRect.topLeft()); // Not animating icon positions because it tends to look wrong
         }
         break;
-    case Display::TextOnly:
+    case IconLabelLayout::TextOnly:
         if (labelItem) {
             q->setLabelRect(alignedRect(mirrored, alignment,
                                         QSizeF(qMin(labelItem->implicitWidth(), q->availableWidth()),
@@ -219,7 +202,7 @@ void IconLabelLayout::Private::layout()
         }
         break;
 
-    case Display::TextUnderIcon: {
+    case IconLabelLayout::TextUnderIcon: {
         // Work out the sizes first, as the positions depend on them.
         QSizeF iconSize;
         QSizeF textSize;
@@ -248,16 +231,17 @@ void IconLabelLayout::Private::layout()
         if (labelItem) {
             labelItem->setSize(labelRect.size());
             labelItem->setPosition(labelRect.topLeft());
-//             labelItem->setOpacity(0);
+            // NOTE: experimental animations when changing display types
+//             labelItem->setOpacity(0); // Reset opacity before OpacityAnimator is activated
 //             labelItem->setY(iconRect.y() + iconRect.height());
-//             labelItem->setProperty("opacity", 1);
+//             labelItem->setProperty("opacity", 1); // Activate OpacityAnimator
 //             labelItem->setX(labelRect.x()); // Not animating X so that the text will only slide vertically
 //             labelItem->setProperty("y", labelRect.y());
         }
         break;
     }
 
-    case Display::TextBesideIcon:
+    case IconLabelLayout::TextBesideIcon:
     default:
         // Work out the sizes first, as the positions depend on them.
         QSizeF iconSize(0, 0);
@@ -287,9 +271,10 @@ void IconLabelLayout::Private::layout()
         if (labelItem) {
             labelItem->setSize(labelRect.size());
             labelItem->setPosition(labelRect.topLeft());
-//             labelItem->setOpacity(0);
+            // NOTE: experimental animations when changing display types
+//             labelItem->setOpacity(0); // Reset opacity before OpacityAnimator is activated
 //             labelItem->setX(iconRect.x() + (mirrored ? -labelRect.width() : iconRect.width()));
-//             labelItem->setProperty("opacity", 1);
+//             labelItem->setProperty("opacity", 1); // Activate OpacityAnimator
 //             labelItem->setProperty("x", labelRect.x());
 //             labelItem->setY(labelRect.y()); // Not animating Y so that the text will only slide horizontally
         }
@@ -312,7 +297,7 @@ void IconLabelLayout::Private::layout()
 
 IconLabelLayout::IconLabelLayout(QQuickItem *parent)
     : QQuickItem(parent)
-    , d(new Private(this))
+    , d_ptr(new IconLabelLayoutPrivate(this))
 {
 }
 
@@ -322,11 +307,13 @@ IconLabelLayout::~IconLabelLayout()
 
 QQmlComponent *IconLabelLayout::iconComponent() const
 {
+    Q_D(const IconLabelLayout);
     return d->iconComponent;
 }
 
 void IconLabelLayout::setIconComponent(QQmlComponent *iconComponent)
 {
+    Q_D(IconLabelLayout);
     if (iconComponent == d->iconComponent) {
         return;
     }
@@ -338,11 +325,13 @@ void IconLabelLayout::setIconComponent(QQmlComponent *iconComponent)
 
 QQmlComponent *IconLabelLayout::labelComponent() const
 {
+    Q_D(const IconLabelLayout);
     return d->labelComponent;
 }
 
 void IconLabelLayout::setLabelComponent(QQmlComponent *labelComponent)
 {
+    Q_D(IconLabelLayout);
     if (labelComponent == d->labelComponent) {
         return;
     }
@@ -354,11 +343,13 @@ void IconLabelLayout::setLabelComponent(QQmlComponent *labelComponent)
 
 bool IconLabelLayout::hasIcon() const
 {
+    Q_D(const IconLabelLayout);
     return d->hasIcon;
 }
 
 void IconLabelLayout::setHasIcon()
 {
+    Q_D(IconLabelLayout);
     if (d->hasIcon == !textOnly() && !d->icon.isEmpty()) {
         return;
     }
@@ -369,11 +360,13 @@ void IconLabelLayout::setHasIcon()
 
 bool IconLabelLayout::hasLabel() const
 {
+    Q_D(const IconLabelLayout);
     return d->hasLabel;
 }
 
 void IconLabelLayout::setHasLabel()
 {
+    Q_D(IconLabelLayout);
     if (d->hasLabel == !iconOnly() && !d->text.isEmpty()) {
         return;
     }
@@ -384,11 +377,13 @@ void IconLabelLayout::setHasLabel()
 
 QQuickIcon IconLabelLayout::icon() const
 {
+    Q_D(const IconLabelLayout);
     return d->icon;
 }
 
 void IconLabelLayout::setIcon(const QQuickIcon &icon)
 {
+    Q_D(IconLabelLayout);
     if (icon == d->icon) {
         return;
     }
@@ -402,11 +397,13 @@ void IconLabelLayout::setIcon(const QQuickIcon &icon)
 
 QString IconLabelLayout::text() const
 {
+    Q_D(const IconLabelLayout);
     return d->text;
 }
 
 void IconLabelLayout::setText(const QString &text)
 {
+    Q_D(IconLabelLayout);
     if (text == d->text) {
         return;
     }
@@ -419,11 +416,13 @@ void IconLabelLayout::setText(const QString &text)
 
 QFont IconLabelLayout::font() const
 {
+    Q_D(const IconLabelLayout);
     return d->font;
 }
 
 void IconLabelLayout::setFont(const QFont &font)
 {
+    Q_D(IconLabelLayout);
     if (font == d->font) {
         return;
     }
@@ -431,19 +430,19 @@ void IconLabelLayout::setFont(const QFont &font)
     d->font = font;
     if (d->labelItem) {
         d->labelItem->setProperty("font", font);
-    } else {
-        d->initialLabelItemProperties[QStringLiteral("font")] = font;
     }
     emit fontChanged(font);
 }
 
 QColor IconLabelLayout::color() const
 {
+    Q_D(const IconLabelLayout);
     return d->color;
 }
 
 void IconLabelLayout::setColor(const QColor &color)
 {
+    Q_D(IconLabelLayout);
     if (color == d->color) {
         return;
     }
@@ -458,11 +457,13 @@ void IconLabelLayout::setColor(const QColor &color)
 
 QRectF IconLabelLayout::iconRect() const
 {
+    Q_D(const IconLabelLayout);
     return d->iconRect;
 }
 
 void IconLabelLayout::setIconRect(const QRectF &rect)
 {
+    Q_D(IconLabelLayout);
     // Icons should always be pixel aligned
     QRectF alignedRect = rect.toAlignedRect();
     if (d->iconRect == alignedRect) {
@@ -475,11 +476,13 @@ void IconLabelLayout::setIconRect(const QRectF &rect)
 
 QRectF IconLabelLayout::labelRect() const
 {
+    Q_D(const IconLabelLayout);
     return d->labelRect;
 }
 
 void IconLabelLayout::setLabelRect(const QRectF &rect)
 {
+    Q_D(IconLabelLayout);
     if (d->labelRect == rect) {
         return;
     }
@@ -490,11 +493,13 @@ void IconLabelLayout::setLabelRect(const QRectF &rect)
 
 qreal IconLabelLayout::availableWidth() const
 {
+    Q_D(const IconLabelLayout);
     return d->availableWidth;
 }
 
 void IconLabelLayout::setAvailableWidth()
 {
+    Q_D(IconLabelLayout);
     qreal newAvailableWidth = std::max(0.0, width() - leftPadding() - rightPadding());
     if (d->availableWidth == newAvailableWidth) {
         return;
@@ -506,11 +511,13 @@ void IconLabelLayout::setAvailableWidth()
 
 qreal IconLabelLayout::availableHeight() const
 {
+    Q_D(const IconLabelLayout);
     return d->availableHeight;
 }
 
 void IconLabelLayout::setAvailableHeight()
 {
+    Q_D(IconLabelLayout);
     qreal newAvailableHeight = std::max(0.0, height() - topPadding() - bottomPadding());
     if (d->availableHeight == newAvailableHeight) {
         return;
@@ -522,11 +529,13 @@ void IconLabelLayout::setAvailableHeight()
 
 qreal IconLabelLayout::spacing() const
 {
+    Q_D(const IconLabelLayout);
     return d->spacing;
 }
 
 void IconLabelLayout::setSpacing(qreal spacing)
 {
+    Q_D(IconLabelLayout);
     if (spacing == d->spacing) {
         return;
     }
@@ -540,11 +549,13 @@ void IconLabelLayout::setSpacing(qreal spacing)
 
 qreal IconLabelLayout::leftPadding() const
 {
+    Q_D(const IconLabelLayout);
     return d->leftPadding;
 }
 
 void IconLabelLayout::setLeftPadding(qreal leftPadding)
 {
+    Q_D(IconLabelLayout);
     if (leftPadding == d->leftPadding) {
         return;
     }
@@ -556,11 +567,13 @@ void IconLabelLayout::setLeftPadding(qreal leftPadding)
 
 qreal IconLabelLayout::rightPadding() const
 {
+    Q_D(const IconLabelLayout);
     return d->rightPadding;
 }
 
 void IconLabelLayout::setRightPadding(qreal rightPadding)
 {
+    Q_D(IconLabelLayout);
     if (rightPadding == d->rightPadding) {
         return;
     }
@@ -572,11 +585,13 @@ void IconLabelLayout::setRightPadding(qreal rightPadding)
 
 qreal IconLabelLayout::topPadding() const
 {
+    Q_D(const IconLabelLayout);
     return d->topPadding;
 }
 
 void IconLabelLayout::setTopPadding(qreal topPadding)
 {
+    Q_D(IconLabelLayout);
     if (topPadding == d->topPadding) {
         return;
     }
@@ -588,11 +603,13 @@ void IconLabelLayout::setTopPadding(qreal topPadding)
 
 qreal IconLabelLayout::bottomPadding() const
 {
+    Q_D(const IconLabelLayout);
     return d->bottomPadding;
 }
 
 void IconLabelLayout::setBottomPadding(qreal bottomPadding)
 {
+    Q_D(IconLabelLayout);
     if (bottomPadding == d->bottomPadding) {
         return;
     }
@@ -604,11 +621,13 @@ void IconLabelLayout::setBottomPadding(qreal bottomPadding)
 
 bool IconLabelLayout::mirrored() const
 {
+    Q_D(const IconLabelLayout);
     return d->mirrored;
 }
 
 void IconLabelLayout::setMirrored(bool mirrored)
 {
+    Q_D(IconLabelLayout);
     if (mirrored == d->mirrored) {
         return;
     }
@@ -622,11 +641,13 @@ void IconLabelLayout::setMirrored(bool mirrored)
 
 Qt::Alignment IconLabelLayout::alignment() const
 {
+    Q_D(const IconLabelLayout);
     return d->alignment;
 }
 
 void IconLabelLayout::setAlignment(Qt::Alignment alignment)
 {
+    Q_D(IconLabelLayout);
     const int valign = alignment & Qt::AlignVertical_Mask;
     const int halign = alignment & Qt::AlignHorizontal_Mask;
     const uint align = (valign ? valign : Qt::AlignVCenter) | (halign ? halign : Qt::AlignHCenter);
@@ -648,11 +669,13 @@ void IconLabelLayout::setAlignment(Qt::Alignment alignment)
 
 IconLabelLayout::Display IconLabelLayout::display() const
 {
+    Q_D(const IconLabelLayout);
     return d->display;
 }
 
 void IconLabelLayout::setDisplay(IconLabelLayout::Display display)
 {
+    Q_D(IconLabelLayout);
     Display oldDisplay = d->display;
     if (display == oldDisplay) {
         return;
@@ -681,26 +704,31 @@ void IconLabelLayout::setDisplay(IconLabelLayout::Display display)
 
 bool IconLabelLayout::iconOnly() const
 {
+    Q_D(const IconLabelLayout);
     return d->display == Display::IconOnly;
 }
 
 bool IconLabelLayout::textOnly() const
 {
+    Q_D(const IconLabelLayout);
     return d->display == Display::TextOnly;
 }
 
 bool IconLabelLayout::textBesideIcon() const
 {
+    Q_D(const IconLabelLayout);
     return d->display == Display::TextBesideIcon;
 }
 
 bool IconLabelLayout::textUnderIcon() const
 {
+    Q_D(const IconLabelLayout);
     return d->display == Display::TextUnderIcon;
 }
 
 void IconLabelLayout::relayout()
 {
+    Q_D(IconLabelLayout);
     if (isComponentComplete()) {
         d->updateImplicitSize();
         d->layout();

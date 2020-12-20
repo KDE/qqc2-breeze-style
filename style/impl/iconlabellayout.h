@@ -10,6 +10,8 @@
 #include <memory>
 #include <QQuickItem>
 
+class IconLabelLayoutPrivate;
+
 /**
  * An item that is meant to show, hide and position an icon item and a label item based on an AbstractButton's display property.
  * 
@@ -218,9 +220,8 @@ protected:
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
 
 private:
-    class Private;
-    friend class Private;
-    const std::unique_ptr<Private> d;
+    QScopedPointer<IconLabelLayoutPrivate> const d_ptr;
+    Q_DECLARE_PRIVATE(IconLabelLayout)
     Q_DISABLE_COPY(IconLabelLayout)
 };
 

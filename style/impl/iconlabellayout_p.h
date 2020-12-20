@@ -8,20 +8,20 @@
 
 #include "iconlabellayout.h"
 
-class IconLabelLayout::Private
+class IconLabelLayoutPrivate : public QObject
 {
-    friend class IconLabelLayout;
-public:
-    Private(IconLabelLayout *qq) : q(qq) {}
+    Q_DECLARE_PUBLIC(IconLabelLayout)
+    Q_DISABLE_COPY(IconLabelLayoutPrivate)
 
-    void setInitialIconItemProperties();
+public:
+    IconLabelLayoutPrivate(IconLabelLayout *qq) : q_ptr(qq) {}
+
     bool createIconItem();
     bool destroyIconItem();
     bool updateIconItem();
     void syncIconItem();
     void updateOrSyncIconItem();
 
-    void setInitialLabelItemProperties();
     bool createLabelItem();
     bool destroyLabelItem();
     bool updateLabelItem();
@@ -31,7 +31,7 @@ public:
     void updateImplicitSize();
     void layout();
 
-    IconLabelLayout *q = nullptr;
+    IconLabelLayout * const q_ptr;
 
     QPointer<QQmlComponent> iconComponent;
     QPointer<QQmlComponent> labelComponent;
@@ -39,27 +39,11 @@ public:
     QPointer<QQuickItem> iconItem;
     QPointer<QQuickItem> labelItem;
 
-    QVariantMap initialIconItemProperties = {
-        {QStringLiteral("source"), QStringLiteral("")},
-        {QStringLiteral("implicitWidth"), 0.0},
-        {QStringLiteral("implicitHeight"), 0.0},
-        {QStringLiteral("color"), QColor("transparent")},
-        {QStringLiteral("cache"), true}
-    };
-
-    QVariantMap initialLabelItemProperties = {
-        {QStringLiteral("text"), QString()},
-        {QStringLiteral("font"), QFont()},
-        {QStringLiteral("color"), QColor()},
-        {QStringLiteral("horizontalAlignment"), Qt::AlignHCenter},
-        {QStringLiteral("verticalAlignment"), Qt::AlignVCenter}
-    };
-
     bool hasIcon = false;
     bool hasLabel = false;
 
     QQuickIcon icon = QQuickIcon();
-    QString text = QStringLiteral("");
+    QString text = QString();
     QFont font = QFont();
     QColor color = QColor();
 
@@ -74,7 +58,7 @@ public:
 
     bool mirrored = false;
     Qt::Alignment alignment = Qt::AlignCenter;
-    Display display = Display::TextBesideIcon;
+    IconLabelLayout::Display display = IconLabelLayout::TextBesideIcon;
 
     QRectF iconRect = QRectF(0,0,0,0);
     QRectF labelRect = QRectF(0,0,0,0);
