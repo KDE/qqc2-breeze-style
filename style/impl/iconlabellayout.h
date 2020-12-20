@@ -220,7 +220,7 @@ protected:
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
 
 private:
-    QScopedPointer<IconLabelLayoutPrivate> const d_ptr;
+    const QScopedPointer<IconLabelLayoutPrivate> d_ptr;
     Q_DECLARE_PRIVATE(IconLabelLayout)
     Q_DISABLE_COPY(IconLabelLayout)
 };
