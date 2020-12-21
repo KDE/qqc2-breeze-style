@@ -33,7 +33,7 @@ bool IconLabelLayoutPrivate::destroyIconItem()
     if (!iconItem)
         return false;
 
-    delete iconItem;
+    iconItem->deleteLater();
     iconItem = nullptr;
     return true;
 }
@@ -95,7 +95,7 @@ bool IconLabelLayoutPrivate::destroyLabelItem()
     if (!labelItem)
         return false;
 
-    delete labelItem;
+    labelItem->deleteLater();
     labelItem = nullptr;
     return true;
 }
