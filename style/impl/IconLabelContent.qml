@@ -10,14 +10,19 @@ import org.kde.breeze 1.0
 
 IconLabelLayout {
     id: root
-
+    // NOTE: Remember to use root.mirrored, not control.mirrored in this file
+    // Controls can change the mirrored property of this component and those
+    // changes will be ignored if you use control.mirrored directly.
     property alias control: root.parent
     property bool reserveSpaceForIndicator: false
     property bool reserveSpaceForIcon: false
     property bool reserveSpaceForArrow: false
-    property bool oppositeSideIndicator: control instanceof Controls.CheckDelegate
-        || control instanceof Controls.RadioDelegate
-        || control instanceof Controls.SwitchDelegate
+    property bool oppositeSideIndicator: {
+        if (!control.indicator) { return false; }
+        let indicatorCenter = control.indicator.x + control.indicator.width/2
+        let controlCenter = control.width/2
+        return root.mirrored ? indicatorCenter <= controlCenter : indicatorCenter > controlCenter
+    }
 
     icon: control.icon
     text: control.text
