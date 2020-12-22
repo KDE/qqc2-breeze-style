@@ -3,6 +3,7 @@
  */
 
 import QtQuick 2.15
+import org.kde.kirigami 2.14 as Kirigami
 Rectangle {
     id: raisedGradient
     anchors.fill: parent
