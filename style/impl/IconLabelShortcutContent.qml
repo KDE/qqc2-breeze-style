@@ -11,7 +11,8 @@ IconLabelContent {
     id: root
     Controls.Label {
         id: shortcutLabel
-        x: root.width - shortcutLabel.width - (root.mirrored ? root.leftPadding : root.rightPadding)
+        // rightPadding is actually left side padding when mirrored == true
+        x: root.mirrored ? root.rightPadding : root.width - shortcutLabel.width - root.rightPadding
         y: root.labelRect.y
         width: Math.min(shortcutLabel.contentWidth, Math.max(0, root.width - root.implicitWidth - root.spacing))
         visible: Qt.styleHints.showShortcutsInContextMenus && control.action && control.action.hasOwnProperty("shortcut") && control.action.shortcut !== undefined && !root.iconOnly
@@ -24,7 +25,7 @@ IconLabelContent {
         text: itemShortcut.nativeText
         font: root.font
         color: root.color
-        horizontalAlignment: root.textUnderIcon ? Text.AlignHCenter : Text.AlignRight
+        horizontalAlignment: Text.AlignRight
         verticalAlignment: Text.AlignVCenter
     }
 }
