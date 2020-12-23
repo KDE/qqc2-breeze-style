@@ -11,6 +11,11 @@ import "impl"
 T.ToolButton {
     id: control
 
+    // HACK: Compatibility with qqc2-desktop-style hack for showing arrows when buttons open menus
+    // This one is at the level of `control` to make it more reliably accessible to the indicator.
+    // Unlike qqc2-desktop-style, the arrow is in the indicator property instead of the background.
+    property bool __showMenuArrow: false
+
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding,
                             implicitIndicatorWidth + leftPadding + rightPadding)
@@ -69,7 +74,22 @@ T.ToolButton {
         text: control.Kirigami.MnemonicData.richTextLabel
     }
 
+    indicator: Kirigami.Icon {
+        visible: control.__showMenuArrow
+        implicitHeight: Kirigami.Units.iconSizes.auto
+        implicitWidth: implicitHeight
+        anchors {
+            right: control.right
+            rightMargin: control.rightPadding
+            verticalCenter: control.verticalCenter
+        }
+        source: "arrow-down"
+    }
+
     background: ButtonBackground {
+        // HACK: Compatibility with qqc2-desktop-style hack for showing arrows when buttons open menus
+        // This one is in the background because that's what Kirigami expects
+        property alias showMenuArrow: control.__showMenuArrow
         control: control
     }
 }
