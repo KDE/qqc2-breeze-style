@@ -31,9 +31,10 @@ class PlasmaDesktopTheme : public Kirigami::PlatformTheme
     Q_PROPERTY(QColor viewBackgroundColor READ viewBackgroundColor NOTIFY colorsChanged)
     Q_PROPERTY(QColor viewHoverColor READ viewHoverColor NOTIFY colorsChanged)
     Q_PROPERTY(QColor viewFocusColor READ viewFocusColor NOTIFY colorsChanged)
-    
+
     // Breeze QQC2 style colors
     Q_PROPERTY(QColor separatorColor READ separatorColor NOTIFY colorsChanged)
+    Q_PROPERTY(QColor buttonSeparatorColor READ buttonSeparatorColor NOTIFY colorsChanged)
 
     // Needed to deal with ShadowedRectangle
     Q_PROPERTY(bool lowPowerHardware MEMBER m_lowPowerHardware CONSTANT)
@@ -58,6 +59,7 @@ public:
 
     // Breeze QQC2 style colors
     QColor separatorColor() const;
+    QColor buttonSeparatorColor() const;
 
 Q_SIGNALS:
     void colorsChanged();
@@ -81,6 +83,7 @@ private:
 
     // Breeze QQC2 style colors
     QColor m_separatorColor;
+    QColor m_buttonSeparatorColor;
 
     // Needed to deal with ShadowedRectangle
     bool m_lowPowerHardware = false;

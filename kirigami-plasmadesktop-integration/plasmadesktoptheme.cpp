@@ -124,11 +124,16 @@ public:
             pal.setColor(state, QPalette::Midlight, ret.scheme.shade(KColorScheme::MidlightShade));
             pal.setColor(state, QPalette::Mid, ret.scheme.shade(KColorScheme::MidShade));
             pal.setColor(state, QPalette::Dark, ret.scheme.shade(KColorScheme::DarkShade));
-            pal.setColor(state, QPalette::Shadow, ret.scheme.shade(KColorScheme::ShadowShade));
+            pal.setColor(state, QPalette::Shadow, QColor(0,0,0,51 /* 20% */));//ret.scheme.shade(KColorScheme::ShadowShade));
 
             pal.setBrush(state, QPalette::AlternateBase, ret.scheme.background(KColorScheme::AlternateBackground));
             pal.setBrush(state, QPalette::Link, ret.scheme.foreground(KColorScheme::LinkText));
             pal.setBrush(state, QPalette::LinkVisited, ret.scheme.foreground(KColorScheme::VisitedText));
+
+            pal.setBrush(state, QPalette::PlaceholderText, ret.scheme.foreground(KColorScheme::InactiveText));
+            pal.setBrush(state, QPalette::BrightText, KColorUtils::hcyColor(
+                KColorUtils::hue(pal.buttonText().color()),KColorUtils::chroma(pal.buttonText().color()), 1 - KColorUtils::luma(pal.buttonText().color())
+            ));
         }
         ret.palette = pal;
         m_cache.insert(key, ret);
@@ -321,11 +326,13 @@ void PlasmaDesktopTheme::syncColors()
         return KColorUtils::luma(bg) > 0.5 ? KColorUtils::mix(bg, fg, baseRatio) : KColorUtils::mix(bg, fg, baseRatio/2);
     };
 
+    m_buttonSeparatorColor = separatorColor(m_buttonBackgroundColor, m_buttonTextColor, 0.3);
+
     switch (colorSet()) {
 //     case ColorSet::View:
 //     case ColorSet::Window:
     case ColorSet::Button:
-        m_separatorColor = separatorColor(backgroundColor(), textColor(), 0.3);
+        m_separatorColor = m_buttonSeparatorColor;
         break;
     case ColorSet::Selection:
         m_separatorColor = focusColor();
@@ -393,6 +400,11 @@ QColor PlasmaDesktopTheme::viewFocusColor() const
 QColor PlasmaDesktopTheme::separatorColor() const
 {
     return m_separatorColor;
+}
+
+QColor PlasmaDesktopTheme::buttonSeparatorColor() const
+{
+    return m_buttonSeparatorColor;
 }
 
 #include "plasmadesktoptheme.moc"
