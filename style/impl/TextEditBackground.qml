@@ -21,17 +21,10 @@ Rectangle {
 
     color: Kirigami.Theme.backgroundColor
     radius: Kirigami.Units.smallRadius
-    Rectangle {
-        Kirigami.Theme.colorSet: Kirigami.Theme.Button
-        Kirigami.Theme.inherit: false
-        radius: parent.radius
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            color: control.activeFocus || control.hovered ?
-                    Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
-            width: Kirigami.Units.smallBorder
-        }
+    border {
+        color: control.activeFocus || control.hovered ?
+            Kirigami.Theme.focusColor : Kirigami.Theme.buttonSeparatorColor
+        width: Kirigami.Units.smallBorder
     }
 
     FocusRect {
