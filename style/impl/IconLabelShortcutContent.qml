@@ -9,23 +9,47 @@ import org.kde.kirigami 2.14 as Kirigami
 
 IconLabelContent {
     id: root
-    Controls.Label {
-        id: shortcutLabel
+    
+    Loader {
+        id: shortcutLabelLoader
         // rightPadding is actually left side padding when mirrored == true
-        x: root.mirrored ? root.rightPadding : root.width - shortcutLabel.width - root.rightPadding
+        x: root.mirrored ? root.rightPadding : root.width - width - root.rightPadding
         y: root.labelRect.y
-        width: Math.min(shortcutLabel.contentWidth, Math.max(0, root.width - root.implicitWidth - root.spacing))
-        visible: Qt.styleHints.showShortcutsInContextMenus && control.action && control.action.hasOwnProperty("shortcut") && control.action.shortcut !== undefined && !root.iconOnly
-
-        Shortcut {
-            id: itemShortcut
-            sequence: (shortcutLabel.visible && control.action !== null) ? control.action.shortcut : ""
+        width: Math.min(implicitWidth, Math.max(0, root.width - root.implicitWidth - root.spacing))
+        sourceComponent: {
+            if (Qt.styleHints.showShortcutsInContextMenus
+                && control.action
+                && control.action.hasOwnProperty("shortcut")
+                && control.action.shortcut !== undefined
+                && !root.iconOnly
+            ) {
+                return shortcutLabelComponent
+            } else {
+                return null
+            }
         }
+    }
 
-        text: itemShortcut.nativeText
-        font: root.font
-        color: root.color
-        horizontalAlignment: Text.AlignRight
-        verticalAlignment: Text.AlignVCenter
+    Component {
+        id: shortcutLabelComponent
+        Controls.Label {
+            id: shortcutLabel
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+            }
+
+            Shortcut {
+                id: itemShortcut
+                sequence: (shortcutLabel.visible && control.action !== null) ? control.action.shortcut : ""
+            }
+
+            text: itemShortcut.nativeText
+            font: root.font
+            color: root.color
+            horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignVCenter
+        }
     }
 }

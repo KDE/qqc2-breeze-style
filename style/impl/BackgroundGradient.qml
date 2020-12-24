@@ -4,18 +4,28 @@
 
 import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
-Rectangle {
-    id: raisedGradient
+
+Loader {
+    id: root
+    property real radius: Kirigami.Units.smallRadius
     anchors.fill: parent
-    gradient: Gradient {
-        GradientStop {
-            position: 0
-            color: Qt.rgba(1,1,1,0.03125)
-        }
-        GradientStop {
-            position: 1
-            color: Qt.rgba(0,0,0,0.0625)
+    sourceComponent: visible ? raisedGradientComponent : null
+    Component {
+        id: raisedGradientComponent
+        Rectangle {
+            id: raisedGradient
+            anchors.fill: parent
+            gradient: Gradient {
+                GradientStop {
+                    position: 0
+                    color: Qt.rgba(1,1,1,0.03125)
+                }
+                GradientStop {
+                    position: 1
+                    color: Qt.rgba(0,0,0,0.0625)
+                }
+            }
+            radius: root.radius
         }
     }
-    radius: Kirigami.Units.smallRadius
 }

@@ -6,6 +6,7 @@ import QtQuick.Controls 2.15 as Controls
 import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
+import org.kde.breeze 1.0
 import "impl"
 
 T.ToolButton {
@@ -74,16 +75,26 @@ T.ToolButton {
         text: control.Kirigami.MnemonicData.richTextLabel
     }
 
-    indicator: Kirigami.Icon {
-        visible: control.__showMenuArrow
-        implicitHeight: Kirigami.Units.iconSizes.auto
-        implicitWidth: implicitHeight
+    indicator: Loader {
         anchors {
             right: control.right
             rightMargin: control.rightPadding
             verticalCenter: control.verticalCenter
         }
-        source: "arrow-down"
+        sourceComponent: control.__showMenuArrow ? indicatorComponent : null
+    }
+
+    Component {
+        id: indicatorComponent
+        PaintedSymbol {
+            implicitHeight: {
+                let h = Kirigami.Units.symbolSize(Kirigami.Units.gridUnit)
+                return h + penWidth*2
+            }
+            implicitWidth: implicitHeight
+            color: Kirigami.Theme.textColor
+            symbolType: /*visible && control.checked ? PaintedSymbol.UpArrow :*/ PaintedSymbol.DownArrow
+        }
     }
 
     background: ButtonBackground {

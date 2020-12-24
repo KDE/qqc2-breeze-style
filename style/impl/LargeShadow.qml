@@ -5,21 +5,23 @@
 import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
-Kirigami.ShadowedRectangle {
+Loader {
     id: root
     anchors.fill: parent
     z: -1
-    radius: Kirigami.Units.smallRadius
-    color: "transparent"//shadow.color
-    //visible: !control.editable && !control.flat && !control.down && control.enabled
-    shadow {
-        color: Qt.rgba(0,0,0,0.2)
-        size: 16
-        yOffset: 4
-    }
-    Component.onCompleted: {
-        if (Kirigami.Theme.lowPowerHardware) {
-            root.visible = false
+    property real radius: Kirigami.Units.smallRadius
+    sourceComponent: visible && !Kirigami.Theme.lowPowerHardware ? shadowComponent : null
+    Component {
+        id: shadowComponent
+        Kirigami.ShadowedRectangle {
+            anchors.fill: parent
+            radius: root.radius
+            color: "transparent"
+            shadow {
+                color: Qt.rgba(0,0,0,0.2)
+                size: 16
+                yOffset: 4
+            }
         }
     }
 }
