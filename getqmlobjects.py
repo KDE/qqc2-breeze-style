@@ -25,7 +25,6 @@ for dirpath, dirnames, filenames in os.walk(INPUT_DIR):
         # Thanks StackOverflow! https://stackoverflow.com/questions/4940032/how-to-search-for-a-string-in-text-files
         with open(filepath, 'rb', 0) as file, mmap.mmap(file.fileno(), 0, access=mmap.ACCESS_READ) as s:
             if s.find(b"pragma Singleton") != -1:
-                # Using 2.0 because that's what Qt does with its own QQC2 style impl modules
-                print("singleton " + f.rstrip('.qml') + " 2.0 " + f)
+                print("singleton " + f.rstrip('.qml') + " 1.0 " + f)
             else:
-                print(f.rstrip('.qml') + " 2.0 " + f)
+                print(f.rstrip('.qml') + " 1.0 " + f)
