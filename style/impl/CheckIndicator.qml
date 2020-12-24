@@ -12,12 +12,7 @@ Rectangle {
 
     property alias control: root.parent
     property int checkState: control.checkState
-    property int symbolSize: {
-        let s = Math.min(root.height, root.width)
-        s = s - s%6
-        s = s - s/3
-        return s
-    }
+    property int symbolSize: Kirigami.Units.symbolSize(Math.min(width, height))
     property bool mirrored: control.mirrored
     readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 
@@ -53,7 +48,7 @@ Rectangle {
         id: checkmark
         anchors.centerIn: parent
         // Should reliably create pixel aligned checkmarks that don't get cut off on the sides.
-        height: root.symbolSize + penWidth
+        height: root.symbolSize + penWidth*2
         width: height
         color: Kirigami.Theme.textColor
         symbolType: PaintedSymbol.Checkmark

@@ -136,6 +136,12 @@ QtObject {
     function estimatedBlockHeight(pointSize) {
         return Math.floor(pointSize / 0.75 * 1.21875);
     }
+
+    function symbolSize(size) {
+        size -= size % 6
+        size -= size/3
+        return size
+    }
     //END Breeze Units
 
     /**
