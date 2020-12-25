@@ -25,7 +25,7 @@ T.RangeSlider {
     Kirigami.Theme.inherit: false
 
     padding: Kirigami.Settings.tabletMode ? Kirigami.Units.mediumSpacing : 0
-    
+
     property bool __hasHandle: Boolean(control.handle)
     property real __preInset: Math.max(
     (__hasHandle ?
@@ -42,12 +42,20 @@ T.RangeSlider {
         control: control
         position: control.first.position
         visualPosition: control.first.visualPosition
+        hovered: first.hovered
+        pressed: first.pressed
+        // For some reason, this doesn't need focusReason to work correctly even though focusReason doesn't work on this
+        visualFocus: activeFocus
     }
 
     second.handle: SliderHandle {
         control: control
         position: control.second.position
         visualPosition: control.second.visualPosition
+        hovered: second.hovered
+        pressed: second.pressed
+        // For some reason, this doesn't need focusReason to work correctly even though focusReason doesn't work on this
+        visualFocus: activeFocus
     }
 
     background: SliderGroove {

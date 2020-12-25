@@ -13,6 +13,9 @@ Rectangle {
     property alias control: root.parent
     property real position: control.position
     property real visualPosition: control.visualPosition
+    property bool hovered: control.hovered
+    property bool pressed: control.pressed
+    property bool visualFocus: control.visualFocus
 
     property bool usePreciseHandle: false
 
@@ -50,7 +53,7 @@ Rectangle {
     color: Kirigami.Theme.backgroundColor
     border {
         width: Kirigami.Units.smallBorder
-        color: (control.down || control.highlighted || control.visualFocus || control.hovered) && control.enabled ?
+        color: (root.pressed || root.visualFocus || root.hovered) && control.enabled ?
             Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     }
 
@@ -72,14 +75,14 @@ Rectangle {
 
     SmallShadow {
         id: shadow
-        visible: !control.flat && !control.down && control.enabled
+        visible: !root.pressed && control.enabled
         z: -1
         radius: parent.radius
     }
 
     FocusRect {
         baseRadius: root.radius
-        visible: control.visualFocus
+        visible: root.visualFocus
     }
 
     // Prevents animations from running when loaded
