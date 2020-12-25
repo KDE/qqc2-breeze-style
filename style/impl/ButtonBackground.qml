@@ -19,10 +19,10 @@ Kirigami.ShadowedRectangle {
     property bool isInButtonGroup: Boolean(buttonGroup)
     property bool isFirstInButtonGroup: isInButtonGroup && buttonGroup.buttons[0] == control
     property bool isLastInButtonGroup: isInButtonGroup && buttonGroup.buttons[buttonGroup.buttons.length-1] == control
-    property real leftRadius: !isInButtonGroup || (isLastInButtonGroup && zeroOrLessSpacing) ? Kirigami.Units.smallRadius : 0
-    property real rightRadius: !isInButtonGroup || (isFirstInButtonGroup && zeroOrLessSpacing) ? Kirigami.Units.smallRadius : 0
+    property real leftRadius: !isInButtonGroup || (isLastInButtonGroup && zeroOrLessSpacing) ? radius : 0
+    property real rightRadius: !isInButtonGroup || (isFirstInButtonGroup && zeroOrLessSpacing) ? radius : 0
 
-//     radius: Kirigami.Units.smallRadius
+    radius: Kirigami.Units.smallRadius
     corners {
         topLeftRadius: leftRadius
         topRightRadius: rightRadius
