@@ -83,6 +83,13 @@ Item {
                 Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
         }
 
+        Behavior on border.color {
+            ColorAnimation {
+                duration: Kirigami.Units.shortDuration
+                easing.type: Easing.OutCubic
+            }
+        }
+
         Behavior on x {
             enabled: handle.loaded// && !Kirigami.Settings.hasTransientTouchInput
             // Using SmoothedAnimation because the fill effect is anchored to the handle.
@@ -94,7 +101,8 @@ Item {
 
         SmallShadow {
             id: shadow
-            visible: !control.flat && !control.down && control.enabled
+            opacity: control.down ? 0 : 1
+            visible: control.enabled
             z: -1
             radius: parent.radius
         }

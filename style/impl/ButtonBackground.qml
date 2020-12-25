@@ -39,7 +39,11 @@ Kirigami.ShadowedRectangle {
         if (control.down || control.checked ) {
             Kirigami.Theme.alternateBackgroundColor
         } else if (control.flat) {
-            return "transparent"
+            return Qt.rgba(
+                control.palette.button.r,
+                control.palette.button.g,
+                control.palette.button.b,
+                0)
         } else {
             control.palette.button
         }
@@ -58,15 +62,29 @@ Kirigami.ShadowedRectangle {
         width: Kirigami.Units.smallBorder
     }
 
+    Behavior on color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on border.color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+
     SmallShadow {
         id: shadowRect
-        visible: !control.editable && !control.flat && !control.down && control.enabled
+        opacity: control.down ? 0 : 1
+        visible: !control.editable && !control.flat && control.enabled
         z: -1
         radius: mainBackground.radius
     }
 
     FocusRect {
-        id: focRect
+        id: focusRect
         baseRadius: mainBackground.radius
         visible: control.visualFocus
     }
@@ -74,7 +92,7 @@ Kirigami.ShadowedRectangle {
     BackgroundGradient {
         id: bgGradient
         radius: mainBackground.radius
-//         rotation: control.checked ? 180 : 0
-        visible: control.enabled && !control.editable && !control.flat && !control.down && !control.hovered
+        opacity: control.down || control.hovered ? 0 : 1
+        visible: !control.editable && !control.flat && control.enabled
     }
 }

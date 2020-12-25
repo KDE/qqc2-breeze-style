@@ -8,8 +8,9 @@ import org.kde.kirigami 2.14 as Kirigami
 Loader {
     id: root
     property real radius: Kirigami.Units.smallRadius
+    property bool unloaded: !visible
     anchors.fill: parent
-    sourceComponent: visible ? raisedGradientComponent : null
+    sourceComponent: unloaded ? null : raisedGradientComponent
     Component {
         id: raisedGradientComponent
         Rectangle {
@@ -26,6 +27,13 @@ Loader {
                 }
             }
             radius: root.radius
+            opacity: parent.opacity
+            Behavior on opacity {
+                OpacityAnimator {
+                    duration: Kirigami.Units.shortDuration
+                    easing.type: Easing.OutCubic
+                }
+            }
         }
     }
 }

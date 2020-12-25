@@ -24,7 +24,7 @@ Rectangle {
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
-    color: control.down || control.checked ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    color: (control.down || control.checked) ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
 
     border {
         width: Kirigami.Units.smallBorder
@@ -32,9 +32,23 @@ Rectangle {
             Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     }
 
+    Behavior on color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on border.color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+
     SmallShadow {
         id: shadow
-        visible: !control.flat && !control.down && control.enabled
+        opacity: control.down ? 0 : 1
+        visible: control.enabled
         z: -1
         radius: parent.radius
     }

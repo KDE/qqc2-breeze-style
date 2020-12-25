@@ -57,6 +57,13 @@ Rectangle {
             Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     }
 
+    Behavior on border.color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+
     Behavior on x {
         enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
@@ -75,7 +82,8 @@ Rectangle {
 
     SmallShadow {
         id: shadow
-        visible: !root.pressed && control.enabled
+        opacity: root.pressed ? 0 : 1
+        visible: control.enabled
         z: -1
         radius: parent.radius
     }

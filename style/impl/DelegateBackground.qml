@@ -14,15 +14,38 @@ Loader {
     property bool listViewHasHighlight: isInListView && control.ListView.view.highlight
     property int currentIndex: isInListView ? control.ListView.view.currentIndex : 0
     property int count: isInListView ? control.ListView.view.count : 0
-    sourceComponent: control.highlighted || control.down || control.hovered || control.visualFocus ? backgroundComponent : null
+
+    // Rectangle compatibility properties. 3rd party devs might assume that these properties are available.
+    property color color: {
+        if (control.down      ) {
+            return Kirigami.Theme.alternateBackgroundColor
+        } else if (control.highlighted) {
+            return Kirigami.Theme.highlightColor
+        } else {
+            return Qt.rgba(
+                Kirigami.Theme.backgroundColor.r,
+                Kirigami.Theme.backgroundColor.g,
+                Kirigami.Theme.backgroundColor.b,
+                0)
+        }
+    }
+    property real radius: 0
+    property QtObject border: QtObject {
+        property real width: 0
+        property color color: Kirigami.Theme.focusColor
+    }
+
+    visible: control.highlighted || control.down || control.hovered || control.visualFocus
+    sourceComponent: visible ? backgroundComponent : null
 
     Component {
         id: backgroundComponent
         Kirigami.ShadowedRectangle {
+            id: mainBackground
             implicitHeight: Kirigami.Units.mediumControlHeight
             anchors.fill: parent
 
-        //     radius: Kirigami.Units.smallRadius
+            radius: root.radius
         //     readonly property real topRadius: root.isCurrentItem && root.currentIndex == 0 ? Kirigami.Units.smallRadius : 0
             //readonly property real bottomRadius: root.isCurrentItem && root.currentIndex == root.count-1 ? Kirigami.Units.smallRadius : 0
 
@@ -33,19 +56,20 @@ Loader {
                 //bottomRightRadius: Kirigami.Units.smallRadius//root.bottomRadius
             //}
 
-            color: {
-                if (control.down) {
-                    return Kirigami.Theme.alternateBackgroundColor
-                } else if (control.highlighted) {
-                    return Kirigami.Theme.highlightColor
-                } else {
-                    return "transparent"
+            color: root.color
+
+            border {
+                width: root.border.width
+                color: root.border.color
+            }
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: Kirigami.Units.shortDuration
+                    easing.type: Easing.OutCubic
                 }
             }
-        //     border {
-        //         width: Kirigami.Units.smallBorder
-        //         color: Kirigami.Theme.focusColor
-        //     }
+
             Rectangle {
                 height: Kirigami.Units.smallBorder
                 anchors {
@@ -53,7 +77,7 @@ Loader {
                     right: parent.right
                     top: parent.top
                 }
-                color: Kirigami.Theme.focusColor
+                color: mainBackground.border.color
             }
             Rectangle {
                 height: Kirigami.Units.smallBorder
@@ -62,7 +86,7 @@ Loader {
                     right: parent.right
                     bottom: parent.bottom
                 }
-                color: Kirigami.Theme.focusColor
+                color: mainBackground.border.color
             }
         }
     }

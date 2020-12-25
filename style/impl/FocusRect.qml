@@ -8,8 +8,9 @@ import org.kde.kirigami 2.14 as Kirigami
 Loader {
     id: root
     property real baseRadius: 0
+    property bool unloaded: !visible
     anchors.fill: parent
-    sourceComponent: visible ? focusRectComponent : null
+    sourceComponent: unloaded ? null : focusRectComponent
     Component {
         id: focusRectComponent
         Rectangle {
@@ -42,6 +43,15 @@ Loader {
                     0.28
                 )
                 border.width: parent.border.width
+            }
+            opacity: 0
+            OpacityAnimator on opacity {
+                id: opacityAnimator
+                running: true
+                from: 0
+                to: 1
+                duration: Kirigami.Units.shortDuration
+                easing.type: Easing.InCubic
             }
         }
     }

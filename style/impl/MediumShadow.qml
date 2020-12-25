@@ -7,10 +7,11 @@ import org.kde.kirigami 2.14 as Kirigami
 
 Loader {
     id: root
+    property real radius: Kirigami.Units.smallRadius
+    property bool unloaded: !visible
+    sourceComponent: unloaded || Kirigami.Theme.lowPowerHardware ? null : shadowComponent
     anchors.fill: parent
     z: -1
-    property real radius: Kirigami.Units.smallRadius
-    sourceComponent: visible && !Kirigami.Theme.lowPowerHardware ? shadowComponent : null
     Component {
         id: shadowComponent
         Kirigami.ShadowedRectangle {
@@ -21,6 +22,13 @@ Loader {
                 color: Qt.rgba(0,0,0,0.2)
                 size: 10
                 yOffset: 2
+            }
+            opacity: parent.opacity
+            Behavior on opacity {
+                OpacityAnimator {
+                    duration: Kirigami.Units.shortDuration
+                    easing.type: Easing.OutCubic
+                }
             }
         }
     }

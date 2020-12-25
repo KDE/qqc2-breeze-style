@@ -26,7 +26,7 @@ Rectangle {
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
-    color: control.enabled && control.down || root.checkState !== Qt.Unchecked ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    color: (control.down || root.checkState !== Qt.Unchecked) ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
 
     radius: Kirigami.Units.smallRadius
 
@@ -37,9 +37,23 @@ Rectangle {
             //Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
     }
 
+    Behavior on color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on border.color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+
     SmallShadow {
         id: shadow
-        visible: !control.editable && !control.flat && !control.down && control.enabled
+        opacity: control.down ? 0 : 1
+        visible: control.enabled
         z: -1
         radius: parent.radius
     }

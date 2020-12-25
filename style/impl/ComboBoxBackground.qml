@@ -28,7 +28,11 @@ Rectangle {
         if (!control.popup.visible && (control.down || control.checked) ) {
             Kirigami.Theme.alternateBackgroundColor
         } else if (control.flat) {
-            "transparent"
+            Qt.rgba(
+                Kirigami.Theme.backgroundColor.r,
+                Kirigami.Theme.backgroundColor.g,
+                Kirigami.Theme.backgroundColor.b,
+                0)
         } else {
             Kirigami.Theme.backgroundColor
         }
@@ -41,17 +45,31 @@ Rectangle {
         width: Kirigami.Units.smallBorder
     }
 
+    Behavior on color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+    Behavior on border.color {
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
+
     radius: Kirigami.Units.smallRadius
 
     SmallShadow {
         id: shadow
-        visible: !control.editable && !control.flat && !control.down && control.enabled
+        opacity: control.down ? 0 : 1
+        visible: !control.editable && !control.flat && control.enabled
         z: -1
         radius: parent.radius
     }
 
     FocusRect {
-        id: focRect
+        id: focusRect
         baseRadius: mainBackground.radius
         visible: control.visualFocus
     }
@@ -59,7 +77,7 @@ Rectangle {
     BackgroundGradient {
         id: bgGradient
         radius: mainBackground.radius
-//         rotation: control.checked ? 180 : 0
-        visible: !control.editable && !control.flat && !control.down && !control.hovered && control.enabled
+        opacity: control.down || control.hovered ? 0 : 1
+        visible: !control.editable && !control.flat && control.enabled
     }
 }
