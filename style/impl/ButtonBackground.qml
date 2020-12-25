@@ -6,10 +6,29 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
-Rectangle {
+// TODO: Maybe use a loader here one day. Make sure nothing breaks.
+// Kirigami ShadowedRectangle doesn't have a gradient property, which could be an issue in some cases
+Kirigami.ShadowedRectangle {
     id: mainBackground
 
     property alias control: mainBackground.parent
+
+    // Segmented button control group properties
+    property T.ButtonGroup buttonGroup: control.T.ButtonGroup.group
+    property bool zeroOrLessSpacing: control.parent.hasOwnProperty("spacing") && control.parent.spacing <= 0
+    property bool isInButtonGroup: Boolean(buttonGroup)
+    property bool isFirstInButtonGroup: isInButtonGroup && buttonGroup.buttons[0] == control
+    property bool isLastInButtonGroup: isInButtonGroup && buttonGroup.buttons[buttonGroup.buttons.length-1] == control
+    property real leftRadius: !isInButtonGroup || (isLastInButtonGroup && zeroOrLessSpacing) ? Kirigami.Units.smallRadius : 0
+    property real rightRadius: !isInButtonGroup || (isFirstInButtonGroup && zeroOrLessSpacing) ? Kirigami.Units.smallRadius : 0
+
+//     radius: Kirigami.Units.smallRadius
+    corners {
+        topLeftRadius: leftRadius
+        topRightRadius: rightRadius
+        bottomLeftRadius: leftRadius
+        bottomRightRadius: rightRadius
+    }
 
     implicitWidth: implicitHeight
     implicitHeight: Kirigami.Units.mediumControlHeight
@@ -36,17 +55,13 @@ Rectangle {
                 return Kirigami.Theme.separatorColor
             }
         }
-//             Kirigami.ColorUtils.tintWithAlpha(mainBackground.color, Kirigami.Theme.textColor, 0.3)
         width: Kirigami.Units.smallBorder
     }
-
-    radius: Kirigami.Units.smallRadius
 
     SmallShadow {
         id: shadowRect
         visible: !control.editable && !control.flat && !control.down && control.enabled
         z: -1
-//         showShadow: !control.editable && !control.down && control.enabled
         radius: mainBackground.radius
     }
 
