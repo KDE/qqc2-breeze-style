@@ -40,7 +40,7 @@ IconLabelLayout {
         ) {
             lpad += control.indicator.width + root.spacing
         }
-        if (reserveSpaceForIcon && !iconVisible && control.icon.width > 0) {
+        if (reserveSpaceForIcon && !hasIcon && control.icon.width > 0) {
             lpad += control.icon.width + root.spacing
         }
         return lpad
