@@ -20,12 +20,12 @@ ecm_qt_declare_logging_category(qqc2breezestyle_SRCS
 
 add_library(qqc2breezestyleplugin SHARED ${qqc2breezestyle_SRCS})
 target_link_libraries(qqc2breezestyleplugin
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Qml
-    Qt5::Quick
-    Qt5::QuickControls2
-    Qt5::QuickTemplates2
+    Qt::Core
+    Qt::Gui
+    Qt::Qml
+    Qt::Quick
+    Qt::QuickControls2
+    Qt::QuickTemplates2
     KF5::ConfigCore
     KF5::Kirigami2
     KF5::GuiAddons
