@@ -55,8 +55,8 @@ T.BusyIndicator {
         id: lowPowerSpinnerComponent
         Kirigami.Icon {
             id: lowPowerSpinner
-            implicitWidth: Kirigami.Units.iconSizes.fromTextSize
-            implicitHeight: Kirigami.Units.iconSizes.fromTextSize
+            implicitWidth: Kirigami.Units.iconSizes.auto
+            implicitHeight: Kirigami.Units.iconSizes.auto
             source: "view-refresh"
 
             opacity: control.visible && control.enabled && control.running ? 1 : 0
