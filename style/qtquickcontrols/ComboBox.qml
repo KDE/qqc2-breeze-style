@@ -48,27 +48,7 @@ T.ComboBox {
             verticalCenter: control.verticalCenter
         }
         source: "arrow-down"
-//         opacity: enabled ? 1 : 0.3
     }
-
-    /*contentItem: T.TextField {
-        padding: Kirigami.Units.controlPadding(control.implicitBackgroundHeight, control.implicitContentHeight)
-
-        text: control.editable ? control.editText : control.displayText
-
-        enabled: control.editable
-        autoScroll: control.editable
-        readOnly: control.down
-        inputMethodHints: control.inputMethodHints
-        validator: control.validator
-        selectByMouse: control.selectTextByMouse
-
-        font: control.font
-        color: control.editable ? control.palette.text : control.palette.buttonText
-        selectionColor: control.palette.highlight
-        selectedTextColor: control.palette.highlightedText
-        verticalAlignment: Text.AlignVCenter
-    }*/
 
     contentItem: Controls.TextField {
         id: textField
@@ -97,27 +77,8 @@ T.ComboBox {
         // Using palette instead of Kirigami.Theme.textColor because the latter
         // always uses the disabled palette when textField.enabled == false
         color: control.editable ? palette.text : palette.buttonText
-        selectionColor: Kirigami.Theme.highlightColor
-        selectedTextColor: Kirigami.Theme.highlightedTextColor
 
-        selectByMouse: !Kirigami.Settings.tabletMode
-        cursorDelegate: Kirigami.Settings.tabletMode ? mobileCursor : null
-        
-        Component {
-            id: mobileCursor
-            MobileCursor {
-                target: control
-            }
-        }
-
-        font: control.font
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignVCenter
-
-        onTextChanged: MobileTextActionsToolBar.shouldBeVisible = false;
-        onPressed: MobileTextActionsToolBar.shouldBeVisible = true;
-
-        background: Item {}
+        background: null
     }
     /*MouseArea {
         id: mouseArea
