@@ -29,6 +29,10 @@ Loader {
         x: xAlignHCenter
         y: yAlignOver
 
+        // HACK: make it appear above most popups that show up in the
+        // overlay in case any of them use TextField or TextArea
+        z: 999
+
         contentItem: RowLayout {
             spacing: 0
             ToolButton {
