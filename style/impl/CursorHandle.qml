@@ -25,6 +25,10 @@ Loader {
         x: isSelectionEnd ? selectionEndX : selectionStartX
         y: isSelectionEnd ? selectionEndY : selectionStartY
 
+        // HACK: make it appear above most popups that show up in the
+        // overlay in case any of them use TextField or TextArea
+        z: 999
+
         //opacity: target.activeFocus ? 1 : 0
         implicitHeight: {
             let h = Kirigami.Units.gridUnit
