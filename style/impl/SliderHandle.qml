@@ -53,11 +53,11 @@ Rectangle {
     color: Kirigami.Theme.backgroundColor
     border {
         width: Kirigami.Units.smallBorder
-        color: (root.pressed || root.visualFocus || root.hovered) && control.enabled ?
-            Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+        color: root.pressed || root.visualFocus || root.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     }
 
     Behavior on border.color {
+        enabled: root.pressed || root.visualFocus || root.hovered
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
@@ -68,7 +68,7 @@ Rectangle {
         enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
             duration: Kirigami.Units.longDuration
-            velocity: control.implicitBackgroundWidth*4
+            velocity: 800
             //SmoothedAnimations have a hardcoded InOutQuad easing
         }
     }
@@ -76,7 +76,7 @@ Rectangle {
         enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
             duration: Kirigami.Units.longDuration
-            velocity: control.implicitBackgroundHeight*4
+            velocity: 800
         }
     }
 
