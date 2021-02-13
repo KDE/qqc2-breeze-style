@@ -11,17 +11,36 @@ Rectangle {
     id: root
 
     property alias control: root.parent
-    property real startPosition: control.first ? control.first.position : 0
-    property real endPosition: control.second ? control.second.position : control.position
-    property real endVisualPosition: control.second ? control.second.visualPosition : control.visualPosition
+    property real startPosition: isRangeSlider ? control.first.position : 0
+    property real endPosition: isRangeSlider ? control.second.position : control.position
 
-    implicitWidth: control.horizontal ? 200 : Kirigami.Units.grooveHeight
-    implicitHeight: control.vertical ? 200 : Kirigami.Units.grooveHeight
+    readonly property bool isRangeSlider: control instanceof Controls.RangeSlider
 
-    // RTL support
-    scale: control.horizontal && control.mirrored ? -1 : 1
+    readonly property real handleWidth: isRangeSlider ? control.first.handle.width ?? 0 : control.handle.width ?? 0
+    readonly property real handleHeight: isRangeSlider ? control.first.handle.height ?? 0 : control.handle.height ?? 0
+    readonly property real secondHandleWidth: isRangeSlider ? control.second.handle.width ?? 0 : handleWidth
+    readonly property real secondHandleHeight: isRangeSlider ? control.second.handle.height ?? 0 : handleHeight
 
-    radius: Math.min(width/2, height/2)
+    readonly property bool horizontal: root.control.horizontal
+    readonly property bool vertical: root.control.vertical
+
+
+    implicitWidth: root.horizontal ? 200 : Kirigami.Units.grooveHeight
+    implicitHeight: root.vertical ? 200 : Kirigami.Units.grooveHeight
+
+
+    //NOTE: Manually setting x,y,width,height because that's what the Basic, Fusion and Material QQC2 styles do.
+    // Inset would be more idiomatic for QQC2, but this is easier to deal with for now since the behavior is expected by app devs.
+
+    width: root.horizontal ? control.availableWidth - root.handleWidth/2 - secondHandleWidth/2 + Kirigami.Units.grooveHeight : implicitWidth
+    height: root.vertical ? control.availableHeight - root.handleHeight/2 - secondHandleHeight/2 + Kirigami.Units.grooveHeight : implicitHeight
+
+    x: control.leftPadding + (root.horizontal ?
+        (control.mirrored ? root.secondHandleWidth/2 : root.handleWidth/2) - radius
+        : (control.availableWidth - width) / 2)
+    y: control.topPadding + (root.vertical ? root.secondHandleHeight/2 - radius : (control.availableHeight - height) / 2)
+
+    radius: Kirigami.Units.grooveHeight/2
     color: Kirigami.Theme.backgroundColor
     border {
         width: Kirigami.Units.smallBorder
@@ -30,14 +49,13 @@ Rectangle {
 
     Rectangle {
         id: fill
-        x: root.control.horizontal ? root.startPosition * parent.width : 0
-        y: root.control.vertical ? root.endVisualPosition * parent.height : 0
-        width: root.control.horizontal ?
-            root.endPosition * parent.width - root.startPosition * parent.width
-            : Kirigami.Units.grooveHeight
-        height: root.control.vertical ?
-            root.endPosition * parent.height - root.startPosition * parent.height
-            : Kirigami.Units.grooveHeight
+        anchors {
+            fill: parent
+            leftMargin: root.horizontal ? root.startPosition * parent.width - (root.startPosition * Kirigami.Units.grooveHeight) : 0
+            rightMargin: root.horizontal ? (1-root.endPosition) * parent.width - ((1-root.endPosition) * Kirigami.Units.grooveHeight) : 0
+            topMargin: root.vertical ? (1-root.endPosition) * parent.height - ((1-root.endPosition) * Kirigami.Units.grooveHeight) : 0
+            bottomMargin: root.vertical ? root.startPosition * parent.height - (root.startPosition * Kirigami.Units.grooveHeight) : 0
+        }
 
         radius: parent.radius
         color: Kirigami.Theme.alternateBackgroundColor
@@ -46,33 +64,33 @@ Rectangle {
             color: Kirigami.Theme.focusColor
         }
 
-        Behavior on x {
+        Behavior on anchors.leftMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
                 duration: Kirigami.Units.longDuration
-                velocity: root.implicitWidth*4
+                velocity: 800
                 //SmoothedAnimations have a hardcoded InOutQuad easing
             }
         }
-        Behavior on y {
+        Behavior on anchors.rightMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
                 duration: Kirigami.Units.longDuration
-                velocity: root.implicitHeight*4
+                velocity: 800
             }
         }
-        Behavior on width {
+        Behavior on anchors.topMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
                 duration: Kirigami.Units.longDuration
-                velocity: root.implicitWidth*4
+                velocity: 800
             }
         }
-        Behavior on height {
+        Behavior on anchors.bottomMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
                 duration: Kirigami.Units.longDuration
-                velocity: root.implicitHeight*4
+                velocity: 800
             }
         }
 
@@ -88,4 +106,37 @@ Rectangle {
             awfulHackTimer.start()
         }
     }
+
+    // Maybe enable this? Depends on what our app devs want.
+    /*Loader {
+        id: tickmarkLoader
+        visible: root.control.stepSize > 0
+        active: visible
+        anchors {
+            left: root.horizontal ? parent.left : parent.right
+            top: root.vertical ? parent.top : parent.bottom
+            leftMargin: root.horizontal ? parent.radius : Kirigami.Units.smallBorder
+            topMargin: root.vertical ? parent.radius : Kirigami.Units.smallBorder
+        }
+        width: root.vertical ? implicitWidth : root.width - parent.radius
+        height: root.horizontal ? implicitHeight : root.height - parent.radius
+        sourceComponent: Grid {
+            id: markGrid
+            rows: root.vertical ? markRepeater.model : 1
+            columns: root.horizontal ? markRepeater.model : 1
+            spacing: (root.vertical ? height/(markRepeater.model-1) : width/(markRepeater.model-1)) - Kirigami.Units.smallBorder*2
+            Repeater {
+                id: markRepeater
+                model: (root.control.to - root.control.from)/root.control.stepSize + 1
+                delegate: Rectangle {
+                    implicitWidth: root.vertical ? root.x - Kirigami.Units.smallBorder : Kirigami.Units.smallBorder
+                    implicitHeight: root.horizontal ? root.y - Kirigami.Units.smallBorder : Kirigami.Units.smallBorder
+                    color: (root.horizontal && x >= fill.x && x <= fill.x + fill.width)
+                        || (root.vertical && y >= fill.y && y <= fill.y + fill.height)
+                        ? Kirigami.Theme.focusColor
+                        : Kirigami.Theme.separatorColor
+                }
+            }
+        }
+    }*/
 }
