@@ -44,6 +44,5 @@ T.Slider {
         control: control
         startPosition: 0
         endPosition: control.position
-        endVisualPosition: control.visualPosition
     }
 }
