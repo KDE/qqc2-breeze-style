@@ -20,18 +20,6 @@ T.Slider {
 
     padding: Kirigami.Settings.tabletMode ? Kirigami.Units.mediumSpacing : 0
 
-    property bool __hasHandle: Boolean(control.handle)
-    property real __preInset: Math.max(
-    (__hasHandle ?
-        handle.width : Kirigami.Units.inlineControlHeight) - implicitBackgroundWidth,
-    (__hasHandle ?
-        handle.height : Kirigami.Units.inlineControlHeight) - implicitBackgroundHeight
-    )/2
-    leftInset: __preInset + leftPadding
-    rightInset: __preInset + rightPadding
-    topInset: __preInset + topPadding
-    bottomInset: __preInset + bottomPadding
-
     handle: SliderHandle {
         control: control
     }
