@@ -232,7 +232,7 @@ QtObject {
     /**
      * metrics used by the default font
      */
-    property variant fontMetrics: FontMetrics {
+    property var fontMetrics: FontMetrics {
         /* Height of a flat topped capital letter
          * 
          * QFontEngine (private, used by QFontMetricsF) uses an 'H' to
@@ -281,7 +281,7 @@ QtObject {
 
     property real pixelSizeBoundingRectHeightRatio: __boundingRectRatioFontMetrics.font.pixelSize / __boundingRectRatioFontMetrics.height
 
-    property variant __boundingRectRatioFontMetrics: FontMetrics {
+    property var __boundingRectRatioFontMetrics: FontMetrics {
         font.pointSize: 96
     }
 }
