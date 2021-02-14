@@ -5,8 +5,9 @@
 import QtQuick 2.15
 import "../../" as Base
 import org.kde.kirigami 2.14 as Kirigami
+import org.kde.breeze 1.0
 Base.Separator {
     id: root
-    color: weight == Base.Separator.Weight.Light ? Kirigami.ColorUtils.tintWithAlpha(Kirigami.Theme.backgroundColor, Kirigami.Theme.separatorColor,  0.4 /*maybe 0.33*/) : Kirigami.Theme.separatorColor
+    color: weight == Base.Separator.Weight.Light ? KColorUtils.mix(Kirigami.Theme.backgroundColor, Kirigami.Theme.separatorColor,  0.4 /*maybe 0.33*/) : Kirigami.Theme.separatorColor
 }
 
