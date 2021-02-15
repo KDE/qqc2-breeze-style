@@ -1,9 +1,11 @@
-//NOTE: replace this
+/* SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+ * SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LicenseRef-KDE-Accepted-LGPL
+ */
 
 import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.14 as Kirigami
 
 T.PageIndicator {
     id: control
@@ -13,18 +15,23 @@ T.PageIndicator {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    padding: 6
-    spacing: 6
+    padding: Kirigami.Units.mediumSpacing
+    spacing: Kirigami.Units.mediumSpacing
 
-    delegate: Rectangle {
-        implicitWidth: 8
-        implicitHeight: 8
+    // Using ShadowedRectangle because it makes smoother circles than Rectangle
+    delegate: Kirigami.ShadowedRectangle {
+        implicitWidth: implicitHeight
+        implicitHeight: {
+            let h = Kirigami.Units.inlineControlHeight/2
+            h -= h % 2
+            return h
+        }
 
-        radius: width / 2
-        color: control.palette.dark
+        radius: height / 2
+        color: Kirigami.Theme.textColor
 
-        opacity: index === currentIndex ? 0.95 : pressed ? 0.7 : 0.45
-        Behavior on opacity { OpacityAnimator { duration: 100 } }
+        opacity: index === currentIndex ? 1 : pressed ? 0.67 : 0.33
+        Behavior on opacity { OpacityAnimator { duration: Kirigami.Units.shortDuration } }
     }
 
     contentItem: Row {
