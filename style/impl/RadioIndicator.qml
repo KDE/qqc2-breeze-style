@@ -5,6 +5,9 @@
 import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
+// TODO: replace with ShadowedRectangle because it produces smoother circles.
+// Unfortunately I can't do it now because batching issues can cause all radio
+// buttons to show hover effects when only one is hovered
 Rectangle {
     id: root
 
