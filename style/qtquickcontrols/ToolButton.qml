@@ -73,25 +73,24 @@ T.ToolButton {
         text: control.Kirigami.MnemonicData.richTextLabel
     }
 
+    // Using a Loader here reduces the RAM usage
     indicator: Loader {
+        property alias iconHeight: control.icon.height
+        property alias iconWidth: control.icon.width
         anchors {
             right: control.right
             rightMargin: control.rightPadding
             verticalCenter: control.verticalCenter
         }
-        sourceComponent: control.__showMenuArrow ? indicatorComponent : null
-    }
-
-    Component {
-        id: indicatorComponent
-        PaintedSymbol {
-            implicitHeight: {
-                let h = Kirigami.Units.symbolSize(Kirigami.Units.gridUnit)
-                return h + penWidth*2
+        visible: control.__showMenuArrow
+        active: visible
+        sourceComponent: Component {
+            Kirigami.Icon {
+                anchors.centerIn: parent
+                implicitHeight: iconHeight
+                implicitWidth: iconWidth
+                source: "arrow-down"
             }
-            implicitWidth: implicitHeight
-            color: Kirigami.Theme.textColor
-            symbolType: /*visible && control.checked ? PaintedSymbol.UpArrow :*/ PaintedSymbol.DownArrow
         }
     }
 
