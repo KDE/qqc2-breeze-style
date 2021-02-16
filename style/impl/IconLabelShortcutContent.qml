@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15 as Controls
+import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
 IconLabelContent {
@@ -22,7 +22,7 @@ IconLabelContent {
                 && control.action.shortcut !== undefined
                 && !root.iconOnly
         sourceComponent: Component {
-            Controls.Label {
+            T.Label {
                 id: shortcutLabel
                 anchors {
                     left: parent.left
