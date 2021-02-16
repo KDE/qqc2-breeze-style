@@ -5,16 +5,17 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
+import QtQuick.Templates 2.15 as Templates
 import org.kde.kirigami 2.14 as Kirigami
 
 Rectangle {
     id: root
 
-    property alias control: root.parent
+    property Templates.Control control
     property real startPosition: isRangeSlider ? control.first.position : 0
     property real endPosition: isRangeSlider ? control.second.position : control.position
 
-    readonly property bool isRangeSlider: control instanceof Controls.RangeSlider
+    readonly property bool isRangeSlider: control instanceof Templates.RangeSlider
 
     readonly property real handleWidth: isRangeSlider ? control.first.handle.width ?? 0 : control.handle.width ?? 0
     readonly property real handleHeight: isRangeSlider ? control.first.handle.height ?? 0 : control.handle.height ?? 0
