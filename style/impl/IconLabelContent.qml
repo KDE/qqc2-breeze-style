@@ -4,7 +4,6 @@
 
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
 
@@ -81,10 +80,12 @@ IconLabelLayout {
     }
 
     labelComponent: Component {
-        Controls.Label {
+        Text {
             // This is set in IconLabelLayout
             property bool firstLayoutCompleted: false
             visible: text.length > 0
+            color: Kirigami.Theme.textColor
+            linkColor: Kirigami.Theme.linkColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
