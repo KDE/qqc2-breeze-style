@@ -176,7 +176,7 @@ public:
     Q_SLOT void notifyWatchersConfigurationChange()
     {
         for (auto watcher : qAsConst(watchers)) {
-            watcher->configurationChanged();
+            watcher->syncFont();
         }
     }
 
@@ -201,13 +201,11 @@ PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
     if (parentItem) {
         connect(parentItem, &QQuickItem::enabledChanged, this, &PlasmaDesktopTheme::syncColors);
         connect(parentItem, &QQuickItem::windowChanged, this, &PlasmaDesktopTheme::syncWindow);
-
     }
-
-    addChangeWatcher(this, std::bind(&PlasmaDesktopTheme::syncColors, this));
 
     (*s_style)->watchers.append(this);
 
+    syncFont();
     syncWindow();
     syncColors();
 }
@@ -248,7 +246,7 @@ void PlasmaDesktopTheme::syncWindow()
     }
 }
 
-void PlasmaDesktopTheme::configurationChanged()
+void PlasmaDesktopTheme::syncFont()
 {
     KSharedConfigPtr ptr = KSharedConfig::openConfig();
     KConfigGroup general( ptr->group("general") );
@@ -308,7 +306,6 @@ void PlasmaDesktopTheme::syncColors()
     setNeutralTextColor(colors.scheme.foreground(KColorScheme::NeutralText).color());
     setPositiveTextColor(colors.scheme.foreground(KColorScheme::PositiveText).color());
 
-
     //background
     setBackgroundColor(colors.scheme.background(KColorScheme::NormalBackground).color());
     setAlternateBackgroundColor(colors.scheme.background(KColorScheme::AlternateBackground).color());
@@ -349,6 +346,25 @@ void PlasmaDesktopTheme::syncColors()
         m_separatorColor = separatorColor(backgroundColor(), textColor());
     }
 }
+
+bool PlasmaDesktopTheme::event(QEvent* event)
+{
+    if (event->type() == Kirigami::PlatformThemeEvents::DataChangedEvent::type) {
+        syncFont();
+        syncColors();
+    }
+
+    if (event->type() == Kirigami::PlatformThemeEvents::ColorSetChangedEvent::type) {
+        syncColors();
+    }
+
+    if (event->type() == Kirigami::PlatformThemeEvents::ColorGroupChangedEvent::type) {
+        syncColors();
+    }
+
+    return PlatformTheme::event(event);
+}
+
 
 // Breeze QQC2 style colors
 QColor PlasmaDesktopTheme::separatorColor() const
