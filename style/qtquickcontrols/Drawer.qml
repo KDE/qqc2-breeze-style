@@ -1,16 +1,15 @@
-// NOTE: check this
-/*
-    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
-    SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
-
-    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
-*/
+/* SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+ * SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
+ * SPDX-FileCopyrightText: 2021 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LicenseRef-KDE-Accepted-LGPL
+ */
 
 
-import QtQuick 2.6
+import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.4 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
+import "impl"
 
 T.Drawer {
     id: control
@@ -18,8 +17,10 @@ T.Drawer {
     palette: Kirigami.Theme.palette
     parent: T.ApplicationWindow.overlay
 
-    implicitWidth: Math.max(background ? background.implicitWidth : 0, contentWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(background ? background.implicitHeight : 0, contentHeight + topPadding + bottomPadding)
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            contentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             contentHeight + topPadding + bottomPadding)
 
     contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
     contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
@@ -32,17 +33,15 @@ T.Drawer {
     background: Rectangle {
         color: Kirigami.Theme.backgroundColor
         Rectangle {
-            readonly property bool horizontal: control.edge === Qt.LeftEdge || control.edge === Qt.RightEdge
             anchors {
                left: control.edge !== Qt.LeftEdge ? parent.left : undefined
                right: control.edge !== Qt.RightEdge ? parent.right : undefined
                top: control.edge !== Qt.TopEdge ? parent.top : undefined
                bottom: control.edge !== Qt.BottomEdge ? parent.bottom : undefined
             }
-            color: Kirigami.Theme.textColor
-            opacity: 0.3
-            width: 1
-            height: 1
+            color: Kirigami.Theme.separatorColor
+            implicitWidth: 1
+            implicitHeight: 1
         }
     }
 
@@ -56,4 +55,7 @@ T.Drawer {
             velocity: 5
         }
     }
+
+    T.Overlay.modal: OverlayModalBackground {}
+    T.Overlay.modeless: OverlayDimBackground {}
 }
