@@ -79,11 +79,12 @@ Item {
         color: Kirigami.Theme.backgroundColor
         border {
             width: Kirigami.Units.smallBorder
-            color: (control.down || control.highlighted || control.visualFocus || control.hovered) && control.enabled ?
+            color: control.down || control.visualFocus || control.hovered ?
                 Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
         }
 
         Behavior on border.color {
+            enabled: control.down || control.visualFocus || control.hovered
             ColorAnimation {
                 duration: Kirigami.Units.shortDuration
                 easing.type: Easing.OutCubic
