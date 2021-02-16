@@ -3,8 +3,6 @@
  */
 
 import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
 Rectangle {
@@ -24,21 +22,23 @@ Rectangle {
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
-    color: (control.down || control.checked) ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    color: control.down || control.checked ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
 
     border {
         width: Kirigami.Units.smallBorder
-        color: control.down || control.checked || control.highlighted || control.visualFocus || control.hovered && control.enabled ?
-            Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+        color: control.down || control.checked || control.visualFocus || control.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     }
 
     Behavior on color {
+        enabled: control.down || control.checked
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
+
     Behavior on border.color {
+        enabled: control.down || control.checked || control.visualFocus || control.hovered
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
