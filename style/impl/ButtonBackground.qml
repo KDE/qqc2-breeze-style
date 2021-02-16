@@ -11,7 +11,7 @@ import org.kde.kirigami 2.14 as Kirigami
 Kirigami.ShadowedRectangle {
     id: mainBackground
 
-    property alias control: mainBackground.parent
+    property T.AbstractButton control: mainBackground.parent
 
     // Segmented button control group properties
     property T.ButtonGroup buttonGroup: control.T.ButtonGroup.group

@@ -3,6 +3,7 @@
  */
 
 import QtQuick 2.15
+import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
 // TODO: replace with ShadowedRectangle because it produces smoother circles.
@@ -11,7 +12,7 @@ import org.kde.kirigami 2.14 as Kirigami
 Rectangle {
     id: root
 
-    property alias control: root.parent
+    property T.AbstractButton control: root.parent
     property bool mirrored: control.mirrored
     readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 

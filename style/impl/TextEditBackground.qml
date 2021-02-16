@@ -9,7 +9,7 @@ import org.kde.kirigami 2.14 as Kirigami
 Rectangle {
     id: root
 
-    property alias control: root.parent
+    property Item control: root.parent
     property bool visualFocus: control.activeFocus && (
         control.focusReason == Qt.TabFocusReason ||
         control.focusReason == Qt.BacktabFocusReason ||

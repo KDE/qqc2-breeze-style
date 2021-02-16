@@ -3,14 +3,14 @@
  */
 
 import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
+import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
 
 Rectangle {
     id: root
 
-    property alias control: root.parent
+    property T.AbstractButton control: root.parent
     property int checkState: control.checkState
     property int symbolSize: Kirigami.Units.symbolSize(Math.min(width, height))
     property bool mirrored: control.mirrored

@@ -3,7 +3,7 @@
  */
 
 import QtQuick 2.15
-import QtQuick.Layouts 1.15
+import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
 
@@ -12,7 +12,7 @@ IconLabelLayout {
     // NOTE: Remember to use root.mirrored, not control.mirrored in this file
     // Controls can change the mirrored property of this component and those
     // changes will be ignored if you use control.mirrored directly.
-    property alias control: root.parent
+    property T.AbstractButton control: root.parent
     property bool reserveSpaceForIndicator: false
     property bool reserveSpaceForIcon: false
     property bool reserveSpaceForArrow: false

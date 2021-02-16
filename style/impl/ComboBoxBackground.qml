@@ -17,7 +17,7 @@ import org.kde.kirigami 2.14 as Kirigami
 Rectangle {
     id: mainBackground
 
-    property alias control: mainBackground.parent
+    property T.ComboBox control: mainBackground.parent
 
     property color flatColor: Qt.rgba(
         Kirigami.Theme.backgroundColor.r,

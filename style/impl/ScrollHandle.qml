@@ -8,7 +8,7 @@ import org.kde.kirigami 2.14 as Kirigami
 
 Rectangle {
     id: root
-    property alias control: root.parent
+    property T.Control control: root.parent
     // ScrollIndicator does not have a policy property
     property int policy: T.ScrollBar.AsNeeded
     // ScrollIndicator does not have a pressed property
