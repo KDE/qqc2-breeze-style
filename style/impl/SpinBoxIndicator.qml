@@ -44,6 +44,7 @@ Item {
     implicitHeight: Kirigami.Units.mediumControlHeight
 
     Rectangle {
+        id: separator
         width: Kirigami.Units.smallBorder
         x: {
             if ((leftAligned && !mirrored)
@@ -59,11 +60,14 @@ Item {
             topMargin: Kirigami.Units.smallSpacing
             bottomMargin: Kirigami.Units.smallSpacing
         }
-        color: {
-            if (button.pressed || button.hovered) {
-                return Kirigami.Theme.focusColor
-            } else {
-                return Kirigami.Theme.separatorColor
+
+        color: button.pressed || button.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+
+        Behavior on color
+            enabled: button.pressed || button.hovered
+            ColorAnimation {
+                duration: Kirigami.Units.shortDuration
+                easing.type: Easing.OutCubic
             }
         }
     }
@@ -72,7 +76,7 @@ Item {
         id: pressedBg
         Kirigami.Theme.colorSet: Kirigami.Theme.Button
         Kirigami.Theme.inherit: false
-        visible: button.pressed
+        opacity: 0
         anchors.fill: parent
         color: Kirigami.Theme.alternateBackgroundColor
         corners {
@@ -83,6 +87,31 @@ Item {
         }
         border.color: Kirigami.Theme.focusColor
         border.width: Kirigami.Units.smallBorder
+
+        states: State {
+            name: "pressed"
+            when: button.pressed
+            PropertyChanges {
+                target: pressedBg
+                opacity: 1
+                visible: true
+            }
+        }
+        transitions: Transition {
+            from: "pressed"
+            to: ""
+            SequentialAnimation {
+                OpacityAnimator {
+                    duration: Kirigami.Units.shortDuration
+                    easing.type: Easing.OutCubic
+                }
+                PropertyAction {
+                    target: pressedBg
+                    property: "visible"
+                    value: false
+                }
+            }
+        }
     }
 
     Kirigami.Icon {
