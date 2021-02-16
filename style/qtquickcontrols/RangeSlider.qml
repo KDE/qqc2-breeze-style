@@ -4,16 +4,15 @@
  */
 
 
-import QtQuick 2.6
+import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.4 as Kirigami
+import org.kde.kirigami 2.16 as Kirigami
 import "impl"
 
 T.RangeSlider {
     id: control
 
-    palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             Math.max(first.implicitHandleWidth,
                                      second.implicitHandleWidth) + leftPadding + rightPadding)
@@ -25,18 +24,6 @@ T.RangeSlider {
     Kirigami.Theme.inherit: false
 
     padding: Kirigami.Settings.tabletMode ? Kirigami.Units.mediumSpacing : 0
-
-    property bool __hasHandle: Boolean(control.handle)
-    property real __preInset: Math.max(
-    (__hasHandle ?
-        handle.width : Kirigami.Units.inlineControlHeight) - implicitBackgroundWidth,
-    (__hasHandle ?
-        handle.height : Kirigami.Units.inlineControlHeight) - implicitBackgroundHeight
-    )/2
-    leftInset: __preInset + leftPadding
-    rightInset: __preInset + rightPadding
-    topInset: __preInset + topPadding
-    bottomInset: __preInset + bottomPadding
 
     first.handle: SliderHandle {
         control: control
@@ -62,6 +49,5 @@ T.RangeSlider {
         control: control
         startPosition: first.position
         endPosition: second.position
-        endVisualPosition: second.visualPosition
     }
 }
