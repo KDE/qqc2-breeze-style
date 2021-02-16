@@ -31,4 +31,12 @@ Rectangle {
         visible: root.visualFocus
         baseRadius: parent.radius
     }
+
+    Behavior on border.color {
+        enabled: control.activeFocus || control.hovered
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
 }
