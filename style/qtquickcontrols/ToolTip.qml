@@ -35,9 +35,9 @@ T.ToolTip {
          * in some contexts, but it seems to work with Noto Sans at 10pts,
          * 10.5pts and 11pts.
          */
-        // If paintedWidthSource isn't available, paintedWidth = 0
-        let paintedWidth = Math.ceil(paintedWidthSource.paintedWidth ?? -1) + 1 
-        return paintedWidth > 0 ? paintedWidth : implicitContentOrFirstChildWidth
+        // If contentWidthSource isn't available, cWidth = 0
+        let cWidth = Math.ceil(contentWidthSource.contentWidth ?? -1) + 1 
+        return cWidth > 0 ? cWidth : implicitContentOrFirstChildWidth
     }
 
     palette: Kirigami.Theme.palette
@@ -59,12 +59,24 @@ T.ToolTip {
 
     closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutsideParent | T.Popup.CloseOnReleaseOutsideParent
 
+    delay: Kirigami.Units.toolTipDelay
+
     enter: Transition {
-        NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.OutQuad; duration: 100 }
+        OpacityAnimator {
+            from: 0
+            to: 1
+            easing.type: Easing.OutCubic
+            duration: Kirigami.Units.shortDuration
+        }
     }
 
     exit: Transition {
-        NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; easing.type: Easing.InQuad; duration: 100 }
+        OpacityAnimator {
+            from: 1
+            to: 0
+            easing.type: Easing.InCubic
+            duration: Kirigami.Units.shortDuration
+        }
     }
 
     contentItem: Controls.Label {
@@ -75,7 +87,7 @@ T.ToolTip {
         // This code looks ugly, but I can't think of anything less ugly
         // that is just as reliable. TextMetrics doesn't support WordWrap.
         Text {
-            id: paintedWidthSource
+            id: contentWidthSource
             visible: false
             width: control.__preferredWidth
             text: parent.text
@@ -109,4 +121,7 @@ T.ToolTip {
             radius: parent.radius
         }
     }
+
+    T.Overlay.modal: OverlayModalBackground {}
+    T.Overlay.modeless: OverlayDimBackground {}
 }
