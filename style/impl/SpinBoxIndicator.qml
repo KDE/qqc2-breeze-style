@@ -63,7 +63,7 @@ Item {
 
         color: button.pressed || button.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
 
-        Behavior on color
+        Behavior on color {
             enabled: button.pressed || button.hovered
             ColorAnimation {
                 duration: Kirigami.Units.shortDuration
