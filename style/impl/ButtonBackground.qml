@@ -22,6 +22,15 @@ Kirigami.ShadowedRectangle {
     property real leftRadius: !isInButtonGroup || (isLastInButtonGroup && zeroOrLessSpacing) ? radius : 0
     property real rightRadius: !isInButtonGroup || (isFirstInButtonGroup && zeroOrLessSpacing) ? radius : 0
 
+    property color flatColor: Qt.rgba(
+        Kirigami.Theme.backgroundColor.r,
+        Kirigami.Theme.backgroundColor.g,
+        Kirigami.Theme.backgroundColor.b,
+        0
+    )
+    property bool highlightBackground: control.down || control.checked
+    property bool highlightBorder: control.enabled && control.down || control.checked || control.highlighted || control.visualFocus || control.hovered
+
     radius: Kirigami.Units.smallRadius
     corners {
         topLeftRadius: leftRadius
@@ -36,14 +45,10 @@ Kirigami.ShadowedRectangle {
     visible: !control.flat || control.editable || control.down || control.checked || control.highlighted || control.visualFocus || control.hovered
 
     color: {
-        if (control.down || control.checked ) {
+        if (highlightBackground) {
             Kirigami.Theme.alternateBackgroundColor
         } else if (control.flat) {
-            return Qt.rgba(
-                control.palette.button.r,
-                control.palette.button.g,
-                control.palette.button.b,
-                0)
+            return flatColor
         } else {
             control.palette.button
         }
@@ -51,10 +56,8 @@ Kirigami.ShadowedRectangle {
 
     border {
         color: {
-            if (control.enabled && control.down || control.checked || control.highlighted || control.visualFocus || control.hovered) {
+            if (highlightBorder) {
                 return Kirigami.Theme.focusColor
-//             } else if (control.flat) {
-                //return "transparent"
             } else {
                 return Kirigami.Theme.separatorColor
             }
@@ -63,12 +66,14 @@ Kirigami.ShadowedRectangle {
     }
 
     Behavior on color {
+        enabled: highlightBackground
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
     Behavior on border.color {
+        enabled: highlightBorder
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
