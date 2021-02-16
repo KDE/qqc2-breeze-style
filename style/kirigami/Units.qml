@@ -6,7 +6,8 @@
 
 import QtQuick 2.15
 import QtQuick.Window 2.15
-import org.kde.kirigami 2.14
+import QtQuick.Controls 1.4 as QtQuickControls
+import QtQuick.Controls.Private 1.0 as QtQuickControlsPrivate
 
 pragma Singleton
 
@@ -44,16 +45,16 @@ QtObject {
     property QtObject iconSizes: QtObject {
         // Breeze
         property int defaultSize: units.iconSizes.auto
-        property int auto: fontMetrics.roundedIconSize(gridUnit * (Settings.isMobile ? 1.5 : 1))
+        property int auto: fontMetrics.roundedIconSize(gridUnit * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
         property int tiny: fontMetrics.roundedIconSize(8 * devicePixelRatio)
         property int tinySmall: fontMetrics.roundedIconSize(12 * devicePixelRatio)
         // Breeze
-        property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
-        property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
-        property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
-        property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
-        property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1))
-        property int enormous: 128 * devicePixelRatio * (Settings.isMobile ? 1.5 : 1)
+        property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
+        property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
+        property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
+        property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
+        property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
+        property int enormous: 128 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1)
         // TODO: Using larger sizes on mobile because that's what Kirigami normally does. Maybe don't do this in the future.
         //property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio)
         //property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio)
