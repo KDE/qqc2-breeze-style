@@ -16,40 +16,33 @@ IconLabelContent {
         x: root.mirrored ? root.rightPadding : root.width - width - root.rightPadding
         y: root.labelRect.y
         width: Math.min(implicitWidth, Math.max(0, root.width - root.implicitWidth - root.spacing))
-        sourceComponent: {
-            if (Qt.styleHints.showShortcutsInContextMenus
+        active: Qt.styleHints.showShortcutsInContextMenus
                 && control.action
                 && control.action.hasOwnProperty("shortcut")
                 && control.action.shortcut !== undefined
                 && !root.iconOnly
-            ) {
-                return shortcutLabelComponent
-            } else {
-                return null
+        sourceComponent: Component {
+            Controls.Label {
+                id: shortcutLabel
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    top: parent.top
+                }
+
+                Shortcut {
+                    id: itemShortcut
+                    sequence: (shortcutLabel.visible && control.action !== null) ? control.action.shortcut : ""
+                }
+
+                text: itemShortcut.nativeText
+                font: root.font
+                color: root.color
+                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter
             }
         }
     }
 
-    Component {
-        id: shortcutLabelComponent
-        Controls.Label {
-            id: shortcutLabel
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: parent.top
-            }
-
-            Shortcut {
-                id: itemShortcut
-                sequence: (shortcutLabel.visible && control.action !== null) ? control.action.shortcut : ""
-            }
-
-            text: itemShortcut.nativeText
-            font: root.font
-            color: root.color
-            horizontalAlignment: Text.AlignRight
-            verticalAlignment: Text.AlignVCenter
-        }
-    }
+    
 }
