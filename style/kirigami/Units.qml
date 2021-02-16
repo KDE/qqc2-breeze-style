@@ -6,6 +6,7 @@
 
 import QtQuick 2.15
 import QtQuick.Window 2.15
+// Use QtQuickControlsPrivate.Settings.isMobile to avoid importing kirigami here which would cause a binding loop
 import QtQuick.Controls 1.4 as QtQuickControls
 import QtQuick.Controls.Private 1.0 as QtQuickControlsPrivate
 
