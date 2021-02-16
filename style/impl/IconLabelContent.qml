@@ -84,7 +84,7 @@ IconLabelLayout {
             // This is set in IconLabelLayout
             property bool firstLayoutCompleted: false
             visible: text.length > 0
-            color: Kirigami.Theme.textColor
+            color: root.color
             linkColor: Kirigami.Theme.linkColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
