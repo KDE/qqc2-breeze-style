@@ -12,6 +12,7 @@ Loader {
     anchors.fill: parent
     sourceComponent: Component {
         Rectangle {
+            id: innerRing
             anchors {
                 fill: parent
                 margins: -border.width
@@ -41,15 +42,6 @@ Loader {
                     0.28
                 )
                 border.width: parent.border.width
-            }
-            opacity: 0
-            OpacityAnimator on opacity {
-                id: opacityAnimator
-                running: true
-                from: 0
-                to: 1
-                duration: Kirigami.Units.shortDuration
-                easing.type: Easing.InCubic
             }
         }
     }
