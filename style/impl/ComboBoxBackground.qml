@@ -19,39 +19,45 @@ Rectangle {
 
     property alias control: mainBackground.parent
 
+    property color flatColor: Qt.rgba(
+        Kirigami.Theme.backgroundColor.r,
+        Kirigami.Theme.backgroundColor.g,
+        Kirigami.Theme.backgroundColor.b,
+        0
+    )
+    property bool highlightBackground: control.down
+    property bool highlightBorder: control.down || control.visualFocus || control.hovered
+
     implicitWidth: 120
     implicitHeight: Kirigami.Units.mediumControlHeight
 
-    visible: !control.flat || control.editable || control.down || control.checked || control.visualFocus || control.hovered
+    visible: !control.flat || control.editable || control.down || control.visualFocus || control.hovered
 
     color: {
-        if (!control.popup.visible && (control.down || control.checked) ) {
-            Kirigami.Theme.alternateBackgroundColor
+        if (highlightBackground) {
+            return Kirigami.Theme.alternateBackgroundColor
         } else if (control.flat) {
-            Qt.rgba(
-                Kirigami.Theme.backgroundColor.r,
-                Kirigami.Theme.backgroundColor.g,
-                Kirigami.Theme.backgroundColor.b,
-                0)
+            return flatColor
         } else {
-            Kirigami.Theme.backgroundColor
+            return Kirigami.Theme.backgroundColor
         }
     }
 
     border {
-        color: control.down || control.checked || control.visualFocus || control.hovered ?
+        color: highlightBorder ?
             Kirigami.Theme.focusColor : Kirigami.Theme.buttonSeparatorColor
-//             Kirigami.ColorUtils.tintWithAlpha(mainBackground.color, Kirigami.Theme.textColor, 0.3)
         width: Kirigami.Units.smallBorder
     }
 
     Behavior on color {
+        enabled: highlightBackground
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
     Behavior on border.color {
+        enabled: highlightBorder
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
@@ -77,7 +83,7 @@ Rectangle {
     BackgroundGradient {
         id: bgGradient
         radius: mainBackground.radius
-        opacity: control.down || control.hovered ? 0 : 1
+        opacity: !control.popup.visible && (control.down || control.hovered) ? 0 : 1
         visible: !control.editable && !control.flat && control.enabled
     }
 }
