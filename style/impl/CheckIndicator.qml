@@ -16,6 +16,9 @@ Rectangle {
     property bool mirrored: control.mirrored
     readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 
+    property bool highlightBackground: control.down || root.checkState !== Qt.Unchecked
+    property bool highlightBorder: control.down || root.checkState !== Qt.Unchecked || control.highlighted || control.visualFocus || control.hovered
+
     visible: control.checkable
 
     x: controlHasContent ? (root.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
@@ -32,18 +35,20 @@ Rectangle {
 
     border {
         width: Kirigami.Units.smallBorder
-        color: control.enabled && control.down || root.checkState !== Qt.Unchecked || control.highlighted || control.visualFocus || control.hovered ?
+        color: control.down || root.checkState !== Qt.Unchecked || control.highlighted || control.visualFocus || control.hovered ?
             Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
             //Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
     }
 
     Behavior on color {
+        enabled: highlightBackground
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
     Behavior on border.color {
+        enabled: highlightBorder
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
