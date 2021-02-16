@@ -9,7 +9,7 @@ import org.kde.kirigami 2.14 as Kirigami
 
 IconLabelContent {
     id: root
-    
+
     Loader {
         id: shortcutLabelLoader
         // rightPadding is actually left side padding when mirrored == true
@@ -43,6 +43,4 @@ IconLabelContent {
             }
         }
     }
-
-    
 }
