@@ -20,8 +20,13 @@ T.ToolBar {
     spacing: Kirigami.Units.smallSpacing
 
     padding: Kirigami.Units.smallSpacing
-    topPadding: __isFooter ? 1 : 0 // Add space for the separator above the footer
-    bottomPadding: __isHeader ? 1 : 0 // Add space for the separator below the header
+
+    // Add space for the separator above the footer
+    topPadding: __isFooter && background && background.hasOwnProperty("separator") ?
+        background.separator.height + verticalPadding : verticalPadding
+    // Add space for the separator below the header
+    bottomPadding: __isHeader && background && background.hasOwnProperty("separator") ?
+        background.separator.height + verticalPadding : verticalPadding
 
     Kirigami.Theme.inherit: !__isHeader
     Kirigami.Theme.colorSet: Kirigami.Theme.Header
@@ -30,8 +35,8 @@ T.ToolBar {
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
         implicitHeight: Kirigami.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? 1 : 0) 
         color: Kirigami.Theme.backgroundColor
-        Kirigami.Separator {
-            id: separator
+        property Item separator: Kirigami.Separator {
+            parent: background
             visible: control.__isHeader || control.__isFooter
             anchors {
                 left: parent.left
