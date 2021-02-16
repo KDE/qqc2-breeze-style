@@ -19,9 +19,6 @@ T.Dialog {
                              + (implicitHeaderHeight > 0 ? implicitHeaderHeight + spacing : 0)
                              + (implicitFooterHeight > 0 ? implicitFooterHeight + spacing : 0))
 
-//     contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
-    //contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0) + header.implicitHeight + footer.implicitHeight
-
     padding: Kirigami.Units.gridUnit
 
 //     anchors.centerIn: T.Overlay.overlay
@@ -70,11 +67,6 @@ T.Dialog {
         visible: count > 0
     }
 
-    T.Overlay.modal: Rectangle {
-        color: Qt.rgba(0,0,0,0.5)
-    }
-
-    T.Overlay.modeless: Rectangle {
-        color: Qt.rgba(0,0,0,0.12)
-    }
+    T.Overlay.modal: OverlayModalBackground {}
+    T.Overlay.modeless: OverlayDimBackground {}
 }
