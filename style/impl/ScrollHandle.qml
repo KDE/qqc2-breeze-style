@@ -9,8 +9,10 @@ import org.kde.kirigami 2.14 as Kirigami
 Rectangle {
     id: root
     property alias control: root.parent
-    // Makes this work for ScrollBar and ScrollIndicator
+    // ScrollIndicator does not have a policy property
     property int policy: Controls.ScrollBar.AsNeeded
+    // ScrollIndicator does not have a pressed property
+    property bool pressed: false
 
     visible: control.size < 1 && root.policy !== Controls.ScrollBar.AlwaysOff
 
@@ -18,8 +20,20 @@ Rectangle {
     implicitHeight: implicitWidth
 
     radius: width / 2
-    color: control.pressed ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+
     opacity: root.policy === Controls.ScrollBar.AsNeeded ? 0 : 1
+
+    Kirigami.Theme.inherit: false
+    Kirigami.Theme.colorSet: Kirigami.Theme.Button
+    color: root.pressed ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+
+    Behavior on color {
+        enabled: root.pressed
+        ColorAnimation {
+            duration: Kirigami.Units.shortDuration
+            easing.type: Easing.OutCubic
+        }
+    }
 
     states: State {
         name: "active"

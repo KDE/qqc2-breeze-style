@@ -28,6 +28,7 @@ T.ScrollBar {
     contentItem: ScrollHandle {
         control: control
         policy: control.policy
+        pressed: control.pressed
     }
 
     background: Rectangle {
