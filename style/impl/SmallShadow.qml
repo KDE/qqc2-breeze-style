@@ -8,12 +8,10 @@ import org.kde.kirigami 2.14 as Kirigami
 Loader {
     id: root
     property real radius: Kirigami.Units.smallRadius
-    property bool unloaded: !visible
-    sourceComponent: unloaded || Kirigami.Theme.lowPowerHardware ? null : shadowComponent
     anchors.fill: parent
     z: -1
-    Component {
-        id: shadowComponent
+    active: visible && !Kirigami.Theme.lowPowerHardware
+    sourceComponent: Component {
         Kirigami.ShadowedRectangle {
             anchors.fill: parent
             radius: root.radius

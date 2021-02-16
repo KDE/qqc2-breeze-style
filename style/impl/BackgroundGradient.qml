@@ -8,11 +8,9 @@ import org.kde.kirigami 2.14 as Kirigami
 Loader {
     id: root
     property real radius: Kirigami.Units.smallRadius
-    property bool unloaded: !visible
+    active: visible
     anchors.fill: parent
-    sourceComponent: unloaded ? null : raisedGradientComponent
-    Component {
-        id: raisedGradientComponent
+    sourceComponent: Component {
         Rectangle {
             id: raisedGradient
             anchors.fill: parent

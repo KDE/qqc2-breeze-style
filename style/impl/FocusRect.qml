@@ -8,11 +8,9 @@ import org.kde.kirigami 2.14 as Kirigami
 Loader {
     id: root
     property real baseRadius: 0
-    property bool unloaded: !visible
+    active: visible
     anchors.fill: parent
-    sourceComponent: unloaded ? null : focusRectComponent
-    Component {
-        id: focusRectComponent
+    sourceComponent: Component {
         Rectangle {
             anchors {
                 fill: parent
