@@ -9,10 +9,7 @@ import org.kde.kirigami 2.14 as Kirigami
 // TODO: I'm currently unsatisfied with the appearance of this
 Loader {
     id: root
-    property T.AbstractButton control: root.parent
-    // God, this code is ugly. Somehow this works, but `control.ListView.view && control.ListView.view.highlight` doesn't.
-    property bool isInListView: control.ListView.view ?? false
-    property bool listViewHasHighlight: isInListView && (control.ListView.view.highlight ?? false)
+    property T.ItemDelegate control: root.parent
 
     property color normalColor: control instanceof T.SwipeDelegate ? Kirigami.Theme.backgroundColor
         : Qt.rgba(
@@ -40,28 +37,15 @@ Loader {
     property bool backgroundAnimationRunning: false
     property bool borderAnimationRunning: false
 
-    visible: (highlightBorder || backgroundAnimationRunning || borderAnimationRunning || control instanceof T.SwipeDelegate) && !listViewHasHighlight
+    visible: (highlightBorder || backgroundAnimationRunning || borderAnimationRunning || control instanceof T.SwipeDelegate)
     active: visible
     sourceComponent: Component {
         Kirigami.ShadowedRectangle {
             id: mainBackground
-            readonly property bool isCurrentItem: root.isInListView && control.ListView.isCurrentItem
-            readonly property int currentIndex: root.isInListView ? control.ListView.view.currentIndex : 0
-//             readonly property int count: root.isInListView ? control.ListView.view.count : 0
-            readonly property bool horizontalListView: root.isInListView && control.ListView.view.orientation === ListView.Horizontal
 
             implicitHeight: Kirigami.Units.mediumControlHeight
 
             radius: root.radius
-            readonly property real topRadius: !root.isInListView || (isCurrentItem && currentIndex == 0) ? radius : 0
-            readonly property real bottomRadius: !root.isInListView || (isCurrentItem && currentIndex == control.ListView.view.count-1) ? radius : 0
-
-            corners {
-                topLeftRadius: topRadius
-                topRightRadius: topRadius
-                bottomLeftRadius: bottomRadius
-                bottomRightRadius: bottomRadius
-            }
 
             color: root.color
 
