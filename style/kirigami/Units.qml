@@ -44,7 +44,8 @@ QtObject {
     property QtObject iconSizes: QtObject {
         // Breeze
         property int defaultSize: units.iconSizes.auto
-        property int auto: fontMetrics.roundedIconSize(gridUnit * (Settings.isMobile ? 1.5 : 1))
+        property int sizeForLabels: units.iconSizes.auto
+        property int auto: fontMetrics.roundedIconSize(fontMetrics.height)
         property int tiny: fontMetrics.roundedIconSize(8 * devicePixelRatio)
         property int tinySmall: fontMetrics.roundedIconSize(12 * devicePixelRatio)
         // Breeze
