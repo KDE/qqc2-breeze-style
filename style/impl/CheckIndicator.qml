@@ -16,7 +16,7 @@ Rectangle {
     property bool mirrored: control.mirrored
     readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 
-    property bool highlightBackground: control.down || root.checkState !== Qt.Unchecked
+    property bool highlightBackground: root.checkState !== Qt.Unchecked || (control.down && !(control instanceof T.CheckDelegate))
     property bool highlightBorder: control.down || root.checkState !== Qt.Unchecked || control.highlighted || control.visualFocus || control.hovered
 
     visible: control.checkable
@@ -29,13 +29,13 @@ Rectangle {
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
-    color: (control.down || root.checkState !== Qt.Unchecked) ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    color: highlightBackground ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
 
     radius: Kirigami.Units.smallRadius
 
     border {
         width: Kirigami.Units.smallBorder
-        color: control.down || root.checkState !== Qt.Unchecked || control.highlighted || control.visualFocus || control.hovered ?
+        color: highlightBorder ?
             Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
             //Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
     }
