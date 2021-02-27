@@ -18,7 +18,7 @@ Loader {
             color: "transparent"
             shadow {
                 color: Qt.rgba(0,0,0,0.2)
-                size: 10
+                size: 9
                 yOffset: 2
             }
             opacity: parent.opacity
