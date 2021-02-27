@@ -28,7 +28,7 @@ Rectangle {
     property bool highlightBackground: control.down
     property bool highlightBorder: control.down || control.visualFocus || control.hovered
 
-    implicitWidth: 120
+    implicitWidth: control.editable ? 120 : implicitHeight
     implicitHeight: Kirigami.Units.mediumControlHeight
 
     visible: !control.flat || control.editable || control.down || control.visualFocus || control.hovered
