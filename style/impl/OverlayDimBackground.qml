@@ -6,7 +6,7 @@ import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
 Rectangle {
-    color: Qt.rgba(0,0,0,0.125)
+    color: Qt.rgba(0,0,0,0.2)
     Behavior on opacity {
         OpacityAnimator {
             duration: Kirigami.Units.longDuration
