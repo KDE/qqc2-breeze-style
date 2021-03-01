@@ -11,5 +11,4 @@ SwipeListIte 2.0 SwipeListItem.qml
 singleton Theme 2.0 Theme.qml
 singleton Units 2.0 Units.qml
 AbstractApplicationHeader 2.0 AbstractApplicationHeader.qml
-ApplicationWindow 2.0 ApplicationWindow.qml
-AbstractListIte 2.0 AbstractListItem.qml
+AbstractListItem 2.0 AbstractListItem.qml
