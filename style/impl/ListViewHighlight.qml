@@ -7,10 +7,10 @@ import org.kde.kirigami 2.14 as Kirigami
 
 Kirigami.ShadowedRectangle {
     id: root
-    property int currentIndex: 0
+    property int currentIndex: -1
     property int count: 0
     readonly property real topRadius: root.currentIndex == 0 ? Kirigami.Units.smallRadius : 0
-    readonly property real bottomRadius: root.currentIndex == root.count-1 ? Kirigami.Units.smallRadius : 0
+    readonly property real bottomRadius: root.currentIndex == Math.max(root.count-1, 0) ? Kirigami.Units.smallRadius : 0
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Selection
     Kirigami.Theme.inherit: false
