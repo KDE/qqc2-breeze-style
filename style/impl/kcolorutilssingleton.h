@@ -5,6 +5,7 @@
 #ifndef KCOLORUTILSSINGLETON_H
 #define KCOLORUTILSSINGLETON_H
 
+#include <QColor>
 #include <QObject>
 #include <qqml.h>
 
