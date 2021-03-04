@@ -14,34 +14,31 @@ import "impl"
 T.Drawer {
     id: control
 
-    palette: Kirigami.Theme.palette
-    parent: T.ApplicationWindow.overlay
+    parent: T.Overlay.overlay
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
 
-    contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
-    contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
-
     topPadding: control.edge === Qt.BottomEdge ? 1 : 0
     leftPadding: control.edge === Qt.RightEdge ? 1 : 0
     rightPadding: control.edge === Qt.LeftEdge ? 1 : 0
     bottomPadding: control.edge === Qt.TopEdge ? 1 : 0
 
-    background: Rectangle {
+    background: Kirigami.ShadowedRectangle {
         color: Kirigami.Theme.backgroundColor
-        Rectangle {
-            anchors {
-               left: control.edge !== Qt.LeftEdge ? parent.left : undefined
-               right: control.edge !== Qt.RightEdge ? parent.right : undefined
-               top: control.edge !== Qt.TopEdge ? parent.top : undefined
-               bottom: control.edge !== Qt.BottomEdge ? parent.bottom : undefined
-            }
-            color: Kirigami.Theme.separatorColor
-            implicitWidth: 1
-            implicitHeight: 1
+        shadow {
+            color: Qt.rgba(0,0,0,0.2)
+            size: 15
+        }
+        Kirigami.Separator {
+            readonly property bool horizontal: control.edge === Qt.LeftEdge || control.edge === Qt.RightEdge
+            width: horizontal ? Kirigami.Units.smallBorder : parent.width
+            height: horizontal ? parent.height : Kirigami.Units.smallBorder
+            x: control.edge === Qt.LeftEdge ? parent.width - 1 : 0
+            y: control.edge === Qt.TopEdge ? parent.height - 1 : 0
+            visible: !control.dim
         }
     }
 
