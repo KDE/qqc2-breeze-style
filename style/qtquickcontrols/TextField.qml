@@ -19,19 +19,17 @@ T.TextField {
     )
 
     implicitWidth: implicitBackgroundWidth + leftInset + rightInset
-                   || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding
+                   || Math.ceil(Math.max(contentWidth, placeholder.implicitWidth)) + leftPadding + rightPadding
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
-    property real horizontalPadding: Kirigami.Units.mediumHorizontalPadding
     padding: Kirigami.Units.mediumSpacing
-    leftPadding: horizontalPadding
-    rightPadding: horizontalPadding
+    leftPadding: Kirigami.Units.mediumHorizontalPadding
+    rightPadding: Kirigami.Units.mediumHorizontalPadding
 
-    palette: Kirigami.Theme.palette
     Kirigami.Theme.colorSet: Kirigami.Theme.View
-    Kirigami.Theme.inherit: background == null
+    Kirigami.Theme.inherit: !background || !background.visible
 
     color: Kirigami.Theme.textColor
     selectionColor: Kirigami.Theme.highlightColor
