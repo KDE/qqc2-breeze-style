@@ -46,11 +46,11 @@ Kirigami.ShadowedRectangle {
 
     color: {
         if (highlightBackground) {
-            Kirigami.Theme.alternateBackgroundColor
+            return Kirigami.Theme.alternateBackgroundColor
         } else if (control.flat) {
             return flatColor
         } else {
-            control.palette.button
+            return Kirigami.Theme.backgroundColor
         }
     }
 
