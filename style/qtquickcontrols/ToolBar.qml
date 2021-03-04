@@ -33,16 +33,13 @@ T.ToolBar {
 
     background: Rectangle {
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
-        implicitHeight: Kirigami.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? 1 : 0) 
+        implicitHeight: Kirigami.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0) 
         color: Kirigami.Theme.backgroundColor
         property Item separator: Kirigami.Separator {
             parent: background
             visible: control.__isHeader || control.__isFooter
-            anchors {
-                left: parent.left
-                right: parent.right
-                verticalCenter: control.__isFooter ? parent.top : parent.bottom
-            }
+            width: parent.width
+            y: control.__isFooter ? 0 : parent.height - height
         }
     }
 }
