@@ -117,7 +117,7 @@ T.ToolTip {
         border.width: Kirigami.Units.smallBorder
         border.color: Kirigami.Theme.separatorColor
 
-        MediumShadow {
+        LargeShadow {
             radius: parent.radius
         }
     }
