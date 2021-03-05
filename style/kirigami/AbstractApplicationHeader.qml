@@ -59,7 +59,7 @@ T.AbstractApplicationHeader {
                     color:  "transparent"
                 }
             }
-            opacity: (!root.page.header || root.page.header.toString().indexOf("ToolBar") === -1)
+            opacity: (!root.page || !root.page.header || root.page.header.toString().indexOf("ToolBar") === -1)
             Behavior on opacity {
                 OpacityAnimator {
                     duration: Kirigami.Units.longDuration
