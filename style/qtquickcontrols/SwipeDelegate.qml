@@ -4,7 +4,6 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import "impl"
@@ -43,17 +42,13 @@ T.SwipeDelegate {
     icon.height: Kirigami.Units.iconSizes.auto
 
     Kirigami.Theme.colorSet: {
-        if (control.down) {
+        if (control.down || control.highlighted) {
             return Kirigami.Theme.Button
-        } else if (control.highlighted) {
-            return Kirigami.Theme.Selection
         } else {
-            return Kirigami.Theme.View
+            return parent.Kirigami.Theme.colorSet ?? Kirigami.Theme.View
         }
     }
-    Kirigami.Theme.inherit: !control.highlighted && !control.down
-
-    swipe.transition: Transition { SmoothedAnimation { velocity: 3; easing.type: Easing.InOutCubic } }
+    Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
 
     contentItem: IconLabelContent {
         control: control
@@ -64,5 +59,13 @@ T.SwipeDelegate {
 
     background: DelegateBackground {
         control: control
+    }
+
+    clip: true
+    swipe.transition: Transition {
+        SmoothedAnimation {
+            velocity: 3
+            easing.type: Easing.InOutCubic
+        }
     }
 }

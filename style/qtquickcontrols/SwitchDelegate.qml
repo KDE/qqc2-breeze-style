@@ -44,15 +44,13 @@ T.SwitchDelegate {
     icon.height: Kirigami.Units.iconSizes.auto
 
     Kirigami.Theme.colorSet: {
-        if (control.down) {
+        if (control.down || control.highlighted) {
             return Kirigami.Theme.Button
-        } else if (control.highlighted) {
-            return Kirigami.Theme.Selection
         } else {
-            return Kirigami.Theme.View
+            return parent.Kirigami.Theme.colorSet ?? Kirigami.Theme.View
         }
     }
-    Kirigami.Theme.inherit: !control.highlighted && !control.down
+    Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
 
     contentItem: IconLabelContent {
         control: control
