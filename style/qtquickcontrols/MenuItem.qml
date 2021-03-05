@@ -1,11 +1,8 @@
-// NOTE: check this
-/*
-    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
-    SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
-
-    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
-*/
-
+/* SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+ * SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
+ * SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LicenseRef-KDE-Accepted-LGPL
+ */
 
 import QtQuick 2.15
 import QtQuick.Layouts 1.12
@@ -20,8 +17,17 @@ T.MenuItem {
     property bool __reserveSpaceForIndicator: true
     property bool __reserveSpaceForIcon: false
     property bool __reserveSpaceForArrow: true
+    Kirigami.Theme.colorSet: Kirigami.Theme.Button
 
-    palette: Kirigami.Theme.palette
+    Kirigami.Theme.colorSet: {
+        if (control.down || control.highlighted) {
+            return Kirigami.Theme.Button
+        } else {
+            return parent.Kirigami.Theme.colorSet ?? Kirigami.Theme.Window
+        }
+    }
+    Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
+
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding,
                             implicitIndicatorWidth + leftPadding + rightPadding)
@@ -40,7 +46,7 @@ T.MenuItem {
     spacing: Kirigami.Units.mediumSpacing
     padding: Kirigami.Units.mediumSpacing
     leftPadding: {
-        if (!control.indicator.visible // TODO move to right padding
+        if (!control.indicator.visible
             && ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
                 || display == T.AbstractButton.TextOnly
                 || display == T.AbstractButton.TextUnderIcon)) {
@@ -87,11 +93,11 @@ T.MenuItem {
             rightMargin: control.rightPadding
             verticalCenter: control.verticalCenter
         }
-       source: control.mirrored ? "arrow-left" : "arrow-right"
-       implicitWidth: Kirigami.Units.iconSizes.auto
-       implicitHeight: Kirigami.Units.iconSizes.auto
-       visible: control.subMenu
-   }
+        source: control.mirrored ? "arrow-left" : "arrow-right"
+        implicitWidth: Kirigami.Units.iconSizes.auto
+        implicitHeight: Kirigami.Units.iconSizes.auto
+        visible: control.subMenu
+    }
 
     contentItem: IconLabelShortcutContent {
         control: control
@@ -102,7 +108,7 @@ T.MenuItem {
         reserveSpaceForArrow: control.__reserveSpaceForArrow
     }
 
-    //background: DelegateBackground {
-        //control: control
-    //}
+    background: MenuItemBackground {
+        control: control
+    }
 }
