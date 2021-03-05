@@ -19,13 +19,7 @@ T.MenuItem {
     property bool __reserveSpaceForArrow: true
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
 
-    Kirigami.Theme.colorSet: {
-        if (control.down || control.highlighted) {
-            return Kirigami.Theme.Button
-        } else {
-            return parent.Kirigami.Theme.colorSet ?? Kirigami.Theme.Window
-        }
-    }
+    Kirigami.Theme.colorSet: control.down || control.highlighted ? Kirigami.Theme.Button : -1
     Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,

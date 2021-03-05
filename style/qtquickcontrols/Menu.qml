@@ -1,4 +1,3 @@
-// NOTE: check this
 /*
     SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
     SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
@@ -18,7 +17,7 @@ import "impl"
 
 T.Menu {
     id: control
-    
+
     property bool __hasIndicators: false
     property bool __hasIcons: false
     property bool __hasArrows: false
@@ -30,19 +29,18 @@ T.Menu {
                              contentHeight + topPadding + bottomPadding)
 
     margins: 0
-    overlap: background.border.width
+    overlap: background && background.hasOwnProperty("border") ? background.border.width : 0
 
-    delegate: Controls.MenuItem {
-        __reserveSpaceForIndicator: control.__hasIndicators
-        __reserveSpaceForIcon: control.__hasIcons
-        __reserveSpaceForArrow: control.__hasArrows
-    }
+    // The default contentItem is a ListView, which has its own contentItem property,
+    // so delegates will be created as children of control.contentItem.contentItem
+    delegate: Controls.MenuItem {}
 
     contentItem: ListView {
         implicitHeight: contentHeight
+        implicitWidth: contentWidth
         model: control.contentModel
         highlightMoveDuration: Kirigami.Units.shortDuration
-//         highlightMoveVelocity: contentHeight
+        highlightMoveVelocity: Kirigami.Units.gridUnit * 20
         highlight: ListViewHighlight {
             currentIndex: control.currentIndex
             count: control.count
@@ -51,34 +49,13 @@ T.Menu {
         // using it causes separators and disabled items to be highlighted
         keyNavigationWraps: true
 
-        interactive: Window.window
-                        ? contentHeight + control.topPadding + control.bottomPadding > Window.window.height
-                        : false
-        clip: true
+        // Makes it so you can't drag/flick the list view around unless the menu is taller than the window
+        interactive: Window.window ? contentHeight + control.topPadding + control.bottomPadding > Window.window.height : false
+        clip: interactive // Only needed when the ListView can be dragged/flicked
         currentIndex: control.currentIndex || 0
 
         ScrollBar.vertical: Controls.ScrollBar {}
     }
-
-    //Connections {
-        //target: control.contentItem.contentItem
-
-        //function onChildrenChanged()
-        //{
-            //for (var i in control.contentItem.contentItem.children) {
-                //var child = control.contentItem.contentItem.children[i];
-                //if (child.indicator && child.indicator.visible) {
-                    //control.__hasIndicators = true;
-                //}
-                //if (child.contentItem && child.contentItem.hasIcon) {
-                    //control.__hasIcons = true;
-                //}
-                //if (child.arrow && child.arrow.visible) {
-                    //control.__hasArrows = true
-                //}
-            //}
-        //}
-    //}
 
     enter: Transition {
         ParallelAnimation {
@@ -86,7 +63,7 @@ T.Menu {
                 property: "opacity"
                 from: 0
                 to: 1
-                easing.type: Easing.OutQuad
+                easing.type: Easing.OutCubic
                 duration: Kirigami.Units.shortDuration
             }
         }
@@ -98,7 +75,7 @@ T.Menu {
                 property: "opacity"
                 from: 1
                 to: 0
-                easing.type: Easing.OutQuad
+                easing.type: Easing.InCubic
                 duration: Kirigami.Units.shortDuration
             }
         }
@@ -115,7 +92,7 @@ T.Menu {
             width: Kirigami.Units.smallBorder
         }
 
-        MediumShadow {
+        LargeShadow {
             radius: parent.radius
         }
     }

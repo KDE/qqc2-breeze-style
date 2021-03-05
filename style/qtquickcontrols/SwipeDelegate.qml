@@ -41,13 +41,7 @@ T.SwipeDelegate {
     icon.width: Kirigami.Units.iconSizes.auto
     icon.height: Kirigami.Units.iconSizes.auto
 
-    Kirigami.Theme.colorSet: {
-        if (control.down || control.highlighted) {
-            return Kirigami.Theme.Button
-        } else {
-            return parent.Kirigami.Theme.colorSet ?? Kirigami.Theme.View
-        }
-    }
+    Kirigami.Theme.colorSet: control.down || control.highlighted ? Kirigami.Theme.Button : -1
     Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
 
     contentItem: IconLabelContent {
