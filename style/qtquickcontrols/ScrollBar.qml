@@ -33,7 +33,7 @@ T.ScrollBar {
 
     background: Rectangle {
         visible: control.policy === T.ScrollBar.AlwaysOn
-        color: Kirigami.Theme.backgroundColor
+        color: "transparent"
         Kirigami.Separator {
             id: separator
             property int thickness: parent.visible ? Math.min(width, height) : 0
