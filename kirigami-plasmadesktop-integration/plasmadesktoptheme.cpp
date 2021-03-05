@@ -307,9 +307,20 @@ void PlasmaDesktopTheme::syncColors()
     setPositiveTextColor(colors.scheme.foreground(KColorScheme::PositiveText).color());
 
     //background
-    setBackgroundColor(colors.scheme.background(KColorScheme::NormalBackground).color());
-    setAlternateBackgroundColor(colors.scheme.background(KColorScheme::AlternateBackground).color());
     setHighlightColor(colors.selectionScheme.background(KColorScheme::NormalBackground).color());
+    setBackgroundColor(colors.scheme.background(KColorScheme::NormalBackground).color());
+
+    // HACK: It's awful, but people sometimes complain about their color scheme not working well with the theme.
+    // This is because I'm using colors that weren't used before and lots of themes have bad colors for previously unused colors.
+    QColor alternateBackgroundOriginalColor = colors.scheme.background(KColorScheme::AlternateBackground).color();
+    // #bdc3c7 is the old default for the Breeze color scheme.
+    // #4d4d4d is the old default for the Breeze Dark color scheme.
+    // Most color schemes use one of these 2 colors.
+    if (colorSet() == ColorSet::Button && (alternateBackgroundOriginalColor == QColor("#bdc3c7") || alternateBackgroundOriginalColor == QColor("#4d4d4d"))) {
+        setAlternateBackgroundColor(KColorUtils::tint(backgroundColor(), highlightColor(), 0.4));
+    } else {
+        setAlternateBackgroundColor(alternateBackgroundOriginalColor);
+    }
     setActiveBackgroundColor(colors.scheme.background(KColorScheme::ActiveBackground).color());
     setLinkBackgroundColor(colors.scheme.background(KColorScheme::LinkBackground).color());
     setVisitedLinkBackgroundColor(colors.scheme.background(KColorScheme::VisitedBackground).color());
