@@ -9,8 +9,12 @@ import org.kde.kirigami 2.14 as Kirigami
 T.DialogButtonBox {
     id: control
 
-    readonly property bool isHeader: control.position === T.DialogButtonBox.Header
-    readonly property bool isFooter: control.position === T.DialogButtonBox.Footer
+    readonly property bool __isHeader: control.position === T.DialogButtonBox.Header
+    readonly property bool __isFooter: control.position === T.DialogButtonBox.Footer
+
+    // Children of QML Popup elements and subclasses of Popup are actually
+    // children of an internal QQuickPopupItem, a subclass of QQuickPage.
+    property bool __isInPopup: parent ? parent.toString().includes("QQuickPopupItem") : false
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding)
@@ -19,15 +23,14 @@ T.DialogButtonBox {
 
     spacing: Kirigami.Units.smallSpacing
 
-    padding: Kirigami.Units.smallSpacing + Kirigami.Units.smallBorder
+    padding: Kirigami.Units.smallSpacing
 
-    property real inset: 0
-    property real horizontalInset: inset
-    property real verticalInset: inset
-    leftInset: horizontalInset
-    rightInset: horizontalInset
-    topInset: verticalInset
-    bottomInset: verticalInset
+    // Add space for the separator above the footer
+    topPadding: __isFooter && background && background.hasOwnProperty("separator") ?
+        background.separator.height + verticalPadding : verticalPadding
+    // Add space for the separator below the header
+    bottomPadding: __isHeader && background && background.hasOwnProperty("separator") ?
+        background.separator.height + verticalPadding : verticalPadding
 
     alignment: Qt.AlignRight
 
@@ -46,12 +49,9 @@ T.DialogButtonBox {
     }
 
     background: Kirigami.ShadowedRectangle {
-        property real topRadius: control.isHeader ? Kirigami.Units.smallRadius : 0
-        property real bottomRadius: control.isFooter ? Kirigami.Units.smallRadius : 0
-        border {
-            width: Kirigami.Units.smallBorder
-            color: Kirigami.Theme.separatorColor
-        }
+        property real topRadius: control.__isHeader ? radius : 0
+        property real bottomRadius: control.__isFooter ? radius : 0
+        radius: control.__isInPopup ? Kirigami.Units.smallRadius : 0
         corners {
             topLeftRadius: topRadius
             topRightRadius: topRadius
@@ -59,16 +59,13 @@ T.DialogButtonBox {
             bottomRightRadius: bottomRadius
         }
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
-        implicitHeight: Kirigami.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + Kirigami.Units.smallBorder*2 //+ (separator.visible ? 1 : 0) 
-        color: Kirigami.Theme.backgroundColor
-//         Kirigami.Separator {
-//             id: separator
-//             color: control.isHeader || control.isFooter ? Kirigami.Theme.separatorColor : Kirigami.Theme.backgroundColor
-//             anchors {
-//                 left: parent.left
-//                 right: parent.right
-//                 verticalCenter: control.isHeader ? parent.bottom : parent.top
-//             }
-//         }
+        implicitHeight: Kirigami.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0)
+        color: control.__isInPopup ? "transparent" : Kirigami.Theme.backgroundColor
+        property Item separator: Kirigami.Separator {
+            parent: background
+            visible: control.__isHeader || control.__isFooter
+            width: parent.width
+            y: control.__isFooter ? 0 : parent.height - height
+        }
     }
 }
