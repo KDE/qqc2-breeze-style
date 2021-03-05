@@ -14,10 +14,27 @@ import "impl"
 T.MenuItem {
     id: control
 
-    property bool __reserveSpaceForIndicator: true
-    property bool __reserveSpaceForIcon: false
-    property bool __reserveSpaceForArrow: true
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
+    property bool __reserveSpaceForIndicator: {
+        if (menu && menu.hasOwnProperty("__hasIndicators")) {
+            menu.__hasIndicators |= indicator && indicator.visible
+            return menu.__hasIndicators
+        }
+        return false
+    }
+    property bool __reserveSpaceForIcon: {
+        if (menu && menu.hasOwnProperty("__hasIcons")) {
+            menu.__hasIcons |= contentItem && contentItem.hasIcon
+            return menu.__hasIcons
+        }
+        return false
+    }
+    property bool __reserveSpaceForArrow: {
+        if (menu && menu.hasOwnProperty("__hasArrows")) {
+            menu.__hasArrows |= arrow && arrow.visible
+            return menu.__hasArrows
+        }
+        return false
+    }
 
     Kirigami.Theme.colorSet: control.down || control.highlighted ? Kirigami.Theme.Button : -1
     Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
