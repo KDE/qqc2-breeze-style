@@ -47,7 +47,7 @@ T.Dialog {
         radius: Kirigami.Units.smallRadius
         color: Kirigami.Theme.backgroundColor
         border.color: Kirigami.Theme.separatorColor
-        border.width: 1
+        border.width: control.dim ? 0 : Kirigami.Units.smallBorder
 
         LargeShadow {
             radius: parent.radius
