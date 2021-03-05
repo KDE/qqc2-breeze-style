@@ -2,6 +2,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.14 as Kirigami
 
 T.TabBar {
     id: control
@@ -15,6 +16,7 @@ T.TabBar {
                              contentHeight + topPadding + bottomPadding)
 
     spacing: 0
+    padding: 0
 
     contentItem: ListView {
         model: control.contentModel
@@ -25,14 +27,9 @@ T.TabBar {
         boundsBehavior: Flickable.StopAtBounds
         flickableDirection: Flickable.AutoFlickIfNeeded
         snapMode: ListView.SnapToItem
-
-        highlightMoveDuration: 0
-        highlightRangeMode: ListView.ApplyRange
-        preferredHighlightBegin: 40
-        preferredHighlightEnd: width - 40
     }
 
     background: Rectangle {
-        color: control.palette.window
+        color: Kirigami.Theme.backgroundColor
     }
 }
