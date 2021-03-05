@@ -13,16 +13,12 @@ import "impl"
 T.Popup {
     id: control
 
-    palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
 
-    contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
-    contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
-
-    padding: 0
+    padding: Kirigami.Units.veryLargeSpacing
 //     clip: true
 
     enter: Transition {
