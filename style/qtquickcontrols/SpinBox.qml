@@ -17,9 +17,8 @@ T.SpinBox {
 
     implicitWidth: Math.max(
         implicitBackgroundWidth + leftInset + rightInset,
-        Math.max(implicitContentWidth + leftPadding + rightPadding, down.implicitIndicatorWidth-2)
-            + up.implicitIndicatorWidth
-            + down.implicitIndicatorWidth
+        implicitContentWidth + leftPadding + rightPadding,
+        up.implicitIndicatorWidth + down.implicitIndicatorWidth
     )
     implicitHeight: Math.max(
         implicitBackgroundHeight + topInset + bottomInset,
@@ -35,6 +34,8 @@ T.SpinBox {
     inputMethodHints: Qt.ImhDigitsOnly
 
     padding: Kirigami.Units.mediumSpacing
+    leftPadding: __leftIndicatorWidth
+    rightPadding: __rightIndicatorWidth
     spacing: Kirigami.Units.mediumSpacing
 
     validator: IntValidator {
@@ -57,15 +58,14 @@ T.SpinBox {
      * contentItem will be the part that takes the focus.
      */
 
-    contentItem: T.TextField {
-        z: 2
+    contentItem: Controls.TextField {
+        palette: control.palette
+        leftPadding: control.spacing
+        rightPadding: control.spacing
+        topPadding: 0
+        bottomPadding: 0
         // Intentionally using anchors so that left/right
         // control padding can be used like it normally would
-        anchors {
-            fill: parent
-            leftMargin: control.__leftIndicatorWidth
-            rightMargin: control.__rightIndicatorWidth
-        }
         text: control.displayText
         font: control.font
         color: Kirigami.Theme.textColor
@@ -78,6 +78,7 @@ T.SpinBox {
         validator: control.validator
         inputMethodHints: control.inputMethodHints
         selectByMouse: true // Should this be disabled for mobile?
+        background: null
     }
 
     up.indicator: SpinBoxIndicator {
@@ -88,6 +89,8 @@ T.SpinBox {
 
     background: TextEditBackground {
         control: control
+        implicitWidth: Kirigami.Units.mediumControlHeight * 3 - Kirigami.Units.smallBorder * 2 
+        implicitHeight: Kirigami.Units.mediumControlHeight
         // Work around SpinBox focus handling flaw
         visualFocus: control.visualFocus || (control.contentItem.activeFocus && (
             control.contentItem.focusReason == Qt.TabFocusReason ||
