@@ -40,7 +40,7 @@ T.Menu {
         implicitWidth: contentWidth
         model: control.contentModel
         highlightMoveDuration: Kirigami.Units.shortDuration
-        highlightMoveVelocity: Kirigami.Units.gridUnit * 20
+        highlightMoveVelocity: 800
         highlight: ListViewHighlight {
             currentIndex: control.currentIndex
             count: control.count
