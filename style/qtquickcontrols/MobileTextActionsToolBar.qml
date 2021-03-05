@@ -25,6 +25,7 @@ Loader {
         modal: false
         focus: false
         margins: Kirigami.Units.verySmallSpacing
+        padding: 0
 
         x: xAlignHCenter
         y: yAlignOver
