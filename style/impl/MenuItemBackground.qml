@@ -20,11 +20,11 @@ Loader {
             Kirigami.Theme.backgroundColor.b,
             0
         )
-    property bool highlightBorder: control.hovered || control.visualFocus || control.down || control.highlighted
+    property bool highlightBackground: control.down || control.highlighted
 
     // Rectangle compatibility properties. 3rd party devs might assume that these properties are available.
     property color color: {
-        if (control.down || control.highlighted) {
+        if (highlightBackground) {
             return Kirigami.Theme.alternateBackgroundColor
         } else {
             return normalColor
@@ -32,14 +32,14 @@ Loader {
     }
     property real radius: Kirigami.Units.smallRadius
     property QtObject border: QtObject {
-        property real width: highlightBorder ? Kirigami.Units.smallBorder : 0
+        property real width: highlightBackground ? Kirigami.Units.smallBorder : 0
         property color color: Kirigami.Theme.focusColor
     }
 
     property bool backgroundAnimationRunning: false
     property bool borderAnimationRunning: false
 
-    visible: (highlightBorder || backgroundAnimationRunning || borderAnimationRunning || control instanceof T.SwipeDelegate) && !listViewHasHighlight
+    visible: (highlightBackground || backgroundAnimationRunning || borderAnimationRunning) && !listViewHasHighlight
     active: visible
     sourceComponent: Component {
         Kirigami.ShadowedRectangle {
@@ -70,7 +70,7 @@ Loader {
             }
 
             Behavior on color {
-                enabled: control.down
+                enabled: highlightBackground
                 ColorAnimation {
                     duration: Kirigami.Units.shortDuration
                     easing.type: Easing.OutCubic
@@ -78,7 +78,7 @@ Loader {
                 }
             }
             Behavior on border.color {
-                enabled: highlightBorder
+                enabled: highlightBackground
                 ColorAnimation {
                     duration: Kirigami.Units.shortDuration
                     easing.type: Easing.OutCubic
