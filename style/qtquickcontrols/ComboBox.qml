@@ -1,5 +1,7 @@
-/* SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
- * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
+/* SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+ * SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
+ * SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-License-Identifier: LicenseRef-KDE-Accepted-LGPL
  */
 
 import QtQuick 2.15
@@ -12,15 +14,15 @@ import "impl"
 T.ComboBox {
     id: control
 
+    property real __indicatorMargin: control.indicator && control.indicator.visible && control.indicator.width > 0 ? control.spacing + indicator.width + control.spacing : 0
+    property real __widestImplicitContentWidth: implicitContentWidth
+    readonly property bool __isContentItemTextInput: contentItem instanceof TextInput
+
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding,
-                            implicitIndicatorWidth + leftPadding + rightPadding)
+                            __widestImplicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
-
-    padding: Kirigami.Units.mediumSpacing
-    horizontalPadding: Kirigami.Units.mediumHorizontalPadding
 
     palette: Kirigami.Theme.palette
     Kirigami.Theme.colorSet: control.editable ? Kirigami.Theme.View : Kirigami.Theme.Button
@@ -28,10 +30,131 @@ T.ComboBox {
 
     spacing: Kirigami.Units.mediumSpacing
 
+    leftPadding: horizontalPadding + (!control.mirrored ? 0 : __indicatorMargin)
+    rightPadding: horizontalPadding + (control.mirrored ? 0 : __indicatorMargin)
+
+    contentItem: Controls.TextField {
+        id: textField
+        palette: control.palette
+        // TextField padding doesn't automatically mirror
+        leftPadding: control.mirrored ? 0 : Kirigami.Units.mediumHorizontalPadding
+        rightPadding: !control.mirrored ? 0 : Kirigami.Units.mediumHorizontalPadding
+
+        text: control.editable ? control.editText : control.displayText
+
+        enabled: control.editable
+        autoScroll: control.editable
+        readOnly: control.down || !control.editable
+        inputMethodHints: control.inputMethodHints
+        validator: control.validator
+
+        // Using control.Kirigami.Theme.textColor instead of directly using
+        // Kirigami.Theme.textColor because the latter always uses the disabled
+        // palette when textField.enabled == false
+        color: control.Kirigami.Theme.textColor
+
+        background: null
+    }
+
+    indicator: Kirigami.Icon {
+        implicitHeight: Kirigami.Units.iconSizes.sizeForLabels
+        implicitWidth: implicitHeight
+        x: control.mirrored ? control.leftPadding : control.leftPadding + control.availableWidth + control.spacing
+        y: control.topPadding + (control.availableHeight - height) / 2
+        source: "arrow-down"
+    }
+
+    background: ComboBoxBackground {
+        control: control
+
+        Rectangle {
+            id: separator
+            visible: control.editable
+            width: Kirigami.Units.smallBorder
+            anchors {
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+                rightMargin: (control.mirrored ? control.leftPadding : control.rightPadding) - width
+                topMargin: control.topPadding + (__isContentItemTextInput ? control.contentItem.topPadding : 0)
+                bottomMargin: control.bottomPadding + (__isContentItemTextInput ? control.contentItem.bottomPadding : 0)
+            }
+
+            color: control.down
+                || ((control.hovered || control.visualFocus)
+                    && !(control.contentItem && control.contentItem.hasOwnProperty("hovered") && control.contentItem.hovered))
+                ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+
+            Behavior on color {
+                enabled: control.down || control.hovered
+                ColorAnimation {
+                    duration: Kirigami.Units.shortDuration
+                    easing.type: Easing.OutCubic
+                }
+            }
+        }
+
+        Kirigami.ShadowedRectangle {
+            id: pressedBg
+            property real leftRadius: control.mirrored ? radius : 0
+            property real rightRadius: !control.mirrored ? radius : 0
+            visible: false
+
+            anchors {
+                left: separator.left
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
+
+            Kirigami.Theme.colorSet: Kirigami.Theme.Button
+            Kirigami.Theme.inherit: false
+            color: Kirigami.Theme.alternateBackgroundColor
+
+            radius: parent.radius
+            corners {
+                topLeftRadius: leftRadius
+                topRightRadius: rightRadius
+                bottomLeftRadius: leftRadius
+                bottomRightRadius: rightRadius
+            }
+
+            border.color: Kirigami.Theme.focusColor
+            border.width: Kirigami.Units.smallBorder
+
+            opacity: 0
+
+            states: State {
+                name: "pressed"
+                when: control.down && control.editable
+                PropertyChanges {
+                    target: pressedBg
+                    opacity: 1
+                    visible: true
+                }
+            }
+            transitions: Transition {
+                from: "pressed"
+                to: ""
+                SequentialAnimation {
+                    OpacityAnimator {
+                        duration: Kirigami.Units.shortDuration
+                        easing.type: Easing.OutCubic
+                    }
+                    PropertyAction {
+                        target: pressedBg
+                        property: "visible"
+                        value: false
+                    }
+                }
+            }
+        }
+    }
+
     delegate: Controls.MenuItem {
-        width: ListView.view.width
+        implicitWidth: leftPadding + implicitContentWidth + rightPadding
+        width: parent ? parent.width : implicitWidth
         text: control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData
-        font.weight: control.currentIndex === index ? Font.DemiBold : Font.Normal
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
         __reserveSpaceForIndicator: false
@@ -39,136 +162,85 @@ T.ComboBox {
         __reserveSpaceForArrow: false
     }
 
-    indicator: Kirigami.Icon {
-        implicitHeight: Kirigami.Units.iconSizes.defaultSize
-        implicitWidth: implicitHeight
-        anchors {
-            right: control.right
-            rightMargin: control.rightPadding
-            verticalCenter: control.verticalCenter
-        }
-        source: "arrow-down"
-    }
+    popup: Controls.Menu {
+        y: control.height
+        x: (control.width - width)/2
+        implicitWidth: contentWidth + leftPadding + rightPadding
+        width: Math.max(control.width, implicitWidth)
 
-    contentItem: Controls.TextField {
-        id: textField
-        palette: control.palette
-        padding: 0
-        // Giving the TextField some extra click area on the sides
-        leftPadding: control.leftPadding
-        rightPadding: control.spacing
-        topPadding: padding
-        bottomPadding: padding
-        // Intentionally using anchors here.
-        // This allows us to control which parts of the combobox send mouse input to the TextField.
-        anchors {
-            fill: parent
-            // The rightMargin isn't clickable, which allows the dropdown indicator to be clicked
-            rightMargin: control.indicator ? indicator.width + control.rightPadding : 0
-        }
-        text: control.editable ? control.editText : control.displayText
+        delegate: null
 
-        enabled: control.editable
-        autoScroll: control.editable
-        readOnly: control.down
-        inputMethodHints: control.inputMethodHints
-        validator: control.validator
-
-        // Using palette instead of Kirigami.Theme.textColor because the latter
-        // always uses the disabled palette when textField.enabled == false
-        color: control.editable ? palette.text : palette.buttonText
-
-        background: null
-    }
-    /*MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton
-        preventStealing: true
-        property int indexUnderMouse: -1
-        onWheel: {
-            if (wheel.pixelDelta.y < 0 || wheel.angleDelta.y < 0) {
-                control.incrementCurrentIndex();
-            } else {
-                control.decrementCurrentIndex();
-            }
-        }
-        onPressed: {
-            if (control.focusPolicy & Qt.ClickFocus) {
-                control.forceActiveFocus();
-            }
-
-            indexUnderMouse = -1;
-            listView.currentIndex = control.highlightedIndex
-            control.down = true;
-            control.pressed = true;
-            control.popup.visible = !control.popup.visible;
-        }
-        onReleased: {
-            if (!containsMouse) {
-                control.down = false;
-                control.pressed = false;
-                control.popup.visible = false;
-            }
-            if (indexUnderMouse > -1) {
-                controlWriter.writeProperty(indexUnderMouse);
-                control.activated(indexUnderMouse);
-            }
-        }
-        onCanceled: {
-            control.down = false;
-            control.pressed = false;
-        }
-        onPositionChanged: {
-            var pos = listView.mapFromItem(this, mouse.x, mouse.y);
-            indexUnderMouse = listView.indexAt(pos.x, pos.y);
-            listView.currentIndex = indexUnderMouse;
-        }
-
-        Connections {
-            target: popup
-            onClosed: {
-                control.down = false;
-                control.pressed = false;
-            }
-        }
-    }*/
-
-    background: ComboBoxBackground {
-        control: control
-    }
-
-    popup: Controls.Popup {
-        padding: 0
-        y: control.height - Kirigami.Units.smallBorder
-        width: control.width
-        height: Math.min(contentItem.implicitHeight, control.Window.height - topMargin - bottomMargin)
-
-        contentItem: ScrollView {
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ListView {
-                id: listView
-                // this causes us to load at least one delegate
-                // this is essential in guessing the contentHeight
-                // which is needed to initially resize the popup
-                cacheBuffer: 1
-                clip: true
-                implicitHeight: contentHeight
-                model: control.delegateModel // Why isn't this in the ComboBox documentation?
+        contentItem: ListView {
+            id: listView
+            // this causes us to load at least one delegate
+            // this is essential in guessing the contentHeight
+            // which is needed to initially resize the popup
+            //cacheBuffer: 1
+            implicitHeight: contentHeight
+            implicitWidth: contentWidth
+            model: control.delegateModel // Why isn't this in the ComboBox documentation?
+            currentIndex: control.highlightedIndex
+            highlightMoveDuration: Kirigami.Units.shortDuration
+            highlightMoveVelocity: Kirigami.Units.gridUnit * 20
+            highlight: ListViewHighlight {
                 currentIndex: control.highlightedIndex
-                highlightMoveDuration: -1
-                highlightMoveVelocity: -1
-                highlight: ListViewHighlight {}
-                boundsBehavior: Flickable.StopAtBounds
-                ScrollBar.vertical: Controls.ScrollBar {}
-                //T.ScrollIndicator.vertical: ScrollIndicator { }
+                count: control.count
+            }
+            interactive: Window.window ? contentHeight + control.topPadding + control.bottomPadding > Window.window.height : false
+            clip: interactive // Only needed when the ListView can be dragged/flicked
+            keyNavigationWraps: true
+            ScrollBar.vertical: Controls.ScrollBar {}
+        }
+    }
+
+    WheelHandler {
+        target: control
+        // FIXME: shouldDec and shouldInc don't work reliably with touchpads when the popup is open.
+        // Sometimes it's fine, sometimes you need to scroll extra hard to move the highlight.
+        enabled: control.count > 1 && (popup ? !popup.visible : true)
+        // Maybe only handle mouse wheels (default) for now. Touchpad scrolling can be too sensitive sometimes.
+        acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+        onWheel: {
+            // Degrees still change by differences greater than 1 scrollwheel notch (typically 15) if you scroll fast enough.
+            // That means multiple scroll ticks are registered before the code can run.
+            // Doesn't seem to impact how the control feels much at least.
+            let shouldDec = rotation >= 15
+            let shouldInc = rotation <= -15
+            let shouldReset = (rotation > 0 && control.currentIndex == 0) || (rotation < 0 && control.currentIndex == control.count-1)
+            if (shouldDec) {
+                control.decrementCurrentIndex(); // This moves the highlight up
+                rotation = 0
+            } else if (shouldInc) {
+                control.incrementCurrentIndex(); // This moves the highlight down
+                rotation = 0
+            } else if (shouldReset) {
+                rotation = 0
             }
         }
-
-/*
-        background: Rectangle {
-            color: control.palette.window
-            border.color: Kirigami.ColorUtils.linearInterpolation(mainBackground.color, Kirigami.Theme.textColor, 0.3)
-        }*/
     }
+
+    TextMetrics {
+        id: textMetrics
+    }
+
+    // Mimicks WidestTextWhenCompleted from Qt 6.
+    // Maybe use this if app devs are interested.
+    // Don't use it for now because lots of GUIs aren't designed for it.
+    /*
+    Component.onCompleted: {
+        // TODO: Remove in Qt 6
+        if (// Qt 6 does this in QQuickComboBoxPrivate::calculateWidestTextWidth()
+            __isContentItemTextInput
+            // Kind of an arbitrary limit, but prevents making lots of calculations with larger models
+            && control.count <= 20
+        ) {
+            let widest = Math.ceil(contentItem.contentWidth)
+            for (let i = 0; i < count; ++i) {
+                textMetrics.text = control.textAt(i)
+                widest = Math.max(widest, textMetrics.width)
+            }
+            __widestImplicitContentWidth = Math.ceil(widest) + contentItem.leftPadding + contentItem.rightPadding
+        }
+    }
+    */
 }
