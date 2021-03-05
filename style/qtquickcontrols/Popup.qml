@@ -49,7 +49,7 @@ T.Popup {
 
         border {
             color: Kirigami.Theme.separatorColor
-            width: Kirigami.Units.smallBorder
+            width: control.dim ? 0 : Kirigami.Units.smallBorder
         }
 
         MediumShadow {
