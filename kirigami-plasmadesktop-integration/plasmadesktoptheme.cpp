@@ -69,8 +69,9 @@ public:
          * reproduce issues with all fractional scale factors.
          */
         qreal devicePixelRatio = qGuiApp->devicePixelRatio();
-        QQuickWindow::TextRenderType defaultTextRenderType =
-            int(devicePixelRatio) == devicePixelRatio ? QQuickWindow::NativeTextRendering : QQuickWindow::QtTextRendering;
+        QQuickWindow::TextRenderType defaultTextRenderType = (int(devicePixelRatio) == devicePixelRatio //
+                                                                  ? QQuickWindow::NativeTextRendering
+                                                                  : QQuickWindow::QtTextRendering);
 
         // Allow setting the text rendering type with an environment variable
         QByteArrayList validInputs = {"qttextrendering", "qtrendering", "nativetextrendering", "nativerendering"};
@@ -284,11 +285,11 @@ void PlasmaDesktopTheme::syncColors()
     if (parentItem) {
         if (!parentItem->isEnabled()) {
             group = QPalette::Disabled;
+        } else if (m_window && !m_window->isActive() && m_window->isExposed()) {
             // Why also checking the window is exposed?
             // in the case of QQuickWidget the window() will never be active
             // and the widgets will always have the inactive palette.
             // better to always show it active than always show it inactive
-        } else if (m_window && !m_window->isActive() && m_window->isExposed()) {
             group = QPalette::Inactive;
         }
     }
@@ -342,17 +343,17 @@ void PlasmaDesktopTheme::syncColors()
     m_buttonSeparatorColor = separatorColor(buttonBackgroundColor, buttonTextColor, 0.3);
 
     switch (colorSet()) {
-        //     case ColorSet::View:
-        //     case ColorSet::Window:
+        // case ColorSet::View:
+        // case ColorSet::Window:
     case ColorSet::Button:
         m_separatorColor = m_buttonSeparatorColor;
         break;
     case ColorSet::Selection:
         m_separatorColor = focusColor();
         break;
-        //     case ColorSet::Tooltip:
-        //     case ColorSet::Complementary:
-        //     case ColorSet::Header:
+        // case ColorSet::Tooltip:
+        // case ColorSet::Complementary:
+        // case ColorSet::Header:
     default:
         m_separatorColor = separatorColor(backgroundColor(), textColor());
     }

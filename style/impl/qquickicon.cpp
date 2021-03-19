@@ -52,8 +52,12 @@ QQuickIcon &QQuickIcon::operator=(const QQuickIcon &other)
 
 bool QQuickIcon::operator==(const QQuickIcon &other) const
 {
-    return d == other.d
-        || (d->name == other.d->name && d->source == other.d->source && d->width == other.d->width && d->height == other.d->height && d->color == other.d->color
+    return d == other.d //
+        || (d->name == other.d->name //
+            && d->source == other.d->source //
+            && d->width == other.d->width //
+            && d->height == other.d->height //
+            && d->color == other.d->color //
             && d->cache == other.d->cache);
 }
 
