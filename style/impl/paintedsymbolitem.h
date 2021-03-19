@@ -14,7 +14,7 @@ class PaintedSymbolItemPrivate;
 /**
  * This class is mainly intended for drawing symbols that are difficult to make
  * with QQuickRectangle or that don't look right with QQuickRectangle.
- * 
+ *
  * This should be used instead of the Qt Quick Shapes API because
  * Qt Quick Shapes can't use good antialiasing. You can use MSAA (expensive) on
  * Qt Quick Shapes via the `layer.samples` property, but it's very prone to

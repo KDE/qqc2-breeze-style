@@ -6,21 +6,23 @@
  */
 
 #include "qqc2breezestyleplugin.h"
-#include "impl/paintedsymbolitem.h"
 #include "impl/iconlabellayout.h"
 #include "impl/kcolorutilssingleton.h"
+#include "impl/paintedsymbolitem.h"
 
+#include <QQmlContext>
 #include <QQmlEngine>
 #include <QQmlFile>
-#include <QQmlContext>
 #include <QQuickWindow>
 
-QQC2BreezeStylePlugin::QQC2BreezeStylePlugin(QObject *parent) : QQmlExtensionPlugin(parent)
+QQC2BreezeStylePlugin::QQC2BreezeStylePlugin(QObject *parent)
+    : QQmlExtensionPlugin(parent)
 {
 }
 
 QQC2BreezeStylePlugin::~QQC2BreezeStylePlugin()
-{}
+{
+}
 
 QString QQC2BreezeStylePlugin::name() const
 {
@@ -31,15 +33,16 @@ void QQC2BreezeStylePlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(QLatin1String(uri) == name());
 
-    //BEGIN org.kde.breeze
+    // BEGIN org.kde.breeze
     qmlRegisterModule(uri, 1, 0);
     qmlRegisterType<PaintedSymbolItem>(uri, 1, 0, "PaintedSymbol");
     qmlRegisterType<IconLabelLayout>(uri, 1, 0, "IconLabelLayout");
     // KColorUtilsSingleton only has invocable functions.
     // Would this be better off being a SingletonInstance?
-    qmlRegisterSingletonType<KColorUtilsSingleton>(uri, 1, 0, "KColorUtils",
-        [] (QQmlEngine*, QJSEngine*) -> QObject* { return new KColorUtilsSingleton; });
-    //END
+    qmlRegisterSingletonType<KColorUtilsSingleton>(uri, 1, 0, "KColorUtils", [](QQmlEngine *, QJSEngine *) -> QObject * {
+        return new KColorUtilsSingleton;
+    });
+    // END
 
     // Prevent additional types from being added.
     qmlProtectModule(uri, 2);

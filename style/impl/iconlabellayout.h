@@ -7,24 +7,24 @@
 #define ICONLABELLAYOUT_H
 
 #include "qquickicon_p.h"
-#include <memory>
 #include <QQuickItem>
+#include <memory>
 
 class IconLabelLayoutPrivate;
 
 /**
  * An item that is meant to show, hide and position an icon item and a label item based on an AbstractButton's display property.
- * 
+ *
  * You can also set the alignment of the icon and label as a group.
- * 
+ *
  * For example, this aligns the icon and label to the left side and vertical center of this item.
- * 
+ *
  * ```qml
  * alignment: Qt.AlignLeft | Qt.AlignVCenter
  * ```
- * 
+ *
  * The result will look like this if there is enough availableWidth and the display type is TextUnderIcon:
- * 
+ *
  * ```
  * +-----------------+
  * |                 |
@@ -33,9 +33,9 @@ class IconLabelLayoutPrivate;
  * |                 |
  * +-----------------+
  * ```
- * 
+ *
  * The default alignment is Qt.AlignCenter and the default display type is TextBesideIcon, which looks like this:
- * 
+ *
  * ```
  * +-----------------+
  * |                 |
@@ -43,10 +43,10 @@ class IconLabelLayoutPrivate;
  * |                 |
  * +-----------------+
  * ```
- * 
+ *
  * You cannot separate the icon and label from each other.
  * They will always move together in the orientation specified by the display property.
- * 
+ *
  * @note: This class was adapted from QtQuick.Control.impl IconLabel
  */
 class IconLabelLayout : public QQuickItem

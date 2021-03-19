@@ -4,24 +4,21 @@
 
 #include "paintedsymbolitem.h"
 #include "paintedsymbolitem_p.h"
-#include <QPainter>
 #include <QGuiApplication>
+#include <QPainter>
 
 PaintedSymbolItem::PaintedSymbolItem(QQuickItem *parent)
     : QQuickPaintedItem(parent)
     , d_ptr(new PaintedSymbolItemPrivate(this))
 {
     Q_D(PaintedSymbolItem);
-    connect(
-        qGuiApp, &QGuiApplication::fontChanged,
-        this, [this, d]() {
-            d->fontMetrics = QFontMetricsF(QGuiApplication::font());
-            update();
-        }
-    );
+    connect(qGuiApp, &QGuiApplication::fontChanged, this, [this, d]() {
+        d->fontMetrics = QFontMetricsF(QGuiApplication::font());
+        update();
+    });
     d->targetSymbolSize = d->fontMetrics.height() + std::fmod(d->fontMetrics.height(), 2.0);
     d->targetSymbolSize -= std::fmod(d->targetSymbolSize, 6.0);
-    d->targetSymbolSize -= d->targetSymbolSize/3.0;
+    d->targetSymbolSize -= d->targetSymbolSize / 3.0;
     setImplicitSize(d->targetSymbolSize, d->fontMetrics.height());
     setBaselineOffset(d->fontMetrics.ascent());
 }
@@ -35,148 +32,143 @@ void PaintedSymbolItem::paint(QPainter *painter)
     Q_D(PaintedSymbolItem);
     // Do I need to save() and restore() if I change the painter in the switch blocks?
     switch (d->symbolType) {
-        case SymbolType::Checkmark: {
+    case SymbolType::Checkmark: {
+        setPenWidth(2);
+        qreal penOffset = d->penWidth / 2;
 
-            setPenWidth(2);
-            qreal penOffset = d->penWidth/2;
+        // Prevent the sides from being cut off. Remember to add extra width and height externally.
+        qreal width = this->width() - d->penWidth * 2;
+        qreal height = this->height() - d->penWidth * 2;
 
-            // Prevent the sides from being cut off. Remember to add extra width and height externally.
-            qreal width = this->width() - d->penWidth*2;
-            qreal height = this->height() - d->penWidth*2;
+        // No point in trying to draw if it's too small
+        if (std::min(width, height) <= 0) {
+            return;
+        }
 
-            // No point in trying to draw if it's too small
-            if (std::min(width, height) <= 0) {
-                return;
-            }
+        painter->translate(d->penWidth, d->penWidth);
 
-            painter->translate(d->penWidth, d->penWidth);
+        painter->setBrush(Qt::NoBrush);
+        painter->setPen(d->pen);
+        painter->setRenderHint(QPainter::Antialiasing);
 
-            painter->setBrush(Qt::NoBrush);
-            painter->setPen(d->pen);
-            painter->setRenderHint(QPainter::Antialiasing);
+        QVector<QPointF> points = {
+            QPointF(0 + penOffset, height / 2.0 + penOffset),
+            QPointF(width / 3.0, height / 1.2), // height * (5/6)
+            QPointF(width - penOffset, height / 6.0 + penOffset),
+        };
+        painter->drawPolyline(points);
 
-            QVector<QPointF> points = {
-                QPointF(0 + penOffset, height/2.0 + penOffset),
-                QPointF(width/3.0, height/1.2), //height * (5/6)
-                QPointF(width - penOffset, height/6.0 + penOffset),
-            };
-            painter->drawPolyline(points);
+    } break;
+    case SymbolType::LeftArrow: {
+        setPenWidth(1);
+        qreal penOffset = d->penWidth / 2;
 
-        } break;
-        case SymbolType::LeftArrow: {
+        // Prevent the sides from being cut off. Remember to add extra width and height externally.
+        qreal width = this->width() - d->penWidth * 2;
+        qreal height = this->height() - d->penWidth * 2;
 
-            setPenWidth(1);
-            qreal penOffset = d->penWidth/2;
+        // No point in trying to draw if it's too small
+        if (std::min(width, height) <= 0) {
+            return;
+        }
 
-            // Prevent the sides from being cut off. Remember to add extra width and height externally.
-            qreal width = this->width() - d->penWidth*2;
-            qreal height = this->height() - d->penWidth*2;
+        painter->translate(d->penWidth, d->penWidth);
 
-            // No point in trying to draw if it's too small
-            if (std::min(width, height) <= 0) {
-                return;
-            }
+        painter->setBrush(Qt::NoBrush);
+        painter->setPen(d->pen);
+        painter->setRenderHint(QPainter::Antialiasing);
 
-            painter->translate(d->penWidth, d->penWidth);
+        QVector<QPointF> points = {
+            QPointF(width / 1.5 - penOffset, 0 + penOffset),
+            QPointF(width / 4.0, height / 2),
+            QPointF(width / 1.5 - penOffset, height - penOffset),
+        };
+        painter->drawPolyline(points);
 
-            painter->setBrush(Qt::NoBrush);
-            painter->setPen(d->pen);
-            painter->setRenderHint(QPainter::Antialiasing);
+    } break;
+    case SymbolType::RightArrow: {
+        setPenWidth(1);
+        qreal penOffset = d->penWidth / 2;
 
-            QVector<QPointF> points = {
-                QPointF(width/1.5 - penOffset, 0 + penOffset),
-                QPointF(width/4.0, height/2),
-                QPointF(width/1.5 - penOffset, height - penOffset),
-            };
-            painter->drawPolyline(points);
+        // Prevent the sides from being cut off. Remember to add extra width and height externally.
+        qreal width = this->width() - d->penWidth * 2;
+        qreal height = this->height() - d->penWidth * 2;
 
-        } break;
-        case SymbolType::RightArrow: {
+        // No point in trying to draw if it's too small
+        if (std::min(width, height) <= 0) {
+            return;
+        }
 
-            setPenWidth(1);
-            qreal penOffset = d->penWidth/2;
+        painter->translate(d->penWidth, d->penWidth);
 
-            // Prevent the sides from being cut off. Remember to add extra width and height externally.
-            qreal width = this->width() - d->penWidth*2;
-            qreal height = this->height() - d->penWidth*2;
+        painter->setBrush(Qt::NoBrush);
+        painter->setPen(d->pen);
+        painter->setRenderHint(QPainter::Antialiasing);
 
-            // No point in trying to draw if it's too small
-            if (std::min(width, height) <= 0) {
-                return;
-            }
+        QVector<QPointF> points = {
+            QPointF(width / 3 /* + penOffset*/, 0 /* + penOffset*/),
+            QPointF(width * 0.75, height / 2),
+            QPointF(width / 3 /* + penOffset*/, height /* - penOffset*/),
+        };
+        painter->drawPolyline(points);
 
-            painter->translate(d->penWidth, d->penWidth);
+    } break;
+    case SymbolType::UpArrow: {
+        setPenWidth(1);
+        qreal penOffset = d->penWidth / 2;
 
-            painter->setBrush(Qt::NoBrush);
-            painter->setPen(d->pen);
-            painter->setRenderHint(QPainter::Antialiasing);
+        // Prevent the sides from being cut off. Remember to add extra width and height externally.
+        qreal width = this->width() - d->penWidth * 2;
+        qreal height = this->height() - d->penWidth * 2;
 
-            QVector<QPointF> points = {
-                QPointF(width/3/* + penOffset*/, 0/* + penOffset*/),
-                QPointF(width*0.75, height/2),
-                QPointF(width/3/* + penOffset*/, height/* - penOffset*/),
-            };
-            painter->drawPolyline(points);
+        // No point in trying to draw if it's too small
+        if (std::min(width, height) <= 0) {
+            return;
+        }
 
-        } break;
-        case SymbolType::UpArrow: {
+        painter->translate(d->penWidth, d->penWidth + penOffset);
 
-            setPenWidth(1);
-            qreal penOffset = d->penWidth/2;
+        painter->setBrush(Qt::NoBrush);
+        painter->setPen(d->pen);
+        painter->setRenderHint(QPainter::Antialiasing);
 
-            // Prevent the sides from being cut off. Remember to add extra width and height externally.
-            qreal width = this->width() - d->penWidth*2;
-            qreal height = this->height() - d->penWidth*2;
+        QVector<QPointF> points = {
+            QPointF(0 - penOffset, height * 0.75),
+            QPointF(width / 2.0, height / 4 - penOffset),
+            QPointF(width + penOffset, height * 0.75),
+        };
+        painter->drawPolyline(points);
 
-            // No point in trying to draw if it's too small
-            if (std::min(width, height) <= 0) {
-                return;
-            }
+    } break;
+    case SymbolType::DownArrow: {
+        setPenWidth(1);
+        qreal penOffset = d->penWidth / 2;
 
-            painter->translate(d->penWidth, d->penWidth + penOffset);
+        // Prevent the sides from being cut off. Remember to add extra width and height externally.
+        qreal width = this->width() - d->penWidth * 2;
+        qreal height = this->height() - d->penWidth * 2;
 
-            painter->setBrush(Qt::NoBrush);
-            painter->setPen(d->pen);
-            painter->setRenderHint(QPainter::Antialiasing);
+        // No point in trying to draw if it's too small
+        if (std::min(width, height) <= 0) {
+            return;
+        }
 
-            QVector<QPointF> points = {
-                QPointF(0 - penOffset, height*0.75),
-                QPointF(width/2.0, height/4 - penOffset),
-                QPointF(width + penOffset, height*0.75),
-            };
-            painter->drawPolyline(points);
+        painter->translate(d->penWidth, d->penWidth + penOffset);
 
-        } break;
-        case SymbolType::DownArrow: {
+        painter->setBrush(Qt::NoBrush);
+        painter->setPen(d->pen);
+        painter->setRenderHint(QPainter::Antialiasing);
 
-            setPenWidth(1);
-            qreal penOffset = d->penWidth/2;
+        QVector<QPointF> points = {
+            QPointF(0 - penOffset, height / 4),
+            QPointF(width / 2.0, height * 0.75 + penOffset),
+            QPointF(width + penOffset, height / 4),
+        };
+        painter->drawPolyline(points);
 
-            // Prevent the sides from being cut off. Remember to add extra width and height externally.
-            qreal width = this->width() - d->penWidth*2;
-            qreal height = this->height() - d->penWidth*2;
-
-            // No point in trying to draw if it's too small
-            if (std::min(width, height) <= 0) {
-                return;
-            }
-
-            painter->translate(d->penWidth, d->penWidth + penOffset);
-
-            painter->setBrush(Qt::NoBrush);
-            painter->setPen(d->pen);
-            painter->setRenderHint(QPainter::Antialiasing);
-
-            QVector<QPointF> points = {
-                QPointF(0 - penOffset, height/4 ),
-                QPointF(width/2.0, height*0.75 + penOffset),
-                QPointF(width + penOffset, height/4),
-            };
-            painter->drawPolyline(points);
-
-        } break;
-        default:
-            break;
+    } break;
+    default:
+        break;
     }
 }
 

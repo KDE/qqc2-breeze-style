@@ -14,7 +14,10 @@ class IconLabelLayoutPrivate : public QObject
     Q_DISABLE_COPY(IconLabelLayoutPrivate)
 
 public:
-    IconLabelLayoutPrivate(IconLabelLayout *qq) : q_ptr(qq) {}
+    IconLabelLayoutPrivate(IconLabelLayout *qq)
+        : q_ptr(qq)
+    {
+    }
 
     bool createIconItem();
     bool destroyIconItem();
@@ -31,7 +34,7 @@ public:
     void updateImplicitSize();
     void layout();
 
-    IconLabelLayout * const q_ptr;
+    IconLabelLayout *const q_ptr;
 
     QPointer<QQmlComponent> iconComponent;
     QPointer<QQmlComponent> labelComponent;
@@ -60,8 +63,8 @@ public:
     Qt::Alignment alignment = Qt::AlignCenter;
     IconLabelLayout::Display display = IconLabelLayout::TextBesideIcon;
 
-    QRectF iconRect = QRectF(0,0,0,0);
-    QRectF labelRect = QRectF(0,0,0,0);
+    QRectF iconRect = QRectF(0, 0, 0, 0);
+    QRectF labelRect = QRectF(0, 0, 0, 0);
     qreal contentWidth = 0.0;
     qreal contentHeight = 0.0;
 

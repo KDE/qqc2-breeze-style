@@ -6,18 +6,18 @@
 */
 
 #include "plasmadesktoptheme.h"
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QGuiApplication>
-#include <QQuickRenderControl>
-#include <QPalette>
-#include <QDebug>
-#include <QQuickWindow>
-#include <KIconLoader>
-#include <KColorUtils>
 #include <KColorScheme>
+#include <KColorUtils>
 #include <KConfigGroup>
+#include <KIconLoader>
 #include <QDBusConnection>
+#include <QDebug>
+#include <QGuiApplication>
+#include <QPalette>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QQuickRenderControl>
+#include <QQuickWindow>
 
 class IconLoaderSingleton
 {
@@ -44,32 +44,33 @@ public:
         : QObject()
         , buttonScheme(QPalette::Active, KColorScheme::ColorSet::Button)
     {
-        connect(qGuiApp, &QGuiApplication::paletteChanged,
-                this, &StyleSingleton::refresh);
+        connect(qGuiApp, &QGuiApplication::paletteChanged, this, &StyleSingleton::refresh);
 
         // Use DBus in order to listen for kdeglobals changes directly, as the
         // QApplication doesn't expose the font variants we're looking for,
         // namely smallFont.
-        QDBusConnection::sessionBus().connect( QString(),
-        QStringLiteral( "/KGlobalSettings" ),
-        QStringLiteral( "org.kde.KGlobalSettings" ),
-        QStringLiteral( "notifyChange" ), this, SLOT(notifyWatchersConfigurationChange()));
+        QDBusConnection::sessionBus().connect(QString(),
+                                              QStringLiteral("/KGlobalSettings"),
+                                              QStringLiteral("org.kde.KGlobalSettings"),
+                                              QStringLiteral("notifyChange"),
+                                              this,
+                                              SLOT(notifyWatchersConfigurationChange()));
 
         connect(qGuiApp, &QGuiApplication::fontDatabaseChanged, this, &StyleSingleton::notifyWatchersConfigurationChange);
 
         /* QtTextRendering uses less memory, so use it in low power mode.
-        * 
-        * For scale factors greater than 2, native rendering doesn't actually do much.
-        * Does native rendering even work when scaleFactor >= 2?
-        * 
-        * NativeTextRendering is still distorted sometimes with fractional scale
-        * factors, despite https://bugreports.qt.io/browse/QTBUG-67007 being closed.
-        * 1.5x scaling looks generally OK, but there are occasional and difficult to
-        * reproduce issues with all fractional scale factors.
-        */
+         *
+         * For scale factors greater than 2, native rendering doesn't actually do much.
+         * Does native rendering even work when scaleFactor >= 2?
+         *
+         * NativeTextRendering is still distorted sometimes with fractional scale
+         * factors, despite https://bugreports.qt.io/browse/QTBUG-67007 being closed.
+         * 1.5x scaling looks generally OK, but there are occasional and difficult to
+         * reproduce issues with all fractional scale factors.
+         */
         qreal devicePixelRatio = qGuiApp->devicePixelRatio();
-        QQuickWindow::TextRenderType defaultTextRenderType = int(devicePixelRatio) == devicePixelRatio ?
-            QQuickWindow::NativeTextRendering : QQuickWindow::QtTextRendering;
+        QQuickWindow::TextRenderType defaultTextRenderType =
+            int(devicePixelRatio) == devicePixelRatio ? QQuickWindow::NativeTextRendering : QQuickWindow::QtTextRendering;
 
         // Allow setting the text rendering type with an environment variable
         QByteArrayList validInputs = {"qttextrendering", "qtrendering", "nativetextrendering", "nativerendering"};
@@ -134,7 +135,7 @@ public:
         Colors ret = {{}, KColorScheme(selectionGroup, KColorScheme::ColorSet::Selection), KColorScheme(group, set)};
 
         QPalette pal;
-        for (auto state : { QPalette::Active, QPalette::Inactive, QPalette::Disabled }) {
+        for (auto state : {QPalette::Active, QPalette::Inactive, QPalette::Disabled}) {
             pal.setBrush(state, QPalette::WindowText, ret.scheme.foreground());
             pal.setBrush(state, QPalette::Window, ret.scheme.background());
             pal.setBrush(state, QPalette::Base, ret.scheme.background());
@@ -150,16 +151,18 @@ public:
             pal.setColor(state, QPalette::Midlight, ret.scheme.shade(KColorScheme::MidlightShade));
             pal.setColor(state, QPalette::Mid, ret.scheme.shade(KColorScheme::MidShade));
             pal.setColor(state, QPalette::Dark, ret.scheme.shade(KColorScheme::DarkShade));
-            pal.setColor(state, QPalette::Shadow, QColor(0,0,0,51 /* 20% */));//ret.scheme.shade(KColorScheme::ShadowShade));
+            pal.setColor(state, QPalette::Shadow, QColor(0, 0, 0, 51 /* 20% */)); // ret.scheme.shade(KColorScheme::ShadowShade));
 
             pal.setBrush(state, QPalette::AlternateBase, ret.scheme.background(KColorScheme::AlternateBackground));
             pal.setBrush(state, QPalette::Link, ret.scheme.foreground(KColorScheme::LinkText));
             pal.setBrush(state, QPalette::LinkVisited, ret.scheme.foreground(KColorScheme::VisitedText));
 
             pal.setBrush(state, QPalette::PlaceholderText, ret.scheme.foreground(KColorScheme::InactiveText));
-            pal.setBrush(state, QPalette::BrightText, KColorUtils::hcyColor(
-                KColorUtils::hue(pal.buttonText().color()),KColorUtils::chroma(pal.buttonText().color()), 1 - KColorUtils::luma(pal.buttonText().color())
-            ));
+            pal.setBrush(state,
+                         QPalette::BrightText,
+                         KColorUtils::hcyColor(KColorUtils::hue(pal.buttonText().color()),
+                                               KColorUtils::chroma(pal.buttonText().color()),
+                                               1 - KColorUtils::luma(pal.buttonText().color())));
         }
         ret.palette = pal;
         m_cache.insert(key, ret);
@@ -192,7 +195,7 @@ Q_GLOBAL_STATIC_WITH_ARGS(QScopedPointer<StyleSingleton>, s_style, (new StyleSin
 PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
     : PlatformTheme(parent)
 {
-    //TODO: MOVE THIS SOMEWHERE ELSE
+    // TODO: MOVE THIS SOMEWHERE ELSE
     m_lowPowerHardware = QByteArrayList{"1", "true"}.contains(qgetenv("KIRIGAMI_LOWPOWER_HARDWARE").toLower());
 
     setSupportsIconColoring(true);
@@ -218,8 +221,7 @@ PlasmaDesktopTheme::~PlasmaDesktopTheme()
 void PlasmaDesktopTheme::syncWindow()
 {
     if (m_window) {
-        disconnect(m_window.data(), &QWindow::activeChanged,
-                this, &PlasmaDesktopTheme::syncColors);
+        disconnect(m_window.data(), &QWindow::activeChanged, this, &PlasmaDesktopTheme::syncColors);
     }
 
     QWindow *window = nullptr;
@@ -233,15 +235,13 @@ void PlasmaDesktopTheme::syncWindow()
             window = qw;
         }
         if (qw) {
-            connect(qw, &QQuickWindow::sceneGraphInitialized,
-                    this, &PlasmaDesktopTheme::syncWindow);
+            connect(qw, &QQuickWindow::sceneGraphInitialized, this, &PlasmaDesktopTheme::syncWindow);
         }
     }
     m_window = window;
 
     if (window) {
-        connect(m_window.data(), &QWindow::activeChanged,
-                this, &PlasmaDesktopTheme::syncColors);
+        connect(m_window.data(), &QWindow::activeChanged, this, &PlasmaDesktopTheme::syncColors);
         syncColors();
     }
 }
@@ -249,13 +249,13 @@ void PlasmaDesktopTheme::syncWindow()
 void PlasmaDesktopTheme::syncFont()
 {
     KSharedConfigPtr ptr = KSharedConfig::openConfig();
-    KConfigGroup general( ptr->group("general") );
+    KConfigGroup general(ptr->group("general"));
     setSmallFont(general.readEntry("smallestReadableFont", []() {
         auto smallFont = qApp->font();
         if (smallFont.pixelSize() != -1) {
-            smallFont.setPixelSize(smallFont.pixelSize()-2);
+            smallFont.setPixelSize(smallFont.pixelSize() - 2);
         } else {
-            smallFont.setPointSize(smallFont.pointSize()-2);
+            smallFont.setPointSize(smallFont.pointSize() - 2);
         }
         return smallFont;
     }()));
@@ -267,7 +267,7 @@ QIcon PlasmaDesktopTheme::iconFromTheme(const QString &name, const QColor &custo
 {
     QPalette pal = palette();
     if (customColor != Qt::transparent) {
-        for (auto state : { QPalette::Active, QPalette::Inactive, QPalette::Disabled }) {
+        for (auto state : {QPalette::Active, QPalette::Inactive, QPalette::Disabled}) {
             pal.setBrush(state, QPalette::WindowText, customColor);
         }
     }
@@ -280,14 +280,14 @@ QIcon PlasmaDesktopTheme::iconFromTheme(const QString &name, const QColor &custo
 void PlasmaDesktopTheme::syncColors()
 {
     QPalette::ColorGroup group = (QPalette::ColorGroup)colorGroup();
-    auto parentItem = qobject_cast<QQuickItem*>(parent());
+    auto parentItem = qobject_cast<QQuickItem *>(parent());
     if (parentItem) {
         if (!parentItem->isEnabled()) {
             group = QPalette::Disabled;
-        //Why also checking the window is exposed?
-        //in the case of QQuickWidget the window() will never be active
-        //and the widgets will always have the inactive palette.
-        // better to always show it active than always show it inactive
+            // Why also checking the window is exposed?
+            // in the case of QQuickWidget the window() will never be active
+            // and the widgets will always have the inactive palette.
+            // better to always show it active than always show it inactive
         } else if (m_window && !m_window->isActive() && m_window->isExposed()) {
             group = QPalette::Inactive;
         }
@@ -295,7 +295,7 @@ void PlasmaDesktopTheme::syncColors()
 
     const auto colors = (*s_style)->loadColors(colorSet(), group);
 
-    //foreground
+    // foreground
     setTextColor(colors.scheme.foreground(KColorScheme::NormalText).color());
     setDisabledTextColor(colors.scheme.foreground(KColorScheme::InactiveText).color());
     setHighlightedTextColor(colors.selectionScheme.foreground(KColorScheme::NormalText).color());
@@ -306,7 +306,7 @@ void PlasmaDesktopTheme::syncColors()
     setNeutralTextColor(colors.scheme.foreground(KColorScheme::NeutralText).color());
     setPositiveTextColor(colors.scheme.foreground(KColorScheme::PositiveText).color());
 
-    //background
+    // background
     setHighlightColor(colors.selectionScheme.background(KColorScheme::NormalBackground).color());
     setBackgroundColor(colors.scheme.background(KColorScheme::NormalBackground).color());
 
@@ -328,7 +328,7 @@ void PlasmaDesktopTheme::syncColors()
     setNeutralBackgroundColor(colors.scheme.background(KColorScheme::NeutralBackground).color());
     setPositiveBackgroundColor(colors.scheme.background(KColorScheme::PositiveBackground).color());
 
-    //decoration
+    // decoration
     setHoverColor(colors.scheme.decoration(KColorScheme::HoverColor).color());
     setFocusColor(colors.scheme.decoration(KColorScheme::FocusColor).color());
 
@@ -336,29 +336,29 @@ void PlasmaDesktopTheme::syncColors()
     const QColor &buttonTextColor = (*s_style)->buttonScheme.foreground(KColorScheme::NormalText).color();
     const QColor &buttonBackgroundColor = (*s_style)->buttonScheme.background(KColorScheme::NormalBackground).color();
     auto separatorColor = [](const QColor &bg, const QColor &fg, const qreal baseRatio = 0.2) {
-        return KColorUtils::luma(bg) > 0.5 ? KColorUtils::mix(bg, fg, baseRatio) : KColorUtils::mix(bg, fg, baseRatio/2);
+        return KColorUtils::luma(bg) > 0.5 ? KColorUtils::mix(bg, fg, baseRatio) : KColorUtils::mix(bg, fg, baseRatio / 2);
     };
 
     m_buttonSeparatorColor = separatorColor(buttonBackgroundColor, buttonTextColor, 0.3);
 
     switch (colorSet()) {
-//     case ColorSet::View:
-//     case ColorSet::Window:
+        //     case ColorSet::View:
+        //     case ColorSet::Window:
     case ColorSet::Button:
         m_separatorColor = m_buttonSeparatorColor;
         break;
     case ColorSet::Selection:
         m_separatorColor = focusColor();
         break;
-//     case ColorSet::Tooltip:
-//     case ColorSet::Complementary:
-//     case ColorSet::Header:
+        //     case ColorSet::Tooltip:
+        //     case ColorSet::Complementary:
+        //     case ColorSet::Header:
     default:
         m_separatorColor = separatorColor(backgroundColor(), textColor());
     }
 }
 
-bool PlasmaDesktopTheme::event(QEvent* event)
+bool PlasmaDesktopTheme::event(QEvent *event)
 {
     if (event->type() == Kirigami::PlatformThemeEvents::DataChangedEvent::type) {
         syncFont();
@@ -375,7 +375,6 @@ bool PlasmaDesktopTheme::event(QEvent* event)
 
     return PlatformTheme::event(event);
 }
-
 
 // Breeze QQC2 style colors
 QColor PlasmaDesktopTheme::separatorColor() const

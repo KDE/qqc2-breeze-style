@@ -8,8 +8,8 @@
 
 #include <QGuiApplication>
 
-#include <unordered_map>
 #include <cmath>
+#include <unordered_map>
 
 bool IconLabelLayoutPrivate::createIconItem()
 {
@@ -17,7 +17,7 @@ bool IconLabelLayoutPrivate::createIconItem()
     if (iconItem)
         return false;
 
-    iconItem = qobject_cast<QQuickItem*>(iconComponent->create());
+    iconItem = qobject_cast<QQuickItem *>(iconComponent->create());
     iconItem->setParentItem(q);
     iconItem->setObjectName(QStringLiteral("iconItem"));
     iconItem->setProperty("source", icon.nameOrSource());
@@ -77,7 +77,7 @@ bool IconLabelLayoutPrivate::createLabelItem()
     if (labelItem)
         return false;
 
-    labelItem = qobject_cast<QQuickItem*>(labelComponent->create());
+    labelItem = qobject_cast<QQuickItem *>(labelComponent->create());
     labelItem->setParentItem(q);
     labelItem->setObjectName(QStringLiteral("labelItem"));
     labelItem->setProperty("text", text);
@@ -141,10 +141,10 @@ void IconLabelLayoutPrivate::updateImplicitSize()
     const qreal labelImplicitWidth = showLabel ? std::ceil(labelItem->implicitWidth()) : 0;
     const qreal labelImplicitHeight = showLabel ? std::ceil(labelItem->implicitHeight()) : 0;
     const qreal effectiveSpacing = showLabel && showIcon && iconItem->implicitWidth() > 0 ? spacing : 0;
-    contentWidth = display == IconLabelLayout::TextBesideIcon ?
-        iconImplicitWidth + labelImplicitWidth + effectiveSpacing : qMax(iconImplicitWidth, labelImplicitWidth);
-    contentHeight = display == IconLabelLayout::TextUnderIcon ?
-        iconImplicitHeight + labelImplicitHeight + effectiveSpacing : qMax(iconImplicitHeight, labelImplicitHeight);
+    contentWidth =
+        display == IconLabelLayout::TextBesideIcon ? iconImplicitWidth + labelImplicitWidth + effectiveSpacing : qMax(iconImplicitWidth, labelImplicitWidth);
+    contentHeight =
+        display == IconLabelLayout::TextUnderIcon ? iconImplicitHeight + labelImplicitHeight + effectiveSpacing : qMax(iconImplicitHeight, labelImplicitHeight);
     q->setImplicitSize(contentWidth + leftPadding + rightPadding, contentHeight + topPadding + bottomPadding);
     q->setAvailableWidth();
     q->setAvailableHeight();
@@ -183,19 +183,19 @@ void IconLabelLayoutPrivate::layout()
     case IconLabelLayout::IconOnly:
         if (iconItem) {
             // Icons should always be pixel aligned, so convert to QRect
-            q->setIconRect(alignedRect(mirrored, alignment,
-                                        QSizeF(qMin(iconItem->implicitWidth(), q->availableWidth()),
-                                                qMin(iconItem->implicitHeight(), q->availableHeight())),
-                                        QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight())));
+            q->setIconRect(alignedRect(mirrored,
+                                       alignment,
+                                       QSizeF(qMin(iconItem->implicitWidth(), q->availableWidth()), qMin(iconItem->implicitHeight(), q->availableHeight())),
+                                       QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight())));
             iconItem->setSize(iconRect.size());
             iconItem->setPosition(iconRect.topLeft()); // Not animating icon positions because it tends to look wrong
         }
         break;
     case IconLabelLayout::TextOnly:
         if (labelItem) {
-            q->setLabelRect(alignedRect(mirrored, alignment,
-                                        QSizeF(qMin(labelItem->implicitWidth(), q->availableWidth()),
-                                                qMin(labelItem->implicitHeight(), q->availableHeight())),
+            q->setLabelRect(alignedRect(mirrored,
+                                        alignment,
+                                        QSizeF(qMin(labelItem->implicitWidth(), q->availableWidth()), qMin(labelItem->implicitHeight(), q->availableHeight())),
                                         QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight())));
             labelItem->setSize(labelRect.size());
             labelItem->setPosition(labelRect.topLeft()); // Not animating when text only because the text tends to clip outside
@@ -218,9 +218,9 @@ void IconLabelLayoutPrivate::layout()
             textSize.setHeight(qMin(labelItem->implicitHeight(), q->availableHeight() - iconSize.height() - effectiveSpacing));
         }
 
-        QRectF combinedRect = alignedRect(mirrored, alignment,
-                                          QSizeF(qMax(iconSize.width(), textSize.width()),
-                                                 iconSize.height() + effectiveSpacing + textSize.height()),
+        QRectF combinedRect = alignedRect(mirrored,
+                                          alignment,
+                                          QSizeF(qMax(iconSize.width(), textSize.width()), iconSize.height() + effectiveSpacing + textSize.height()),
                                           QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight()));
         q->setIconRect(alignedRect(mirrored, Qt::AlignHCenter | Qt::AlignTop, iconSize, combinedRect));
         q->setLabelRect(alignedRect(mirrored, Qt::AlignHCenter | Qt::AlignBottom, textSize, combinedRect));
@@ -232,11 +232,11 @@ void IconLabelLayoutPrivate::layout()
             labelItem->setSize(labelRect.size());
             labelItem->setPosition(labelRect.topLeft());
             // NOTE: experimental animations when changing display types
-//             labelItem->setOpacity(0); // Reset opacity before OpacityAnimator is activated
-//             labelItem->setY(iconRect.y() + iconRect.height());
-//             labelItem->setProperty("opacity", 1); // Activate OpacityAnimator
-//             labelItem->setX(labelRect.x()); // Not animating X so that the text will only slide vertically
-//             labelItem->setProperty("y", labelRect.y());
+            //             labelItem->setOpacity(0); // Reset opacity before OpacityAnimator is activated
+            //             labelItem->setY(iconRect.y() + iconRect.height());
+            //             labelItem->setProperty("opacity", 1); // Activate OpacityAnimator
+            //             labelItem->setX(labelRect.x()); // Not animating X so that the text will only slide vertically
+            //             labelItem->setProperty("y", labelRect.y());
         }
         break;
     }
@@ -258,9 +258,9 @@ void IconLabelLayoutPrivate::layout()
             textSize.setHeight(qMin(labelItem->implicitHeight(), q->availableHeight()));
         }
 
-        const QRectF combinedRect = alignedRect(mirrored, alignment,
-                                                QSizeF(iconSize.width() + effectiveSpacing + textSize.width(),
-                                                       qMax(iconSize.height(), textSize.height())),
+        const QRectF combinedRect = alignedRect(mirrored,
+                                                alignment,
+                                                QSizeF(iconSize.width() + effectiveSpacing + textSize.width(), qMax(iconSize.height(), textSize.height())),
                                                 QRectF(mirrored ? rightPadding : leftPadding, topPadding, q->availableWidth(), q->availableHeight()));
         q->setIconRect(alignedRect(mirrored, Qt::AlignLeft | Qt::AlignVCenter, iconSize, combinedRect));
         q->setLabelRect(alignedRect(mirrored, Qt::AlignRight | Qt::AlignVCenter, textSize, combinedRect));
@@ -272,11 +272,11 @@ void IconLabelLayoutPrivate::layout()
             labelItem->setSize(labelRect.size());
             labelItem->setPosition(labelRect.topLeft());
             // NOTE: experimental animations when changing display types
-//             labelItem->setOpacity(0); // Reset opacity before OpacityAnimator is activated
-//             labelItem->setX(iconRect.x() + (mirrored ? -labelRect.width() : iconRect.width()));
-//             labelItem->setProperty("opacity", 1); // Activate OpacityAnimator
-//             labelItem->setProperty("x", labelRect.x());
-//             labelItem->setY(labelRect.y()); // Not animating Y so that the text will only slide horizontally
+            //             labelItem->setOpacity(0); // Reset opacity before OpacityAnimator is activated
+            //             labelItem->setX(iconRect.x() + (mirrored ? -labelRect.width() : iconRect.width()));
+            //             labelItem->setProperty("opacity", 1); // Activate OpacityAnimator
+            //             labelItem->setProperty("x", labelRect.x());
+            //             labelItem->setY(labelRect.y()); // Not animating Y so that the text will only slide horizontally
         }
         break;
     }
@@ -291,8 +291,8 @@ void IconLabelLayoutPrivate::layout()
             labelItem->setProperty("firstLayoutCompleted", true);
         }
     }
-//     qDebug() << q << "d->layout()" << layoutCount;
-//     layoutCount += 1;
+    //     qDebug() << q << "d->layout()" << layoutCount;
+    //     layoutCount += 1;
 }
 
 IconLabelLayout::IconLabelLayout(QQuickItem *parent)
@@ -659,7 +659,6 @@ void IconLabelLayout::setAlignment(Qt::Alignment alignment)
     if (d->labelItem) {
         d->labelItem->setProperty("horizontalAlignment", halign);
         d->labelItem->setProperty("verticalAlignment", valign);
-
     }
     emit alignmentChanged();
     if (isComponentComplete()) {
@@ -741,7 +740,7 @@ void IconLabelLayout::componentComplete()
     relayout();
 }
 
-void IconLabelLayout::geometryChanged(const QRectF& newGeometry, const QRectF& oldGeometry)
+void IconLabelLayout::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     if (newGeometry != oldGeometry) {
         setAvailableWidth();

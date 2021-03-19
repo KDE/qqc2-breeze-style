@@ -7,10 +7,10 @@
 #ifndef QQUICKICON_P_H
 #define QQUICKICON_P_H
 
-#include <QtCore/qurl.h>
-#include <QtCore/qstring.h>
 #include <QtCore/qobjectdefs.h>
 #include <QtCore/qshareddata.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qurl.h>
 #include <QtGui/qcolor.h>
 #include <QtQml/qqml.h>
 
@@ -32,7 +32,7 @@ public:
     QQuickIcon(const QQuickIcon &other);
     ~QQuickIcon();
 
-    QQuickIcon& operator=(const QQuickIcon &other);
+    QQuickIcon &operator=(const QQuickIcon &other);
     bool operator==(const QQuickIcon &other) const;
     bool operator!=(const QQuickIcon &other) const;
 

@@ -5,26 +5,27 @@
 #include "kcolorutilssingleton.h"
 #include <KColorUtils>
 
-KColorUtilsSingleton::KColorUtilsSingleton(QObject* parent) : QObject(parent)
+KColorUtilsSingleton::KColorUtilsSingleton(QObject *parent)
+    : QObject(parent)
 {
 }
 
-qreal KColorUtilsSingleton::hue(const QColor& color)
+qreal KColorUtilsSingleton::hue(const QColor &color)
 {
     return KColorUtils::hue(color);
 }
 
-qreal KColorUtilsSingleton::chroma(const QColor& color)
+qreal KColorUtilsSingleton::chroma(const QColor &color)
 {
     return KColorUtils::chroma(color);
 }
 
-qreal KColorUtilsSingleton::luma(const QColor& color)
+qreal KColorUtilsSingleton::luma(const QColor &color)
 {
     return KColorUtils::luma(color);
 }
 
-qreal KColorUtilsSingleton::contrastRatio(const QColor& color1, const QColor& color2)
+qreal KColorUtilsSingleton::contrastRatio(const QColor &color1, const QColor &color2)
 {
     return KColorUtils::contrastRatio(color1, color2);
 }
@@ -34,27 +35,27 @@ QColor KColorUtilsSingleton::hcyColor(qreal hue, qreal chroma, qreal luma, qreal
     return KColorUtils::hcyColor(hue, chroma, luma, alpha);
 }
 
-QColor KColorUtilsSingleton::lighten(const QColor& color, qreal amount, qreal chromaInverseGain)
+QColor KColorUtilsSingleton::lighten(const QColor &color, qreal amount, qreal chromaInverseGain)
 {
     return KColorUtils::lighten(color, amount, chromaInverseGain);
 }
 
-QColor KColorUtilsSingleton::darken(const QColor& color, qreal amount, qreal chromaGain)
+QColor KColorUtilsSingleton::darken(const QColor &color, qreal amount, qreal chromaGain)
 {
     return KColorUtils::darken(color, amount, chromaGain);
 }
 
-QColor KColorUtilsSingleton::shade(const QColor& color, qreal lumaAmount, qreal chromaAmount)
+QColor KColorUtilsSingleton::shade(const QColor &color, qreal lumaAmount, qreal chromaAmount)
 {
     return KColorUtils::shade(color, lumaAmount, chromaAmount);
 }
 
-QColor KColorUtilsSingleton::tint(const QColor& base, const QColor& color, qreal amount)
+QColor KColorUtilsSingleton::tint(const QColor &base, const QColor &color, qreal amount)
 {
     return KColorUtils::tint(base, color, amount);
 }
 
-QColor KColorUtilsSingleton::mix(const QColor& color1, const QColor& color2, qreal bias)
+QColor KColorUtilsSingleton::mix(const QColor &color1, const QColor &color2, qreal bias)
 {
     return KColorUtils::mix(color1, color2, bias);
 }
