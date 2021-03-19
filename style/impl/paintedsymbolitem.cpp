@@ -58,7 +58,7 @@ void PaintedSymbolItem::paint(QPainter *painter)
             QVector<QPointF> points = {
                 QPointF(0 + penOffset, height/2.0 + penOffset),
                 QPointF(width/3.0, height/1.2), //height * (5/6)
-                QPointF(width - penOffset, height/6.0 + penOffset)
+                QPointF(width - penOffset, height/6.0 + penOffset),
             };
             painter->drawPolyline(points);
 
@@ -86,7 +86,7 @@ void PaintedSymbolItem::paint(QPainter *painter)
             QVector<QPointF> points = {
                 QPointF(width/1.5 - penOffset, 0 + penOffset),
                 QPointF(width/4.0, height/2),
-                QPointF(width/1.5 - penOffset, height - penOffset)
+                QPointF(width/1.5 - penOffset, height - penOffset),
             };
             painter->drawPolyline(points);
 
@@ -114,7 +114,7 @@ void PaintedSymbolItem::paint(QPainter *painter)
             QVector<QPointF> points = {
                 QPointF(width/3/* + penOffset*/, 0/* + penOffset*/),
                 QPointF(width*0.75, height/2),
-                QPointF(width/3/* + penOffset*/, height/* - penOffset*/)
+                QPointF(width/3/* + penOffset*/, height/* - penOffset*/),
             };
             painter->drawPolyline(points);
 
@@ -142,7 +142,7 @@ void PaintedSymbolItem::paint(QPainter *painter)
             QVector<QPointF> points = {
                 QPointF(0 - penOffset, height*0.75),
                 QPointF(width/2.0, height/4 - penOffset),
-                QPointF(width + penOffset, height*0.75)
+                QPointF(width + penOffset, height*0.75),
             };
             painter->drawPolyline(points);
 
@@ -170,7 +170,7 @@ void PaintedSymbolItem::paint(QPainter *painter)
             QVector<QPointF> points = {
                 QPointF(0 - penOffset, height/4 ),
                 QPointF(width/2.0, height*0.75 + penOffset),
-                QPointF(width + penOffset, height/4)
+                QPointF(width + penOffset, height/4),
             };
             painter->drawPolyline(points);
 

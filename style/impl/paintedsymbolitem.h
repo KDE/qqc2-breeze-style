@@ -38,7 +38,7 @@ public:
         UpArrow,
         DownArrow,
         NSymbolTypes, // Only used to access the total number of symbol types
-        None = USHRT_MAX
+        None = USHRT_MAX,
     };
     Q_ENUM(SymbolType)
 

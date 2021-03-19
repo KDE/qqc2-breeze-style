@@ -29,7 +29,7 @@ public:
         {QPointF(1.0/1.5, 0.0), QPointF(0.25, 0.5), QPointF(1.0/1.5, 1.0)}, //LeftArrow
         {QPointF(1.0/3.0, 0.0), QPointF(0.75, 0.5), QPointF(1.0/3.0, 1.0)}, //RightArrow
         {QPointF(0.0, 1.0/1.5), QPointF(0.5, 0.25), QPointF(1.0, 1.0/1.5)}, //UpArrow
-        {QPointF(0.0, 1.0/3.0), QPointF(0.5, 0.75), QPointF(1.0, 1.0/3.0)} //DownArrow
+        {QPointF(0.0, 1.0/3.0), QPointF(0.5, 0.75), QPointF(1.0, 1.0/3.0)}, //DownArrow
     };
 };
 #endif

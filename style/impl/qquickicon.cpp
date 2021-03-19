@@ -23,7 +23,7 @@ public:
         HeightResolved = 0x0008,
         ColorResolved = 0x0010,
         CacheResolved = 0x0020,
-        AllPropertiesResolved = 0x1ffff
+        AllPropertiesResolved = 0x1ffff,
     };
 
     // This is based on QFont's resolve_mask.

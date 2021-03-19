@@ -109,7 +109,7 @@ public:
         IconOnly,
         TextOnly,
         TextBesideIcon,
-        TextUnderIcon
+        TextUnderIcon,
     };
     Q_ENUM(Display)
 
