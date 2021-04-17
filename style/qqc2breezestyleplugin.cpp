@@ -45,7 +45,7 @@ void QQC2BreezeStylePlugin::registerTypes(const char *uri)
     // END
 
     // Prevent additional types from being added.
-    qmlProtectModule(uri, 2);
+    qmlProtectModule(uri, 1);
 }
 
 #include "moc_qqc2breezestyleplugin.cpp"
