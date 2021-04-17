@@ -75,3 +75,7 @@ SplitView 2.13 SplitView.qml
 # QtQuick.Controls 2.15 (new types in Qt 5.15)
 HorizontalHeaderView 2.15 HorizontalHeaderView.qml
 VerticalHeaderView 2.15 VerticalHeaderView.qml
+
+# TEMP: Find a better way to organize this stuff
+MobileTextActionsToolBar 1.0 MobileTextActionsToolBar.qml
+#singleton TextFieldContextMenu 1.0 TextFieldContextMenu.qml

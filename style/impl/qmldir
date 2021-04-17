@@ -6,16 +6,25 @@ depends org.kde.kirigami 2.14
 # Make sure the style works with Qt Quick Designer
 designersupported
 
-BackgroundGradient 2.0 BackgroundGradient.qml
-ButtonBackground 2.0 ButtonBackground.qml
-CheckIndicator 2.0 CheckIndicator.qml
-DelegateBackground 2.0 DelegateBackground.qml
-FocusRect 2.0 FocusRect.qml
-IconLabelContent 2.0 IconLabelContent.qml
-IconLabelShortcutContent 2.0 IconLabelShortcutContent.qml
-ListViewHighlight 2.0 ListViewHighlight.qml
-MobileCursor 2.0 MobileCursor.qml
-singleton MobileTextActionsToolBar 2.0 MobileTextActionsToolBar.qml
-RadioIndicator 2.0 RadioIndicator.qml
-SliderHandle 2.0 SliderHandle.qml
-SwitchIndicator 2.0 SwitchIndicator.qml
+BackgroundGradient 1.0 BackgroundGradient.qml
+ButtonBackground 1.0 ButtonBackground.qml
+CheckIndicator 1.0 CheckIndicator.qml
+ComboBoxBackground 1.0 ComboBoxBackground.qml
+CursorDelegate 1.0 CursorDelegate.qml
+DelegateBackground 1.0 DelegateBackground.qml
+FocusRect 1.0 FocusRect.qml
+IconLabelContent 1.0 IconLabelContent.qml
+IconLabelShortcutContent 1.0 IconLabelShortcutContent.qml
+InlineIconLabelContent 1.0 InlineIconLabelContent.qml
+LargeShadow 1.0 LargeShadow.qml
+ListViewHighlight 1.0 ListViewHighlight.qml
+MediumShadow 1.0 MediumShadow.qml
+MobileCursor 1.0 MobileCursor.qml
+RadioIndicator 1.0 RadioIndicator.qml
+ScrollHandle 1.0 ScrollHandle.qml
+SliderGroove 1.0 SliderGroove.qml
+SliderHandle 1.0 SliderHandle.qml
+SmallShadow 1.0 SmallShadow.qml
+SpinBoxIndicator 1.0 SpinBoxIndicator.qml
+SwitchIndicator 1.0 SwitchIndicator.qml
+TextEditBackground 1.0 TextEditBackground.qml
