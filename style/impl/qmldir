@@ -1,6 +1,8 @@
 module org.kde.breeze.impl
-#plugin qqc2breezestyleplugin
-#classname QQC2BreezeStylePlugin
+
+# plugin QQC2BreezeStylePlugin
+classname QQC2BreezeStylePlugin
+
 depends QtQuick.Controls 2.15
 depends org.kde.kirigami 2.14
 # Make sure the style works with Qt Quick Designer
