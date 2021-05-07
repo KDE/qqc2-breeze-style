@@ -5,11 +5,15 @@
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
+import org.kde.breeze 1.0
 import "impl"
 
 T.TabButton {
     id: control
 
+    readonly property bool __inTabBar: T.TabBar.tabBar != null
+    readonly property bool __hasLeftSeparator: background && background.hasOwnProperty("leftSeparatorLine")
+    readonly property bool __hasRightSeparator: background && background.hasOwnProperty("rightSeparatorLine")
     readonly property bool __inHeader: T.TabBar.position === T.TabBar.Header
     readonly property bool __inFooter: T.TabBar.position === T.TabBar.Footer
 
@@ -37,12 +41,38 @@ T.TabButton {
             return control.horizontalPadding
         }
     }
+
+    leftInset: {
+        if (!mirrored && __hasLeftSeparator && background.leftSeparatorLine.visible) {
+            return background.leftSeparatorLine.width
+        } else if (mirrored && __hasRightSeparator && background.rightSeparatorLine.visible) {
+            return background.rightSeparatorLine.width
+        } else {
+            return 0
+        }
+    }
+    rightInset: {
+        if (!mirrored && __hasRightSeparator && background.leftSeparatorLine.visible) {
+            return background.rightSeparatorLine.width
+        } else if (mirrored && __hasLeftSeparator && background.rightSeparatorLine.visible) {
+            return background.leftSeparatorLine.width
+        } else {
+            return 0
+        }
+    }
+
     spacing: Kirigami.Units.mediumSpacing
 
     icon.width: Kirigami.Units.iconSizes.auto
     icon.height: Kirigami.Units.iconSizes.auto
 
-    Kirigami.Theme.colorSet: control.checked || control.down ? Kirigami.Theme.Button : (T.TabBar.tabBar.Kirigami.Theme.colorSet ?? Kirigami.Theme.Button)
+    Kirigami.Theme.colorSet: {
+        if (control.__inTabBar && !(control.checked)) {
+            return T.TabBar.tabBar.Kirigami.Theme.colorSet
+        } else {
+            return Kirigami.Theme.Button
+        }
+    }
     Kirigami.Theme.inherit: !(background && background.visible)
 
     contentItem: IconLabelContent {
@@ -50,25 +80,95 @@ T.TabButton {
     }
 
     //TODO: tweak the appearance. This is just to have something usable and reasonably close to what we want.
-    background: Kirigami.ShadowedRectangle {
-//         visible: control.checked
-//             && !(control.ListView.view
-//                 && control.ListView.view.highlightItem
-//                 && control.ListView.view.highlightItem.visible)
-        implicitHeight: Kirigami.Units.mediumControlHeight
+    background: Rectangle {
+        implicitHeight: Kirigami.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) // fill TabBar
         implicitWidth: implicitHeight
-        color: control.checked || control.down ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+        color: control.checked ? Kirigami.Theme.backgroundColor : "transparent"
+
+        property Rectangle leftSeparatorLine: Rectangle {
+            parent: control.background
+            visible: control.T.TabBar.index != 0 && control.checked
+            Kirigami.Theme.colorSet: Kirigami.Theme.Button
+            Kirigami.Theme.inherit: false
+            anchors.left: parent.left
+            anchors.leftMargin: -control.leftInset
+            anchors.verticalCenter: parent.verticalCenter
+            width: 1
+            height: control.checked ? parent.height : Math.min(parent.height, Kirigami.Units.gridUnit)
+            color: Kirigami.Theme.separatorColor
+            Behavior on height {
+                NumberAnimation {
+                    easing.type: Easing.InOutQuad
+                    duration: Kirigami.Units.longDuration
+                }
+            }
+        }
+
+        property Rectangle rightSeparatorLine: Rectangle {
+            parent: control.background
+            visible: control.__inTabBar && control.T.TabBar.index != control.T.TabBar.tabBar.count - 1 && control.checked
+            Kirigami.Theme.colorSet: Kirigami.Theme.Button
+            Kirigami.Theme.inherit: false
+            anchors.right: parent.right
+            anchors.rightMargin: -control.rightInset
+            anchors.verticalCenter: parent.verticalCenter
+            width: 1
+            height: parent.leftSeparatorLine.height
+            color: Kirigami.Theme.separatorColor
+        }
 
         Rectangle {
-            id: separatorLine
-            anchors {
-                left: parent.left
-                right: parent.right
-                top: control.__inFooter ? parent.top : undefined
-                bottom: control.__inHeader ? parent.bottom : undefined
+            id: thickHighlightLine
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: -control.leftInset
+            anchors.rightMargin: -control.rightInset
+            y: control.__inHeader ? 0 : parent.height - height
+            height: Kirigami.Units.highlightLineThickness
+            opacity: control.visualFocus || control.checked || control.hovered || control.down ? 1 : 0
+            Kirigami.Theme.colorSet: Kirigami.Theme.Button
+            Kirigami.Theme.inherit: false
+            color: {
+                if (control.visualFocus) {
+                    Kirigami.Theme.alternateBackgroundColor
+                } else if (control.checked || control.down) {
+                    Kirigami.Theme.focusColor
+                } else {
+                    Kirigami.Theme.separatorColor
+                }
             }
-            height: control.checked ? Kirigami.Units.highlightLineThickness : 1
-            color: control.hovered || control.checked || control.visualFocus ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+            Behavior on opacity {
+                OpacityAnimator {
+                    easing.type: Easing.OutCubic
+                    duration: Kirigami.Units.shortDuration
+                }
+            }
+            Behavior on color {
+                ColorAnimation {
+                    easing.type: Easing.InOutQuad
+                    duration: Kirigami.Units.longDuration
+                }
+            }
+        }
+
+        Rectangle {
+            id: thinHighlightLine
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: -control.leftInset
+            anchors.rightMargin: -control.rightInset
+            y: control.__inHeader ? 0 : parent.height - height
+            height: 1
+            opacity: control.visualFocus ? 1 : 0
+            Kirigami.Theme.colorSet: Kirigami.Theme.Button
+            Kirigami.Theme.inherit: false
+            color: Kirigami.Theme.focusColor
+            Behavior on opacity {
+                OpacityAnimator {
+                    easing.type: Easing.OutCubic
+                    duration: Kirigami.Units.shortDuration
+                }
+            }
         }
     }
 }

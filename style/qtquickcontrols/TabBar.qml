@@ -15,8 +15,18 @@ T.TabBar {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
 
-    spacing: 0
+    spacing: -1
     padding: 0
+
+    // Add space for the separator above the footer
+    topPadding: __isFooter && background && background.hasOwnProperty("separator") ?
+        background.separator.height + verticalPadding : verticalPadding
+    // Add space for the separator below the header
+    bottomPadding: __isHeader && background && background.hasOwnProperty("separator") ?
+        background.separator.height + verticalPadding : verticalPadding
+
+    Kirigami.Theme.inherit: !__isHeader
+    Kirigami.Theme.colorSet: Kirigami.Theme.Header
 
     contentItem: ListView {
         model: control.contentModel
@@ -30,6 +40,14 @@ T.TabBar {
     }
 
     background: Rectangle {
+        // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
+        implicitHeight: Kirigami.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0) 
         color: Kirigami.Theme.backgroundColor
+        property Item separator: Kirigami.Separator {
+            parent: background
+            visible: control.__isHeader || control.__isFooter
+            width: parent.width
+            y: control.__isFooter ? 0 : parent.height - height
+        }
     }
 }
