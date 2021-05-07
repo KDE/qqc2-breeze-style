@@ -107,8 +107,7 @@ Rectangle {
         }
     }
 
-    // Maybe enable this? Depends on what our app devs want.
-    /*Loader {
+    Loader {
         id: tickmarkLoader
         visible: root.control.stepSize > 0
         active: visible
@@ -120,7 +119,27 @@ Rectangle {
         }
         width: root.vertical ? implicitWidth : root.width - parent.radius
         height: root.horizontal ? implicitHeight : root.height - parent.radius
-        sourceComponent: Grid {
+        sourceComponent: markGridComponent
+    }
+
+    Loader {
+        id: tickmarkLoader2
+        visible: tickmarkLoader.visible
+        active: visible
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: root.horizontal ? parent.radius : -width - Kirigami.Units.smallBorder
+            topMargin: root.vertical ? parent.radius : -height - Kirigami.Units.smallBorder
+        }
+        width: tickmarkLoader.width
+        height: tickmarkLoader.height
+        sourceComponent: markGridComponent
+    }
+
+    Component {
+        id: markGridComponent
+        Grid {
             id: markGrid
             rows: root.vertical ? markRepeater.model : 1
             columns: root.horizontal ? markRepeater.model : 1
@@ -138,5 +157,5 @@ Rectangle {
                 }
             }
         }
-    }*/
+    }
 }
