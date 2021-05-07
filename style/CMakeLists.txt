@@ -6,6 +6,7 @@ set(qqc2breezestyle_SRCS
     impl/iconlabellayout.cpp
     impl/qquickicon.cpp
     impl/kcolorutilssingleton.cpp
+    impl/breezedial.cpp
 )
 
 #[[ I don't actually know if this would work.
