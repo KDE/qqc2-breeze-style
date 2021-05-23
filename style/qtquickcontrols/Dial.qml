@@ -3,6 +3,7 @@
  */
 
 import QtQuick 2.15
+import QtQml 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
@@ -18,7 +19,7 @@ T.Dial {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    wrap: true
+    inputMode: !Kirigami.Settings.tabletMode ? Dial.Vertical : Dial.Circular
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
@@ -44,29 +45,38 @@ T.Dial {
 
     handle: Kirigami.ShadowedRectangle {
         id: handle
+        property real grooveOffset: Kirigami.Units.grooveHeight * 4
         x: control.background.x + (control.background.width - control.handle.width) / 2
         y: control.background.y + (control.background.height - control.handle.height) / 2
         implicitWidth: implicitHeight
-        implicitHeight: 100 - Kirigami.Units.grooveHeight * 4 + 4
+        implicitHeight: 100 - grooveOffset + 2
         width: height
-        height: Math.min(control.background.width, control.background.height) - Kirigami.Units.grooveHeight * 4 + 4
+        height: {
+            let bgExtent = Math.min(control.background.width, control.background.height)
+            let handleExtent = bgExtent
+            if (bgExtent - grooveOffset <= grooveOffset*2) {
+                handleExtent -= grooveOffset/2 - 2
+            } else {
+                handleExtent -= grooveOffset - 2
+            }
+            return handleExtent
+        }
         radius: height/2
 
         color: Kirigami.Theme.backgroundColor
 
         border {
             width: Kirigami.Units.smallBorder
-            color: control.pressed || control.visualFocus || control.hovered
+            color: control.hovered || control.pressed || control.visualFocus
                 ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
         }
 
         shadow {
             color: control.pressed ? "transparent" : Qt.rgba(0,0,0,0.2)
-            size: control.enabled ? 9 : 0
-            yOffset: 2
+            size: control.enabled ? Math.round(handle.height/10 + 1) : 0
+            yOffset: Math.round(Math.round(handle.height/10 + 1) / 4)
         }
 
-        //opacity: control.enabled ? 1 : 0.3
         Kirigami.ShadowedRectangle {
             anchors.fill: parent
             anchors.margins: parent.border.width
@@ -82,42 +92,11 @@ T.Dial {
                 }
             }
             Rectangle {
-                id: handleTriangle
-                property real colorPosition: Math.abs(control.angle) / 140
-                z: -1
-                implicitWidth: Kirigami.Units.gridUnit + Kirigami.Units.grooveHeight
-                implicitHeight: Kirigami.Units.gridUnit + Kirigami.Units.grooveHeight
-                anchors.verticalCenter: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenterOffset: height/6
-                rotation: 45
-                antialiasing: true
-                color: control.pressed || control.hovered || !control.enabled
-                    ? parent.color
-                    : KColorUtils.mix(topColor(parent.color), bottomColor(parent.color), colorPosition)
-                border.color: control.pressed || control.hovered || !control.enabled
-                    ? handle.border.color
-                    : KColorUtils.mix(topColor(handle.border.color), bottomColor(handle.border.color), colorPosition)
-                border.width: handle.border.width
-                Behavior on color {
-                    enabled: control.pressed || control.visualFocus || control.hovered
-                    ColorAnimation {
-                        duration: Kirigami.Units.shortDuration
-                        easing.type: Easing.OutCubic
-                    }
-                }
-                function topColor(color) {
-                    return Qt.tint(color, Qt.rgba(1,1,1,0.03125))
-                }
-                function bottomColor(color) {
-                    return Qt.tint(color, Qt.rgba(0,0,0,0.0625))
-                }
-            }
-            Rectangle {
                 id: handleDot
                 radius: width/2
                 anchors.verticalCenter: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenterOffset: height
                 width: 4
                 height: 4
                 color: control.enabled ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
@@ -125,7 +104,7 @@ T.Dial {
         }
 
         Behavior on border.color {
-            enabled: control.pressed || control.visualFocus || control.hovered
+            enabled: control.hovered || control.pressed || control.visualFocus
             ColorAnimation {
                 duration: Kirigami.Units.shortDuration
                 easing.type: Easing.OutCubic
