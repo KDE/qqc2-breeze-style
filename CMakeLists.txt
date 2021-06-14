@@ -36,7 +36,11 @@ include(KDEClangFormat)
 include(KDEGitCommitHooks)
 
 #TODO: Clean up dependencies. I was experimenting.
-find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2 DBus)
+find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
+
+if (NOT ANDROID)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
+endif()
 
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2)
 

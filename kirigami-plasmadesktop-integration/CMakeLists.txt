@@ -13,13 +13,16 @@ target_link_libraries(org.kde.breeze
         Qt::Core
         KF5::Kirigami2
     PRIVATE
-        Qt::DBus
         Qt::Qml
         Qt::Quick
         KF5::GuiAddons
         KF5::ConfigWidgets
         KF5::IconThemes
 )
+
+if(NOT ANDROID)
+    target_link_libraries(org.kde.breeze PRIVATE Qt::DBus)
+endif()
 
 install(TARGETS org.kde.breeze DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf5/kirigami)
 

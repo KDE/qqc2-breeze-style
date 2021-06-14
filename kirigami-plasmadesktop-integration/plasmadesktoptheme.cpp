@@ -10,7 +10,6 @@
 #include <KColorUtils>
 #include <KConfigGroup>
 #include <KIconLoader>
-#include <QDBusConnection>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QPalette>
@@ -18,6 +17,10 @@
 #include <QQmlEngine>
 #include <QQuickRenderControl>
 #include <QQuickWindow>
+
+#ifndef Q_OS_ANDROID
+#include <QDBusConnection>
+#endif
 
 class IconLoaderSingleton
 {
@@ -46,6 +49,7 @@ public:
     {
         connect(qGuiApp, &QGuiApplication::paletteChanged, this, &StyleSingleton::refresh);
 
+#ifndef Q_OS_ANDROID
         // Use DBus in order to listen for kdeglobals changes directly, as the
         // QApplication doesn't expose the font variants we're looking for,
         // namely smallFont.
@@ -55,6 +59,7 @@ public:
                                               QStringLiteral("notifyChange"),
                                               this,
                                               SLOT(notifyWatchersConfigurationChange()));
+#endif
 
         connect(qGuiApp, &QGuiApplication::fontDatabaseChanged, this, &StyleSingleton::notifyWatchersConfigurationChange);
 
