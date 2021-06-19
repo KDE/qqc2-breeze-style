@@ -51,19 +51,12 @@ QtObject {
         property int tiny: fontMetrics.roundedIconSize(8 * devicePixelRatio)
         property int tinySmall: fontMetrics.roundedIconSize(12 * devicePixelRatio)
         // Breeze
-        property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
-        property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
-        property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
-        property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
-        property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1))
-        property int enormous: 128 * devicePixelRatio * (QtQuickControlsPrivate.Settings.isMobile ? 1.5 : 1)
-        // TODO: Using larger sizes on mobile because that's what Kirigami normally does. Maybe don't do this in the future.
-        //property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio)
-        //property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio)
-        //property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio)
-        //property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio)
-        //property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio)
-        //property int enormous: 128 * devicePixelRatio
+        property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio)
+        property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio)
+        property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio)
+        property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio)
+        property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio)
+        property int enormous: 128 * devicePixelRatio
     }
 
     //BEGIN Breeze Units
