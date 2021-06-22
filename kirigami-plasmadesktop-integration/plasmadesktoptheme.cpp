@@ -9,7 +9,6 @@
 #include <KColorScheme>
 #include <KColorUtils>
 #include <KConfigGroup>
-#include <KIconLoader>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QPalette>
@@ -20,7 +19,8 @@
 
 #ifndef Q_OS_ANDROID
 #include <QDBusConnection>
-#endif
+
+#include <KIconLoader>
 
 class IconLoaderSingleton
 {
@@ -31,6 +31,7 @@ public:
 };
 
 Q_GLOBAL_STATIC(IconLoaderSingleton, privateIconLoaderSelf)
+#endif
 
 class StyleSingleton : public QObject
 {
@@ -204,7 +205,10 @@ PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
     // TODO: MOVE THIS SOMEWHERE ELSE
     m_lowPowerHardware = QByteArrayList{"1", "true"}.contains(qgetenv("KIRIGAMI_LOWPOWER_HARDWARE").toLower());
 
+    // We don't use KIconLoader on Android so we don't support recoloring there
+#ifndef Q_OS_ANDROID
     setSupportsIconColoring(true);
+#endif
 
     auto parentItem = qobject_cast<QQuickItem *>(parent);
     if (parentItem) {
@@ -271,6 +275,7 @@ void PlasmaDesktopTheme::syncFont()
 
 QIcon PlasmaDesktopTheme::iconFromTheme(const QString &name, const QColor &customColor)
 {
+#ifndef Q_OS_ANDROID
     QPalette pal = palette();
     if (customColor != Qt::transparent) {
         for (auto state : {QPalette::Active, QPalette::Inactive, QPalette::Disabled}) {
@@ -281,6 +286,10 @@ QIcon PlasmaDesktopTheme::iconFromTheme(const QString &name, const QColor &custo
     privateIconLoaderSelf->self.setCustomPalette(pal);
 
     return KDE::icon(name, &privateIconLoaderSelf->self);
+#else
+    // On Android we don't want to use the KIconThemes-based loader since that appears to be broken
+    return QIcon::fromTheme(name);
+#endif
 }
 
 void PlasmaDesktopTheme::syncColors()

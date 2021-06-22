@@ -40,12 +40,12 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Q
 
 if (NOT ANDROID)
     find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
+    find_package(KF5IconThemes ${KF5_DEP_VERSION})
 endif()
 
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons)
 
 # IconThemes and ConfigWidgets are optional
-find_package(KF5IconThemes ${KF5_DEP_VERSION})
 find_package(KF5ConfigWidgets ${KF5_DEP_VERSION})
 
 if (NOT APPLE AND NOT WIN32)
@@ -99,8 +99,8 @@ add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x054900)
 
 add_subdirectory(style)
 
-if (KF5IconThemes_FOUND AND KF5WidgetsAddons_FOUND)
-add_subdirectory(kirigami-plasmadesktop-integration)
+if ((KF5IconThemes_FOUND OR ANDROID) AND KF5WidgetsAddons_FOUND)
+    add_subdirectory(kirigami-plasmadesktop-integration)
 endif(KF5IconThemes_FOUND AND KF5WidgetsAddons_FOUND)
 
 # FIXME: this assumes there will always be a QQC2 release for each Qt release, needs

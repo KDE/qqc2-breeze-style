@@ -16,9 +16,8 @@ target_link_libraries(org.kde.breeze
         Qt::Quick
         KF5::GuiAddons
         KF5::ConfigWidgets
-        KF5::IconThemes
 )
 
 if(NOT ANDROID)
-    target_link_libraries(org.kde.breeze PRIVATE Qt::DBus)
+    target_link_libraries(org.kde.breeze PRIVATE Qt::DBus KF5::IconThemes)
 endif()
