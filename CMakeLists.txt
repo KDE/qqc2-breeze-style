@@ -42,7 +42,7 @@ if (NOT ANDROID)
     find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
 endif()
 
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons)
 
 # IconThemes and ConfigWidgets are optional
 find_package(KF5IconThemes ${KF5_DEP_VERSION})

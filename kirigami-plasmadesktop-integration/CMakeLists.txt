@@ -5,8 +5,7 @@ set(org.kde.breeze_SRCS
     kirigamiplasmafactory.cpp
 )
 
-
-add_library(org.kde.breeze MODULE ${org.kde.breeze_SRCS})
+kcoreaddons_add_plugin(org.kde.breeze SOURCES ${org.kde.breeze_SRCS} INSTALL_NAMESPACE "kf5/kirigami" JSON kirigamiplasmaintegration.json)
 
 target_link_libraries(org.kde.breeze
     PUBLIC
@@ -23,6 +22,3 @@ target_link_libraries(org.kde.breeze
 if(NOT ANDROID)
     target_link_libraries(org.kde.breeze PRIVATE Qt::DBus)
 endif()
-
-install(TARGETS org.kde.breeze DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf5/kirigami)
-
