@@ -122,6 +122,9 @@ Rectangle {
         sourceComponent: markGridComponent
     }
 
+    //NOTE: this code has problems when large from/to ranges are used.
+    // Keeping it here to work on it later.
+    /*
     Loader {
         id: tickmarkLoader2
         visible: tickmarkLoader.visible
@@ -157,5 +160,5 @@ Rectangle {
                 }
             }
         }
-    }
+    }*/
 }
