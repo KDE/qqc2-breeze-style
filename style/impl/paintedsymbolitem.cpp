@@ -88,7 +88,7 @@ void PaintedSymbolItem::paint(QPainter *painter)
     } break;
     case SymbolType::RightArrow: {
         setPenWidth(1);
-        qreal penOffset = d->penWidth / 2;
+        // qreal penOffset = d->penWidth / 2;
 
         // Prevent the sides from being cut off. Remember to add extra width and height externally.
         qreal width = this->width() - d->penWidth * 2;
