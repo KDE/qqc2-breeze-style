@@ -9,7 +9,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.MenuItem {
     id: control
@@ -49,19 +49,19 @@ T.MenuItem {
 
 //     width: parent ? parent.width : implicitWidth
 
-    icon.width: Kirigami.Units.iconSizes.auto
-    icon.height: Kirigami.Units.iconSizes.auto
+    icon.width: Impl.Units.iconSizes.auto
+    icon.height: Impl.Units.iconSizes.auto
 
     Layout.fillWidth: true
 
-    spacing: Kirigami.Units.mediumSpacing
-    padding: Kirigami.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
+    padding: Impl.Units.mediumSpacing
     leftPadding: {
         if (!control.indicator.visible
             && ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
                 || display == T.AbstractButton.TextOnly
                 || display == T.AbstractButton.TextUnderIcon)) {
-            return Kirigami.Units.mediumHorizontalPadding
+            return Impl.Units.mediumHorizontalPadding
         } else {
             return control.horizontalPadding
         }
@@ -70,7 +70,7 @@ T.MenuItem {
         if (!control.arrow.visible
             && contentItem.hasLabel // False if contentItem has been replaced
             && display != T.AbstractButton.IconOnly) {
-            return Kirigami.Units.mediumHorizontalPadding
+            return Impl.Units.mediumHorizontalPadding
         } else {
             return control.horizontalPadding
         }
@@ -92,7 +92,7 @@ T.MenuItem {
         }
     }
 
-    indicator: CheckIndicator {
+    indicator: Impl.CheckIndicator {
         visible: control.checkable
         control: control
         checkState: control.checked ? Qt.Checked : Qt.Unchecked
@@ -105,12 +105,12 @@ T.MenuItem {
             verticalCenter: control.verticalCenter
         }
         source: control.mirrored ? "arrow-left" : "arrow-right"
-        implicitWidth: Kirigami.Units.iconSizes.auto
-        implicitHeight: Kirigami.Units.iconSizes.auto
+        implicitWidth: Impl.Units.iconSizes.auto
+        implicitHeight: Impl.Units.iconSizes.auto
         visible: control.subMenu
     }
 
-    contentItem: IconLabelShortcutContent {
+    contentItem: Impl.IconLabelShortcutContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
         alignment: Qt.AlignLeft | Qt.AlignVCenter
@@ -119,7 +119,7 @@ T.MenuItem {
         reserveSpaceForArrow: control.__reserveSpaceForArrow
     }
 
-    background: MenuItemBackground {
+    background: Impl.MenuItemBackground {
         control: control
     }
 }

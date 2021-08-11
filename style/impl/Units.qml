@@ -11,6 +11,8 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 1.4 as QtQuickControls
 import QtQuick.Controls.Private 1.0 as QtQuickControlsPrivate
 
+import org.kde.kirigami 2.14 as Kirigami
+
 pragma Singleton
 
 /**
@@ -25,7 +27,7 @@ QtObject {
      * Given the screen has an accurate DPI settings, it corresponds to a width of
      * the capital letter M
      */
-    property int gridUnit: fontMetrics.height + fontMetrics.height % 2
+    property int gridUnit: Kirigami.Units.gridUnit
 
     /**
      * units.iconSizes provides access to platform-dependent icon sizing
@@ -46,26 +48,26 @@ QtObject {
      */
     property QtObject iconSizes: QtObject {
         // Breeze
-        property int sizeForLabels: units.iconSizes.auto
-        property int auto: fontMetrics.roundedIconSize(fontMetrics.height)
-        property int tiny: fontMetrics.roundedIconSize(8 * devicePixelRatio)
-        property int tinySmall: fontMetrics.roundedIconSize(12 * devicePixelRatio)
+        property int sizeForLabels: Kirigami.Units.iconSizes.sizeForLabels
+        property int auto: Kirigami.Units.iconSizes.sizeForLabels
+        property int tiny: Kirigami.Units.iconSizes.small * 0.5
+        property int tinySmall: Kirigami.Units.iconSizes.small * 0.75
         // Breeze
-        property int small: fontMetrics.roundedIconSize(16 * devicePixelRatio)
-        property int smallMedium: fontMetrics.roundedIconSize(22 * devicePixelRatio)
-        property int medium: fontMetrics.roundedIconSize(32 * devicePixelRatio)
-        property int large: fontMetrics.roundedIconSize(48 * devicePixelRatio)
-        property int huge: fontMetrics.roundedIconSize(64 * devicePixelRatio)
-        property int enormous: 128 * devicePixelRatio
+        property int small: Kirigami.Units.iconSizes.small
+        property int smallMedium: Kirigami.Units.iconSizes.smallMedium
+        property int medium: Kirigami.Units.iconSizes.medium
+        property int large: Kirigami.Units.iconSizes.large
+        property int huge: Kirigami.Units.iconSizes.huge
+        property int enormous: Kirigami.Units.iconSizes.enormous
     }
 
     //BEGIN Breeze Units
     // The default border width
     property int smallBorder: 1
     // Used for the focus ring
-    property int mediumBorder: smallBorder*2
+    property int mediumBorder: smallBorder * 2
     // Usually for highlights on larger surfaces like Cards
-    property int largeBorder: smallBorder*4
+    property int largeBorder: smallBorder * 4
 
     // The default corner radius
     property int smallRadius: 3
@@ -78,13 +80,13 @@ QtObject {
     property int highlightLineThickness: smallRadius
 
     property int grooveHeight: {
-        let h = Math.floor(gridUnit/3);
+        let h = Math.floor(gridUnit / 3);
         h += h % 2;
         return h;
     }
 
     property int thickGrooveHeight: {
-        let h = Math.floor(gridUnit/1.5);
+        let h = Math.floor(gridUnit / 1.5);
         h += h % 2;
         return h;
     }
@@ -93,15 +95,15 @@ QtObject {
     property int inlineControlHeight: gridUnit
 
     // For small controls with a small amount of vertical padding
-    property int smallControlHeight: gridUnit + units.smallSpacing*2
+    property int smallControlHeight: gridUnit + units.smallSpacing * 2
 
     // For medium controls with a medium amount of vertical padding
-    property int mediumControlHeight: gridUnit + units.mediumSpacing*2
+    property int mediumControlHeight: gridUnit + units.mediumSpacing * 2
 
     // For large controls with a large amount of vertical padding
-    property int largeControlHeight: gridUnit + units.largeSpacing*2
+    property int largeControlHeight: gridUnit + units.largeSpacing * 2
 
-    property real horizontalPaddingRatio: Math.max(fontMetrics.height/fontMetrics.fullWidthCharWidth, 1)
+    property real horizontalPaddingRatio: Math.max(fontMetrics.height / fontMetrics.fullWidthCharWidth, 1)
 
     property int verySmallHorizontalPadding: Math.round(horizontalPaddingRatio * units.verySmallSpacing)
 
@@ -146,7 +148,7 @@ QtObject {
      * the default font as rendered on the screen, so it takes user-configured font size and DPI
      * into account.
      */
-    property int verySmallSpacing: 2
+    property int verySmallSpacing: Kirigami.Units.smallSpacing * 0.5
 
     /**
      * Units.smallSpacing is the amount of spacing that should be used around smaller UI elements,
@@ -154,12 +156,12 @@ QtObject {
      * the default font as rendered on the screen, so it takes user-configured font size and DPI
      * into account.
      */
-    property int smallSpacing: 4
+    property int smallSpacing: Kirigami.Units.smallSpacing
 
     /**
      * Units.mediumSpacing is the amount of spacing that should be used around medium UI elements
      */
-    property int mediumSpacing: 6
+    property int mediumSpacing: Kirigami.Units.smallSpacing * 1.5
 
     /**
      * Units.largeSpacing is the amount of spacing that should be used inside bigger UI elements,
@@ -167,99 +169,70 @@ QtObject {
      * the size of the default font as rendered on the screen, so it takes user-configured font
      * size and DPI into account.
      */
-    property int largeSpacing: 8
+    property int largeSpacing: Kirigami.Units.largeSpacing
 
     /**
      * Units.veryLargeSpacing is the amount of spacing that should be used inside very big UI elements
      */
-    property int veryLargeSpacing: 12
+    property int veryLargeSpacing: Kirigami.Units.largeSpacing * 1.5
 
     /**
      * The ratio between physical and device-independent pixels. This value does not depend on the \
      * size of the configured font. If you want to take font sizes into account when scaling elements,
      * use theme.mSize(theme.defaultFont), units.smallSpacing and units.largeSpacing.
      * The devicePixelRatio follows the definition of "device independent pixel" by Microsoft.
+     *
+     * @deprecated See Kirigami.Units.devicePixelRatio
      */
-    property real devicePixelRatio: Math.max(1, (fontMetrics.font.pixelSize*0.75) / fontMetrics.font.pointSize)
+    property real devicePixelRatio: Kirigami.Units.devicePixelRatio
 
     /**
      * units.shortDuration should be used for short animations, such as accentuating a UI event,
      * hover events, etc..
      */
-    property int veryShortDuration: 50
+    property int veryShortDuration: Kirigami.Units.veryShortDuration
 
     /**
      * units.shortDuration should be used for short animations, such as accentuating a UI event,
      * hover events, etc..
      */
-    property int shortDuration: 100
+    property int shortDuration: Kirigami.Units.shortDuration
     
     /**
      * units.shortDuration should be used for short animations, such as accentuating a UI event,
      * hover events, etc..
      */
-    property int mediumDuration: 150
+    property int mediumDuration: Kirigami.Units.longDuration * 0.75 // Was 150
 
     /**
      * units.longDuration should be used for longer, screen-covering animations, for opening and
      * closing of dialogs and other "not too small" animations
      */
-    property int longDuration: 200
+    property int longDuration: Kirigami.Units.longDuration
 
     /**
      * units.veryLongDuration should be used for specialty animations that benefit
      * from being even longer than longDuration.
      */
-    property int veryLongDuration: 400
+    property int veryLongDuration: Kirigami.Units.veryLongDuration
 
     /**
      * time in ms by which the display of tooltips will be delayed.
      *
      * @sa ToolTip.delay property
      */
-    property int toolTipDelay: 700
-    
+    property int toolTipDelay: Kirigami.Units.toolTipDelay
+
     /**
-     * Time in milliseconds equivalent to the theoretical human moment, which can be used
-     * to determine whether how long to wait until the user should be informed of something,
-     * or can be used as the limit for how long something should wait before being
-     * automatically initiated.
-     *
-     * Some examples:
-     *
-     * - When the user types text in a search field, wait no longer than this duration after
-     *   the user completes typing before starting the search
-     * - When loading data which would commonly arrive rapidly enough to not require interaction,
-     *   wait this long before showing a spinner
-     *
-     * This might seem an arbitrary number, but given the psychological effect that three
-     * seconds seems to be what humans consider a moment (and in the case of waiting for
-     * something to happen, a moment is that time when you think "this is taking a bit long,
-     * isn't it?"), the idea is to postpone for just before such a conceptual moment. The reason
-     * for the two seconds, rather than three, is to function as a middle ground: Not long enough
-     * that the user would think that something has taken too long, for also not so fast as to
-     * happen too soon.
-     *
-     * See also
-     * https://www.psychologytoday.com/blog/all-about-addiction/201101/tick-tock-tick-hugs-and-life-in-3-second-intervals
-     * (the actual paper is hidden behind an academic paywall and consequently not readily
-     * available to us, so the source will have to be the blog entry above)
-     *
-     * \note This should __not__ be used as an animation duration, as it is deliberately not scaled according
-     * to the animation settings. This is specifically for determining when something has taken too long and
-     * the user should expect some kind of feedback. See veryShortDuration, shortDuration, longDuration, and
-     * veryLongDuration for animation duration choices.
-     *
-     * @since 5.81
-     * @since org.kde.kirigami 2.16
+     * See Kirigami.Units.humanMoment
      */
-    property int humanMoment: 2000
+    property int humanMoment: Kirigami.Units.humanMoment
 
     /**
      * How much the mouse scroll wheel scrolls, expressed in lines of text.
      * Note: this is strictly for classical mouse wheels, touchpads 2 figer scrolling won't be affected
      */
-    readonly property int wheelScrollLines: 3
+    readonly property int wheelScrollLines: Kirigami.Units.wheelScrollLines
 
     /**
      * metrics used by the default font

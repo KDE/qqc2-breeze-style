@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Loader {
     id: root
     property T.MenuItem control: root.parent
@@ -30,9 +32,9 @@ Loader {
             return normalColor
         }
     }
-    property real radius: Kirigami.Units.smallRadius
+    property real radius: Impl.Units.smallRadius
     property QtObject border: QtObject {
-        property real width: highlightBackground ? Kirigami.Units.smallBorder : 0
+        property real width: highlightBackground ? Impl.Units.smallBorder : 0
         property color color: Kirigami.Theme.focusColor
     }
 
@@ -49,7 +51,7 @@ Loader {
 //             readonly property int count: root.isInListView ? control.ListView.view.count : 0
             readonly property bool horizontalListView: root.isInListView && control.ListView.view.orientation === ListView.Horizontal
 
-            implicitHeight: Kirigami.Units.mediumControlHeight
+            implicitHeight: Impl.Units.mediumControlHeight
 
             radius: root.radius
             readonly property real topRadius: !root.isInListView || (isCurrentItem && currentIndex == 0) ? radius : 0
@@ -72,7 +74,7 @@ Loader {
             Behavior on color {
                 enabled: highlightBackground
                 ColorAnimation {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                     easing.type: Easing.OutCubic
                     onRunningChanged: root.backgroundAnimationRunning = running
                 }
@@ -80,7 +82,7 @@ Loader {
             Behavior on border.color {
                 enabled: highlightBackground
                 ColorAnimation {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                     easing.type: Easing.OutCubic
                     onRunningChanged: root.borderAnimationRunning = running
                 }

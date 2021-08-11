@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Rectangle {
     id: root
     property T.Control control: root.parent
@@ -16,7 +18,7 @@ Rectangle {
 
     visible: control.size < 1 && root.policy !== T.ScrollBar.AlwaysOff
 
-    implicitWidth: Kirigami.Units.grooveHeight
+    implicitWidth: Impl.Units.grooveHeight
     implicitHeight: implicitWidth
 
     radius: width / 2
@@ -30,7 +32,7 @@ Rectangle {
     Behavior on color {
         enabled: root.pressed
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
@@ -47,9 +49,9 @@ Rectangle {
     transitions: Transition {
         from: "active"
         SequentialAnimation {
-            PauseAnimation { duration: Kirigami.Units.veryLongDuration }
+            PauseAnimation { duration: Impl.Units.veryLongDuration }
             OpacityAnimator {
-                duration: Kirigami.Units.longDuration
+                duration: Impl.Units.longDuration
                 to: 0.0
             }
         }

@@ -8,6 +8,8 @@ import QtQuick.Window 2.15
 import QtQuick.Templates 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Item {
     id: root
     property alias target: root.parent
@@ -57,14 +59,14 @@ Item {
             SmoothedAnimation {
                 velocity: 200
                 reversingMode: SmoothedAnimation.Immediate
-                duration: Kirigami.Settings.tabletMode ? Kirigami.Units.shortDuration : 0//Kirigami.Units.veryShortDuration
+                duration: Kirigami.Settings.tabletMode ? Impl.Units.shortDuration : 0//Impl.Units.veryShortDuration
             }
         }
         Behavior on y {
             SmoothedAnimation {
                 velocity: 200
                 reversingMode: SmoothedAnimation.Immediate
-                duration: Kirigami.Settings.tabletMode ? Kirigami.Units.shortDuration : 0//Kirigami.Units.veryShortDuration
+                duration: Kirigami.Settings.tabletMode ? Impl.Units.shortDuration : 0//Impl.Units.veryShortDuration
             }
         }
         */

@@ -12,7 +12,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.MenuBarItem {
     id: controlRoot
@@ -23,10 +23,10 @@ T.MenuBarItem {
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
     Layout.fillWidth: true
-    leftPadding: Kirigami.Units.largeSpacing
-    rightPadding: Kirigami.Units.largeSpacing
-    topPadding: Kirigami.Units.smallSpacing
-    bottomPadding: Kirigami.Units.smallSpacing
+    leftPadding: Impl.Units.largeSpacing
+    rightPadding: Impl.Units.largeSpacing
+    topPadding: Impl.Units.smallSpacing
+    bottomPadding: Impl.Units.smallSpacing
     hoverEnabled: true
 
     Kirigami.MnemonicData.enabled: controlRoot.enabled && controlRoot.visible
@@ -52,7 +52,7 @@ T.MenuBarItem {
 
     background: Item {
         anchors.fill: parent
-        implicitWidth: Kirigami.Units.gridUnit * 8
+        implicitWidth: Impl.Units.gridUnit * 8
 
         Rectangle {
             anchors.fill: parent

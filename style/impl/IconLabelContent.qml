@@ -7,6 +7,8 @@ import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
 
+import "." as Impl
+
 IconLabelLayout {
     id: root
     // NOTE: Remember to use root.mirrored, not control.mirrored in this file
@@ -73,7 +75,7 @@ IconLabelLayout {
             Behavior on opacity {
                 enabled: firstLayoutCompleted
                 OpacityAnimator {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                 }
             }
         }
@@ -91,19 +93,19 @@ IconLabelLayout {
             Behavior on x {
                 enabled: firstLayoutCompleted
                 XAnimator {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                 }
             }
             Behavior on y {
                 enabled: firstLayoutCompleted
                 YAnimator {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                 }
             }
             Behavior on opacity {
                 enabled: firstLayoutCompleted
                 OpacityAnimator {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                 }
             }
         }

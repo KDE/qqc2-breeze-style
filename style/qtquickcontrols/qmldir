@@ -66,8 +66,6 @@ DelayButton 2.2 DelayButton.qml
 ScrollView 2.2 ScrollView.qml
 
 # QtQuick.Controls 2.3 (new types in Qt 5.10)
-Action 2.3 Action.qml
-ActionGroup 2.3 ActionGroup.qml
 MenuBar 2.3 MenuBar.qml
 MenuBarItem 2.3 MenuBarItem.qml
 

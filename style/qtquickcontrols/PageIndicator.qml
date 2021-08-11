@@ -7,6 +7,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "impl" as Impl
+
 T.PageIndicator {
     id: control
 
@@ -15,14 +17,14 @@ T.PageIndicator {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.mediumSpacing
-    spacing: Kirigami.Units.mediumSpacing
+    padding: Impl.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
 
     // Using ShadowedRectangle because it makes smoother circles than Rectangle
     delegate: Kirigami.ShadowedRectangle {
         implicitWidth: implicitHeight
         implicitHeight: {
-            let h = Kirigami.Units.inlineControlHeight/2
+            let h = Impl.Units.inlineControlHeight/2
             h -= h % 2
             return h
         }
@@ -31,7 +33,7 @@ T.PageIndicator {
         color: Kirigami.Theme.textColor
 
         opacity: index === currentIndex ? 1 : pressed ? 0.67 : 0.33
-        Behavior on opacity { OpacityAnimator { duration: Kirigami.Units.shortDuration } }
+        Behavior on opacity { OpacityAnimator { duration: Impl.Units.shortDuration } }
     }
 
     contentItem: Row {

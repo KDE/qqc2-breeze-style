@@ -7,6 +7,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as Templates
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Rectangle {
     id: root
 
@@ -25,25 +27,25 @@ Rectangle {
     readonly property bool vertical: root.control.vertical
 
 
-    implicitWidth: root.horizontal ? 200 : Kirigami.Units.grooveHeight
-    implicitHeight: root.vertical ? 200 : Kirigami.Units.grooveHeight
+    implicitWidth: root.horizontal ? 200 : Impl.Units.grooveHeight
+    implicitHeight: root.vertical ? 200 : Impl.Units.grooveHeight
 
 
     //NOTE: Manually setting x,y,width,height because that's what the Basic, Fusion and Material QQC2 styles do.
     // Inset would be more idiomatic for QQC2, but this is easier to deal with for now since the behavior is expected by app devs.
 
-    width: root.horizontal ? control.availableWidth - root.handleWidth/2 - secondHandleWidth/2 + Kirigami.Units.grooveHeight : implicitWidth
-    height: root.vertical ? control.availableHeight - root.handleHeight/2 - secondHandleHeight/2 + Kirigami.Units.grooveHeight : implicitHeight
+    width: root.horizontal ? control.availableWidth - root.handleWidth/2 - secondHandleWidth/2 + Impl.Units.grooveHeight : implicitWidth
+    height: root.vertical ? control.availableHeight - root.handleHeight/2 - secondHandleHeight/2 + Impl.Units.grooveHeight : implicitHeight
 
     x: control.leftPadding + (root.horizontal ?
         (control.mirrored ? root.secondHandleWidth/2 : root.handleWidth/2) - radius
         : (control.availableWidth - width) / 2)
     y: control.topPadding + (root.vertical ? root.secondHandleHeight/2 - radius : (control.availableHeight - height) / 2)
 
-    radius: Kirigami.Units.grooveHeight/2
+    radius: Impl.Units.grooveHeight/2
     color: Kirigami.Theme.backgroundColor
     border {
-        width: Kirigami.Units.smallBorder
+        width: Impl.Units.smallBorder
         color: Kirigami.Theme.separatorColor
     }
 
@@ -51,23 +53,23 @@ Rectangle {
         id: fill
         anchors {
             fill: parent
-            leftMargin: root.horizontal ? root.startPosition * parent.width - (root.startPosition * Kirigami.Units.grooveHeight) : 0
-            rightMargin: root.horizontal ? (1-root.endPosition) * parent.width - ((1-root.endPosition) * Kirigami.Units.grooveHeight) : 0
-            topMargin: root.vertical ? (1-root.endPosition) * parent.height - ((1-root.endPosition) * Kirigami.Units.grooveHeight) : 0
-            bottomMargin: root.vertical ? root.startPosition * parent.height - (root.startPosition * Kirigami.Units.grooveHeight) : 0
+            leftMargin: root.horizontal ? root.startPosition * parent.width - (root.startPosition * Impl.Units.grooveHeight) : 0
+            rightMargin: root.horizontal ? (1-root.endPosition) * parent.width - ((1-root.endPosition) * Impl.Units.grooveHeight) : 0
+            topMargin: root.vertical ? (1-root.endPosition) * parent.height - ((1-root.endPosition) * Impl.Units.grooveHeight) : 0
+            bottomMargin: root.vertical ? root.startPosition * parent.height - (root.startPosition * Impl.Units.grooveHeight) : 0
         }
 
         radius: parent.radius
         color: Kirigami.Theme.alternateBackgroundColor
         border {
-            width: Kirigami.Units.smallBorder
+            width: Impl.Units.smallBorder
             color: Kirigami.Theme.focusColor
         }
 
         Behavior on anchors.leftMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Kirigami.Units.longDuration
+                duration: Impl.Units.longDuration
                 velocity: 800
                 //SmoothedAnimations have a hardcoded InOutQuad easing
             }
@@ -75,21 +77,21 @@ Rectangle {
         Behavior on anchors.rightMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Kirigami.Units.longDuration
+                duration: Impl.Units.longDuration
                 velocity: 800
             }
         }
         Behavior on anchors.topMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Kirigami.Units.longDuration
+                duration: Impl.Units.longDuration
                 velocity: 800
             }
         }
         Behavior on anchors.bottomMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Kirigami.Units.longDuration
+                duration: Impl.Units.longDuration
                 velocity: 800
             }
         }
@@ -117,8 +119,8 @@ Rectangle {
         anchors {
             left: root.horizontal ? parent.left : parent.right
             top: root.vertical ? parent.top : parent.bottom
-            leftMargin: root.horizontal ? parent.radius : Kirigami.Units.smallBorder
-            topMargin: root.vertical ? parent.radius : Kirigami.Units.smallBorder
+            leftMargin: root.horizontal ? parent.radius : Impl.Units.smallBorder
+            topMargin: root.vertical ? parent.radius : Impl.Units.smallBorder
         }
         width: root.vertical ? implicitWidth : root.width - parent.radius
         height: root.horizontal ? implicitHeight : root.height - parent.radius
@@ -132,8 +134,8 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            leftMargin: root.horizontal ? parent.radius : -width - Kirigami.Units.smallBorder
-            topMargin: root.vertical ? parent.radius : -height - Kirigami.Units.smallBorder
+            leftMargin: root.horizontal ? parent.radius : -width - Impl.Units.smallBorder
+            topMargin: root.vertical ? parent.radius : -height - Impl.Units.smallBorder
         }
         width: tickmarkLoader.width
         height: tickmarkLoader.height
@@ -146,13 +148,13 @@ Rectangle {
             id: markGrid
             rows: root.vertical ? markRepeater.model : 1
             columns: root.horizontal ? markRepeater.model : 1
-            spacing: (root.vertical ? height/(markRepeater.model-1) : width/(markRepeater.model-1)) - Kirigami.Units.smallBorder*2
+            spacing: (root.vertical ? height/(markRepeater.model-1) : width/(markRepeater.model-1)) - Impl.Units.smallBorder*2
             Repeater {
                 id: markRepeater
                 model: (root.control.to - root.control.from)/root.control.stepSize + 1
                 delegate: Rectangle {
-                    implicitWidth: root.vertical ? root.x - Kirigami.Units.smallBorder : Kirigami.Units.smallBorder
-                    implicitHeight: root.horizontal ? root.y - Kirigami.Units.smallBorder : Kirigami.Units.smallBorder
+                    implicitWidth: root.vertical ? root.x - Impl.Units.smallBorder : Impl.Units.smallBorder
+                    implicitHeight: root.horizontal ? root.y - Impl.Units.smallBorder : Impl.Units.smallBorder
                     color: (root.horizontal && x >= fill.x && x <= fill.x + fill.width)
                         || (root.vertical && y >= fill.y && y <= fill.y + fill.height)
                         ? Kirigami.Theme.focusColor

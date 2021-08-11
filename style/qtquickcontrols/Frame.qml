@@ -7,6 +7,8 @@ import QtQuick.Controls 2.15 as Controls
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "impl" as Impl
+
 T.Frame {
     id: control
 
@@ -18,12 +20,12 @@ T.Frame {
 //     contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
     //contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
 
-    padding: Kirigami.Units.veryLargeSpacing + Kirigami.Units.smallBorder
+    padding: Impl.Units.veryLargeSpacing + Impl.Units.smallBorder
 
     background: Rectangle {
         color: Kirigami.Theme.backgroundColor
-        radius: Kirigami.Units.smallRadius
+        radius: Impl.Units.smallRadius
         border.color: Kirigami.Theme.separatorColor
-        border.width: Kirigami.Units.smallBorder
+        border.width: Impl.Units.smallBorder
     }
 }

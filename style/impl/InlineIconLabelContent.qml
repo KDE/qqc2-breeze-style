@@ -5,6 +5,8 @@
 import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 IconLabelContent {
     id: root
     Rectangle {
@@ -12,7 +14,7 @@ IconLabelContent {
         x: root.labelRect.x
         y: root.labelRect.y + root.labelRect.height - height
         width: root.labelRect.width//root.hasIcon && root.hasLabel ? root.availableWidth - root.icon.width - root.spacing : root.availableWidth
-        height: Kirigami.Units.focusUnderlineThickness
+        height: Impl.Units.focusUnderlineThickness
         visible: control.visualFocus
         color: Kirigami.Theme.focusColor
     }

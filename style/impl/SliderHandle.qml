@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Rectangle {
     id: root
 
@@ -19,7 +21,7 @@ Rectangle {
     property bool usePreciseHandle: false
 
     implicitWidth: implicitHeight
-    implicitHeight: Kirigami.Units.inlineControlHeight
+    implicitHeight: Impl.Units.inlineControlHeight
 
     // It's not necessary here. Not sure if it would swap leftPadding with
     // rightPadding in the x position calculation, but there's no risk to
@@ -51,14 +53,14 @@ Rectangle {
     radius: height / 2
     color: Kirigami.Theme.backgroundColor
     border {
-        width: Kirigami.Units.smallBorder
+        width: Impl.Units.smallBorder
         color: root.pressed || root.visualFocus || root.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     }
 
     Behavior on border.color {
         enabled: root.pressed || root.visualFocus || root.hovered
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
@@ -66,7 +68,7 @@ Rectangle {
     Behavior on x {
         enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
-            duration: Kirigami.Units.longDuration
+            duration: Impl.Units.longDuration
             velocity: 800
             //SmoothedAnimations have a hardcoded InOutQuad easing
         }
@@ -74,7 +76,7 @@ Rectangle {
     Behavior on y {
         enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
-            duration: Kirigami.Units.longDuration
+            duration: Impl.Units.longDuration
             velocity: 800
         }
     }

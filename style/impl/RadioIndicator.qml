@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 // TODO: replace with ShadowedRectangle because it produces smoother circles.
 // Unfortunately I can't do it now because batching issues can cause all radio
 // buttons to show hover effects when only one is hovered
@@ -17,7 +19,7 @@ Rectangle {
     readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 
     implicitWidth: implicitHeight
-    implicitHeight: Kirigami.Units.inlineControlHeight
+    implicitHeight: Impl.Units.inlineControlHeight
 
     x: controlHasContent ? (root.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
     y: control.topPadding + (control.availableHeight - height) / 2
@@ -29,14 +31,14 @@ Rectangle {
     color: control.down || control.checked ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
 
     border {
-        width: Kirigami.Units.smallBorder
+        width: Impl.Units.smallBorder
         color: control.down || control.checked || control.visualFocus || control.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
     }
 
     Behavior on color {
         enabled: control.down || control.checked
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
@@ -44,7 +46,7 @@ Rectangle {
     Behavior on border.color {
         enabled: control.down || control.checked || control.visualFocus || control.hovered
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
@@ -112,7 +114,7 @@ Rectangle {
             from: "unchecked"
             to: "checked"
             ScaleAnimator {
-                duration: Kirigami.Units.shortDuration
+                duration: Impl.Units.shortDuration
                 easing.type: Easing.OutQuad
             }
         }

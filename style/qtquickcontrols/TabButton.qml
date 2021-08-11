@@ -6,7 +6,7 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
-import "impl"
+import "impl" as Impl
 
 T.TabButton {
     id: control
@@ -24,19 +24,19 @@ T.TabButton {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.mediumSpacing
+    padding: Impl.Units.mediumSpacing
     leftPadding: {
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly
             || display == T.AbstractButton.TextUnderIcon) {
-            return Kirigami.Units.mediumHorizontalPadding
+            return Impl.Units.mediumHorizontalPadding
         } else {
             return control.horizontalPadding
         }
     }
     rightPadding: {
         if (contentItem.hasLabel && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
-            return Kirigami.Units.mediumHorizontalPadding
+            return Impl.Units.mediumHorizontalPadding
         } else {
             return control.horizontalPadding
         }
@@ -61,10 +61,10 @@ T.TabButton {
         }
     }
 
-    spacing: Kirigami.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
 
-    icon.width: Kirigami.Units.iconSizes.auto
-    icon.height: Kirigami.Units.iconSizes.auto
+    icon.width: Impl.Units.iconSizes.auto
+    icon.height: Impl.Units.iconSizes.auto
 
     Kirigami.Theme.colorSet: {
         if (control.__inTabBar && !(control.checked)) {
@@ -75,13 +75,13 @@ T.TabButton {
     }
     Kirigami.Theme.inherit: !(background && background.visible)
 
-    contentItem: IconLabelContent {
+    contentItem:Impl.IconLabelContent {
         control: control
     }
 
     //TODO: tweak the appearance. This is just to have something usable and reasonably close to what we want.
     background: Rectangle {
-        implicitHeight: Kirigami.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) // fill TabBar
+        implicitHeight: Impl.Units.mediumControlHeight + (Impl.Units.smallSpacing * 2) // fill TabBar
         implicitWidth: implicitHeight
         color: control.checked ? Kirigami.Theme.backgroundColor : "transparent"
 
@@ -94,12 +94,12 @@ T.TabButton {
             anchors.leftMargin: -control.leftInset
             anchors.verticalCenter: parent.verticalCenter
             width: 1
-            height: control.checked ? parent.height : Math.min(parent.height, Kirigami.Units.gridUnit)
+            height: control.checked ? parent.height : Math.min(parent.height, Impl.Units.gridUnit)
             color: Kirigami.Theme.separatorColor
             Behavior on height {
                 NumberAnimation {
                     easing.type: Easing.InOutQuad
-                    duration: Kirigami.Units.longDuration
+                    duration: Impl.Units.longDuration
                 }
             }
         }
@@ -124,7 +124,7 @@ T.TabButton {
             anchors.leftMargin: -control.leftInset
             anchors.rightMargin: -control.rightInset
             y: control.__inHeader ? 0 : parent.height - height
-            height: Kirigami.Units.highlightLineThickness
+            height: Impl.Units.highlightLineThickness
             opacity: control.visualFocus || control.checked || control.hovered || control.down ? 1 : 0
             Kirigami.Theme.colorSet: Kirigami.Theme.Button
             Kirigami.Theme.inherit: false
@@ -140,13 +140,13 @@ T.TabButton {
             Behavior on opacity {
                 OpacityAnimator {
                     easing.type: Easing.OutCubic
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                 }
             }
             Behavior on color {
                 ColorAnimation {
                     easing.type: Easing.InOutQuad
-                    duration: Kirigami.Units.longDuration
+                    duration: Impl.Units.longDuration
                 }
             }
         }
@@ -166,7 +166,7 @@ T.TabButton {
             Behavior on opacity {
                 OpacityAnimator {
                     easing.type: Easing.OutCubic
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                 }
             }
         }

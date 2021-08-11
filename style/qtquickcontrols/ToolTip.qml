@@ -8,7 +8,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 /* NOTE:
  * It took a LOT of trial and error to get the text to fit in a specific
@@ -45,7 +45,7 @@ T.ToolTip {
     Kirigami.Theme.inherit: false
 
     x: parent ? Math.round((parent.width - implicitWidth) / 2) : 0
-    y: -implicitHeight - Kirigami.Units.smallSpacing
+    y: -implicitHeight - Impl.Units.smallSpacing
     // Always show the tooltip on top of everything else
     z: 999
 
@@ -54,19 +54,19 @@ T.ToolTip {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.mediumSpacing
-    horizontalPadding: Kirigami.Units.mediumHorizontalPadding
+    padding: Impl.Units.mediumSpacing
+    horizontalPadding: Impl.Units.mediumHorizontalPadding
 
     closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutsideParent | T.Popup.CloseOnReleaseOutsideParent
 
-    delay: Kirigami.Units.toolTipDelay
+    delay: Impl.Units.toolTipDelay
 
     enter: Transition {
         OpacityAnimator {
             from: 0
             to: 1
             easing.type: Easing.OutCubic
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
         }
     }
 
@@ -75,7 +75,7 @@ T.ToolTip {
             from: 1
             to: 0
             easing.type: Easing.InCubic
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
         }
     }
 
@@ -111,17 +111,17 @@ T.ToolTip {
 
     background: Rectangle {
         implicitWidth: implicitHeight
-        implicitHeight: Kirigami.Units.mediumControlHeight
-        radius: Kirigami.Units.smallRadius
+        implicitHeight: Impl.Units.mediumControlHeight
+        radius: Impl.Units.smallRadius
         color: Kirigami.Theme.backgroundColor
-        border.width: Kirigami.Units.smallBorder
+        border.width: Impl.Units.smallBorder
         border.color: Kirigami.Theme.separatorColor
 
-        LargeShadow {
+        Impl.LargeShadow {
             radius: parent.radius
         }
     }
 
-    T.Overlay.modal: OverlayModalBackground {}
-    T.Overlay.modeless: OverlayDimBackground {}
+    T.Overlay.modal: Impl.OverlayModalBackground {}
+    T.Overlay.modeless: Impl.OverlayDimBackground {}
 }

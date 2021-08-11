@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "impl" as Impl
+
 T.Pane {
     id: control
 
@@ -17,7 +19,7 @@ T.Pane {
     // Not confident about this value.
     // Why do Qt QQC2 styles use large padding for this
     // and no padding for Pages?
-    padding: Kirigami.Units.veryLargeSpacing
+    padding: Impl.Units.veryLargeSpacing
 
     background: Rectangle {
         color: Kirigami.Theme.backgroundColor

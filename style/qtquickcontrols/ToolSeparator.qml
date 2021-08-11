@@ -8,6 +8,8 @@ import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "impl" as Impl
+
 T.ToolSeparator {
     id: control
     palette: Kirigami.Theme.palette
@@ -21,7 +23,7 @@ T.ToolSeparator {
     focusPolicy: Qt.NoFocus
 
     contentItem: Kirigami.Separator {
-        readonly property int defaultHeight: Kirigami.Units.mediumControlHeight
+        readonly property int defaultHeight: Impl.Units.mediumControlHeight
         implicitWidth: vertical ? 1 : defaultHeight
         implicitHeight: vertical ? defaultHeight : 1
     }

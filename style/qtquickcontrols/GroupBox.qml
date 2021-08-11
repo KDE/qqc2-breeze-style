@@ -8,6 +8,8 @@ import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
 
+import "impl" as Impl
+
 T.GroupBox {
     id: control
 
@@ -20,8 +22,8 @@ T.GroupBox {
 //     contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
     //contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
 
-    spacing: Kirigami.Units.mediumSpacing
-    padding: Kirigami.Units.veryLargeSpacing
+    spacing: Impl.Units.mediumSpacing
+    padding: Impl.Units.veryLargeSpacing
     topPadding: padding + (implicitLabelWidth > 0 ? implicitLabelHeight + spacing : 0)
 
     label: Controls.Label {

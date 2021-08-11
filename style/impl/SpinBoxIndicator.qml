@@ -5,6 +5,8 @@
 import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Item {
     id: root
 
@@ -16,7 +18,7 @@ Item {
     property real leftRadius: {
         if ((leftAligned && !mirrored)
             || (rightAligned && mirrored)) {
-            return Kirigami.Units.smallRadius
+            return Impl.Units.smallRadius
         } else {
             return 0
         }
@@ -24,7 +26,7 @@ Item {
     property real rightRadius: {
         if ((rightAligned && !mirrored)
             || (leftAligned && mirrored)) {
-            return Kirigami.Units.smallRadius
+            return Impl.Units.smallRadius
         } else {
             return 0
         }
@@ -41,11 +43,11 @@ Item {
     height: parent.height
 
     implicitWidth: implicitHeight
-    implicitHeight: Kirigami.Units.mediumControlHeight
+    implicitHeight: Impl.Units.mediumControlHeight
 
     Rectangle {
         id: separator
-        width: Kirigami.Units.smallBorder
+        width: Impl.Units.smallBorder
         x: {
             if ((leftAligned && !mirrored)
                 || (rightAligned && mirrored)) {
@@ -57,8 +59,8 @@ Item {
         anchors {
             top: parent.top
             bottom: parent.bottom
-            topMargin: Kirigami.Units.smallSpacing
-            bottomMargin: Kirigami.Units.smallSpacing
+            topMargin: Impl.Units.smallSpacing
+            bottomMargin: Impl.Units.smallSpacing
         }
 
         color: button.pressed || button.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
@@ -66,7 +68,7 @@ Item {
         Behavior on color {
             enabled: button.pressed || button.hovered
             ColorAnimation {
-                duration: Kirigami.Units.shortDuration
+                duration: Impl.Units.shortDuration
                 easing.type: Easing.OutCubic
             }
         }
@@ -86,7 +88,7 @@ Item {
             bottomRightRadius: root.rightRadius
         }
         border.color: Kirigami.Theme.focusColor
-        border.width: Kirigami.Units.smallBorder
+        border.width: Impl.Units.smallBorder
 
         states: State {
             name: "pressed"
@@ -102,7 +104,7 @@ Item {
             to: ""
             SequentialAnimation {
                 OpacityAnimator {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                     easing.type: Easing.OutCubic
                 }
                 PropertyAction {
@@ -115,7 +117,7 @@ Item {
     }
 
     Kirigami.Icon {
-        implicitHeight: Kirigami.Units.iconSizes.auto
+        implicitHeight: Impl.Units.iconSizes.auto
         implicitWidth: implicitHeight
         anchors {
             centerIn: parent

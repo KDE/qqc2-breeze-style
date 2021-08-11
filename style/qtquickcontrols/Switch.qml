@@ -6,7 +6,7 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.Switch {
     id: control
@@ -18,15 +18,15 @@ T.Switch {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.verySmallSpacing
-    horizontalPadding: Kirigami.Units.mediumSpacing
+    padding: Impl.Units.verySmallSpacing
+    horizontalPadding: Impl.Units.mediumSpacing
 
-    spacing: Kirigami.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
 
-    icon.width: Kirigami.Units.iconSizes.auto
-    icon.height: Kirigami.Units.iconSizes.auto
+    icon.width: Impl.Units.iconSizes.auto
+    icon.height: Impl.Units.iconSizes.auto
 
-    indicator: SwitchIndicator {
+    indicator: Impl.SwitchIndicator {
         control: control
     }
 
@@ -40,7 +40,7 @@ T.Switch {
         onActivated: control.toggle();
     }
 
-    contentItem: InlineIconLabelContent {
+    contentItem: Impl.InlineIconLabelContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
         alignment: Qt.AlignLeft | Qt.AlignVCenter

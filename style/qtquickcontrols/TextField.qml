@@ -7,7 +7,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.TextField {
     id: control
@@ -24,9 +24,9 @@ T.TextField {
                              contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.mediumSpacing
-    leftPadding: Kirigami.Units.mediumHorizontalPadding
-    rightPadding: Kirigami.Units.mediumHorizontalPadding
+    padding: Impl.Units.mediumSpacing
+    leftPadding: Impl.Units.mediumHorizontalPadding
+    rightPadding: Impl.Units.mediumHorizontalPadding
 
     Kirigami.Theme.colorSet: Kirigami.Theme.View
     Kirigami.Theme.inherit: !background || !background.visible
@@ -43,7 +43,7 @@ T.TextField {
     cursorDelegate: Loader {
         visible: control.activeFocus && !control.readOnly && control.selectionStart === control.selectionEnd
         active: visible
-        sourceComponent: CursorDelegate { target: control }
+        sourceComponent: Impl.CursorDelegate { target: control }
     }
 
     Controls.Label {
@@ -66,18 +66,18 @@ T.TextField {
         renderType: control.renderType
     }
 
-    background: TextEditBackground {
+    background: Impl.TextEditBackground {
         control: control
         implicitWidth: 200
         visualFocus: control.visualFocus
     }
 
-    CursorHandle {
+    Impl.CursorHandle {
         id: selectionStartHandle
         target: control
     }
 
-    CursorHandle {
+    Impl.CursorHandle {
         id: selectionEndHandle
         target: control
         isSelectionEnd: true

@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 // TODO: I'm currently unsatisfied with the appearance of this
 Loader {
     id: root
@@ -28,9 +30,9 @@ Loader {
             return normalColor
         }
     }
-    property real radius: Kirigami.Units.smallRadius
+    property real radius: Impl.Units.smallRadius
     property QtObject border: QtObject {
-        property real width: highlightBorder ? Kirigami.Units.smallBorder : 0
+        property real width: highlightBorder ? Impl.Units.smallBorder : 0
         property color color: Kirigami.Theme.focusColor
     }
 
@@ -43,7 +45,7 @@ Loader {
         Kirigami.ShadowedRectangle {
             id: mainBackground
 
-            implicitHeight: Kirigami.Units.mediumControlHeight
+            implicitHeight: Impl.Units.mediumControlHeight
 
             radius: root.radius
 
@@ -57,7 +59,7 @@ Loader {
             Behavior on color {
                 enabled: control.down
                 ColorAnimation {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                     easing.type: Easing.OutCubic
                     onRunningChanged: root.backgroundAnimationRunning = running
                 }
@@ -65,7 +67,7 @@ Loader {
             Behavior on border.color {
                 enabled: highlightBorder
                 ColorAnimation {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                     easing.type: Easing.OutCubic
                     onRunningChanged: root.borderAnimationRunning = running
                 }

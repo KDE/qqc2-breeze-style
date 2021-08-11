@@ -7,6 +7,8 @@ import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.quickcharts 1.0 as Charts
 
+import "impl" as Impl
+
 T.BusyIndicator {
     id: control
 
@@ -17,7 +19,7 @@ T.BusyIndicator {
 
     hoverEnabled: false
 
-    padding: Kirigami.Units.mediumSpacing
+    padding: Impl.Units.mediumSpacing
 
     ListModel {
         id: pieModel
@@ -55,13 +57,13 @@ T.BusyIndicator {
         id: lowPowerSpinnerComponent
         Kirigami.Icon {
             id: lowPowerSpinner
-            implicitWidth: Kirigami.Units.iconSizes.auto
-            implicitHeight: Kirigami.Units.iconSizes.auto
+            implicitWidth: Impl.Units.iconSizes.auto
+            implicitHeight: Impl.Units.iconSizes.auto
             source: "view-refresh"
 
             opacity: control.visible && control.enabled && control.running ? 1 : 0
             Behavior on opacity {
-                OpacityAnimator { duration: Kirigami.Units.shortDuration }
+                OpacityAnimator { duration: Impl.Units.shortDuration }
             }
 
             smooth: true
@@ -80,12 +82,12 @@ T.BusyIndicator {
         id: fancySpinnerComponent
         Charts.PieChart {
             id: fancySpinner
-            implicitWidth: Kirigami.Units.gridUnit
-            implicitHeight: Kirigami.Units.gridUnit
+            implicitWidth: Impl.Units.gridUnit
+            implicitHeight: Impl.Units.gridUnit
 
             opacity: control.visible && control.enabled && control.running ? 1 : 0
             Behavior on opacity {
-                OpacityAnimator { duration: Kirigami.Units.shortDuration }
+                OpacityAnimator { duration: Impl.Units.shortDuration }
             }
 
             valueSources: Charts.ModelSource { roleName: "value"; model: pieModel }
@@ -93,7 +95,7 @@ T.BusyIndicator {
 
             fromAngle: 0
             toAngle: 360
-            thickness: Math.max(Kirigami.Units.smallRadius * 2, Math.floor(Math.min(width, height)/6))
+            thickness: Math.max(Impl.Units.smallRadius * 2, Math.floor(Math.min(width, height)/6))
             filled: false
             //smoothEnds: true // Turns the segments into aesthetically pleasing round dots, but breaks the connected appearance when the ends meet :(
 

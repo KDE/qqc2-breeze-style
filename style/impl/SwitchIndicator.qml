@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Item {
     id: root
 
@@ -14,7 +16,7 @@ Item {
     readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 
     implicitWidth: implicitHeight*2
-    implicitHeight: Kirigami.Units.inlineControlHeight
+    implicitHeight: Impl.Units.inlineControlHeight
 
     x: controlHasContent ? (root.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
     y: control.topPadding + (control.availableHeight - height) / 2
@@ -31,7 +33,7 @@ Item {
         radius: height / 2
         color: Kirigami.Theme.backgroundColor
         border {
-            width: Kirigami.Units.smallBorder
+            width: Impl.Units.smallBorder
             color: Kirigami.Theme.separatorColor
         }
     }
@@ -41,7 +43,7 @@ Item {
         visible: width > handle.width/2
         color: Kirigami.Theme.alternateBackgroundColor
         border {
-            width: Kirigami.Units.smallBorder
+            width: Impl.Units.smallBorder
             color: Kirigami.Theme.focusColor
         }
         radius: height/2
@@ -77,7 +79,7 @@ Item {
         radius: height / 2
         color: Kirigami.Theme.backgroundColor
         border {
-            width: Kirigami.Units.smallBorder
+            width: Impl.Units.smallBorder
             color: control.down || control.visualFocus || control.hovered ?
                 Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
         }
@@ -85,7 +87,7 @@ Item {
         Behavior on border.color {
             enabled: control.down || control.visualFocus || control.hovered
             ColorAnimation {
-                duration: Kirigami.Units.shortDuration
+                duration: Impl.Units.shortDuration
                 easing.type: Easing.OutCubic
             }
         }
@@ -94,7 +96,7 @@ Item {
             enabled: handle.loaded// && !Kirigami.Settings.hasTransientTouchInput
             // Using SmoothedAnimation because the fill effect is anchored to the handle.
             SmoothedAnimation {
-                duration: Kirigami.Units.shortDuration
+                duration: Impl.Units.shortDuration
                 //SmoothedAnimations have a hardcoded InOutQuad easing
             }
         }

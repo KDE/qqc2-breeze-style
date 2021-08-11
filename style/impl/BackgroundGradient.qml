@@ -5,9 +5,11 @@
 import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Loader {
     id: root
-    property real radius: Kirigami.Units.smallRadius
+    property real radius: Impl.Units.smallRadius
     active: visible
     anchors.fill: parent
     sourceComponent: Component {
@@ -28,7 +30,7 @@ Loader {
             opacity: parent.opacity
             Behavior on opacity {
                 OpacityAnimator {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                     easing.type: Easing.OutCubic
                 }
             }

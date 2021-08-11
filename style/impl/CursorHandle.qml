@@ -8,6 +8,8 @@ import QtQuick.Window 2.15
 import QtQuick.Templates 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Loader {
     id: root
     property Item target
@@ -31,7 +33,7 @@ Loader {
 
         //opacity: target.activeFocus ? 1 : 0
         implicitHeight: {
-            let h = Kirigami.Units.gridUnit
+            let h = Impl.Units.gridUnit
             return h - (h % 2 == 0 ? 1 : 0)
         }
         implicitWidth: implicitHeight
@@ -60,7 +62,7 @@ Loader {
             id: inner
             visible: target.selectionStart !== target.selectionEnd && (handle.y < selectionStartY || handle.y < selectionEndY)
             anchors.fill: parent
-            anchors.margins: Kirigami.Units.smallBorder
+            anchors.margins: Impl.Units.smallBorder
             color: target.selectedTextColor
             radius: height/2
             Rectangle {
@@ -102,7 +104,7 @@ Loader {
             SmoothedAnimation {
                 velocity: 200
                 reversingMode: SmoothedAnimation.Immediate
-                duration: Kirigami.Units.shortDuration
+                duration: Impl.Units.shortDuration
             }
         }
         Behavior on y {
@@ -110,7 +112,7 @@ Loader {
             SmoothedAnimation {
                 velocity: 200
                 reversingMode: SmoothedAnimation.Immediate
-                duration: Kirigami.Units.shortDuration
+                duration: Impl.Units.shortDuration
             }
         }
 

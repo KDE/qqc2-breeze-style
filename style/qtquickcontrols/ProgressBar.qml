@@ -5,7 +5,7 @@
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.ProgressBar {
     id: control
@@ -20,7 +20,7 @@ T.ProgressBar {
 
     contentItem: Item {
         implicitWidth: 200
-        implicitHeight: Kirigami.Units.grooveHeight
+        implicitHeight: Impl.Units.grooveHeight
         clip: true
         Rectangle {
             id: progressFill
@@ -32,10 +32,10 @@ T.ProgressBar {
             }
             width: control.position * parent.width
 
-            radius: Kirigami.Units.grooveHeight/2
+            radius: Impl.Units.grooveHeight/2
             color: Kirigami.Theme.alternateBackgroundColor
             border {
-                width: Kirigami.Units.smallBorder
+                width: Impl.Units.smallBorder
                 color: Kirigami.Theme.focusColor
             }
         }
@@ -49,12 +49,12 @@ T.ProgressBar {
 
     background: Rectangle {
         implicitWidth: 200
-        implicitHeight: Kirigami.Units.grooveHeight
+        implicitHeight: Impl.Units.grooveHeight
 
-        radius: Kirigami.Units.grooveHeight/2
+        radius: Impl.Units.grooveHeight/2
         color: Kirigami.Theme.backgroundColor
         border {
-            width: Kirigami.Units.smallBorder
+            width: Impl.Units.smallBorder
             color: Kirigami.Theme.separatorColor
         }
     }

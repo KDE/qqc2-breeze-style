@@ -8,7 +8,7 @@
 import QtQuick 2.6
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.Popup {
     id: control
@@ -18,7 +18,7 @@ T.Popup {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.veryLargeSpacing
+    padding: Impl.Units.veryLargeSpacing
 //     clip: true
 
     enter: Transition {
@@ -27,7 +27,7 @@ T.Popup {
             from: 0
             to: 1
             easing.type: Easing.InOutQuad
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
         }
     }
 
@@ -37,26 +37,26 @@ T.Popup {
             from: 1
             to: 0
             easing.type: Easing.InOutQuad
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
         }
     }
 
     background: Rectangle {
-        radius: Kirigami.Units.smallRadius
-//         implicitHeight: Kirigami.Units.smallControlHeight
-        //implicitWidth: Kirigami.Units.gridUnit * 12
+        radius: Impl.Units.smallRadius
+//         implicitHeight: Impl.Units.smallControlHeight
+        //implicitWidth: Impl.Units.gridUnit * 12
         color: Kirigami.Theme.backgroundColor
 
         border {
             color: Kirigami.Theme.separatorColor
-            width: control.dim ? 0 : Kirigami.Units.smallBorder
+            width: control.dim ? 0 : Impl.Units.smallBorder
         }
 
-        MediumShadow {
+        Impl.MediumShadow {
             radius: parent.radius
         }
     }
 
-    T.Overlay.modal: OverlayModalBackground {}
-    T.Overlay.modeless: OverlayDimBackground {}
+    T.Overlay.modal: Impl.OverlayModalBackground {}
+    T.Overlay.modeless: Impl.OverlayDimBackground {}
 }

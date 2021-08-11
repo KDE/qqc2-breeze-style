@@ -7,12 +7,14 @@ import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
 
+import "." as Impl
+
 Rectangle {
     id: root
 
     property T.AbstractButton control: root.parent
     property int checkState: control.checkState
-    property int symbolSize: Kirigami.Units.symbolSize(Math.min(width, height))
+    property int symbolSize: Impl.Units.symbolSize(Math.min(width, height))
     property bool mirrored: control.mirrored
     readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 
@@ -25,16 +27,16 @@ Rectangle {
     y: control.topPadding + (control.availableHeight - height) / 2
 
     implicitWidth: implicitHeight
-    implicitHeight: Kirigami.Units.inlineControlHeight
+    implicitHeight: Impl.Units.inlineControlHeight
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
     color: highlightBackground ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
 
-    radius: Kirigami.Units.smallRadius
+    radius: Impl.Units.smallRadius
 
     border {
-        width: Kirigami.Units.smallBorder
+        width: Impl.Units.smallBorder
         color: highlightBorder ?
             Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
             //Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
@@ -43,14 +45,14 @@ Rectangle {
     Behavior on color {
         enabled: highlightBackground
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
     Behavior on border.color {
         enabled: highlightBorder
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
@@ -147,7 +149,7 @@ Rectangle {
         property: "width"
         from: checkmark.width
         to: 0
-        duration: Kirigami.Units.shortDuration
+        duration: Impl.Units.shortDuration
         //Intentionally not using an easing curve
     }
 

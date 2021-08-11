@@ -5,6 +5,8 @@
 import QtQuick 2.6
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Loader {
     id: root
     property real baseRadius: 0
@@ -25,7 +27,7 @@ Loader {
                 Kirigami.Theme.focusColor.b,
                 0.42
             )
-            border.width: Kirigami.Units.mediumBorder/2
+            border.width: Impl.Units.mediumBorder/2
 
             Rectangle {
                 id: outerRing

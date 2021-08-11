@@ -5,7 +5,8 @@
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+
+import "impl" as Impl
 
 T.ScrollIndicator {
     id: control
@@ -19,9 +20,9 @@ T.ScrollIndicator {
 
     minimumSize: horizontal ? height / width : width / height
 
-    padding: Kirigami.Units.verySmallSpacing
+    padding: Impl.Units.verySmallSpacing
 
-    contentItem: ScrollHandle {
+    contentItem: Impl.ScrollHandle {
         control: control
     }
 }

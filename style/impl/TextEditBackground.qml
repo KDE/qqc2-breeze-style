@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Rectangle {
     id: root
 
@@ -17,14 +19,14 @@ Rectangle {
     )
 
     implicitWidth: implicitHeight
-    implicitHeight: Kirigami.Units.mediumControlHeight
+    implicitHeight: Impl.Units.mediumControlHeight
 
     color: Kirigami.Theme.backgroundColor
-    radius: Kirigami.Units.smallRadius
+    radius: Impl.Units.smallRadius
     border {
         color: control.activeFocus || control.hovered ?
             Kirigami.Theme.focusColor : Kirigami.Theme.buttonSeparatorColor
-        width: Kirigami.Units.smallBorder
+        width: Impl.Units.smallBorder
     }
 
     FocusRect {
@@ -35,7 +37,7 @@ Rectangle {
     Behavior on border.color {
         enabled: control.activeFocus || control.hovered
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }

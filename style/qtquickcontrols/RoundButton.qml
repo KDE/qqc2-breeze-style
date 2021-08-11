@@ -11,7 +11,7 @@ import QtQuick.Layouts 1.15
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.RoundButton {
     id: control
@@ -28,11 +28,11 @@ T.RoundButton {
     Kirigami.Theme.colorSet: control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button
     Kirigami.Theme.inherit: control.flat && !control.down && !control.checked
 
-    padding: Kirigami.Units.mediumSpacing
-    spacing: Kirigami.Units.mediumSpacing
+    padding: Impl.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
 
-    icon.width: Kirigami.Units.iconSizes.auto
-    icon.height: Kirigami.Units.iconSizes.auto
+    icon.width: Impl.Units.iconSizes.auto
+    icon.height: Impl.Units.iconSizes.auto
 
     Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
@@ -44,12 +44,12 @@ T.RoundButton {
         onActivated: control.clicked()
     }
 
-    contentItem: IconLabelContent {
+    contentItem:Impl.IconLabelContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
     }
 
-    background: ButtonBackground {
+    background: Impl.ButtonBackground {
         control: control
         radius: control.radius
     }

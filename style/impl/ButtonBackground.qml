@@ -6,6 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 // TODO: Maybe use a loader here one day. Make sure nothing breaks.
 // Kirigami ShadowedRectangle doesn't have a gradient property, which could be an issue in some cases
 Kirigami.ShadowedRectangle {
@@ -31,7 +33,7 @@ Kirigami.ShadowedRectangle {
     property bool highlightBackground: control.down || control.checked
     property bool highlightBorder: control.enabled && control.down || control.checked || control.highlighted || control.visualFocus || control.hovered
 
-    radius: Kirigami.Units.smallRadius
+    radius: Impl.Units.smallRadius
     corners {
         topLeftRadius: leftRadius
         topRightRadius: rightRadius
@@ -40,7 +42,7 @@ Kirigami.ShadowedRectangle {
     }
 
     implicitWidth: implicitHeight
-    implicitHeight: Kirigami.Units.mediumControlHeight
+    implicitHeight: Impl.Units.mediumControlHeight
 
     visible: !control.flat || control.editable || control.down || control.checked || control.highlighted || control.visualFocus || control.hovered
 
@@ -62,20 +64,20 @@ Kirigami.ShadowedRectangle {
                 return Kirigami.Theme.separatorColor
             }
         }
-        width: Kirigami.Units.smallBorder
+        width: Impl.Units.smallBorder
     }
 
     Behavior on color {
         enabled: highlightBackground
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
     Behavior on border.color {
         enabled: highlightBorder
         ColorAnimation {
-            duration: Kirigami.Units.shortDuration
+            duration: Impl.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }

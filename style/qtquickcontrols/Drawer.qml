@@ -9,7 +9,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.Drawer {
     id: control
@@ -34,8 +34,8 @@ T.Drawer {
         }
         Kirigami.Separator {
             readonly property bool horizontal: control.edge === Qt.LeftEdge || control.edge === Qt.RightEdge
-            width: horizontal ? Kirigami.Units.smallBorder : parent.width
-            height: horizontal ? parent.height : Kirigami.Units.smallBorder
+            width: horizontal ? Impl.Units.smallBorder : parent.width
+            height: horizontal ? parent.height : Impl.Units.smallBorder
             x: control.edge === Qt.LeftEdge ? parent.width - 1 : 0
             y: control.edge === Qt.TopEdge ? parent.height - 1 : 0
             visible: !control.dim
@@ -53,6 +53,6 @@ T.Drawer {
         }
     }
 
-    T.Overlay.modal: OverlayModalBackground {}
-    T.Overlay.modeless: OverlayDimBackground {}
+    T.Overlay.modal: Impl.OverlayModalBackground {}
+    T.Overlay.modeless: Impl.OverlayDimBackground {}
 }

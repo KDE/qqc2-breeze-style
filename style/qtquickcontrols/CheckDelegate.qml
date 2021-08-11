@@ -6,7 +6,8 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+
+import "impl" as Impl
 
 T.CheckDelegate {
     id: control
@@ -18,12 +19,12 @@ T.CheckDelegate {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.mediumSpacing
+    padding: Impl.Units.mediumSpacing
     leftPadding: {
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly
             || display == T.AbstractButton.TextUnderIcon) {
-            return Kirigami.Units.mediumHorizontalPadding
+            return Impl.Units.mediumHorizontalPadding
         } else {
             return control.horizontalPadding
         }
@@ -32,32 +33,32 @@ T.CheckDelegate {
         if (!control.indicator.visible
             && contentItem.hasLabel
             && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
-            return Kirigami.Units.mediumHorizontalPadding
+            return Impl.Units.mediumHorizontalPadding
         } else {
             return control.horizontalPadding
         }
     }
 
-    spacing: Kirigami.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
 
-    icon.width: Kirigami.Units.iconSizes.auto
-    icon.height: Kirigami.Units.iconSizes.auto
+    icon.width: Impl.Units.iconSizes.auto
+    icon.height: Impl.Units.iconSizes.auto
 
     Kirigami.Theme.colorSet: control.down || control.highlighted ? Kirigami.Theme.Button : -1
     Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
 
-    contentItem: IconLabelContent {
+    contentItem: Impl.IconLabelContent {
         control: control
         alignment: Qt.AlignLeft | Qt.AlignVCenter
         //color: (control.pressed && !control.checked && !control.sectionDelegate) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
     }
 
-    indicator: CheckIndicator {
+    indicator: Impl.CheckIndicator {
         control: control
         mirrored: !control.mirrored
     }
 
-    background: DelegateBackground {
+    background: Impl.DelegateBackground {
         control: control
     }
 }

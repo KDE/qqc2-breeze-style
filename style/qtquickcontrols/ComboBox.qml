@@ -9,7 +9,8 @@ import QtQuick.Window 2.15
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+
+import "impl" as Impl
 
 T.ComboBox {
     id: control
@@ -28,7 +29,7 @@ T.ComboBox {
     Kirigami.Theme.colorSet: control.editable ? Kirigami.Theme.View : Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
 
-    spacing: Kirigami.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
 
     leftPadding: horizontalPadding + (!control.mirrored ? 0 : __indicatorMargin)
     rightPadding: horizontalPadding + (control.mirrored ? 0 : __indicatorMargin)
@@ -37,8 +38,8 @@ T.ComboBox {
         id: textField
         palette: control.palette
         // TextField padding doesn't automatically mirror
-        leftPadding: control.mirrored ? 0 : Kirigami.Units.mediumHorizontalPadding
-        rightPadding: !control.mirrored ? 0 : Kirigami.Units.mediumHorizontalPadding
+        leftPadding: control.mirrored ? 0 : Impl.Units.mediumHorizontalPadding
+        rightPadding: !control.mirrored ? 0 : Impl.Units.mediumHorizontalPadding
 
         text: control.editable ? control.editText : control.displayText
 
@@ -57,20 +58,20 @@ T.ComboBox {
     }
 
     indicator: Kirigami.Icon {
-        implicitHeight: Kirigami.Units.iconSizes.sizeForLabels
+        implicitHeight: Impl.Units.iconSizes.sizeForLabels
         implicitWidth: implicitHeight
         x: control.mirrored ? control.leftPadding : control.leftPadding + control.availableWidth + control.spacing
         y: control.topPadding + (control.availableHeight - height) / 2
         source: "arrow-down"
     }
 
-    background: ComboBoxBackground {
+    background: Impl.ComboBoxBackground {
         control: control
 
         Rectangle {
             id: separator
             visible: control.editable
-            width: Kirigami.Units.smallBorder
+            width: Impl.Units.smallBorder
             anchors {
                 right: parent.right
                 top: parent.top
@@ -88,7 +89,7 @@ T.ComboBox {
             Behavior on color {
                 enabled: control.down || control.hovered
                 ColorAnimation {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                     easing.type: Easing.OutCubic
                 }
             }
@@ -120,7 +121,7 @@ T.ComboBox {
             }
 
             border.color: Kirigami.Theme.focusColor
-            border.width: Kirigami.Units.smallBorder
+            border.width: Impl.Units.smallBorder
 
             opacity: 0
 
@@ -138,7 +139,7 @@ T.ComboBox {
                 to: ""
                 SequentialAnimation {
                     OpacityAnimator {
-                        duration: Kirigami.Units.shortDuration
+                        duration: Impl.Units.shortDuration
                         easing.type: Easing.OutCubic
                     }
                     PropertyAction {
@@ -180,9 +181,9 @@ T.ComboBox {
             implicitWidth: contentWidth
             model: control.delegateModel // Why isn't this in the ComboBox documentation?
             currentIndex: control.highlightedIndex
-            highlightMoveDuration: Kirigami.Units.shortDuration
-            highlightMoveVelocity: Kirigami.Units.gridUnit * 20
-            highlight: ListViewHighlight {
+            highlightMoveDuration: Impl.Units.shortDuration
+            highlightMoveVelocity: Impl.Units.gridUnit * 20
+            highlight: Impl.ListViewHighlight {
                 currentIndex: control.highlightedIndex
                 count: control.count
             }

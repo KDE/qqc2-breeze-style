@@ -5,7 +5,7 @@
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.Dialog {
     id: control
@@ -19,7 +19,7 @@ T.Dialog {
                              + (implicitHeaderHeight > 0 ? implicitHeaderHeight + spacing : 0)
                              + (implicitFooterHeight > 0 ? implicitFooterHeight + spacing : 0))
 
-    padding: Kirigami.Units.gridUnit
+    padding: Impl.Units.gridUnit
 
 //     anchors.centerIn: T.Overlay.overlay
 
@@ -29,7 +29,7 @@ T.Dialog {
             from: 0
             to: 1
             easing.type: Easing.InOutQuad
-            duration: Kirigami.Units.longDuration
+            duration: Impl.Units.longDuration
         }
     }
 
@@ -39,17 +39,17 @@ T.Dialog {
             from: 1
             to: 0
             easing.type: Easing.InOutQuad
-            duration: Kirigami.Units.longDuration
+            duration: Impl.Units.longDuration
         }
     }
 
     background: Rectangle {
-        radius: Kirigami.Units.smallRadius
+        radius: Impl.Units.smallRadius
         color: Kirigami.Theme.backgroundColor
         border.color: Kirigami.Theme.separatorColor
-        border.width: control.dim ? 0 : Kirigami.Units.smallBorder
+        border.width: control.dim ? 0 : Impl.Units.smallBorder
 
-        LargeShadow {
+        Impl.LargeShadow {
             radius: parent.radius
         }
     }
@@ -59,7 +59,7 @@ T.Dialog {
         level: 2
         visible: control.title
         elide: Label.ElideRight
-        padding: Kirigami.Units.gridUnit
+        padding: Impl.Units.gridUnit
         bottomPadding: 0
     }
 
@@ -67,6 +67,6 @@ T.Dialog {
         visible: count > 0
     }
 
-    T.Overlay.modal: OverlayModalBackground {}
-    T.Overlay.modeless: OverlayDimBackground {}
+    T.Overlay.modal: Impl.OverlayModalBackground {}
+    T.Overlay.modeless: Impl.OverlayDimBackground {}
 }

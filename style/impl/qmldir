@@ -21,7 +21,6 @@ InlineIconLabelContent 1.0 InlineIconLabelContent.qml
 LargeShadow 1.0 LargeShadow.qml
 ListViewHighlight 1.0 ListViewHighlight.qml
 MediumShadow 1.0 MediumShadow.qml
-MobileCursor 1.0 MobileCursor.qml
 RadioIndicator 1.0 RadioIndicator.qml
 ScrollHandle 1.0 ScrollHandle.qml
 SliderGroove 1.0 SliderGroove.qml
@@ -30,3 +29,5 @@ SmallShadow 1.0 SmallShadow.qml
 SpinBoxIndicator 1.0 SpinBoxIndicator.qml
 SwitchIndicator 1.0 SwitchIndicator.qml
 TextEditBackground 1.0 TextEditBackground.qml
+
+singleton Units 1.0 Units.qml

@@ -3,6 +3,7 @@
 set(org.kde.breeze_SRCS
     plasmadesktoptheme.cpp
     kirigamiplasmafactory.cpp
+    units.cpp
 )
 
 kcoreaddons_add_plugin(org.kde.breeze SOURCES ${org.kde.breeze_SRCS} INSTALL_NAMESPACE "kf5/kirigami" JSON kirigamiplasmaintegration.json)

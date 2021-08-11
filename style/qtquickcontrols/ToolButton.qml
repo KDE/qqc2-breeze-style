@@ -5,7 +5,7 @@ import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
-import "impl"
+import "impl" as Impl
 
 T.ToolButton {
     id: control
@@ -35,28 +35,28 @@ T.ToolButton {
         Kirigami.Theme.inherit = false//Qt.binding(() => control.flat && !(control.down || control.checked))
     }
 
-    padding: Kirigami.Units.mediumSpacing
+    padding: Impl.Units.mediumSpacing
     leftPadding: {
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly
             || display == T.AbstractButton.TextUnderIcon) {
-            return Kirigami.Units.mediumHorizontalPadding
+            return Impl.Units.mediumHorizontalPadding
         } else {
             return control.horizontalPadding
         }
     }
     rightPadding: {
         if (contentItem.hasLabel && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
-            return Kirigami.Units.mediumHorizontalPadding
+            return Impl.Units.mediumHorizontalPadding
         } else {
             return control.horizontalPadding
         }
     }
 
-    spacing: Kirigami.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
 
-    icon.width: Kirigami.Units.iconSizes.auto
-    icon.height: Kirigami.Units.iconSizes.auto
+    icon.width: Impl.Units.iconSizes.auto
+    icon.height: Impl.Units.iconSizes.auto
 
     Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
@@ -68,7 +68,7 @@ T.ToolButton {
         onActivated: control.clicked()
     }
 
-    contentItem: IconLabelContent {
+    contentItem:Impl.IconLabelContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
     }
@@ -94,7 +94,7 @@ T.ToolButton {
         }
     }
 
-    background: ButtonBackground {
+    background: Impl.ButtonBackground {
         // HACK: Compatibility with qqc2-desktop-style hack for showing arrows when buttons open menus
         // This one is in the background because that's what Kirigami expects
         property alias showMenuArrow: control.__showMenuArrow

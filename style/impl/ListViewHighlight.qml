@@ -5,12 +5,14 @@
 import QtQuick 2.15
 import org.kde.kirigami 2.14 as Kirigami
 
+import "." as Impl
+
 Kirigami.ShadowedRectangle {
     id: root
     property int currentIndex: -1
     property int count: 0
-    readonly property real topRadius: root.currentIndex == 0 ? Kirigami.Units.smallRadius : 0
-    readonly property real bottomRadius: root.currentIndex == Math.max(root.count-1, 0) ? Kirigami.Units.smallRadius : 0
+    readonly property real topRadius: root.currentIndex == 0 ? Impl.Units.smallRadius : 0
+    readonly property real bottomRadius: root.currentIndex == Math.max(root.count-1, 0) ? Impl.Units.smallRadius : 0
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Selection
     Kirigami.Theme.inherit: false
@@ -24,7 +26,7 @@ Kirigami.ShadowedRectangle {
 
     color: Kirigami.Theme.alternateBackgroundColor
     border {
-        width: Kirigami.Units.smallBorder
+        width: Impl.Units.smallBorder
         color: Kirigami.Theme.focusColor
     }
 }

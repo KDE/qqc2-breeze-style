@@ -9,7 +9,7 @@ import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
 import org.kde.breeze 1.0
-import "impl"
+import "impl" as Impl
 
 T.Dial {
     id: control
@@ -32,11 +32,11 @@ T.Dial {
         fillBorderColor: Kirigami.Theme.focusColor
         fillColor: Kirigami.Theme.alternateBackgroundColor
         angle: control.angle
-        grooveThickness: Kirigami.Units.grooveHeight
+        grooveThickness: Impl.Units.grooveHeight
         Behavior on angle {
             enabled: !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Kirigami.Units.longDuration
+                duration: Impl.Units.longDuration
                 velocity: 800
                 //SmoothedAnimations have a hardcoded InOutQuad easing
             }
@@ -45,7 +45,7 @@ T.Dial {
 
     handle: Kirigami.ShadowedRectangle {
         id: handle
-        property real grooveOffset: Kirigami.Units.grooveHeight * 4
+        property real grooveOffset: Impl.Units.grooveHeight * 4
         x: control.background.x + (control.background.width - control.handle.width) / 2
         y: control.background.y + (control.background.height - control.handle.height) / 2
         implicitWidth: implicitHeight
@@ -66,7 +66,7 @@ T.Dial {
         color: Kirigami.Theme.backgroundColor
 
         border {
-            width: Kirigami.Units.smallBorder
+            width: Impl.Units.smallBorder
             color: control.hovered || control.pressed || control.visualFocus
                 ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
         }
@@ -86,7 +86,7 @@ T.Dial {
             Behavior on rotation {
                 enabled: !Kirigami.Settings.hasTransientTouchInput
                 SmoothedAnimation {
-                    duration: Kirigami.Units.longDuration
+                    duration: Impl.Units.longDuration
                     velocity: 800
                     //SmoothedAnimations have a hardcoded InOutQuad easing
                 }
@@ -106,7 +106,7 @@ T.Dial {
         Behavior on border.color {
             enabled: control.hovered || control.pressed || control.visualFocus
             ColorAnimation {
-                duration: Kirigami.Units.shortDuration
+                duration: Impl.Units.shortDuration
                 easing.type: Easing.OutCubic
             }
         }
@@ -114,12 +114,12 @@ T.Dial {
         Behavior on shadow.color {
             enabled: control.pressed
             ColorAnimation {
-                duration: Kirigami.Units.shortDuration
+                duration: Impl.Units.shortDuration
                 easing.type: Easing.OutCubic
             }
         }
 
-        FocusRect {
+        Impl.FocusRect {
             z: -1
             baseRadius: parent.radius
             visible: control.visualFocus
@@ -143,7 +143,7 @@ T.Dial {
             }
             Behavior on opacity {
                 OpacityAnimator {
-                    duration: Kirigami.Units.shortDuration
+                    duration: Impl.Units.shortDuration
                     easing.type: Easing.OutCubic
                 }
             }

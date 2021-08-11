@@ -6,7 +6,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Templates 2.15 as T
 import org.kde.kirigami 2.14 as Kirigami
-import "impl"
+import "impl" as Impl
 
 T.SpinBox {
     id: control
@@ -33,10 +33,10 @@ T.SpinBox {
     editable: true
     inputMethodHints: Qt.ImhDigitsOnly
 
-    padding: Kirigami.Units.mediumSpacing
+    padding: Impl.Units.mediumSpacing
     leftPadding: __leftIndicatorWidth
     rightPadding: __rightIndicatorWidth
-    spacing: Kirigami.Units.mediumSpacing
+    spacing: Impl.Units.mediumSpacing
 
     validator: IntValidator {
         locale: control.locale.name
@@ -44,7 +44,7 @@ T.SpinBox {
         top: Math.max(control.from, control.to)
     }
 
-    down.indicator: SpinBoxIndicator {
+    down.indicator: Impl.SpinBoxIndicator {
         button: control.down
         alignment: Qt.AlignLeft
         mirrored: control.mirrored
@@ -81,16 +81,16 @@ T.SpinBox {
         background: null
     }
 
-    up.indicator: SpinBoxIndicator {
+    up.indicator: Impl.SpinBoxIndicator {
         button: control.up
         alignment: Qt.AlignRight
         mirrored: control.mirrored
     }
 
-    background: TextEditBackground {
+    background:Impl.TextEditBackground {
         control: control
-        implicitWidth: Kirigami.Units.mediumControlHeight * 3 - Kirigami.Units.smallBorder * 2 
-        implicitHeight: Kirigami.Units.mediumControlHeight
+        implicitWidth: Impl.Units.mediumControlHeight * 3 - Impl.Units.smallBorder * 2 
+        implicitHeight: Impl.Units.mediumControlHeight
         // Work around SpinBox focus handling flaw
         visualFocus: control.visualFocus || (control.contentItem.activeFocus && (
             control.contentItem.focusReason == Qt.TabFocusReason ||
