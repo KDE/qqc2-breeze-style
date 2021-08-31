@@ -18,6 +18,8 @@ T.Slider {
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
 
+    hoverEnabled: Qt.styleHints.useHoverEffects
+
     padding: Kirigami.Settings.tabletMode ? Impl.Units.mediumSpacing : 0
 
     handle: Impl.SliderHandle {

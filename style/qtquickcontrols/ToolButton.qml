@@ -24,6 +24,8 @@ T.ToolButton {
 
     flat: true
 
+    hoverEnabled: Qt.styleHints.useHoverEffects
+
     Kirigami.Theme.colorSet: /*control.highlighted ? Kirigami.Theme.Selection :*/ Kirigami.Theme.Button
     Kirigami.Theme.inherit: false//control.flat && !control.down && !control.checked
     // Absolutely terrible HACK:

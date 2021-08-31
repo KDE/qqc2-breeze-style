@@ -27,6 +27,8 @@ T.SpinBox {
         down.implicitIndicatorHeight
     )
 
+    hoverEnabled: Qt.styleHints.useHoverEffects
+
     Kirigami.Theme.colorSet: control.editable ? Kirigami.Theme.View : Kirigami.Theme.Button
     Kirigami.Theme.inherit: !Boolean(background)
 

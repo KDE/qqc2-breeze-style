@@ -20,8 +20,9 @@ T.RadioButton {
 
     padding: Impl.Units.verySmallSpacing
     horizontalPadding: Impl.Units.mediumSpacing
-
     spacing: Impl.Units.mediumSpacing
+
+    hoverEnabled: Qt.styleHints.useHoverEffects
 
     icon.width: Impl.Units.iconSizes.auto
     icon.height: Impl.Units.iconSizes.auto

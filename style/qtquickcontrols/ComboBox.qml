@@ -31,6 +31,8 @@ T.ComboBox {
 
     spacing: Impl.Units.mediumSpacing
 
+    hoverEnabled: Qt.styleHints.useHoverEffects
+
     leftPadding: horizontalPadding + (!control.mirrored ? 0 : __indicatorMargin)
     rightPadding: horizontalPadding + (control.mirrored ? 0 : __indicatorMargin)
 
