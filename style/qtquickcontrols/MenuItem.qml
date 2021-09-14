@@ -92,10 +92,19 @@ T.MenuItem {
         }
     }
 
-    indicator: Impl.CheckIndicator {
-        visible: control.checkable
-        control: control
-        checkState: control.checked ? Qt.Checked : Qt.Unchecked
+    indicator: Item {
+        implicitWidth: implicitHeight
+        implicitHeight: Impl.Units.inlineControlHeight
+
+        Impl.CheckIndicator {
+            visible: control.checkable && !control.autoExclusive
+            control: control
+            checkState: control.checked ? Qt.Checked : Qt.Unchecked
+        }
+        Impl.RadioIndicator {
+            visible: control.checkable && control.autoExclusive
+            control: control
+        }
     }
 
     arrow: Kirigami.Icon {
