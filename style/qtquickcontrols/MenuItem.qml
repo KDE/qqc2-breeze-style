@@ -92,18 +92,25 @@ T.MenuItem {
         }
     }
 
-    indicator: Item {
-        implicitWidth: implicitHeight
-        implicitHeight: Impl.Units.inlineControlHeight
+    indicator: Loader {
+        visible: control.checkable
+        active: visible
+        sourceComponent: control.autoExclusive ? radioIndicator : checkIndicator
 
-        Impl.CheckIndicator {
-            visible: control.checkable && !control.autoExclusive
-            control: control
-            checkState: control.checked ? Qt.Checked : Qt.Unchecked
+        onLoaded: {
+            item.control = control;
         }
-        Impl.RadioIndicator {
-            visible: control.checkable && control.autoExclusive
-            control: control
+
+        Component {
+            id: checkIndicator
+            Impl.CheckIndicator {
+                checkState: control.checked ? Qt.Checked : Qt.Unchecked
+            }
+        }
+        Component {
+            id: radioIndicator
+            Impl.RadioIndicator {
+            }
         }
     }
 
