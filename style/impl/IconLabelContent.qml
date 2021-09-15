@@ -35,11 +35,12 @@ IconLabelLayout {
     property real verticalPadding: padding
     leftPadding: {
         let lpad = horizontalPadding
-        if (!oppositeSideIndicator && control.indicator
-            && (control.indicator.visible || reserveSpaceForIndicator)
-            && control.indicator.width > 0
-        ) {
-            lpad += control.indicator.width + root.spacing
+        if (!oppositeSideIndicator) {
+            if (control.indicator && control.indicator.visible && control.indicator.width > 0) {
+                lpad += control.indicator.width + root.spacing
+            } else if (reserveSpaceForIndicator) {
+                lpad += Units.inlineControlHeight + root.spacing
+            }
         }
         if (reserveSpaceForIcon && !hasIcon && control.icon.width > 0) {
             lpad += control.icon.width + root.spacing
@@ -48,11 +49,12 @@ IconLabelLayout {
     }
     rightPadding: {
         let rpad = horizontalPadding
-        if (oppositeSideIndicator && control.indicator
-            && (control.indicator.visible || reserveSpaceForIndicator)
-            && control.indicator.width > 0
-        ) {
-            rpad += control.indicator.width + root.spacing
+        if (oppositeSideIndicator) {
+            if (control.indicator && control.indicator.visible && control.indicator.width > 0) {
+                rpad += control.indicator.width + root.spacing
+            } else if (reserveSpaceForIndicator) {
+                rpad += Units.inlineControlHeight + root.spacing
+            }
         }
         if (control.arrow && (control.arrow.visible || reserveSpaceForArrow) && control.arrow.width > 0) {
             rpad += control.arrow.width + root.spacing
