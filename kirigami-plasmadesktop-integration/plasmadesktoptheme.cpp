@@ -9,7 +9,6 @@
 #include <KColorScheme>
 #include <KColorUtils>
 #include <KConfigGroup>
-#include <KIconColors>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QPalette>
@@ -22,6 +21,7 @@
 #ifndef Q_OS_ANDROID
 #include <QDBusConnection>
 
+#include <KIconColors>
 #include <KIconLoader>
 #endif
 
