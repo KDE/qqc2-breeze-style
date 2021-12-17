@@ -10,4 +10,3 @@ Base.Separator {
     id: root
     color: weight == Base.Separator.Weight.Light ? KColorUtils.mix(Kirigami.Theme.backgroundColor, Kirigami.Theme.separatorColor,  0.4 /*maybe 0.33*/) : Kirigami.Theme.separatorColor
 }
-

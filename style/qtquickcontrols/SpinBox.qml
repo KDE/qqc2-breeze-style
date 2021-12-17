@@ -91,7 +91,7 @@ T.SpinBox {
 
     background:Impl.TextEditBackground {
         control: control
-        implicitWidth: Impl.Units.mediumControlHeight * 3 - Impl.Units.smallBorder * 2 
+        implicitWidth: Impl.Units.mediumControlHeight * 3 - Impl.Units.smallBorder * 2
         implicitHeight: Impl.Units.mediumControlHeight
         // Work around SpinBox focus handling flaw
         visualFocus: control.visualFocus || (control.contentItem.activeFocus && (

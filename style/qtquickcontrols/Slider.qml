@@ -30,7 +30,7 @@ T.Slider {
      * and fill. It doesn't really make sense when you look at the way
      * backgrounds typically work. Originally, there was a `track` property,
      * but it got replaced by `background` in 2016.
-     * 
+     *
      * Neither of the background or contentItem properties are perfect
      * for use as the property to hold the groove or the fill.
      * The background seems like it could be OK for the groove and the

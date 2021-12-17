@@ -197,7 +197,7 @@ QtObject {
      * hover events, etc..
      */
     property int shortDuration: Kirigami.Units.shortDuration
-    
+
     /**
      * units.shortDuration should be used for short animations, such as accentuating a UI event,
      * hover events, etc..
@@ -239,12 +239,12 @@ QtObject {
      */
     property var fontMetrics: FontMetrics {
         /* Height of a flat topped capital letter
-         * 
+         *
          * QFontEngine (private, used by QFontMetricsF) uses an 'H' to
          * calculate capHeight(), so the behavior should match the behavior
          * of QFontMetricsF::capHeight().
          * NOTE: With FreeType, QFontMetricsF::capHeight() is just an alias to QFontMetricsF::ascent()
-         * 
+         *
          * WARNING: Very Latin-centric. Be kind to your translators and use it
          * carefully. Don't make areas with text that are too small to look
          * good with or at least contain scripts that aren't based on Latin.
@@ -256,7 +256,7 @@ QtObject {
         property real blockHeight: fontMetrics.tightBoundingRect('█').height
 
         property real verticalBarHeight: fontMetrics.tightBoundingRect('|').height
-        
+
         /* Can be used to guess the font's stroke width.
          * It's not always exactly the same as letter stroke widths.
          * In fonts where 'l' is just a straight line, 'l' is more accurate,

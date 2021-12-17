@@ -36,7 +36,7 @@ T.ToolTip {
          * 10.5pts and 11pts.
          */
         // If contentWidthSource isn't available, cWidth = 0
-        let cWidth = Math.ceil(contentWidthSource.contentWidth ?? -1) + 1 
+        let cWidth = Math.ceil(contentWidthSource.contentWidth ?? -1) + 1
         return cWidth > 0 ? cWidth : implicitContentOrFirstChildWidth
     }
 

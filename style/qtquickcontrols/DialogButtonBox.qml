@@ -82,7 +82,7 @@ T.DialogButtonBox {
         function setStandardIcon(buttonType, iconName) {
             let button = standardButton(buttonType)
             // For some reason, `== ""` works, but `=== ""` and `!name && !source` doesn't.
-            if (button && button.icon.name == "" && button.icon.source == "") { 
+            if (button && button.icon.name == "" && button.icon.source == "") {
                 button.icon.name = iconName
             }
         }

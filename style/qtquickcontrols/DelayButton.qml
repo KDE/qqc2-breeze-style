@@ -120,7 +120,7 @@ T.DelayButton {
                     }
                 }
             ]
-            
+
             transitions: Transition {
                 from: "*"
                 to: "normalHeight"

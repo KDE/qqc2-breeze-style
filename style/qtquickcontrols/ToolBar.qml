@@ -35,7 +35,7 @@ T.ToolBar {
 
     background: Rectangle {
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
-        implicitHeight: Impl.Units.mediumControlHeight + (Impl.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0) 
+        implicitHeight: Impl.Units.mediumControlHeight + (Impl.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0)
         color: Kirigami.Theme.backgroundColor
         property Item separator: Kirigami.Separator {
             parent: background

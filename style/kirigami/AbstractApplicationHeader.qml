@@ -10,7 +10,6 @@ import QtQuick.Controls 2.15 as Controls
 import "../../templates" as T
 import "../../private" as KP
 
-
 /**
  * An item that can be used as a title for the application.
  * Scrolling the main page will make it taller or shorter (trough the point of going away)
@@ -51,7 +50,7 @@ T.AbstractApplicationHeader {
                     color: Qt.rgba(0, 0, 0, 0.20)
                 }
                 GradientStop {
-                    position: 0.368 // 1/e 
+                    position: 0.368 // 1/e
                     color: Qt.rgba(0, 0, 0, 0.074) // 0.2/e
                 }
                 GradientStop {
