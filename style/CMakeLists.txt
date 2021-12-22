@@ -31,3 +31,7 @@ add_subdirectory(qtquickcontrols)
 add_subdirectory(kirigami)
 
 ecm_finalize_qml_module(qqc2breezestyleplugin DESTINATION ${KDE_INSTALL_QMLDIR})
+
+if(ANDROID)
+    install(FILES BreezeLight.colors BreezeDark.colors DESTINATION ${KDE_INSTALL_DATADIR}/color-schemes)
+endif()
