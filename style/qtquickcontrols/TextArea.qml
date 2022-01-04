@@ -41,7 +41,9 @@ T.TextArea {
     selectedTextColor: Kirigami.Theme.highlightedTextColor
     placeholderTextColor: Kirigami.Theme.disabledTextColor
 
-    selectByMouse: !(Kirigami.Settings.hasTransientTouchInput && Kirigami.Settings.tabletMode)
+    selectByMouse: true
+    mouseSelectionMode: Kirigami.Settings.tabletMode ?
+        TextEdit.SelectWords : TextEdit.SelectCharacters
 
     cursorDelegate: Loader {
         visible: control.activeFocus && !control.readOnly && control.selectionStart === control.selectionEnd
