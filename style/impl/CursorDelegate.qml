@@ -21,7 +21,10 @@ Item {
         parent: target
         implicitWidth: target.cursorRectangle.width
         implicitHeight: target.cursorRectangle.height
-        x: Math.floor(target.cursorRectangle.x)
+        // HACK: fix cursorRecangleChanged not getting triggered correctly
+        // So trick the qml engine to update the x position when the leftPadding or rightPadding
+        // are updated and not only the cursorRectangle
+        x: Math.floor(target.cursorRectangle.x) + target.leftPadding * 0 + target.rightPadding * 0
         y: Math.floor(target.cursorRectangle.y)
 
         color: target.color
