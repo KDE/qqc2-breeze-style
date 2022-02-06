@@ -48,9 +48,6 @@ public:
 protected:
     bool event(QEvent *event) override;
 
-protected Q_SLOTS:
-    void syncFont();
-
 private:
     friend class StyleSingleton;
     QPointer<QWindow> m_window;
