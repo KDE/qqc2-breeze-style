@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "impl" as Impl
 
@@ -19,9 +19,9 @@ T.ToolBar {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
 
-    spacing: Impl.Units.smallSpacing
+    spacing: Kirigami.Units.smallSpacing
 
-    padding: Impl.Units.smallSpacing
+    padding: Kirigami.Units.smallSpacing
 
     // Add space for the separator above the footer
     topPadding: __isFooter && background && background.hasOwnProperty("separator") ?
@@ -35,7 +35,7 @@ T.ToolBar {
 
     background: Rectangle {
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
-        implicitHeight: Impl.Units.mediumControlHeight + (Impl.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0)
+        implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0)
         color: Kirigami.Theme.backgroundColor
         property Item separator: Kirigami.Separator {
             parent: background

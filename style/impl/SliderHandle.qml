@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 
@@ -60,7 +60,7 @@ Rectangle {
     Behavior on border.color {
         enabled: root.pressed || root.visualFocus || root.hovered
         ColorAnimation {
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
@@ -68,7 +68,7 @@ Rectangle {
     Behavior on x {
         enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
-            duration: Impl.Units.longDuration
+            duration: Kirigami.Units.longDuration
             velocity: 800
             //SmoothedAnimations have a hardcoded InOutQuad easing
         }
@@ -76,7 +76,7 @@ Rectangle {
     Behavior on y {
         enabled: root.loaded && !Kirigami.Settings.hasTransientTouchInput
         SmoothedAnimation {
-            duration: Impl.Units.longDuration
+            duration: Kirigami.Units.longDuration
             velocity: 800
         }
     }

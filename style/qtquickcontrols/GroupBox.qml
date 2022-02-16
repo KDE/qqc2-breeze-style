@@ -6,7 +6,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "impl" as Impl
 
@@ -22,7 +22,7 @@ T.GroupBox {
 //     contentWidth: contentItem.implicitWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0)
     //contentHeight: contentItem.implicitHeight || (contentChildren.length === 1 ? contentChildren[0].implicitHeight : 0)
 
-    spacing: Impl.Units.mediumSpacing
+    spacing: Kirigami.Units.mediumSpacing
     padding: Impl.Units.veryLargeSpacing
     topPadding: padding + (implicitLabelWidth > 0 ? implicitLabelHeight + spacing : 0)
 

@@ -5,7 +5,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import "impl" as Impl
 
 T.SpinBox {
@@ -34,11 +34,12 @@ T.SpinBox {
 
     editable: true
     inputMethodHints: Qt.ImhDigitsOnly
+    wheelEnabled: true
 
-    padding: Impl.Units.mediumSpacing
+    padding: Kirigami.Units.mediumSpacing
     leftPadding: __leftIndicatorWidth
     rightPadding: __rightIndicatorWidth
-    spacing: Impl.Units.mediumSpacing
+    spacing: Kirigami.Units.mediumSpacing
 
     validator: IntValidator {
         locale: control.locale.name

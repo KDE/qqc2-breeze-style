@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import org.kde.breeze 1.0
 import "impl" as Impl
 
@@ -24,7 +24,7 @@ T.TabButton {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    padding: Impl.Units.mediumSpacing
+    padding: Kirigami.Units.mediumSpacing
     leftPadding: {
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly
@@ -61,10 +61,10 @@ T.TabButton {
         }
     }
 
-    spacing: Impl.Units.mediumSpacing
+    spacing: Kirigami.Units.mediumSpacing
 
-    icon.width: Impl.Units.iconSizes.auto
-    icon.height: Impl.Units.iconSizes.auto
+    icon.width: Kirigami.Units.iconSizes.sizeForLabels
+    icon.height: Kirigami.Units.iconSizes.sizeForLabels
 
     Kirigami.Theme.colorSet: {
         if (control.__inTabBar && !(control.checked)) {
@@ -81,7 +81,7 @@ T.TabButton {
 
     //TODO: tweak the appearance. This is just to have something usable and reasonably close to what we want.
     background: Rectangle {
-        implicitHeight: Impl.Units.mediumControlHeight + (Impl.Units.smallSpacing * 2) // fill TabBar
+        implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) // fill TabBar
         implicitWidth: implicitHeight
         color: control.checked ? Kirigami.Theme.backgroundColor : "transparent"
 
@@ -94,12 +94,12 @@ T.TabButton {
             anchors.leftMargin: -control.leftInset
             anchors.verticalCenter: parent.verticalCenter
             width: 1
-            height: control.checked ? parent.height : Math.min(parent.height, Impl.Units.gridUnit)
+            height: control.checked ? parent.height : Math.min(parent.height, Kirigami.Units.gridUnit)
             color: Kirigami.Theme.separatorColor
             Behavior on height {
                 NumberAnimation {
                     easing.type: Easing.InOutQuad
-                    duration: Impl.Units.longDuration
+                    duration: Kirigami.Units.longDuration
                 }
             }
         }
@@ -140,13 +140,13 @@ T.TabButton {
             Behavior on opacity {
                 OpacityAnimator {
                     easing.type: Easing.OutCubic
-                    duration: Impl.Units.shortDuration
+                    duration: Kirigami.Units.shortDuration
                 }
             }
             Behavior on color {
                 ColorAnimation {
                     easing.type: Easing.InOutQuad
-                    duration: Impl.Units.longDuration
+                    duration: Kirigami.Units.longDuration
                 }
             }
         }
@@ -166,7 +166,7 @@ T.TabButton {
             Behavior on opacity {
                 OpacityAnimator {
                     easing.type: Easing.OutCubic
-                    duration: Impl.Units.shortDuration
+                    duration: Kirigami.Units.shortDuration
                 }
             }
         }

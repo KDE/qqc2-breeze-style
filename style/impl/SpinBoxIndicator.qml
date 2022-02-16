@@ -3,7 +3,7 @@
  */
 
 import QtQuick 2.15
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 
@@ -59,8 +59,8 @@ Item {
         anchors {
             top: parent.top
             bottom: parent.bottom
-            topMargin: Impl.Units.smallSpacing
-            bottomMargin: Impl.Units.smallSpacing
+            topMargin: Kirigami.Units.smallSpacing
+            bottomMargin: Kirigami.Units.smallSpacing
         }
 
         color: button.pressed || button.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
@@ -68,7 +68,7 @@ Item {
         Behavior on color {
             enabled: button.pressed || button.hovered
             ColorAnimation {
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
                 easing.type: Easing.OutCubic
             }
         }
@@ -104,7 +104,7 @@ Item {
             to: ""
             SequentialAnimation {
                 OpacityAnimator {
-                    duration: Impl.Units.shortDuration
+                    duration: Kirigami.Units.shortDuration
                     easing.type: Easing.OutCubic
                 }
                 PropertyAction {
@@ -117,7 +117,7 @@ Item {
     }
 
     Kirigami.Icon {
-        implicitHeight: Impl.Units.iconSizes.auto
+        implicitHeight: Kirigami.Units.iconSizes.sizeForLabels
         implicitWidth: implicitHeight
         anchors {
             centerIn: parent

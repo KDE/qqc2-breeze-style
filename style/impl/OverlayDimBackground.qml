@@ -3,7 +3,7 @@
  */
 
 import QtQuick 2.15
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 
@@ -11,7 +11,7 @@ Rectangle {
     color: Qt.rgba(0,0,0,0.2)
     Behavior on opacity {
         OpacityAnimator {
-            duration: Impl.Units.longDuration
+            duration: Kirigami.Units.longDuration
         }
     }
 }

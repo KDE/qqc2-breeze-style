@@ -7,7 +7,7 @@
 
 import QtQuick 2.6
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import "impl" as Impl
 
 T.Popup {
@@ -27,7 +27,7 @@ T.Popup {
             from: 0
             to: 1
             easing.type: Easing.InOutQuad
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
         }
     }
 
@@ -37,14 +37,14 @@ T.Popup {
             from: 1
             to: 0
             easing.type: Easing.InOutQuad
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
         }
     }
 
     background: Rectangle {
         radius: Impl.Units.smallRadius
 //         implicitHeight: Impl.Units.smallControlHeight
-        //implicitWidth: Impl.Units.gridUnit * 12
+        //implicitWidth: Kirigami.Units.gridUnit * 12
         color: Kirigami.Theme.backgroundColor
 
         border {

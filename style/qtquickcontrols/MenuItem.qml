@@ -8,7 +8,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.12
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import "impl" as Impl
 
 T.MenuItem {
@@ -49,13 +49,13 @@ T.MenuItem {
 
 //     width: parent ? parent.width : implicitWidth
 
-    icon.width: Impl.Units.iconSizes.auto
-    icon.height: Impl.Units.iconSizes.auto
+    icon.width: Kirigami.Units.iconSizes.sizeForLabels
+    icon.height: Kirigami.Units.iconSizes.sizeForLabels
 
     Layout.fillWidth: true
 
-    spacing: Impl.Units.mediumSpacing
-    padding: Impl.Units.mediumSpacing
+    spacing: Kirigami.Units.mediumSpacing
+    padding: Kirigami.Units.mediumSpacing
     leftPadding: {
         if (!control.indicator.visible
             && ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
@@ -121,8 +121,8 @@ T.MenuItem {
             verticalCenter: control.verticalCenter
         }
         source: control.mirrored ? "arrow-left" : "arrow-right"
-        implicitWidth: Impl.Units.iconSizes.auto
-        implicitHeight: Impl.Units.iconSizes.auto
+        implicitWidth: Kirigami.Units.iconSizes.sizeForLabels
+        implicitHeight: Kirigami.Units.iconSizes.sizeForLabels
         visible: control.subMenu
     }
 

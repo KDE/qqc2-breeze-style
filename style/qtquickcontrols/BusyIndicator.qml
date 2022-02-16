@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import org.kde.quickcharts 1.0 as Charts
 
 import "impl" as Impl
@@ -19,7 +19,7 @@ T.BusyIndicator {
 
     hoverEnabled: false
 
-    padding: Impl.Units.mediumSpacing
+    padding: Kirigami.Units.mediumSpacing
 
     ListModel {
         id: pieModel
@@ -57,13 +57,13 @@ T.BusyIndicator {
         id: lowPowerSpinnerComponent
         Kirigami.Icon {
             id: lowPowerSpinner
-            implicitWidth: Impl.Units.iconSizes.auto
-            implicitHeight: Impl.Units.iconSizes.auto
+            implicitWidth: Kirigami.Units.iconSizes.sizeForLabels
+            implicitHeight: Kirigami.Units.iconSizes.sizeForLabels
             source: "view-refresh"
 
             opacity: control.visible && control.enabled && control.running ? 1 : 0
             Behavior on opacity {
-                OpacityAnimator { duration: Impl.Units.shortDuration }
+                OpacityAnimator { duration: Kirigami.Units.shortDuration }
             }
 
             smooth: true
@@ -82,12 +82,12 @@ T.BusyIndicator {
         id: fancySpinnerComponent
         Charts.PieChart {
             id: fancySpinner
-            implicitWidth: Impl.Units.gridUnit
-            implicitHeight: Impl.Units.gridUnit
+            implicitWidth: Kirigami.Units.gridUnit
+            implicitHeight: Kirigami.Units.gridUnit
 
             opacity: control.visible && control.enabled && control.running ? 1 : 0
             Behavior on opacity {
-                OpacityAnimator { duration: Impl.Units.shortDuration }
+                OpacityAnimator { duration: Kirigami.Units.shortDuration }
             }
 
             valueSources: Charts.ModelSource { roleName: "value"; model: pieModel }

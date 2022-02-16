@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 
@@ -87,7 +87,7 @@ Item {
         Behavior on border.color {
             enabled: control.down || control.visualFocus || control.hovered
             ColorAnimation {
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
                 easing.type: Easing.OutCubic
             }
         }
@@ -96,7 +96,7 @@ Item {
             enabled: handle.loaded// && !Kirigami.Settings.hasTransientTouchInput
             // Using SmoothedAnimation because the fill effect is anchored to the handle.
             SmoothedAnimation {
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
                 //SmoothedAnimations have a hardcoded InOutQuad easing
             }
         }

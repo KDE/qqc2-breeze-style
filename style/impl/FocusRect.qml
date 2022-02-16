@@ -3,7 +3,7 @@
  */
 
 import QtQuick 2.6
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 

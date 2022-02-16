@@ -7,7 +7,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import "impl" as Impl
 
 T.RangeSlider {
@@ -23,7 +23,7 @@ T.RangeSlider {
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
 
-    padding: Kirigami.Settings.tabletMode ? Impl.Units.mediumSpacing : 0
+    padding: Kirigami.Settings.tabletMode ? Kirigami.Units.mediumSpacing : 0
 
     first.handle: Impl.SliderHandle {
         control: control

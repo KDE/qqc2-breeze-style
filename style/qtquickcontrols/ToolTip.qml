@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import "impl" as Impl
 
 /* NOTE:
@@ -45,7 +45,7 @@ T.ToolTip {
     Kirigami.Theme.inherit: false
 
     x: parent ? Math.round((parent.width - implicitWidth) / 2) : 0
-    y: -implicitHeight - Impl.Units.smallSpacing
+    y: -implicitHeight - Kirigami.Units.smallSpacing
     // Always show the tooltip on top of everything else
     z: 999
 
@@ -54,19 +54,19 @@ T.ToolTip {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
 
-    padding: Impl.Units.mediumSpacing
+    padding: Kirigami.Units.mediumSpacing
     horizontalPadding: Impl.Units.mediumHorizontalPadding
 
     closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutsideParent | T.Popup.CloseOnReleaseOutsideParent
 
-    delay: Impl.Units.toolTipDelay
+    delay: Kirigami.Units.toolTipDelay
 
     enter: Transition {
         OpacityAnimator {
             from: 0
             to: 1
             easing.type: Easing.OutCubic
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
         }
     }
 
@@ -75,7 +75,7 @@ T.ToolTip {
             from: 1
             to: 0
             easing.type: Easing.InCubic
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
         }
     }
 

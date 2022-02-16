@@ -8,7 +8,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls 2.15 as Controls
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "impl" as Impl
 
@@ -29,7 +29,7 @@ T.ComboBox {
     Kirigami.Theme.colorSet: control.editable ? Kirigami.Theme.View : Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
 
-    spacing: Impl.Units.mediumSpacing
+    spacing: Kirigami.Units.mediumSpacing
 
     hoverEnabled: Qt.styleHints.useHoverEffects
 
@@ -60,7 +60,7 @@ T.ComboBox {
     }
 
     indicator: Kirigami.Icon {
-        implicitHeight: Impl.Units.iconSizes.sizeForLabels
+        implicitHeight: Kirigami.Units.iconSizes.sizeForLabels
         implicitWidth: implicitHeight
         x: control.mirrored ? control.leftPadding : control.leftPadding + control.availableWidth + control.spacing
         y: control.topPadding + (control.availableHeight - height) / 2
@@ -91,7 +91,7 @@ T.ComboBox {
             Behavior on color {
                 enabled: control.down || control.hovered
                 ColorAnimation {
-                    duration: Impl.Units.shortDuration
+                    duration: Kirigami.Units.shortDuration
                     easing.type: Easing.OutCubic
                 }
             }
@@ -141,7 +141,7 @@ T.ComboBox {
                 to: ""
                 SequentialAnimation {
                     OpacityAnimator {
-                        duration: Impl.Units.shortDuration
+                        duration: Kirigami.Units.shortDuration
                         easing.type: Easing.OutCubic
                     }
                     PropertyAction {
@@ -183,8 +183,8 @@ T.ComboBox {
             implicitWidth: contentWidth
             model: control.delegateModel // Why isn't this in the ComboBox documentation?
             currentIndex: control.highlightedIndex
-            highlightMoveDuration: Impl.Units.shortDuration
-            highlightMoveVelocity: Impl.Units.gridUnit * 20
+            highlightMoveDuration: Kirigami.Units.shortDuration
+            highlightMoveVelocity: Kirigami.Units.gridUnit * 20
             highlight: Impl.ListViewHighlight {
                 currentIndex: control.highlightedIndex
                 count: control.count

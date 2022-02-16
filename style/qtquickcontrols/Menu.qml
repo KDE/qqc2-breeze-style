@@ -12,7 +12,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "impl" as Impl
 
@@ -40,7 +40,7 @@ T.Menu {
         implicitHeight: contentHeight
         implicitWidth: contentWidth
         model: control.contentModel
-        highlightMoveDuration: Impl.Units.shortDuration
+        highlightMoveDuration: Kirigami.Units.shortDuration
         highlightMoveVelocity: 800
         highlight: Impl.ListViewHighlight {
             currentIndex: control.currentIndex
@@ -65,7 +65,7 @@ T.Menu {
                 from: 0
                 to: 1
                 easing.type: Easing.OutCubic
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
             }
         }
     }
@@ -77,7 +77,7 @@ T.Menu {
                 from: 1
                 to: 0
                 easing.type: Easing.InCubic
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
             }
         }
     }
@@ -85,7 +85,7 @@ T.Menu {
     background: Rectangle {
         radius: Impl.Units.smallRadius
         implicitHeight: Impl.Units.mediumControlHeight
-        implicitWidth: Impl.Units.gridUnit * 15
+        implicitWidth: Kirigami.Units.gridUnit * 15
         color: Kirigami.Theme.backgroundColor
 
         border {

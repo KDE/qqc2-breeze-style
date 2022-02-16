@@ -6,7 +6,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Templates 2.15
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 
@@ -33,7 +33,7 @@ Loader {
 
         //opacity: target.activeFocus ? 1 : 0
         implicitHeight: {
-            let h = Impl.Units.gridUnit
+            let h = Kirigami.Units.gridUnit
             return h - (h % 2 == 0 ? 1 : 0)
         }
         implicitWidth: implicitHeight
@@ -104,7 +104,7 @@ Loader {
             SmoothedAnimation {
                 velocity: 200
                 reversingMode: SmoothedAnimation.Immediate
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
             }
         }
         Behavior on y {
@@ -112,7 +112,7 @@ Loader {
             SmoothedAnimation {
                 velocity: 200
                 reversingMode: SmoothedAnimation.Immediate
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
             }
         }
 

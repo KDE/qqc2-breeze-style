@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 
@@ -38,7 +38,7 @@ Rectangle {
     Behavior on color {
         enabled: control.down || control.checked
         ColorAnimation {
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
@@ -46,7 +46,7 @@ Rectangle {
     Behavior on border.color {
         enabled: control.down || control.checked || control.visualFocus || control.hovered
         ColorAnimation {
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
@@ -114,7 +114,7 @@ Rectangle {
             from: "unchecked"
             to: "checked"
             ScaleAnimator {
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
                 easing.type: Easing.OutQuad
             }
         }

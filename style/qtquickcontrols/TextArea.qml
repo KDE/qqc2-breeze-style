@@ -6,7 +6,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import "impl" as Impl
 
 T.TextArea {
@@ -25,7 +25,7 @@ T.TextArea {
     )
 
 
-    padding: Impl.Units.mediumSpacing
+    padding: Kirigami.Units.mediumSpacing
     property real horizontalPadding: Impl.Units.mediumHorizontalPadding
     property real verticalPadding: padding
     leftPadding: horizontalPadding

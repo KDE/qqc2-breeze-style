@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import "impl" as Impl
 
 T.Dialog {
@@ -19,7 +19,7 @@ T.Dialog {
                              + (implicitHeaderHeight > 0 ? implicitHeaderHeight + spacing : 0)
                              + (implicitFooterHeight > 0 ? implicitFooterHeight + spacing : 0))
 
-    padding: Impl.Units.gridUnit
+    padding: Kirigami.Units.gridUnit
 
 //     anchors.centerIn: T.Overlay.overlay
 
@@ -29,7 +29,7 @@ T.Dialog {
             from: 0
             to: 1
             easing.type: Easing.InOutQuad
-            duration: Impl.Units.longDuration
+            duration: Kirigami.Units.longDuration
         }
     }
 
@@ -39,7 +39,7 @@ T.Dialog {
             from: 1
             to: 0
             easing.type: Easing.InOutQuad
-            duration: Impl.Units.longDuration
+            duration: Kirigami.Units.longDuration
         }
     }
 
@@ -59,7 +59,7 @@ T.Dialog {
         level: 2
         visible: control.title
         elide: Label.ElideRight
-        padding: Impl.Units.gridUnit
+        padding: Kirigami.Units.gridUnit
         bottomPadding: 0
     }
 

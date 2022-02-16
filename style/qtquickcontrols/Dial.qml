@@ -7,7 +7,7 @@ import QtQml 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 import org.kde.breeze 1.0
 import "impl" as Impl
 
@@ -36,7 +36,7 @@ T.Dial {
         Behavior on angle {
             enabled: !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Impl.Units.longDuration
+                duration: Kirigami.Units.longDuration
                 velocity: 800
                 //SmoothedAnimations have a hardcoded InOutQuad easing
             }
@@ -86,7 +86,7 @@ T.Dial {
             Behavior on rotation {
                 enabled: !Kirigami.Settings.hasTransientTouchInput
                 SmoothedAnimation {
-                    duration: Impl.Units.longDuration
+                    duration: Kirigami.Units.longDuration
                     velocity: 800
                     //SmoothedAnimations have a hardcoded InOutQuad easing
                 }
@@ -106,7 +106,7 @@ T.Dial {
         Behavior on border.color {
             enabled: control.hovered || control.pressed || control.visualFocus
             ColorAnimation {
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
                 easing.type: Easing.OutCubic
             }
         }
@@ -114,7 +114,7 @@ T.Dial {
         Behavior on shadow.color {
             enabled: control.pressed
             ColorAnimation {
-                duration: Impl.Units.shortDuration
+                duration: Kirigami.Units.shortDuration
                 easing.type: Easing.OutCubic
             }
         }
@@ -143,7 +143,7 @@ T.Dial {
             }
             Behavior on opacity {
                 OpacityAnimator {
-                    duration: Impl.Units.shortDuration
+                    duration: Kirigami.Units.shortDuration
                     easing.type: Easing.OutCubic
                 }
             }

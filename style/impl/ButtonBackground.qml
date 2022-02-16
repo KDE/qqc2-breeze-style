@@ -4,7 +4,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 
@@ -70,14 +70,14 @@ Kirigami.ShadowedRectangle {
     Behavior on color {
         enabled: highlightBackground
         ColorAnimation {
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
     Behavior on border.color {
         enabled: highlightBorder
         ColorAnimation {
-            duration: Impl.Units.shortDuration
+            duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }

@@ -5,7 +5,7 @@
 
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as Templates
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 import "." as Impl
 
@@ -69,7 +69,7 @@ Rectangle {
         Behavior on anchors.leftMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Impl.Units.longDuration
+                duration: Kirigami.Units.longDuration
                 velocity: 800
                 //SmoothedAnimations have a hardcoded InOutQuad easing
             }
@@ -77,21 +77,21 @@ Rectangle {
         Behavior on anchors.rightMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Impl.Units.longDuration
+                duration: Kirigami.Units.longDuration
                 velocity: 800
             }
         }
         Behavior on anchors.topMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Impl.Units.longDuration
+                duration: Kirigami.Units.longDuration
                 velocity: 800
             }
         }
         Behavior on anchors.bottomMargin {
             enabled: fill.loaded && !Kirigami.Settings.hasTransientTouchInput
             SmoothedAnimation {
-                duration: Impl.Units.longDuration
+                duration: Kirigami.Units.longDuration
                 velocity: 800
             }
         }

@@ -7,11 +7,7 @@
 
 import QtQuick 2.15
 import QtQuick.Window 2.15
-// Use QtQuickControlsPrivate.Settings.isMobile to avoid importing kirigami here which would cause a binding loop
-import QtQuick.Controls 1.4 as QtQuickControls
-import QtQuick.Controls.Private 1.0 as QtQuickControlsPrivate
-
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami 2.19 as Kirigami
 
 pragma Singleton
 
@@ -22,46 +18,6 @@ pragma Singleton
 QtObject {
     id: units
 
-    /**
-     * The fundamental unit of space that should be used for sizes, expressed in pixels.
-     * Given the screen has an accurate DPI settings, it corresponds to a width of
-     * the capital letter M
-     */
-    property int gridUnit: Kirigami.Units.gridUnit
-
-    /**
-     * units.iconSizes provides access to platform-dependent icon sizing
-     *
-     * The icon sizes provided are normalized for different DPI, so icons
-     * will scale depending on the DPI.
-     *
-     * Icon sizes from KIconLoader, adjusted to devicePixelRatio:
-     * * small
-     * * smallMedium
-     * * medium
-     * * large
-     * * huge
-     * * enormous
-     *
-     * Not devicePixelRation-adjusted::
-     * * desktop
-     */
-    property QtObject iconSizes: QtObject {
-        // Breeze
-        property int sizeForLabels: Kirigami.Units.iconSizes.sizeForLabels
-        property int auto: Kirigami.Units.iconSizes.sizeForLabels
-        property int tiny: Kirigami.Units.iconSizes.small * 0.5
-        property int tinySmall: Kirigami.Units.iconSizes.small * 0.75
-        // Breeze
-        property int small: Kirigami.Units.iconSizes.small
-        property int smallMedium: Kirigami.Units.iconSizes.smallMedium
-        property int medium: Kirigami.Units.iconSizes.medium
-        property int large: Kirigami.Units.iconSizes.large
-        property int huge: Kirigami.Units.iconSizes.huge
-        property int enormous: Kirigami.Units.iconSizes.enormous
-    }
-
-    //BEGIN Breeze Units
     // The default border width
     property int smallBorder: 1
     // Used for the focus ring
@@ -80,67 +36,42 @@ QtObject {
     property int highlightLineThickness: smallRadius
 
     property int grooveHeight: {
-        let h = Math.floor(gridUnit / 3);
+        let h = Math.floor(fontMetrics.height / 3);
         h += h % 2;
         return h;
     }
 
     property int thickGrooveHeight: {
-        let h = Math.floor(gridUnit / 1.5);
+        let h = Math.floor(fontMetrics.height / 1.5);
         h += h % 2;
         return h;
     }
 
     /// For things like checkboxes/radiobuttons/switches/slider handles
-    property int inlineControlHeight: gridUnit
+    property int inlineControlHeight: fontMetrics.height
 
     // For small controls with a small amount of vertical padding
-    property int smallControlHeight: gridUnit + units.smallSpacing * 2
+    property int smallControlHeight: fontMetrics.height + Kirigami.Units.smallSpacing * 2
 
     // For medium controls with a medium amount of vertical padding
-    property int mediumControlHeight: gridUnit + units.mediumSpacing * 2
+    property int mediumControlHeight: fontMetrics.height + Kirigami.Units.mediumSpacing * 2
 
     // For large controls with a large amount of vertical padding
-    property int largeControlHeight: gridUnit + units.largeSpacing * 2
+    property int largeControlHeight: fontMetrics.height + Kirigami.Units.largeSpacing * 2
 
     property real horizontalPaddingRatio: Math.max(fontMetrics.height / fontMetrics.fullWidthCharWidth, 1)
 
     property int verySmallHorizontalPadding: Math.round(horizontalPaddingRatio * units.verySmallSpacing)
 
-    property int smallHorizontalPadding: Math.round(horizontalPaddingRatio * units.smallSpacing)
+    property int smallHorizontalPadding: Math.round(horizontalPaddingRatio * Kirigami.Units.smallSpacing)
 
-    property int  mediumHorizontalPadding: Math.round(horizontalPaddingRatio * units.mediumSpacing)
-
-    /**
-     * These can work around the fact that units.fontMetrics doesn't account for custom font sizes used by different controls
-     */
-    function dynamicControlHeight(iconHeight, pointSize, totalVerticalPadding) {
-        /* pointSize / 0.75 == pixelSize == roughly the height of "ph|".
-         * HACK: pixelSize * 1.21875 == roughly the height of '█'.
-         * I got 1.21875 by looking at "█ph|" (96pt Noto Sans), counting the heights in pixels
-         * and then dividing the block height by the pixel size of the text.
-         */
-        return Math.max(iconHeight, units.estimatedBoundingRectHeight(pointSize)) + totalVerticalPadding;
-    }
-
-    function dynamicControlPadding(iconHeight, pointSize) {
-        return Math.round(Math.max(iconHeight, units.estimatedBoundingRectHeight(pointSize)) / 2);
-    }
-
-    function estimatedBoundingRectHeight(pointSize) {
-        return Math.floor(pointSize / 0.75 * 1.3671875);
-    }
-
-    function estimatedBlockHeight(pointSize) {
-        return Math.floor(pointSize / 0.75 * 1.21875);
-    }
+    property int  mediumHorizontalPadding: Math.round(horizontalPaddingRatio * Kirigami.Units.mediumSpacing)
 
     function symbolSize(size) {
         size -= size % 6
         size -= size/3
         return size
     }
-    //END Breeze Units
 
     /**
      * Units.verySmallSpacing is the amount of spacing that should be used around smaller UI elements,
@@ -151,142 +82,14 @@ QtObject {
     property int verySmallSpacing: Kirigami.Units.smallSpacing * 0.5
 
     /**
-     * Units.smallSpacing is the amount of spacing that should be used around smaller UI elements,
-     * for example as spacing in Columns. Internally, this size depends on the size of
-     * the default font as rendered on the screen, so it takes user-configured font size and DPI
-     * into account.
-     */
-    property int smallSpacing: Kirigami.Units.smallSpacing
-
-    /**
-     * Units.mediumSpacing is the amount of spacing that should be used around medium UI elements
-     */
-    property int mediumSpacing: Kirigami.Units.smallSpacing * 1.5
-
-    /**
-     * Units.largeSpacing is the amount of spacing that should be used inside bigger UI elements,
-     * for example between an icon and the corresponding text. Internally, this size depends on
-     * the size of the default font as rendered on the screen, so it takes user-configured font
-     * size and DPI into account.
-     */
-    property int largeSpacing: Kirigami.Units.largeSpacing
-
-    /**
      * Units.veryLargeSpacing is the amount of spacing that should be used inside very big UI elements
      */
     property int veryLargeSpacing: Kirigami.Units.largeSpacing * 1.5
 
     /**
-     * The ratio between physical and device-independent pixels. This value does not depend on the \
-     * size of the configured font. If you want to take font sizes into account when scaling elements,
-     * use theme.mSize(theme.defaultFont), units.smallSpacing and units.largeSpacing.
-     * The devicePixelRatio follows the definition of "device independent pixel" by Microsoft.
-     *
-     * @deprecated See Kirigami.Units.devicePixelRatio
-     */
-    property real devicePixelRatio: Kirigami.Units.devicePixelRatio
-
-    /**
-     * units.shortDuration should be used for short animations, such as accentuating a UI event,
-     * hover events, etc..
-     */
-    property int veryShortDuration: Kirigami.Units.veryShortDuration
-
-    /**
-     * units.shortDuration should be used for short animations, such as accentuating a UI event,
-     * hover events, etc..
-     */
-    property int shortDuration: Kirigami.Units.shortDuration
-
-    /**
-     * units.shortDuration should be used for short animations, such as accentuating a UI event,
-     * hover events, etc..
-     */
-    property int mediumDuration: Kirigami.Units.longDuration * 0.75 // Was 150
-
-    /**
-     * units.longDuration should be used for longer, screen-covering animations, for opening and
-     * closing of dialogs and other "not too small" animations
-     */
-    property int longDuration: Kirigami.Units.longDuration
-
-    /**
-     * units.veryLongDuration should be used for specialty animations that benefit
-     * from being even longer than longDuration.
-     */
-    property int veryLongDuration: Kirigami.Units.veryLongDuration
-
-    /**
-     * time in ms by which the display of tooltips will be delayed.
-     *
-     * @sa ToolTip.delay property
-     */
-    property int toolTipDelay: Kirigami.Units.toolTipDelay
-
-    /**
-     * See Kirigami.Units.humanMoment
-     */
-    property int humanMoment: Kirigami.Units.humanMoment
-
-    /**
-     * How much the mouse scroll wheel scrolls, expressed in lines of text.
-     * Note: this is strictly for classical mouse wheels, touchpads 2 figer scrolling won't be affected
-     */
-    readonly property int wheelScrollLines: Kirigami.Units.wheelScrollLines
-
-    /**
      * metrics used by the default font
      */
     property var fontMetrics: FontMetrics {
-        /* Height of a flat topped capital letter
-         *
-         * QFontEngine (private, used by QFontMetricsF) uses an 'H' to
-         * calculate capHeight(), so the behavior should match the behavior
-         * of QFontMetricsF::capHeight().
-         * NOTE: With FreeType, QFontMetricsF::capHeight() is just an alias to QFontMetricsF::ascent()
-         *
-         * WARNING: Very Latin-centric. Be kind to your translators and use it
-         * carefully. Don't make areas with text that are too small to look
-         * good with or at least contain scripts that aren't based on Latin.
-         * Examples of scripts to check: CJK, Arabic, Devanagari, Malayalam
-         */
-        property real flatCapHeight: fontMetrics.tightBoundingRect("ETIFHL").height
-
-        /// Height of a full block character
-        property real blockHeight: fontMetrics.tightBoundingRect('█').height
-
-        property real verticalBarHeight: fontMetrics.tightBoundingRect('|').height
-
-        /* Can be used to guess the font's stroke width.
-         * It's not always exactly the same as letter stroke widths.
-         * In fonts where 'l' is just a straight line, 'l' is more accurate,
-         * but 'l' isn't always just a straight line.
-         */
-        property real verticalBarWidth: fontMetrics.tightBoundingRect('|').width
-
-        property real emWidth: fontMetrics.boundingRect('M').width
         property real fullWidthCharWidth: fontMetrics.tightBoundingRect('＿').width
-
-        function roundedIconSize(size) {
-            if (size < 16) {
-                return size;
-            } else if (size < 22) {
-                return 16;
-            } else if (size < 32) {
-                return 22;
-            } else if (size < 48) {
-                return 32;
-            } else if (size < 64) {
-                return 48;
-            } else {
-                return size;
-            }
-        }
-    }
-
-    property real pixelSizeBoundingRectHeightRatio: __boundingRectRatioFontMetrics.font.pixelSize / __boundingRectRatioFontMetrics.height
-
-    property var __boundingRectRatioFontMetrics: FontMetrics {
-        font.pointSize: 96
     }
 }
