@@ -239,7 +239,9 @@ PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
     setSmallFont((*s_style)->smallFont);
 
     syncWindow();
-    syncColors();
+    if (!m_lastColors) {
+        syncColors();
+    }
 }
 
 PlasmaDesktopTheme::~PlasmaDesktopTheme()
@@ -271,8 +273,8 @@ void PlasmaDesktopTheme::syncWindow()
 
     if (window) {
         connect(m_window.data(), &QWindow::activeChanged, this, &PlasmaDesktopTheme::syncColors);
-        syncColors();
     }
+    syncColors();
 }
 
 QIcon PlasmaDesktopTheme::iconFromTheme(const QString &name, const QColor &customColor)
