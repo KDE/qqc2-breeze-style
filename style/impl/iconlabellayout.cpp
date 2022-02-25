@@ -738,12 +738,20 @@ void IconLabelLayout::componentComplete()
     relayout();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void IconLabelLayout::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
+#else
+void IconLabelLayout::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
+#endif
 {
     if (newGeometry != oldGeometry) {
         setAvailableWidth();
         setAvailableHeight();
         relayout();
     }
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
+#else
+    QQuickItem::geometryChange(newGeometry, oldGeometry);
+#endif
 }

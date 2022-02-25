@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 #set(KF5_VERSION "5.75.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.76.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.91.0") # handled by release scripts
 
 project(qqc2-breeze-style VERSION 1.0)
 
@@ -34,15 +34,16 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
+set(KDE_COMPILERSETTINGS_LEVEL 5.84.0)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
 
 #TODO: Clean up dependencies. I was experimenting.
-find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
+find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
 
 if (NOT ANDROID)
-    find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
+    find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
     find_package(KF5IconThemes ${KF5_DEP_VERSION} REQUIRED)
 endif()
 
@@ -55,7 +56,7 @@ endif()
 # When building as a static plugin, dependencies may add a -lQt5X11Extras
 # to the linker, in that case, it requires to have the proper variables
 # to exists.
-if(X11_FOUND)
+if(X11_FOUND AND NOT QT_MAJOR_VERSION EQUAL "5")
     find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} NO_MODULE QUIET)
 endif()
 
@@ -76,7 +77,7 @@ configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/KF5QQC2BreezeStyleConfig.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/KF5QQC2BreezeStyleConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
-  PATH_VARS  KF5_INCLUDE_INSTALL_DIR CMAKE_INSTALL_PREFIX
+  PATH_VARS  KDE_INSTALL_INCLUDEDIR_KF CMAKE_INSTALL_PREFIX
 )
 
 install(FILES
