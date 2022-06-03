@@ -8,7 +8,6 @@ depends org.kde.kirigami 2.14
 # Make sure the style works with Qt Quick Designer
 designersupported
 
-BackgroundGradient 1.0 BackgroundGradient.qml
 ButtonBackground 1.0 ButtonBackground.qml
 CheckIndicator 1.0 CheckIndicator.qml
 ComboBoxBackground 1.0 ComboBoxBackground.qml

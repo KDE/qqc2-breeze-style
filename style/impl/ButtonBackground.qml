@@ -95,11 +95,4 @@ Kirigami.ShadowedRectangle {
         baseRadius: mainBackground.radius
         visible: control.visualFocus
     }
-
-    BackgroundGradient {
-        id: bgGradient
-        radius: mainBackground.radius
-        opacity: control.down || control.hovered ? 0 : 1
-        visible: !control.editable && !control.flat && control.enabled
-    }
 }
