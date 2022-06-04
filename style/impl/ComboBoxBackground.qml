@@ -68,11 +68,10 @@ Rectangle {
 
     radius: Impl.Units.smallRadius
 
-    SmallShadow {
+    SmallBoxShadow {
         id: shadow
         opacity: control.down ? 0 : 1
         visible: !control.editable && !control.flat && control.enabled
-        z: -1
         radius: parent.radius
     }
 
