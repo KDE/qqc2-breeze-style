@@ -81,11 +81,10 @@ Rectangle {
         }
     }
 
-    SmallShadow {
+    SmallBoxShadow {
         id: shadow
         opacity: root.pressed ? 0 : 1
         visible: control.enabled
-        z: -1
         radius: parent.radius
     }
 

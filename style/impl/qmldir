@@ -24,7 +24,7 @@ RadioIndicator 1.0 RadioIndicator.qml
 ScrollHandle 1.0 ScrollHandle.qml
 SliderGroove 1.0 SliderGroove.qml
 SliderHandle 1.0 SliderHandle.qml
-SmallShadow 1.0 SmallShadow.qml
+SmallBoxShadow 1.0 SmallBoxShadow.qml
 SpinBoxIndicator 1.0 SpinBoxIndicator.qml
 SwitchIndicator 1.0 SwitchIndicator.qml
 TextEditBackground 1.0 TextEditBackground.qml

@@ -82,14 +82,12 @@ Kirigami.ShadowedRectangle {
         }
     }
 
-    SmallShadow {
-        id: shadowRect
+    SmallBoxShadow {
         opacity: control.down ? 0 : 1
         visible: !control.editable && !control.flat && control.enabled
-        z: -1
         radius: mainBackground.radius
     }
-
+    
     FocusRect {
         id: focusRect
         baseRadius: mainBackground.radius
