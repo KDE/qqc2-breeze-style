@@ -13,3 +13,5 @@ Dependencies:
     'frameworks/kiconthemes': '@latest'
     'frameworks/kirigami': '@latest'
     'frameworks/kwidgetsaddons': '@latest'
+Options:
+  require-passing-tests-on: [ 'Linux', 'FreeBSD']
