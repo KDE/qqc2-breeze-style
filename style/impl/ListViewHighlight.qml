@@ -11,8 +11,9 @@ Kirigami.ShadowedRectangle {
     id: root
     property int currentIndex: -1
     property int count: 0
-    readonly property real topRadius: root.currentIndex == 0 ? Impl.Units.smallRadius : 0
-    readonly property real bottomRadius: root.currentIndex == Math.max(root.count-1, 0) ? Impl.Units.smallRadius : 0
+    property bool alwaysCurveCorners: false
+    readonly property real topRadius: (alwaysCurveCorners || root.currentIndex == 0) ? Impl.Units.smallRadius : 0
+    readonly property real bottomRadius: (alwaysCurveCorners || root.currentIndex == Math.max(root.count-1, 0)) ? Impl.Units.smallRadius : 0
 
     Kirigami.Theme.colorSet: Kirigami.Theme.Selection
     Kirigami.Theme.inherit: false

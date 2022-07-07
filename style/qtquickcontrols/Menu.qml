@@ -28,7 +28,7 @@ T.Menu {
                             contentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
-
+    padding: Kirigami.Units.smallSpacing
     margins: 0
     overlap: background && background.hasOwnProperty("border") ? background.border.width : 0
 
@@ -45,6 +45,7 @@ T.Menu {
         highlight: Impl.ListViewHighlight {
             currentIndex: control.currentIndex
             count: control.count
+            alwaysCurveCorners: true
         }
         // For some reason, `keyNavigationEnabled: true` isn't needed and
         // using it causes separators and disabled items to be highlighted

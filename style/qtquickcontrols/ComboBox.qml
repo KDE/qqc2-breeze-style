@@ -170,6 +170,7 @@ T.ComboBox {
         x: (control.width - width)/2
         implicitWidth: contentWidth + leftPadding + rightPadding
         width: Math.max(control.width, implicitWidth)
+        padding: Kirigami.Units.smallSpacing
 
         delegate: null
 
@@ -188,6 +189,7 @@ T.ComboBox {
             highlight: Impl.ListViewHighlight {
                 currentIndex: control.highlightedIndex
                 count: control.count
+                alwaysCurveCorners: true
             }
             interactive: Window.window ? contentHeight + control.topPadding + control.bottomPadding > Window.window.height : false
             clip: interactive // Only needed when the ListView can be dragged/flicked
