@@ -46,7 +46,7 @@ if (NOT ANDROID)
     find_package(KF5IconThemes ${KF5_DEP_VERSION} REQUIRED)
 endif()
 
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons ConfigWidgets)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons ConfigWidgets I18n)
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)
@@ -171,3 +171,5 @@ feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAG
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+
+ki18n_install(po)
