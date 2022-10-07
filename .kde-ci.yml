@@ -12,5 +12,4 @@ Dependencies:
     'frameworks/kguiaddons': '@latest'
     'frameworks/kiconthemes': '@latest'
     'frameworks/kirigami': '@latest'
-    'frameworks/ki18n': '@latest'
     'frameworks/kwidgetsaddons': '@latest'
