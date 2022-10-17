@@ -11,6 +11,10 @@ import "impl" as Impl
 T.ScrollIndicator {
     id: control
 
+    // content may be loaded after this component, ensure it always stays above content
+    // inline with qqc2-desktop-style behaviour
+    z: 9999
+
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
