@@ -19,7 +19,13 @@ ecm_qt_declare_logging_category(qqc2breezestyle_SRCS
 )
 ]]
 
-add_library(qqc2breezestyleplugin SHARED ${qqc2breezestyle_SRCS})
+ecm_add_qml_module(qqc2breezestyleplugin URI "org.kde.breeze" CLASSNAME QQC2BreezeStylePlugin)
+ecm_add_qml_module_dependencies(qqc2breezestyleplugin
+DEPENDS
+    "QtQuick.Controls 2.15"
+    "org.kde.kirigami 2.14"
+)
+target_sources(qqc2breezestyleplugin PRIVATE ${qqc2breezestyle_SRCS})
 target_link_libraries(qqc2breezestyleplugin
     Qt::Core
     Qt::Gui
@@ -42,5 +48,4 @@ add_subdirectory(impl)
 add_subdirectory(qtquickcontrols)
 add_subdirectory(kirigami)
 
-install(TARGETS qqc2breezestyleplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/breeze)
-install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/breeze)
+ecm_finalize_qml_module(qqc2breezestyleplugin DESTINATION ${KDE_INSTALL_QMLDIR})

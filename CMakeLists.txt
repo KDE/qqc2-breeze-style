@@ -38,6 +38,7 @@ set(KDE_COMPILERSETTINGS_LEVEL 5.84.0)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
+include(ECMQmlModule)
 
 #TODO: Clean up dependencies. I was experimenting.
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
