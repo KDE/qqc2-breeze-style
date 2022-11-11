@@ -1,6 +1,12 @@
 project(qqc2breezestyle)
 
-set(qqc2breezestyle_SRCS
+ecm_add_qml_module(qqc2breezestyleplugin URI "org.kde.breeze" CLASSNAME QQC2BreezeStylePlugin)
+ecm_add_qml_module_dependencies(qqc2breezestyleplugin
+DEPENDS
+    "QtQuick.Controls 2.15"
+    "org.kde.kirigami 2.14"
+)
+target_sources(qqc2breezestyleplugin PRIVATE
     qqc2breezestyleplugin.cpp
     impl/paintedsymbolitem.cpp
     impl/iconlabellayout.cpp
@@ -8,24 +14,6 @@ set(qqc2breezestyle_SRCS
     impl/kcolorutilssingleton.cpp
     impl/breezedial.cpp
 )
-
-#[[ I don't actually know if this would work.
-ecm_qt_declare_logging_category(qqc2breezestyle_SRCS
-    HEADER qqc2breezestyle_debug.h
-    IDENTIFIER QQC2BreezeStyle_LOG
-    CATEGORY_NAME org.kde.breeze
-    DESCRIPTION "QQC2BreezeStyle"
-    EXPORT QQC2BreezeStyle
-)
-]]
-
-ecm_add_qml_module(qqc2breezestyleplugin URI "org.kde.breeze" CLASSNAME QQC2BreezeStylePlugin)
-ecm_add_qml_module_dependencies(qqc2breezestyleplugin
-DEPENDS
-    "QtQuick.Controls 2.15"
-    "org.kde.kirigami 2.14"
-)
-target_sources(qqc2breezestyleplugin PRIVATE ${qqc2breezestyle_SRCS})
 target_link_libraries(qqc2breezestyleplugin
     Qt::Core
     Qt::Gui
