@@ -27,13 +27,6 @@ T.DialogButtonBox {
 
     padding: Kirigami.Units.smallSpacing
 
-    // Add space for the separator above the footer
-    topPadding: __isFooter && background && background.hasOwnProperty("separator") ?
-        background.separator.height + verticalPadding : verticalPadding
-    // Add space for the separator below the header
-    bottomPadding: __isHeader && background && background.hasOwnProperty("separator") ?
-        background.separator.height + verticalPadding : verticalPadding
-
     alignment: Qt.AlignRight
 
     delegate: Button {
@@ -61,14 +54,8 @@ T.DialogButtonBox {
             bottomRightRadius: bottomRadius
         }
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
-        implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0)
+        implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2)
         color: control.__isInPopup ? "transparent" : Kirigami.Theme.backgroundColor
-        property Item separator: Kirigami.Separator {
-            parent: background
-            visible: control.__isHeader || control.__isFooter
-            width: parent.width
-            y: control.__isFooter ? 0 : parent.height - height
-        }
     }
 
     // Standard buttons are destroyed and then recreated every time
