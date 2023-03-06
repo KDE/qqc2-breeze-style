@@ -189,7 +189,7 @@ void PaintedSymbolItem::setColor(const QColor &color)
     d->color = color;
     d->pen.setColor(d->color);
     update();
-    emit colorChanged();
+    Q_EMIT colorChanged();
 }
 
 // penWidth
@@ -208,7 +208,7 @@ void PaintedSymbolItem::setPenWidth(const qreal penWidth)
 
     d->penWidth = penWidth == 1 ? 1.001 : penWidth;
     d->pen.setWidthF(d->penWidth);
-    emit penWidthChanged();
+    Q_EMIT penWidthChanged();
 }
 
 // symbolType
@@ -227,5 +227,5 @@ void PaintedSymbolItem::setSymbolType(const SymbolType symbolType)
 
     d->symbolType = symbolType;
     update();
-    emit symbolTypeChanged();
+    Q_EMIT symbolTypeChanged();
 }

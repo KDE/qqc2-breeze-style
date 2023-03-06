@@ -1,24 +1,26 @@
 
-
 set(org.kde.breeze_SRCS
     plasmadesktoptheme.cpp
     kirigamiplasmafactory.cpp
     units.cpp
 )
 
-kcoreaddons_add_plugin(org.kde.breeze SOURCES ${org.kde.breeze_SRCS} INSTALL_NAMESPACE "kf5/kirigami" JSON kirigamiplasmaintegration.json)
+add_library(org.kde.breeze MODULE ${org.kde.desktop_SRCS})
 
 target_link_libraries(org.kde.breeze
     PUBLIC
         Qt::Core
-        KF5::Kirigami2
+        KF6::Kirigami2
     PRIVATE
         Qt::Qml
         Qt::Quick
-        KF5::GuiAddons
-        KF5::ConfigWidgets
+        KF6::GuiAddons
+        KF6::ConfigWidgets
 )
 
 if(NOT ANDROID)
-    target_link_libraries(org.kde.breeze PRIVATE Qt::DBus KF5::IconThemes)
+    target_link_libraries(org.kde.breeze PRIVATE Qt::DBus KF6::IconThemes)
 endif()
+
+install(TARGETS org.kde.breeze DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf6/kirigami)
+

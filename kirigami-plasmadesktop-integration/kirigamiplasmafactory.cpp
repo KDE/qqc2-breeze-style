@@ -9,7 +9,7 @@
 #include "units.h"
 
 KirigamiPlasmaFactory::KirigamiPlasmaFactory(QObject *parent)
-    : Kirigami::KirigamiPluginFactoryV2(parent)
+    : Kirigami::KirigamiPluginFactory(parent)
 {
 }
 

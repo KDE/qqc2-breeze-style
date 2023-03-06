@@ -21,14 +21,14 @@ target_link_libraries(qqc2breezestyleplugin
     Qt::Quick
     Qt::QuickControls2
     Qt::QuickTemplates2
-    KF5::ConfigCore
-    KF5::Kirigami2
-    KF5::GuiAddons
+    KF6::ConfigCore
+    KF6::Kirigami2
+    KF6::GuiAddons
 )
 
-if(KF5ConfigWidgets_FOUND)
+if(KF6ConfigWidgets_FOUND)
     target_link_libraries(qqc2breezestyleplugin
-        KF5::ConfigWidgets
+        KF6::ConfigWidgets
     )
 endif()
 

@@ -318,7 +318,7 @@ void IconLabelLayout::setIconComponent(QQmlComponent *iconComponent)
 
     d->iconComponent = iconComponent;
     d->updateOrSyncIconItem();
-    emit iconComponentChanged();
+    Q_EMIT iconComponentChanged();
 }
 
 QQmlComponent *IconLabelLayout::labelComponent() const
@@ -336,7 +336,7 @@ void IconLabelLayout::setLabelComponent(QQmlComponent *labelComponent)
 
     d->labelComponent = labelComponent;
     d->updateOrSyncLabelItem();
-    emit labelComponentChanged();
+    Q_EMIT labelComponentChanged();
 }
 
 bool IconLabelLayout::hasIcon() const
@@ -353,7 +353,7 @@ void IconLabelLayout::setHasIcon()
     }
 
     d->hasIcon = !textOnly() && !d->icon.isEmpty();
-    emit hasIconChanged();
+    Q_EMIT hasIconChanged();
 }
 
 bool IconLabelLayout::hasLabel() const
@@ -370,7 +370,7 @@ void IconLabelLayout::setHasLabel()
     }
 
     d->hasLabel = !iconOnly() && !d->text.isEmpty();
-    emit hasLabelChanged();
+    Q_EMIT hasLabelChanged();
 }
 
 QQuickIcon IconLabelLayout::icon() const
@@ -390,7 +390,7 @@ void IconLabelLayout::setIcon(const QQuickIcon &icon)
     setHasIcon();
     d->updateOrSyncIconItem();
 
-    emit iconChanged();
+    Q_EMIT iconChanged();
 }
 
 QString IconLabelLayout::text() const
@@ -409,7 +409,7 @@ void IconLabelLayout::setText(const QString &text)
     d->text = text;
     setHasLabel();
     d->updateOrSyncLabelItem();
-    emit textChanged(text);
+    Q_EMIT textChanged(text);
 }
 
 QFont IconLabelLayout::font() const
@@ -429,7 +429,7 @@ void IconLabelLayout::setFont(const QFont &font)
     if (d->labelItem) {
         d->labelItem->setProperty("font", font);
     }
-    emit fontChanged(font);
+    Q_EMIT fontChanged(font);
 }
 
 QColor IconLabelLayout::color() const
@@ -450,7 +450,7 @@ void IconLabelLayout::setColor(const QColor &color)
         d->labelItem->setProperty("color", color);
     }
 
-    emit colorChanged();
+    Q_EMIT colorChanged();
 }
 
 QRectF IconLabelLayout::iconRect() const
@@ -469,7 +469,7 @@ void IconLabelLayout::setIconRect(const QRectF &rect)
     }
 
     d->iconRect = alignedRect;
-    emit iconRectChanged();
+    Q_EMIT iconRectChanged();
 }
 
 QRectF IconLabelLayout::labelRect() const
@@ -486,7 +486,7 @@ void IconLabelLayout::setLabelRect(const QRectF &rect)
     }
 
     d->labelRect = rect;
-    emit labelRectChanged();
+    Q_EMIT labelRectChanged();
 }
 
 qreal IconLabelLayout::availableWidth() const
@@ -504,7 +504,7 @@ void IconLabelLayout::setAvailableWidth()
     }
 
     d->availableWidth = newAvailableWidth;
-    emit availableWidthChanged();
+    Q_EMIT availableWidthChanged();
 }
 
 qreal IconLabelLayout::availableHeight() const
@@ -522,7 +522,7 @@ void IconLabelLayout::setAvailableHeight()
     }
 
     d->availableHeight = newAvailableHeight;
-    emit availableHeightChanged();
+    Q_EMIT availableHeightChanged();
 }
 
 qreal IconLabelLayout::spacing() const
@@ -539,7 +539,7 @@ void IconLabelLayout::setSpacing(qreal spacing)
     }
 
     d->spacing = spacing;
-    emit spacingChanged();
+    Q_EMIT spacingChanged();
     if (d->iconItem && d->labelItem) {
         relayout();
     }
@@ -559,7 +559,7 @@ void IconLabelLayout::setLeftPadding(qreal leftPadding)
     }
 
     d->leftPadding = leftPadding;
-    emit leftPaddingChanged();
+    Q_EMIT leftPaddingChanged();
     relayout();
 }
 
@@ -577,7 +577,7 @@ void IconLabelLayout::setRightPadding(qreal rightPadding)
     }
 
     d->rightPadding = rightPadding;
-    emit rightPaddingChanged();
+    Q_EMIT rightPaddingChanged();
     relayout();
 }
 
@@ -595,7 +595,7 @@ void IconLabelLayout::setTopPadding(qreal topPadding)
     }
 
     d->topPadding = topPadding;
-    emit topPaddingChanged();
+    Q_EMIT topPaddingChanged();
     relayout();
 }
 
@@ -613,7 +613,7 @@ void IconLabelLayout::setBottomPadding(qreal bottomPadding)
     }
 
     d->bottomPadding = bottomPadding;
-    emit bottomPaddingChanged();
+    Q_EMIT bottomPaddingChanged();
     relayout();
 }
 
@@ -631,7 +631,7 @@ void IconLabelLayout::setMirrored(bool mirrored)
     }
 
     d->mirrored = mirrored;
-    emit mirroredChanged();
+    Q_EMIT mirroredChanged();
     if (isComponentComplete()) {
         d->layout();
     }
@@ -658,7 +658,7 @@ void IconLabelLayout::setAlignment(Qt::Alignment alignment)
         d->labelItem->setProperty("horizontalAlignment", halign);
         d->labelItem->setProperty("verticalAlignment", valign);
     }
-    emit alignmentChanged();
+    Q_EMIT alignmentChanged();
     if (isComponentComplete()) {
         d->layout();
     }
@@ -679,16 +679,16 @@ void IconLabelLayout::setDisplay(IconLabelLayout::Display display)
     }
 
     d->display = display;
-    emit displayChanged();
+    Q_EMIT displayChanged();
 
     if (oldDisplay == iconOnly()) {
-        emit iconOnlyChanged();
+        Q_EMIT iconOnlyChanged();
     } else if (oldDisplay == textOnly()) {
-        emit textOnlyChanged();
+        Q_EMIT textOnlyChanged();
     } else if (oldDisplay == textBesideIcon()) {
-        emit textBesideIconChanged();
+        Q_EMIT textBesideIconChanged();
     } else if (oldDisplay == textUnderIcon()) {
-        emit textUnderIconChanged();
+        Q_EMIT textUnderIconChanged();
     }
 
     setHasIcon();

@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-#set(KF5_VERSION "5.75.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.91.0") # handled by release scripts
+set(KF_VERSION "5.240.0") # handled by release scripts
+set(KF_DEP_VERSION "5.240.0") # handled by release scripts
 
 project(qqc2-breeze-style VERSION 1.0)
 
-# QT_VERSION >= 5.15.2 is required for Layout margins with working support for LayoutMirroring
-set(REQUIRED_QT_VERSION 5.15.0)
+set(REQUIRED_QT_VERSION 6.4.0)
 
 ################# Disallow in-source build #################
 
@@ -25,7 +24,7 @@ include(FeatureSummary)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(ECM ${KF5_DEP_VERSION} REQUIRED NO_MODULE)
+find_package(ECM ${KF_DEP_VERSION} REQUIRED NO_MODULE)
 
 # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
@@ -34,21 +33,19 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
-set(KDE_COMPILERSETTINGS_LEVEL 5.84.0)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
 include(ECMQmlModule)
 
-#TODO: Clean up dependencies. I was experimenting.
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
 
 if (NOT ANDROID)
     find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
-    find_package(KF5IconThemes ${KF5_DEP_VERSION} REQUIRED)
+    find_package(KF6IconThemes ${KF_DEP_VERSION} REQUIRED)
 endif()
 
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons ConfigWidgets)
+find_package(KF6 ${KF_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons ConfigWidgets)
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)
@@ -58,14 +55,14 @@ endif()
 # to the linker, in that case, it requires to have the proper variables
 # to exists.
 if(X11_FOUND AND NOT QT_MAJOR_VERSION EQUAL "5")
-    find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} NO_MODULE QUIET)
+    find_package(Qt6X11Extras ${REQUIRED_QT_VERSION} NO_MODULE QUIET)
 endif()
 
-set_package_properties(IconThemes PROPERTIES DESCRIPTION "KF5 IconThemes framework"
+set_package_properties(IconThemes PROPERTIES DESCRIPTION "KF6 IconThemes framework"
                        TYPE OPTIONAL
                        PURPOSE "Optional integration of Kirigami with KIconLoader icons handling for a better integration with Plasma Desktop"
                       )
-set_package_properties(ConfigWidgets PROPERTIES DESCRIPTION "KF5 WidgetAddons framework"
+set_package_properties(ConfigWidgets PROPERTIES DESCRIPTION "KF6 WidgetAddons framework"
                        TYPE OPTIONAL
                        PURPOSE "Optional integration of Kirigami with KColorScheme for color palettes integration with Plasma Desktop"
                       )
@@ -75,15 +72,15 @@ find_package(PkgConfig)
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5QQC2BreezeStyle")
 
 configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/KF5QQC2BreezeStyleConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5QQC2BreezeStyleConfig.cmake"
+  "${CMAKE_CURRENT_SOURCE_DIR}/KF6QQC2BreezeStyleConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6QQC2BreezeStyleConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
   PATH_VARS  KDE_INSTALL_INCLUDEDIR_KF CMAKE_INSTALL_PREFIX
 )
 
 install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5QQC2BreezeStyleConfig.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5QQC2BreezeStyleConfigVersion.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6QQC2BreezeStyleConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF6QQC2BreezeStyleConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )
@@ -91,7 +88,7 @@ install(FILES
 
 ecm_setup_version(PROJECT
     VARIABLE_PREFIX QQC2BREEZESTYLE
-    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5QQC2BreezeStyleConfigVersion.cmake"
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6QQC2BreezeStyleConfigVersion.cmake"
     SOVERSION 5)
 
 #########################################################################
@@ -103,36 +100,11 @@ add_subdirectory(style)
 
 add_subdirectory(kirigami-plasmadesktop-integration)
 
-# FIXME: this assumes there will always be a QQC2 release for each Qt release, needs
-# something to discover what's the latest qqc2 version available
-# Since 5.12, QQC2 version is sync with Qt's minor version:
-# https://github.com/qt/qtquickcontrols2/commit/3c7bfc156797b2f3ef08a8cf620b79da80e4b061
-if (Qt5QuickControls2_VERSION_MINOR LESS 12)
-    math(EXPR QQC2_VERSION_MINOR "${Qt5QuickControls2_VERSION_MINOR} - 7")
-else()
-    set(QQC2_VERSION_MINOR "${Qt5QuickControls2_VERSION_MINOR}")
-endif()
+set(QQC2_VERSION_MINOR "${Qt6QuickControls2_VERSION_MINOR}")
 set(QQC2_VERSION "2.${QQC2_VERSION_MINOR}")
 
-if (QQC2_VERSION_MINOR LESS 3)
-    set(DISABLE_UNDER_QQC2_2_3 "//Needs QtQuick.Controls 2.3 ")
-else()
-    set(DISABLE_UNDER_QQC2_2_3 "")
-endif()
-
-if (QQC2_VERSION_MINOR LESS 4)
-    set(DISABLE_UNDER_QQC2_2_4 "//Needs QtQuick.Controls 2.4 ")
-else()
-    set(DISABLE_UNDER_QQC2_2_4 "")
-endif()
-
-if (Qt5Qml_VERSION_STRING VERSION_GREATER_EQUAL 5.14)
-    set(DISABLE_UNDER_QT_5_14 "")
-    set(DISABLE_AT_QT_5_14 "//Disabled since Qt 5.14 ")
-else()
-    set(DISABLE_UNDER_QT_5_14 "//Needs Qt 5.14 ")
-    set(DISABLE_AT_QT_5_14 "")
-endif()
+set(DISABLE_UNDER_QT_5_14 "")
+set(DISABLE_AT_QT_5_14 "//Disabled since Qt 5.14 ")
 
 # TODO: Automate Kirigami version
 # This code doesn't work yet
@@ -148,8 +120,7 @@ FOREACH(infileName ${inFiles})
         "${CMAKE_CURRENT_SOURCE_DIR}/${infileName}"
         "${CMAKE_CURRENT_BINARY_DIR}/${infileName}"
         INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
-        PATH_VARS  QQC2_VERSION DISABLE_UNDER_QQC2_2_3
-        DISABLE_UNDER_QQC2_2_4
+        PATH_VARS  QQC2_VERSION
     )
 ENDFOREACH(infileName)
 
