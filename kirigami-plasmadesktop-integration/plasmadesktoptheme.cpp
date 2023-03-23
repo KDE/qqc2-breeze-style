@@ -68,6 +68,7 @@ public:
          * reproduce issues with all fractional scale factors.
          */
         qreal devicePixelRatio = qGuiApp->devicePixelRatio();
+#ifndef Q_OS_ANDROID
         QQuickWindow::TextRenderType defaultTextRenderType = (int(devicePixelRatio) == devicePixelRatio //
                                                                   ? QQuickWindow::NativeTextRendering
                                                                   : QQuickWindow::QtTextRendering);
@@ -84,6 +85,11 @@ public:
         }
 
         QQuickWindow::setTextRenderType(defaultTextRenderType);
+#else
+        // Native rendering on android is broken, so prefer Qt rendering in
+        // this case.
+        QQuickWindow::setTextRenderType(QQuickWindow::QtTextRendering);
+#endif
 
         smallFont = loadSmallFont();
     }
