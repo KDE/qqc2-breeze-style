@@ -26,12 +26,6 @@ target_link_libraries(qqc2breezestyleplugin
     KF6::GuiAddons
 )
 
-if(KF6ConfigWidgets_FOUND)
-    target_link_libraries(qqc2breezestyleplugin
-        KF6::ConfigWidgets
-    )
-endif()
-
 add_subdirectory(impl)
 add_subdirectory(qtquickcontrols)
 add_subdirectory(kirigami)

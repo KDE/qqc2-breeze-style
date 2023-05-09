@@ -45,7 +45,7 @@ if (NOT ANDROID)
     find_package(KF6IconThemes ${KF_DEP_VERSION} REQUIRED)
 endif()
 
-find_package(KF6 ${KF_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons ConfigWidgets)
+find_package(KF6 ${KF_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons ColorScheme)
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)
@@ -62,7 +62,7 @@ set_package_properties(IconThemes PROPERTIES DESCRIPTION "KF6 IconThemes framewo
                        TYPE OPTIONAL
                        PURPOSE "Optional integration of Kirigami with KIconLoader icons handling for a better integration with Plasma Desktop"
                       )
-set_package_properties(ConfigWidgets PROPERTIES DESCRIPTION "KF6 WidgetAddons framework"
+set_package_properties(ColorScheme PROPERTIES DESCRIPTION "KF6 WidgetAddons framework"
                        TYPE OPTIONAL
                        PURPOSE "Optional integration of Kirigami with KColorScheme for color palettes integration with Plasma Desktop"
                       )

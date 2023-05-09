@@ -15,7 +15,7 @@ target_link_libraries(org.kde.breeze
         Qt::Qml
         Qt::Quick
         KF6::GuiAddons
-        KF6::ConfigWidgets
+        KF6::ColorScheme
 )
 
 if(NOT ANDROID)
