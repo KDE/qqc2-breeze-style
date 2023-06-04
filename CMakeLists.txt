@@ -38,10 +38,10 @@ include(KDEClangFormat)
 include(KDEGitCommitHooks)
 include(ECMQmlModule)
 
-find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
+find_package(Qt6 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
 
 if (NOT ANDROID)
-    find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
+    find_package(Qt6 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
     find_package(KF6IconThemes ${KF_DEP_VERSION} REQUIRED)
 endif()
 
@@ -54,9 +54,7 @@ endif()
 # When building as a static plugin, dependencies may add a -lQt5X11Extras
 # to the linker, in that case, it requires to have the proper variables
 # to exists.
-if(X11_FOUND AND NOT QT_MAJOR_VERSION EQUAL "5")
-    find_package(Qt6X11Extras ${REQUIRED_QT_VERSION} NO_MODULE QUIET)
-endif()
+find_package(Qt6X11Extras ${REQUIRED_QT_VERSION} NO_MODULE QUIET)
 
 set_package_properties(IconThemes PROPERTIES DESCRIPTION "KF6 IconThemes framework"
                        TYPE OPTIONAL
