@@ -27,7 +27,7 @@ Loader {
         modal: false
         focus: false
         margins: Impl.Units.verySmallSpacing
-        padding: 0
+        padding: Kirigami.Units.smallSpacing
 
         x: xAlignHCenter
         y: yAlignOver
@@ -37,30 +37,30 @@ Loader {
         z: 999
 
         contentItem: RowLayout {
-            spacing: 0
+            spacing: Kirigami.Units.smallSpacing
+
             ToolButton {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-cut"
+                text: i18nc("@action:inmenu Text editor action", "Cut")
                 visible: target && target.selectedText.length > 0 && (!target.hasOwnProperty("echoMode") || target.echoMode === TextInput.Normal)
-                onClicked: {
-                    target.cut();
-                }
+                onClicked: target.cut();
             }
+
             ToolButton {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-copy"
+                text: i18nc("@action:inmenu Text editor action", "Copy")
                 visible: target && target.selectedText.length > 0 && (!target.hasOwnProperty("echoMode") || target.echoMode === TextInput.Normal)
-                onClicked: {
-                    target.copy();
-                }
+                onClicked: target.copy();
             }
+
             ToolButton {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-paste"
+                text: i18nc("@action:inmenu Text editor action", "Paste")
                 visible: target && target.canPaste
-                onClicked: {
-                    target.paste();
-                }
+                onClicked: target.paste();
             }
         }
 
