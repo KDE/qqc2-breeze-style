@@ -32,6 +32,12 @@ if(KF5ConfigWidgets_FOUND)
     )
 endif()
 
+if(TARGET KF5::ColorScheme)
+    target_link_libraries(qqc2breezestyleplugin
+        KF5::ColorScheme
+    )
+endif()
+
 add_subdirectory(impl)
 add_subdirectory(qtquickcontrols)
 add_subdirectory(kirigami)

@@ -22,3 +22,7 @@ target_link_libraries(org.kde.breeze
 if(NOT ANDROID)
     target_link_libraries(org.kde.breeze PRIVATE Qt::DBus KF5::IconThemes)
 endif()
+
+if(TARGET KF5::ColorScheme)
+    target_link_libraries(org.kde.breeze PRIVATE KF5::ColorScheme)
+endif()

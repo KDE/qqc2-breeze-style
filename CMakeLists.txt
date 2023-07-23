@@ -43,12 +43,26 @@ include(ECMQmlModule)
 #TODO: Clean up dependencies. I was experimenting.
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
 
-if (NOT ANDROID)
-    find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
-    find_package(KF5IconThemes ${KF5_DEP_VERSION} REQUIRED)
-endif()
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons)
 
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons ConfigWidgets)
+if (ANDROID)
+    find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS ColorScheme)
+else()
+    find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
+    find_package(KF5 ${KF5_DEP_VERSION} COMPONENTS IconThemes ConfigWidgets)
+
+    set_package_properties(ConfigWidgets PROPERTIES
+        DESCRIPTION "KF5 WidgetAddons framework"
+        TYPE OPTIONAL
+        PURPOSE "Optional integration of Kirigami with KColorScheme for color palettes integration with Plasma Desktop"
+    )
+
+    set_package_properties(IconThemes PROPERTIES
+        DESCRIPTION "KF5 IconThemes framework"
+        TYPE OPTIONAL
+        PURPOSE "Optional integration of Kirigami with KIconLoader icons handling for a better integration with Plasma Desktop"
+    )
+endif()
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)
@@ -60,15 +74,6 @@ endif()
 if(X11_FOUND AND NOT QT_MAJOR_VERSION EQUAL "5")
     find_package(Qt5X11Extras ${REQUIRED_QT_VERSION} NO_MODULE QUIET)
 endif()
-
-set_package_properties(IconThemes PROPERTIES DESCRIPTION "KF5 IconThemes framework"
-                       TYPE OPTIONAL
-                       PURPOSE "Optional integration of Kirigami with KIconLoader icons handling for a better integration with Plasma Desktop"
-                      )
-set_package_properties(ConfigWidgets PROPERTIES DESCRIPTION "KF5 WidgetAddons framework"
-                       TYPE OPTIONAL
-                       PURPOSE "Optional integration of Kirigami with KColorScheme for color palettes integration with Plasma Desktop"
-                      )
 
 find_package(PkgConfig)
 
