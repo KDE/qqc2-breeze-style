@@ -238,3 +238,5 @@ QQuickIcon QQuickIcon::resolve(const QQuickIcon &other) const
 
     return resolved;
 }
+
+#include "moc_qquickicon_p.cpp"

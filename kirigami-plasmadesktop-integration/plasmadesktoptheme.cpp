@@ -413,3 +413,5 @@ bool PlasmaDesktopTheme::lowPowerHardware() const
 }
 
 #include "plasmadesktoptheme.moc"
+
+#include "moc_plasmadesktoptheme.cpp"

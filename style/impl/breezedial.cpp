@@ -192,3 +192,5 @@ void BreezeDial::setNotchesVisible(const qreal notchesVisible)
     update();
     Q_EMIT notchesVisibleChanged();
 }
+
+#include "moc_breezedial.cpp"

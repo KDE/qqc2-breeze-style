@@ -56,3 +56,5 @@ void Units::updateAnimationSpeed()
     setLongDuration(longDuration);
     setVeryLongDuration(longDuration * 2);
 }
+
+#include "moc_units.cpp"

@@ -229,3 +229,5 @@ void PaintedSymbolItem::setSymbolType(const SymbolType symbolType)
     update();
     Q_EMIT symbolTypeChanged();
 }
+
+#include "moc_paintedsymbolitem.cpp"

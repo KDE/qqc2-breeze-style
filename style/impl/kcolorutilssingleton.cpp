@@ -59,3 +59,5 @@ QColor KColorUtilsSingleton::mix(const QColor &color1, const QColor &color2, qre
 {
     return KColorUtils::mix(color1, color2, bias);
 }
+
+#include "moc_kcolorutilssingleton.cpp"

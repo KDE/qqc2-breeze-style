@@ -755,3 +755,5 @@ void IconLabelLayout::geometryChange(const QRectF &newGeometry, const QRectF &ol
     QQuickItem::geometryChange(newGeometry, oldGeometry);
 #endif
 }
+
+#include "moc_iconlabellayout.cpp"
