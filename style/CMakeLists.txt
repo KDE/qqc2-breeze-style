@@ -14,7 +14,7 @@ target_sources(qqc2breezestyleplugin PRIVATE
     impl/kcolorutilssingleton.cpp
     impl/breezedial.cpp
 )
-target_link_libraries(qqc2breezestyleplugin
+target_link_libraries(qqc2breezestyleplugin PRIVATE
     Qt::Core
     Qt::Gui
     Qt::Qml
