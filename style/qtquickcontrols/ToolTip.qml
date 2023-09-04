@@ -8,7 +8,7 @@ import QtQuick.Window
 import QtQuick.Controls as Controls
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
-import "impl" as Impl
+import org.kde.breeze.impl as Impl
 
 /* NOTE:
  * It took a LOT of trial and error to get the text to fit in a specific

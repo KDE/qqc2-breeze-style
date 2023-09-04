@@ -8,7 +8,7 @@
 import QtQuick
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
-import "impl" as Impl
+import org.kde.breeze.impl as Impl
 
 T.Popup {
     id: control

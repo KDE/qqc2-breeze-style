@@ -9,7 +9,7 @@ import QtQuick.Window
 import QtQuick.Controls
 import org.kde.kirigami as Kirigami
 
-import "impl" as Impl
+import org.kde.breeze.impl as Impl
 
 Loader {
     id: root
