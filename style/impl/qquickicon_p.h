@@ -25,7 +25,6 @@ class QQuickIcon
     Q_PROPERTY(int height READ height WRITE setHeight RESET resetHeight FINAL)
     Q_PROPERTY(QColor color READ color WRITE setColor RESET resetColor FINAL)
     Q_PROPERTY(bool cache READ cache WRITE setCache RESET resetCache FINAL)
-    QML_ANONYMOUS
 
 public:
     QQuickIcon();
