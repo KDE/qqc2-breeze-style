@@ -1,5 +1,3 @@
-project(qqc2breezestyle)
-
 file(GLOB qmlfiles
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
     CONFIGURE_DEPENDS

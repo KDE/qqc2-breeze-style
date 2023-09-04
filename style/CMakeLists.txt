@@ -1,5 +1,3 @@
-project(qqc2breezestyle)
-
 ecm_add_qml_module(qqc2breezestyleplugin URI "org.kde.breeze" CLASSNAME QQC2BreezeStylePlugin)
 ecm_add_qml_module_dependencies(qqc2breezestyleplugin
 DEPENDS
