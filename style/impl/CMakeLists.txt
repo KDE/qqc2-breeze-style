@@ -1,11 +1,65 @@
-file(GLOB qmlfiles
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    CONFIGURE_DEPENDS
-    "*.qml"
+ecm_add_qml_module(BreezeImpl URI "org.kde.breeze.impl"
+    GENERATE_PLUGIN_SOURCE
+    DEPENDENCIES
+    "QtQuick.Controls"
+    "org.kde.kirigami"
 )
-install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/QtQuick/Controls.2/org.kde.breeze/impl)
-install(FILES ${qmlfiles} DESTINATION ${KDE_INSTALL_QMLDIR}/QtQuick/Controls.2/org.kde.breeze/impl)
-install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/kirigami/styles/org.kde.breeze/impl)
-install(FILES ${qmlfiles} DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/kirigami/styles/org.kde.breeze/impl)
-install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/breeze/impl)
-install(FILES ${qmlfiles} DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/breeze/impl)
+
+target_sources(BreezeImpl PRIVATE
+    breezedial.cpp
+    breezedial.h
+    iconlabellayout.cpp
+    iconlabellayout.h
+    iconlabellayout_p.h
+    kcolorutilssingleton.cpp
+    kcolorutilssingleton.h
+    paintedsymbolitem.cpp
+    paintedsymbolitem.h
+    paintedsymbolitem_p.h
+    qquickicon.cpp
+    qquickicon_p.h
+)
+
+set_source_files_properties(Units.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
+ecm_target_qml_sources(BreezeImpl SOURCES
+    ButtonBackground.qml
+    CheckIndicator.qml
+    ComboBoxBackground.qml
+    CursorDelegate.qml
+    CursorHandle.qml
+    DelegateBackground.qml
+    FocusRect.qml
+    IconLabelContent.qml
+    IconLabelShortcutContent.qml
+    InlineIconLabelContent.qml
+    LargeShadow.qml
+    ListViewHighlight.qml
+    MediumShadow.qml
+    MenuItemBackground.qml
+    OverlayDimBackground.qml
+    OverlayModalBackground.qml
+    RadioIndicator.qml
+    ScrollHandle.qml
+    SliderGroove.qml
+    SliderHandle.qml
+    SmallBoxShadow.qml
+    SpinBoxIndicator.qml
+    SwitchIndicator.qml
+    TextEditBackground.qml
+    Units.qml
+)
+
+target_link_libraries(BreezeImpl PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Qml
+    Qt6::Quick
+    Qt6::QuickControls2
+    Qt6::QuickTemplates2
+    KF6::ConfigCore
+    KF6::Kirigami2
+    KF6::GuiAddons
+)
+
+ecm_finalize_qml_module(BreezeImpl)
