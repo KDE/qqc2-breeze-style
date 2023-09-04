@@ -98,44 +98,6 @@ add_subdirectory(style)
 
 add_subdirectory(kirigami-plasmadesktop-integration)
 
-set(QQC2_VERSION_MINOR "${Qt6QuickControls2_VERSION_MINOR}")
-set(QQC2_VERSION "2.${QQC2_VERSION_MINOR}")
-
-set(DISABLE_UNDER_QT_5_14 "")
-set(DISABLE_AT_QT_5_14 "//Disabled since Qt 5.14 ")
-
-# TODO: Automate Kirigami version
-# This code doesn't work yet
-# set(KIRIGAMI_VERSION "2.${KF5_DEP_VERSION_MINOR}")
-
-# Find all the source qml files
-
-FILE(GLOB_RECURSE inFiles RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.qml")
-
-#for each file, replace @QQC2_VERSION@ with the version we found
-FOREACH(infileName ${inFiles})
-    configure_package_config_file(
-        "${CMAKE_CURRENT_SOURCE_DIR}/${infileName}"
-        "${CMAKE_CURRENT_BINARY_DIR}/${infileName}"
-        INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
-        PATH_VARS  QQC2_VERSION
-    )
-ENDFOREACH(infileName)
-
-# TODO: Automate Kirigami version
-# This code doesn't work yet
-#for each file, replace @KIRIGAMI_VERSION@ with the version we found
-#[[
-FOREACH(infileName ${inFiles})
-    configure_package_config_file(
-        "${CMAKE_CURRENT_SOURCE_DIR}/${infileName}"
-        "${CMAKE_CURRENT_BINARY_DIR}/${infileName}"
-        INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
-        PATH_VARS KIRIGAMI_VERSION
-    )
-ENDFOREACH(infileName)
-]]
-
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 # add clang-format target for all our real source files
