@@ -65,8 +65,6 @@ set_package_properties(ColorScheme PROPERTIES DESCRIPTION "KF6 WidgetAddons fram
                        PURPOSE "Optional integration of Kirigami with KColorScheme for color palettes integration with Plasma Desktop"
                       )
 
-find_package(PkgConfig)
-
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5QQC2BreezeStyle")
 
 configure_package_config_file(
