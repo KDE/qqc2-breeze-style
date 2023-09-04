@@ -1,8 +1,8 @@
 // NOTE: check/replace this
-import QtQuick 2.15
-import QtQuick.Templates 2.15 as T
-import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
+import QtQuick
+import QtQuick.Templates as T
+import QtQuick.Controls as Controls
+import QtQuick.Controls.impl
 
 T.MenuBar {
     id: control

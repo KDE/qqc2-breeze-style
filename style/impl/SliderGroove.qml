@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later OR LicenseRef-KDE-Accepted-LGPL OR LicenseRef-KFQF-Accepted-GPL
  */
 
-import QtQuick 2.15
-import QtQuick.Templates 2.15 as Templates
-import org.kde.kirigami 2.19 as Kirigami
+import QtQuick
+import QtQuick.Templates as Templates
+import org.kde.kirigami as Kirigami
 
 import "." as Impl
 

@@ -5,9 +5,9 @@
  *  SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import org.kde.kirigami 2.19 as Kirigami
+import QtQuick
+import QtQuick.Window
+import org.kde.kirigami as Kirigami
 
 pragma Singleton
 

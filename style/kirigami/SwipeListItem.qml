@@ -4,8 +4,8 @@
  *  SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
-import QtQuick 2.5
-import org.kde.kirigami 2.4
+import QtQuick
+import org.kde.kirigami
 import "../../private"
 import "../../templates" as T
 

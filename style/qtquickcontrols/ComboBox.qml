@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: LicenseRef-KDE-Accepted-LGPL
  */
 
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import QtQuick.Templates 2.15 as T
-import QtQuick.Controls 2.15 as Controls
-import org.kde.kirigami 2.19 as Kirigami
+import QtQuick
+import QtQuick.Window
+import QtQuick.Templates as T
+import QtQuick.Controls as Controls
+import org.kde.kirigami as Kirigami
 
 import "impl" as Impl
 

@@ -1,8 +1,8 @@
 // NOTE: replace this
-import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
-import QtQuick.Controls.impl 2.15
-import QtQuick.Templates 2.15 as T
+import QtQuick
+import QtQuick.Controls as Controls
+import QtQuick.Controls.impl
+import QtQuick.Templates as T
 
 T.Tumbler {
     id: control
