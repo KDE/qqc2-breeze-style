@@ -12,6 +12,7 @@ Dependencies:
     'frameworks/kguiaddons': '@latest-kf6'
     'frameworks/kirigami': '@latest-kf6'
     'frameworks/kwidgetsaddons': '@latest-kf6'
+    'frameworks/kquickcharts': '@latest-kf6'
 - 'on': ['Linux', 'FreeBSD', 'Windows']
   'require':
     'frameworks/kiconthemes': '@latest-kf6'

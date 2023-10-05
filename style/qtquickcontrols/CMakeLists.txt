@@ -4,6 +4,7 @@ ecm_add_qml_module(BreezeStyle URI "org.kde.breeze"
     DEPENDENCIES
     "QtQuick.Controls"
     "org.kde.kirigami"
+    "org.kde.quickcharts"
     "org.kde.breeze.impl"
 )
 
