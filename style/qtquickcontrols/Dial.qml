@@ -24,7 +24,7 @@ T.Dial {
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
 
-    background: BreezeDial {
+    background: Impl.BreezeDial {
         implicitWidth: 100
         implicitHeight: 100
         backgroundBorderColor: Kirigami.Theme.separatorColor
