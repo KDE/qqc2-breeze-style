@@ -5,7 +5,7 @@ set(org.kde.breeze_SRCS
     units.cpp
 )
 
-add_library(org.kde.breeze MODULE ${org.kde.desktop_SRCS})
+add_library(org.kde.breeze MODULE ${org.kde.breeze_SRCS})
 
 target_link_libraries(org.kde.breeze
     PUBLIC
