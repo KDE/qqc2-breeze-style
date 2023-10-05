@@ -17,7 +17,7 @@ import org.kde.breeze.impl as Impl
 T.MenuBarItem {
     id: controlRoot
 
-    palette: Kirigami.Theme.palette
+    // palette: Kirigami.Theme.palette
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
     implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
     baselineOffset: contentItem.y + contentItem.baselineOffset

@@ -9,7 +9,7 @@ import org.kde.kirigami as Kirigami
 T.AbstractButton {
     id: control
 
-    palette: Kirigami.Theme.palette
+    // palette: Kirigami.Theme.palette
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)

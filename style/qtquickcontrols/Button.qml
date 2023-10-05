@@ -20,7 +20,7 @@ T.Button {
 
     flat: false
 
-    palette: Kirigami.Theme.palette
+    // // palette: Kirigami.Theme.palette
 
     hoverEnabled: Qt.styleHints.useHoverEffects
 

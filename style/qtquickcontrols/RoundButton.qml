@@ -24,7 +24,7 @@ T.RoundButton {
 
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
-    palette: Kirigami.Theme.palette
+    // palette: Kirigami.Theme.palette
     Kirigami.Theme.colorSet: control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button
     Kirigami.Theme.inherit: control.flat && !control.down && !control.checked
 

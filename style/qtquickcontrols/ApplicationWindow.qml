@@ -8,7 +8,7 @@ import org.kde.kirigami as Kirigami
 
 T.ApplicationWindow {
     id: window
-    palette: Kirigami.Theme.palette
+    // palette: Kirigami.Theme.palette
     Kirigami.Theme.colorSet: Kirigami.Theme.Window
     color: Kirigami.Theme.backgroundColor
 }

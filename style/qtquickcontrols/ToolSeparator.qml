@@ -12,7 +12,7 @@ import org.kde.breeze.impl as Impl
 
 T.ToolSeparator {
     id: control
-    palette: Kirigami.Theme.palette
+    // palette: Kirigami.Theme.palette
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)

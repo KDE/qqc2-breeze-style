@@ -23,7 +23,7 @@ T.Menu {
     property bool __hasIcons: false
     property bool __hasArrows: false
 
-    palette: Kirigami.Theme.palette
+    // palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,

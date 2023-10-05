@@ -40,7 +40,7 @@ T.ToolTip {
         return cWidth > 0 ? cWidth : implicitContentOrFirstChildWidth
     }
 
-    palette: Kirigami.Theme.palette
+    // palette: Kirigami.Theme.palette
     Kirigami.Theme.colorSet: Kirigami.Theme.Tooltip
     Kirigami.Theme.inherit: false
 
