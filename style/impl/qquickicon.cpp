@@ -11,6 +11,7 @@ class QQuickIconPrivate : public QSharedData
 public:
     QString name;
     QUrl source;
+    QUrl resolvedSource; // UNUSED: needed to keep compatibility with Qt's QQuickIcon
     int width = 0;
     int height = 0;
     QColor color = Qt::transparent;
