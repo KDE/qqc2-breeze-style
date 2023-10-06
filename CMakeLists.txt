@@ -64,7 +64,7 @@ set_package_properties(IconThemes PROPERTIES DESCRIPTION "KF6 IconThemes framewo
                        TYPE OPTIONAL
                        PURPOSE "Optional integration of Kirigami with KIconLoader icons handling for a better integration with Plasma Desktop"
                       )
-set_package_properties(ColorScheme PROPERTIES DESCRIPTION "KF6 WidgetAddons framework"
+set_package_properties(ColorScheme PROPERTIES DESCRIPTION "KF6 ColorScheme framework"
                        TYPE OPTIONAL
                        PURPOSE "Optional integration of Kirigami with KColorScheme for color palettes integration with Plasma Desktop"
                       )
