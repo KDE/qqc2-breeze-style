@@ -19,9 +19,9 @@ import org.kde.breeze.impl as Impl
 T.Menu {
     id: control
 
-    property bool __hasIndicators: false
-    property bool __hasIcons: false
-    property bool __hasArrows: false
+    readonly property bool __hasIndicators: contentItem.contentItem.visibleChildren.some(menuItem => menuItem?.indicator?.visible ?? false)
+    readonly property bool __hasIcons: contentItem.contentItem.visibleChildren.some(menuItem => __itemHasIcon(menuItem))
+    readonly property bool __hasArrows: contentItem.contentItem.visibleChildren.some(menuItem => menuItem?.arrow?.visible ?? false)
 
     // palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
@@ -31,6 +31,12 @@ T.Menu {
     padding: Kirigami.Units.smallSpacing
     margins: 0
     overlap: background && background.hasOwnProperty("border") ? background.border.width : 0
+
+    function __itemHasIcon(item) {
+        const hasName = (item?.icon?.name ?? "") !== ""
+        const hasSource = (item?.icon?.source.toString() ?? "") !== ""
+        return hasName || hasSource
+    }
 
     // The default contentItem is a ListView, which has its own contentItem property,
     // so delegates will be created as children of control.contentItem.contentItem

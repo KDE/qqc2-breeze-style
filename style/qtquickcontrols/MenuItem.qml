@@ -14,27 +14,9 @@ import org.kde.breeze.impl as Impl
 T.MenuItem {
     id: control
 
-    property bool __reserveSpaceForIndicator: {
-        if (menu && menu.hasOwnProperty("__hasIndicators")) {
-            menu.__hasIndicators |= indicator && indicator.visible
-            return menu.__hasIndicators
-        }
-        return false
-    }
-    property bool __reserveSpaceForIcon: {
-        if (menu && menu.hasOwnProperty("__hasIcons")) {
-            menu.__hasIcons |= contentItem && contentItem.hasIcon
-            return menu.__hasIcons
-        }
-        return false
-    }
-    property bool __reserveSpaceForArrow: {
-        if (menu && menu.hasOwnProperty("__hasArrows")) {
-            menu.__hasArrows |= arrow && arrow.visible
-            return menu.__hasArrows
-        }
-        return false
-    }
+    property bool __reserveSpaceForIndicator: menu?.__hasIndicators ?? false
+    property bool __reserveSpaceForIcon: menu?.__hasIcons ?? false
+    property bool __reserveSpaceForArrow: menu?.__hasArrows ?? false
 
     Kirigami.Theme.colorSet: control.down || control.highlighted ? Kirigami.Theme.Button : -1
     Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
