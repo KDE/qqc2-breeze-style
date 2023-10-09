@@ -44,7 +44,8 @@ T.Menu {
 
     contentItem: ListView {
         implicitHeight: contentHeight
-        implicitWidth: contentWidth
+        // Cannot use `contentWidth` as this only accounts for Actions, not MenuItems or MenuSeparators
+        implicitWidth: contentItem.visibleChildren.reduce((maxWidth, child) => Math.max(maxWidth, child.implicitWidth), 0)
         model: control.contentModel
         highlightMoveDuration: Kirigami.Units.shortDuration
         highlightMoveVelocity: 800
