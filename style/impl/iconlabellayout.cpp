@@ -62,10 +62,7 @@ void IconLabelLayoutPrivate::updateOrSyncIconItem()
 {
     Q_Q(IconLabelLayout);
     if (updateIconItem()) {
-        if (q->isComponentComplete()) {
-            updateImplicitSize();
-            layout();
-        }
+        q->relayout();
     } else {
         syncIconItem();
     }
@@ -120,10 +117,7 @@ void IconLabelLayoutPrivate::updateOrSyncLabelItem()
 {
     Q_Q(IconLabelLayout);
     if (updateLabelItem()) {
-        if (q->isComponentComplete()) {
-            updateImplicitSize();
-            layout();
-        }
+        q->relayout();
     } else {
         syncLabelItem();
     }
