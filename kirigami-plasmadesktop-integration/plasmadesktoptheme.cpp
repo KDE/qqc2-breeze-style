@@ -197,7 +197,7 @@ public:
 
     void notifyWatchersPaletteChange()
     {
-        for (auto watcher : qAsConst(watchers)) {
+        for (auto watcher : std::as_const(watchers)) {
             watcher->syncColors();
         }
     }
@@ -205,7 +205,7 @@ public:
     Q_SLOT void notifyWatchersConfigurationChange()
     {
         smallFont = loadSmallFont();
-        for (auto watcher : qAsConst(watchers)) {
+        for (auto watcher : std::as_const(watchers)) {
             watcher->setSmallFont(smallFont);
             watcher->setDefaultFont(qApp->font());
         }
