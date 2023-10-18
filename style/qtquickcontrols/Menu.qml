@@ -93,7 +93,7 @@ T.Menu {
     background: Rectangle {
         radius: Impl.Units.smallRadius
         implicitHeight: Impl.Units.mediumControlHeight
-        implicitWidth: Kirigami.Units.gridUnit * 15
+        implicitWidth: Kirigami.Units.gridUnit * 8
         color: Kirigami.Theme.backgroundColor
 
         border {

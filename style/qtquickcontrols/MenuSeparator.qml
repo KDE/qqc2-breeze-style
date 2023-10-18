@@ -19,7 +19,7 @@ T.MenuSeparator {
     focusPolicy: Qt.NoFocus
 
     contentItem: Kirigami.Separator {
-        implicitWidth: 188
+        implicitWidth: Kirigami.Units.gridUnit * 8
         implicitHeight: 1
     }
 }
