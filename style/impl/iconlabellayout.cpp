@@ -421,6 +421,7 @@ void IconLabelLayout::setFont(const QFont &font)
     if (d->labelItem) {
         d->labelItem->setProperty("font", font);
     }
+    d->updateOrSyncLabelItem();
     Q_EMIT fontChanged(font);
 }
 
