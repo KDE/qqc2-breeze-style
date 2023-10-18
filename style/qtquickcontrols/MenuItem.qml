@@ -14,6 +14,10 @@ import org.kde.breeze.impl as Impl
 T.MenuItem {
     id: control
 
+    // We can't do `control: control` inside a Component due to scoping issues, so set up an alias
+    // to be used by the radio/check indicator components.
+    property alias __controlRoot: control
+
     property bool __reserveSpaceForIndicator: menu?.__hasIndicators ?? false
     property bool __reserveSpaceForIcon: menu?.__hasIcons ?? false
     property bool __reserveSpaceForArrow: menu?.__hasArrows ?? false
@@ -79,19 +83,17 @@ T.MenuItem {
         active: visible
         sourceComponent: control.autoExclusive ? radioIndicator : checkIndicator
 
-        onLoaded: {
-            item.control = control;
-        }
-
         Component {
             id: checkIndicator
             Impl.CheckIndicator {
+                control: __controlRoot
                 checkState: control.checked ? Qt.Checked : Qt.Unchecked
             }
         }
         Component {
             id: radioIndicator
             Impl.RadioIndicator {
+                control: __controlRoot
             }
         }
     }
