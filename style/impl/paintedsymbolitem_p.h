@@ -28,7 +28,7 @@ public:
 
     // Normalized points. The range is 0 to 1 and the coordinates are scaled to fit the size of the drawing area.
     // clang-format off
-    QVector<QVector<QPointF>> shapePoints = {
+    QList<QList<QPointF>> shapePoints = {
         {QPointF(0.0, 0.5), QPointF(1.0/3.0, 5.0/6.0), QPointF(1.0, 1.0/6.0)}, // Checkmark
         {QPointF(1.0/1.5, 0.0), QPointF(0.25, 0.5), QPointF(1.0/1.5, 1.0)}, // LeftArrow
         {QPointF(1.0/3.0, 0.0), QPointF(0.75, 0.5), QPointF(1.0/3.0, 1.0)}, // RightArrow

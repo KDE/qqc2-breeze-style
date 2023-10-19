@@ -214,7 +214,7 @@ public:
     KColorScheme buttonScheme;
     QFont smallFont;
 
-    QVector<PlasmaDesktopTheme *> watchers;
+    QList<PlasmaDesktopTheme *> watchers;
 
 private:
     QHash<QPair<Kirigami::PlatformTheme::ColorSet, QPalette::ColorGroup>, Colors> m_cache;
