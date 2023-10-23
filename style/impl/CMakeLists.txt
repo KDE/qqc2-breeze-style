@@ -21,6 +21,7 @@ target_sources(BreezeImpl PRIVATE
 )
 
 set_source_files_properties(Units.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+set_source_files_properties(Theme.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 ecm_target_qml_sources(BreezeImpl SOURCES
     ButtonBackground.qml
@@ -47,6 +48,7 @@ ecm_target_qml_sources(BreezeImpl SOURCES
     SpinBoxIndicator.qml
     SwitchIndicator.qml
     TextEditBackground.qml
+    Theme.qml
     Units.qml
 )
 

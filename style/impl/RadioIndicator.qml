@@ -32,7 +32,7 @@ Rectangle {
 
     border {
         width: Impl.Units.smallBorder
-        color: control.down || control.checked || control.visualFocus || control.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+        color: control.down || control.checked || control.visualFocus || control.hovered ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor();
     }
 
     Behavior on color {

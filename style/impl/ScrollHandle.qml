@@ -27,7 +27,7 @@ Rectangle {
 
     Kirigami.Theme.inherit: false
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    color: root.pressed ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+    color: root.pressed ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
 
     Behavior on color {
         enabled: root.pressed

@@ -224,9 +224,6 @@ Q_GLOBAL_STATIC(StyleSingleton, s_style)
 PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
     : PlatformTheme(parent)
 {
-    // TODO: MOVE THIS SOMEWHERE ELSE
-    m_lowPowerHardware = QByteArrayList{"1", "true"}.contains(qgetenv("KIRIGAMI_LOWPOWER_HARDWARE").toLower());
-
     // We don't use KIconLoader on Android so we don't support recoloring there
 #ifndef Q_OS_ANDROID
     setSupportsIconColoring(true);
@@ -352,31 +349,6 @@ void PlasmaDesktopTheme::syncColors()
     // decoration
     setHoverColor(colors.scheme.decoration(KColorScheme::HoverColor).color());
     setFocusColor(colors.scheme.decoration(KColorScheme::FocusColor).color());
-
-    // Breeze QQC2 style colors
-    const QColor &buttonTextColor = s_style->buttonScheme.foreground(KColorScheme::NormalText).color();
-    const QColor &buttonBackgroundColor = s_style->buttonScheme.background(KColorScheme::NormalBackground).color();
-    auto separatorColor = [](const QColor &bg, const QColor &fg, const qreal baseRatio = 0.2) {
-        return KColorUtils::luma(bg) > 0.5 ? KColorUtils::mix(bg, fg, baseRatio) : KColorUtils::mix(bg, fg, baseRatio / 2);
-    };
-
-    m_buttonSeparatorColor = separatorColor(buttonBackgroundColor, buttonTextColor, 0.3);
-
-    switch (colorSet()) {
-        // case ColorSet::View:
-        // case ColorSet::Window:
-    case ColorSet::Button:
-        m_separatorColor = m_buttonSeparatorColor;
-        break;
-    case ColorSet::Selection:
-        m_separatorColor = focusColor();
-        break;
-        // case ColorSet::Tooltip:
-        // case ColorSet::Complementary:
-        // case ColorSet::Header:
-    default:
-        m_separatorColor = separatorColor(backgroundColor(), textColor());
-    }
 }
 
 bool PlasmaDesktopTheme::event(QEvent *event)
@@ -394,22 +366,6 @@ bool PlasmaDesktopTheme::event(QEvent *event)
     }
 
     return PlatformTheme::event(event);
-}
-
-// Breeze QQC2 style colors
-QColor PlasmaDesktopTheme::separatorColor() const
-{
-    return m_separatorColor;
-}
-
-QColor PlasmaDesktopTheme::buttonSeparatorColor() const
-{
-    return m_buttonSeparatorColor;
-}
-
-bool PlasmaDesktopTheme::lowPowerHardware() const
-{
-    return m_lowPowerHardware;
 }
 
 #include "plasmadesktoptheme.moc"

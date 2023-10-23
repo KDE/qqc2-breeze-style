@@ -93,7 +93,7 @@ T.ProgressBar {
         color: Kirigami.Theme.backgroundColor
         border {
             width: Impl.Units.smallBorder
-            color: Kirigami.Theme.separatorColor
+            color: Impl.Theme.separatorColor()
         }
     }
 }

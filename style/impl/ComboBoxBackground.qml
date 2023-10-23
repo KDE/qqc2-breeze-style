@@ -47,7 +47,7 @@ Rectangle {
 
     border {
         color: highlightBorder ?
-            Kirigami.Theme.focusColor : Kirigami.Theme.buttonSeparatorColor
+            Kirigami.Theme.focusColor : Impl.Theme.buttonSeparatorColor()
         width: Impl.Units.smallBorder
     }
 

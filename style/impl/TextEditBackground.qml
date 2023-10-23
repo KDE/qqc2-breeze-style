@@ -25,7 +25,7 @@ Rectangle {
     radius: Impl.Units.smallRadius
     border {
         color: control.activeFocus || control.hovered ?
-            Kirigami.Theme.focusColor : Kirigami.Theme.buttonSeparatorColor
+            Kirigami.Theme.focusColor : Impl.Theme.buttonSeparatorColor()
         width: Impl.Units.smallBorder
     }
 

@@ -63,7 +63,7 @@ Item {
             bottomMargin: Kirigami.Units.smallSpacing
         }
 
-        color: button.pressed || button.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+        color: button.pressed || button.hovered ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
 
         Behavior on color {
             enabled: button.pressed || button.hovered

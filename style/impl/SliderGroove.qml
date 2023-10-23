@@ -46,7 +46,7 @@ Rectangle {
     color: Kirigami.Theme.backgroundColor
     border {
         width: Impl.Units.smallBorder
-        color: Kirigami.Theme.separatorColor
+        color: Impl.Theme.separatorColor()
     }
 
     Rectangle {
@@ -158,7 +158,7 @@ Rectangle {
                     color: (root.horizontal && x >= fill.x && x <= fill.x + fill.width)
                         || (root.vertical && y >= fill.y && y <= fill.y + fill.height)
                         ? Kirigami.Theme.focusColor
-                        : Kirigami.Theme.separatorColor
+                        : Impl.Theme.separatorColor()
                 }
             }
         }

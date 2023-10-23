@@ -48,7 +48,7 @@ T.Popup {
         color: Kirigami.Theme.backgroundColor
 
         border {
-            color: Kirigami.Theme.separatorColor
+            color: Impl.Theme.separatorColor()
             width: control.dim ? 0 : Impl.Units.smallBorder
         }
 

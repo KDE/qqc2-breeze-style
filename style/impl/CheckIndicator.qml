@@ -38,7 +38,7 @@ Rectangle {
     border {
         width: Impl.Units.smallBorder
         color: highlightBorder ?
-            Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+            Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
             //Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
     }
 

@@ -25,7 +25,7 @@ T.Frame {
     background: Rectangle {
         color: Kirigami.Theme.backgroundColor
         radius: Impl.Units.smallRadius
-        border.color: Kirigami.Theme.separatorColor
+        border.color: Impl.Theme.separatorColor()
         border.width: Impl.Units.smallBorder
     }
 }

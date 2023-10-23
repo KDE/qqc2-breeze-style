@@ -61,7 +61,7 @@ Kirigami.ShadowedRectangle {
             if (highlightBorder) {
                 return Kirigami.Theme.focusColor
             } else {
-                return Kirigami.Theme.separatorColor
+                return Impl.Theme.separatorColor()
             }
         }
         width: Impl.Units.smallBorder

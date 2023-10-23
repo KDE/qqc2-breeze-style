@@ -115,7 +115,7 @@ T.ToolTip {
         radius: Impl.Units.smallRadius
         color: Kirigami.Theme.backgroundColor
         border.width: Impl.Units.smallBorder
-        border.color: Kirigami.Theme.separatorColor
+        border.color: Impl.Theme.separatorColor()
 
         Impl.LargeShadow {
             radius: parent.radius

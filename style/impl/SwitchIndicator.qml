@@ -34,7 +34,7 @@ Item {
         color: Kirigami.Theme.backgroundColor
         border {
             width: Impl.Units.smallBorder
-            color: Kirigami.Theme.separatorColor
+            color: Impl.Theme.separatorColor()
         }
     }
 
@@ -81,7 +81,7 @@ Item {
         border {
             width: Impl.Units.smallBorder
             color: control.down || control.visualFocus || control.hovered ?
-                Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+                Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
         }
 
         Behavior on border.color {

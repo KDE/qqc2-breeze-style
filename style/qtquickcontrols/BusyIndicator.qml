@@ -49,7 +49,7 @@ T.BusyIndicator {
     }
 
     contentItem: Loader {
-        sourceComponent: Kirigami.Theme.lowPowerHardware || GraphicsInfo.api == GraphicsInfo.Software ?
+        sourceComponent: GraphicsInfo.api == GraphicsInfo.Software ?
             lowPowerSpinnerComponent : fancySpinnerComponent
     }
 

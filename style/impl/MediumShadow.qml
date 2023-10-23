@@ -12,7 +12,7 @@ Loader {
     property real radius: Impl.Units.smallRadius
     anchors.fill: parent
     z: -1
-    active: visible && !Kirigami.Theme.lowPowerHardware
+    active: visible
     sourceComponent: Component {
         Kirigami.ShadowedRectangle {
             anchors.fill: parent

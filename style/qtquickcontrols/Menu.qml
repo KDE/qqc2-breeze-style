@@ -97,7 +97,7 @@ T.Menu {
         color: Kirigami.Theme.backgroundColor
 
         border {
-            color: Kirigami.Theme.separatorColor
+            color: Impl.Theme.separatorColor()
             width: Impl.Units.smallBorder
         }
 

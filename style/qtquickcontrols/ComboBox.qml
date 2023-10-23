@@ -86,7 +86,7 @@ T.ComboBox {
             color: control.down
                 || ((control.hovered || control.visualFocus)
                     && !(control.contentItem && control.contentItem.hasOwnProperty("hovered") && control.contentItem.hovered))
-                ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+                ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
 
             Behavior on color {
                 enabled: control.down || control.hovered

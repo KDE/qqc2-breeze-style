@@ -46,7 +46,7 @@ T.Dialog {
     background: Rectangle {
         radius: Impl.Units.smallRadius
         color: Kirigami.Theme.backgroundColor
-        border.color: Kirigami.Theme.separatorColor
+        border.color: Impl.Theme.separatorColor()
         border.width: control.dim ? 0 : Impl.Units.smallBorder
 
         Impl.LargeShadow {

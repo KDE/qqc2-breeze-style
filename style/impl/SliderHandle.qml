@@ -54,7 +54,7 @@ Rectangle {
     color: Kirigami.Theme.backgroundColor
     border {
         width: Impl.Units.smallBorder
-        color: root.pressed || root.visualFocus || root.hovered ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+        color: root.pressed || root.visualFocus || root.hovered ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
     }
 
     Behavior on border.color {

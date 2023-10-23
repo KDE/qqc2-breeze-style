@@ -95,7 +95,7 @@ T.TabButton {
             anchors.verticalCenter: parent.verticalCenter
             width: 1
             height: control.checked ? parent.height : Math.min(parent.height, Kirigami.Units.gridUnit)
-            color: Kirigami.Theme.separatorColor
+            color: Impl.Theme.separatorColor()
             Behavior on height {
                 NumberAnimation {
                     easing.type: Easing.InOutQuad
@@ -114,7 +114,7 @@ T.TabButton {
             anchors.verticalCenter: parent.verticalCenter
             width: 1
             height: parent.leftSeparatorLine.height
-            color: Kirigami.Theme.separatorColor
+            color: Impl.Theme.separatorColor()
         }
 
         Rectangle {
@@ -134,7 +134,7 @@ T.TabButton {
                 } else if (control.checked || control.down) {
                     Kirigami.Theme.focusColor
                 } else {
-                    Kirigami.Theme.separatorColor
+                    Impl.Theme.separatorColor()
                 }
             }
             Behavior on opacity {

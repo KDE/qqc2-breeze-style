@@ -27,7 +27,7 @@ T.Dial {
     background: Impl.BreezeDial {
         implicitWidth: 100
         implicitHeight: 100
-        backgroundBorderColor: Kirigami.Theme.separatorColor
+        backgroundBorderColor: Impl.Theme.separatorColor()
         backgroundColor: Kirigami.Theme.backgroundColor
         fillBorderColor: Kirigami.Theme.focusColor
         fillColor: Kirigami.Theme.alternateBackgroundColor
@@ -68,7 +68,7 @@ T.Dial {
         border {
             width: Impl.Units.smallBorder
             color: control.hovered || control.pressed || control.visualFocus
-                ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+                ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
         }
 
         shadow {
@@ -99,7 +99,7 @@ T.Dial {
                 anchors.verticalCenterOffset: height
                 width: 4
                 height: 4
-                color: control.enabled ? Kirigami.Theme.focusColor : Kirigami.Theme.separatorColor
+                color: control.enabled ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
             }
         }
 

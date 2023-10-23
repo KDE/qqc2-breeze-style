@@ -23,13 +23,6 @@ class PlasmaDesktopTheme : public Kirigami::Platform::PlatformTheme
 {
     Q_OBJECT
 
-    // Breeze QQC2 style colors
-    Q_PROPERTY(QColor separatorColor READ separatorColor NOTIFY colorsChanged)
-    Q_PROPERTY(QColor buttonSeparatorColor READ buttonSeparatorColor NOTIFY colorsChanged)
-
-    // Needed to deal with ShadowedRectangle
-    Q_PROPERTY(bool lowPowerHardware READ lowPowerHardware CONSTANT FINAL)
-
 public:
     explicit PlasmaDesktopTheme(QObject *parent = nullptr);
     ~PlasmaDesktopTheme() override;
@@ -39,25 +32,12 @@ public:
     void syncWindow();
     void syncColors();
 
-    // Breeze QQC2 style colors
-    QColor separatorColor() const;
-    QColor buttonSeparatorColor() const;
-
-    bool lowPowerHardware() const;
-
 protected:
     bool event(QEvent *event) override;
 
 private:
     friend class StyleSingleton;
     QPointer<QWindow> m_window;
-
-    // Breeze QQC2 style colors
-    QColor m_separatorColor;
-    QColor m_buttonSeparatorColor;
-
-    // Needed to deal with ShadowedRectangle
-    bool m_lowPowerHardware = false;
 };
 
 #endif // KIRIGAMIPLASMATHEME_H
