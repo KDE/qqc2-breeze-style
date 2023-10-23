@@ -40,11 +40,49 @@ T.ProgressBar {
             }
         }
 
-        /*Item {
+        Item {
             id: indeterminateFill
-            //TODO: Make this look like the indeterminate fill from the Breeze QStyle
-            // or come up with something better.
-        }*/
+
+            readonly property real __backgroundBorderWidth: control.background?.border?.width ?? 0
+
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                topMargin: __backgroundBorderWidth
+                bottomMargin: __backgroundBorderWidth
+            }
+            width: parent.width + 2 * __segmentLength
+            x: - 2 * __segmentLength
+
+            clip: true
+            visible: control.indeterminate && width > 0
+
+            readonly property real __segmentLength: 14
+
+            Row {
+                anchors.fill: parent
+                spacing: indeterminateFill.__segmentLength
+
+                Repeater {
+                    model: Math.round(parent.width / (2 * indeterminateFill.__segmentLength))
+                    delegate: Rectangle {
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        implicitWidth: indeterminateFill.__segmentLength
+                        radius: Impl.Units.grooveHeight/2
+                        color: Kirigami.Theme.alternateBackgroundColor
+                    }
+                }
+            }
+
+            XAnimator on x {
+                from: - 2 * indeterminateFill.__segmentLength
+                to: 0
+                duration: 3 * Kirigami.Units.veryLongDuration
+                loops: Animation.Infinite
+                running: true
+            }
+        }
     }
 
     background: Rectangle {
