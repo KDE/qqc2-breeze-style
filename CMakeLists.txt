@@ -45,7 +45,7 @@ if (NOT ANDROID)
     find_package(KF6IconThemes ${KF_DEP_VERSION} REQUIRED)
 endif()
 
-find_package(KF6 ${KF_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config Kirigami2 CoreAddons ColorScheme QuickCharts)
+find_package(KF6 ${KF_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform CoreAddons ColorScheme QuickCharts)
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)

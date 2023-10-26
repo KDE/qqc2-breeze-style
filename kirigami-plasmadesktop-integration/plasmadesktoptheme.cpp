@@ -120,14 +120,14 @@ public:
         notifyWatchersPaletteChange();
     }
 
-    Colors loadColors(Kirigami::PlatformTheme::ColorSet cs, QPalette::ColorGroup group)
+    Colors loadColors(Kirigami::Platform::PlatformTheme::ColorSet cs, QPalette::ColorGroup group)
     {
         const auto key = qMakePair(cs, group);
         auto it = m_cache.constFind(key);
         if (it != m_cache.constEnd())
             return *it;
 
-        using Kirigami::PlatformTheme;
+        using Kirigami::Platform::PlatformTheme;
 
         KColorScheme::ColorSet set;
 
@@ -217,7 +217,7 @@ public:
     QList<PlasmaDesktopTheme *> watchers;
 
 private:
-    QHash<QPair<Kirigami::PlatformTheme::ColorSet, QPalette::ColorGroup>, Colors> m_cache;
+    QHash<QPair<Kirigami::Platform::PlatformTheme::ColorSet, QPalette::ColorGroup>, Colors> m_cache;
 };
 Q_GLOBAL_STATIC(StyleSingleton, s_style)
 
@@ -381,15 +381,15 @@ void PlasmaDesktopTheme::syncColors()
 
 bool PlasmaDesktopTheme::event(QEvent *event)
 {
-    if (event->type() == Kirigami::PlatformThemeEvents::DataChangedEvent::type) {
+    if (event->type() == Kirigami::Platform::PlatformThemeEvents::DataChangedEvent::type) {
         syncColors();
     }
 
-    if (event->type() == Kirigami::PlatformThemeEvents::ColorSetChangedEvent::type) {
+    if (event->type() == Kirigami::Platform::PlatformThemeEvents::ColorSetChangedEvent::type) {
         syncColors();
     }
 
-    if (event->type() == Kirigami::PlatformThemeEvents::ColorGroupChangedEvent::type) {
+    if (event->type() == Kirigami::Platform::PlatformThemeEvents::ColorGroupChangedEvent::type) {
         syncColors();
     }
 

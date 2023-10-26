@@ -58,7 +58,6 @@ target_link_libraries(BreezeImpl PRIVATE
     Qt6::QuickControls2
     Qt6::QuickTemplates2
     KF6::ConfigCore
-    KF6::Kirigami2
     KF6::GuiAddons
 )
 

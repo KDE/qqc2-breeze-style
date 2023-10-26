@@ -10,7 +10,7 @@ add_library(org.kde.breeze MODULE ${org.kde.breeze_SRCS})
 target_link_libraries(org.kde.breeze
     PUBLIC
         Qt::Core
-        KF6::Kirigami2
+        KF6::KirigamiPlatform
     PRIVATE
         Qt::Qml
         Qt::Quick
@@ -22,5 +22,5 @@ if(NOT ANDROID)
     target_link_libraries(org.kde.breeze PRIVATE Qt::DBus KF6::IconThemes)
 endif()
 
-install(TARGETS org.kde.breeze DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf6/kirigami)
+install(TARGETS org.kde.breeze DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf6/kirigami/platform)
 
