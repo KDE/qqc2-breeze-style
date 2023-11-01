@@ -69,18 +69,18 @@ set_package_properties(ColorScheme PROPERTIES DESCRIPTION "KF6 ColorScheme frame
                        PURPOSE "Optional integration of Kirigami with KColorScheme for color palettes integration with Plasma Desktop"
                       )
 
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5QQC2BreezeStyle")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/QQC2BreezeStyle")
 
 configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/KF6QQC2BreezeStyleConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF6QQC2BreezeStyleConfig.cmake"
+  "${CMAKE_CURRENT_SOURCE_DIR}/QQC2BreezeStyleConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/QQC2BreezeStyleConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
   PATH_VARS  KDE_INSTALL_INCLUDEDIR_KF CMAKE_INSTALL_PREFIX
 )
 
 install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/KF6QQC2BreezeStyleConfig.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF6QQC2BreezeStyleConfigVersion.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/QQC2BreezeStyleConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/QQC2BreezeStyleConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )
@@ -88,7 +88,7 @@ install(FILES
 
 ecm_setup_version(PROJECT
     VARIABLE_PREFIX QQC2BREEZESTYLE
-    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6QQC2BreezeStyleConfigVersion.cmake"
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/QQC2BreezeStyleConfigVersion.cmake"
     SOVERSION 5)
 
 #########################################################################
