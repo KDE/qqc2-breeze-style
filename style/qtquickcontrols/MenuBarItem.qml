@@ -1,37 +1,30 @@
-// NOTE: check this
-/*
-    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
-    SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
-
-    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
-*/
-
+// SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
+// SPDX-FileCopyrightText: 2017 The Qt Company Ltd.
+// SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later
 
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Templates as T
-import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
-import org.kde.breeze.impl as Impl
 
 T.MenuBarItem {
     id: controlRoot
 
-    // palette: Kirigami.Theme.palette
-    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
-    baselineOffset: contentItem.y + contentItem.baselineOffset
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding,
+                             implicitIndicatorHeight + topPadding + bottomPadding)
 
-    Layout.fillWidth: true
+    topPadding: Kirigami.Units.smallSpacing
     leftPadding: Kirigami.Units.largeSpacing
     rightPadding: Kirigami.Units.largeSpacing
-    topPadding: Kirigami.Units.smallSpacing
     bottomPadding: Kirigami.Units.smallSpacing
     hoverEnabled: true
 
-    Kirigami.MnemonicData.enabled: controlRoot.enabled && controlRoot.visible
+    Kirigami.MnemonicData.enabled: enabled && visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.MenuItem
-    Kirigami.MnemonicData.label: controlRoot.text
+    Kirigami.MnemonicData.label: text
 
     Shortcut {
         //in case of explicit & the button manages it by itself
@@ -40,7 +33,7 @@ T.MenuBarItem {
         onActivated: controlRoot.clicked();
     }
 
-    contentItem: Controls.Label {
+    contentItem: Label {
         text: controlRoot.Kirigami.MnemonicData.richTextLabel
         font: controlRoot.font
         color: controlRoot.hovered && !controlRoot.pressed ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
@@ -50,15 +43,16 @@ T.MenuBarItem {
         verticalAlignment: Text.AlignVCenter
     }
 
-    background: Item {
-        anchors.fill: parent
-        implicitWidth: Kirigami.Units.gridUnit * 8
+    background: Rectangle {
+        implicitWidth: 40
+        implicitHeight: Kirigami.Units.gridUnit + 2 * Kirigami.Units.smallSpacing
+        color: Kirigami.Theme.highlightColor
+        opacity: controlRoot.down || controlRoot.highlighted ? 0.7 : 0
 
-        Rectangle {
-            anchors.fill: parent
-            color: Kirigami.Theme.highlightColor
-            opacity: controlRoot.down || controlRoot.highlighted  ? 0.7 : 0
-            Behavior on opacity { NumberAnimation { duration: 150 } }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: Kirigami.Units.shortDuration
+            }
         }
     }
 }
