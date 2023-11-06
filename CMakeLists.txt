@@ -1,11 +1,18 @@
+project(qqc2-breeze-style)
+set(PROJECT_VERSION "5.27.80")
+
 cmake_minimum_required(VERSION 3.16)
 
-set(KF_VERSION "5.240.0") # handled by release scripts
-set(KF_DEP_VERSION "5.240.0") # handled by release scripts
+set(QT_MIN_VERSION "6.4.0")
+set(KF6_MIN_VERSION "5.240.0")
+set(KF_DEP_VERSION "5.240.0")
+set(KDE_COMPILERSETTINGS_LEVEL "5.82")
 
-project(qqc2-breeze-style VERSION 1.0)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(REQUIRED_QT_VERSION 6.4.0)
+find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} )
 
 ################# Disallow in-source build #################
 
@@ -13,18 +20,11 @@ if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
    message(FATAL_ERROR "qqc2-breeze-style requires an out of source build. Please create a separate build directory and run 'cmake -S /path/to/qqc2-breeze-style' there.")
 endif()
 
-
-
 # Make CPack available to easy generate binary packages
 include(CPack)
 include(FeatureSummary)
 
 ################# set KDE specific information #################
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-find_package(ECM ${KF_DEP_VERSION} REQUIRED NO_MODULE)
 
 # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
@@ -38,14 +38,14 @@ include(KDEClangFormat)
 include(KDEGitCommitHooks)
 include(ECMQmlModule)
 
-find_package(Qt6 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
+find_package(Qt6 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Quick QuickControls2 QuickTemplates2)
 
 if (NOT ANDROID)
-    find_package(Qt6 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS DBus)
-    find_package(KF6IconThemes ${KF_DEP_VERSION} REQUIRED)
+    find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS DBus)
+    find_package(KF6IconThemes ${KF6_MIN_VERSION} REQUIRED)
 endif()
 
-find_package(KF6 ${KF_DEP_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform CoreAddons ColorScheme QuickCharts)
+find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform CoreAddons ColorScheme QuickCharts)
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)
@@ -54,7 +54,7 @@ endif()
 # When building as a static plugin, dependencies may add a -lQt5X11Extras
 # to the linker, in that case, it requires to have the proper variables
 # to exists.
-find_package(Qt6X11Extras ${REQUIRED_QT_VERSION} NO_MODULE QUIET)
+find_package(Qt6X11Extras ${QT_MIN_VERSION} NO_MODULE QUIET)
 
 set_package_properties(QuickCharts PROPERTIES DESCRIPTION "KF6 QuickCharts framework"
                        TYPE REQUIRED
