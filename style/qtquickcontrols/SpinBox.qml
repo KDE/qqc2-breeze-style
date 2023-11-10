@@ -82,6 +82,11 @@ T.SpinBox {
         inputMethodHints: control.inputMethodHints
         selectByMouse: true // Should this be disabled for mobile?
         background: null
+
+        // Since the contentItem receives focus (we make them editable by default),
+        // the screen reader reads its Accessible properties instead of the SpinBox's
+        Accessible.name: control.Accessible.name
+        Accessible.description: control.Accessible.description
     }
 
     up.indicator: Impl.SpinBoxIndicator {
