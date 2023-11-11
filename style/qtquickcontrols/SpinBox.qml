@@ -36,10 +36,10 @@ T.SpinBox {
     inputMethodHints: Qt.ImhDigitsOnly
     wheelEnabled: true
 
-    padding: Kirigami.Units.mediumSpacing
+    padding: Kirigami.Units.smallSpacing
     leftPadding: __leftIndicatorWidth
     rightPadding: __rightIndicatorWidth
-    spacing: Kirigami.Units.mediumSpacing
+    spacing: Kirigami.Units.smallSpacing
 
     validator: IntValidator {
         locale: control.locale.name

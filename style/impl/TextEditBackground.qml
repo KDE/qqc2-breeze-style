@@ -19,7 +19,7 @@ Rectangle {
     )
 
     implicitWidth: implicitHeight
-    implicitHeight: Impl.Units.mediumControlHeight
+    implicitHeight: Impl.Units.smallControlHeight
 
     color: Kirigami.Theme.backgroundColor
     radius: Impl.Units.smallRadius

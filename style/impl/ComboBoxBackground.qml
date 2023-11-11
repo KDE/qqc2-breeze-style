@@ -31,7 +31,7 @@ Rectangle {
     property bool highlightBorder: control.down || control.visualFocus || control.hovered
 
     implicitWidth: 200
-    implicitHeight: Impl.Units.mediumControlHeight
+    implicitHeight: Impl.Units.smallControlHeight
 
     visible: !control.flat || control.editable || control.down || control.visualFocus || control.hovered
 

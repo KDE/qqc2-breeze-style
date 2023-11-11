@@ -26,8 +26,9 @@ T.ToolButton {
 
     hoverEnabled: Qt.styleHints.useHoverEffects
 
-    Kirigami.Theme.colorSet: /*control.highlighted ? Kirigami.Theme.Selection :*/ Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false//control.flat && !control.down && !control.checked
+    Kirigami.Theme.colorSet: flat ? Kirigami.Theme.Window : Kirigami.Theme.Button
+    Kirigami.Theme.inherit: flat
+
     // Absolutely terrible HACK:
     // For some reason, ActionToolBar overrides the colorSet and inherit attached properties
     Component.onCompleted: {
@@ -37,7 +38,7 @@ T.ToolButton {
         Kirigami.Theme.inherit = false//Qt.binding(() => control.flat && !(control.down || control.checked))
     }
 
-    padding: Kirigami.Units.mediumSpacing
+    padding: Kirigami.Units.smallSpacing
     leftPadding: {
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly
@@ -57,12 +58,15 @@ T.ToolButton {
 
     spacing: Kirigami.Units.mediumSpacing
 
-    icon.width: Kirigami.Units.iconSizes.sizeForLabels
-    icon.height: Kirigami.Units.iconSizes.sizeForLabels
+    icon {
+        width: Kirigami.Units.iconSizes.smallMedium
+        height: Kirigami.Units.iconSizes.smallMedium
+    }
 
     Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
     Kirigami.MnemonicData.label: control.display !== T.Button.IconOnly ? control.text : ""
+
     Shortcut {
         //in case of explicit & the button manages it by itself
         enabled: !(RegExp(/\&[^\&]/).test(control.text))
@@ -70,7 +74,7 @@ T.ToolButton {
         onActivated: control.clicked()
     }
 
-    contentItem:Impl.IconLabelContent {
+    contentItem: Impl.IconLabelContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
     }

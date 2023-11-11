@@ -42,7 +42,7 @@ Kirigami.ShadowedRectangle {
     }
 
     implicitWidth: implicitHeight
-    implicitHeight: Impl.Units.mediumControlHeight
+    implicitHeight: Impl.Units.smallControlHeight
 
     visible: !control.flat || control.editable || control.down || control.checked || control.highlighted || control.visualFocus || control.hovered
 
