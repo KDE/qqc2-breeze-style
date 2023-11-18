@@ -58,23 +58,18 @@ Rectangle {
         radius: parent.radius
     }
 
-    // Using Kirigami.ShadowedRectangle because Rectangle looks a bit jagged at 2x scaling even with antialiasing
-    Kirigami.ShadowedRectangle {
+    Rectangle {
         id: mark
         anchors.centerIn: parent
         implicitHeight: {
-            let h = root.height/2
+            let h = root.height * 0.4
             h -= h % 2
-            return h
+            // we need an odd width because it's centered, so there needs to be a center pixel
+            return Math.round(h + 1)
         }
         implicitWidth: implicitHeight
         radius: height / 2
         color: Kirigami.Theme.textColor
-        // slight glow gives subtle depth
-        shadow {
-            size: 2
-            color: mark.color
-        }
         visible: control.checked
         scale: 0.8
     }
