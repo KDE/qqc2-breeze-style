@@ -33,7 +33,7 @@ T.Button {
         Kirigami.Theme.inherit = false//Qt.binding(() => control.flat && !(control.down || control.checked))
     }
 
-    padding: Kirigami.Units.smallSpacing
+    padding: Kirigami.Units.mediumSpacing
     leftPadding: {
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly

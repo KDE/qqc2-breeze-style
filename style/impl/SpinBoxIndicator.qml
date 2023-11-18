@@ -43,7 +43,7 @@ Item {
     height: parent.height
 
     implicitWidth: implicitHeight
-    implicitHeight: Impl.Units.smallControlHeight
+    implicitHeight: Impl.Units.mediumControlHeight
 
     Rectangle {
         id: separator

@@ -24,7 +24,7 @@ T.TextField {
                              contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.smallSpacing
+    padding: Kirigami.Units.mediumSpacing
     leftPadding: Impl.Units.mediumHorizontalPadding
     rightPadding: Impl.Units.mediumHorizontalPadding
 
