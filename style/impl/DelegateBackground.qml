@@ -8,69 +8,60 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-// TODO: I'm currently unsatisfied with the appearance of this
-Loader {
+Rectangle {
     id: root
     property T.ItemDelegate control: root.parent
 
-    property color normalColor: control instanceof T.SwipeDelegate ? Kirigami.Theme.backgroundColor
-        : Qt.rgba(
-            Kirigami.Theme.backgroundColor.r,
-            Kirigami.Theme.backgroundColor.g,
-            Kirigami.Theme.backgroundColor.b,
-            0
-        )
-    property bool highlightBorder: control.hovered || control.visualFocus || control.down || control.highlighted
-
-    // Rectangle compatibility properties. 3rd party devs might assume that these properties are available.
-    property color color: {
-        if (control.down || control.highlighted) {
-            return Kirigami.Theme.alternateBackgroundColor
-        } else {
-            return normalColor
+    readonly property bool highlight: control.highlighted || control.down
+    readonly property bool useAlternatingColors: {
+        if (control.TableView.view?.alternatingRows && row % 2) {
+            return true
+        } else if (control.Kirigami.Theme.useAlternateBackgroundColor && index % 2) {
+            return true
         }
-    }
-    property real radius: Impl.Units.smallRadius
-    property QtObject border: QtObject {
-        property real width: highlightBorder ? Impl.Units.smallBorder : 0
-        property color color: Kirigami.Theme.focusColor
+        return false
     }
 
-    property bool backgroundAnimationRunning: false
-    property bool borderAnimationRunning: false
+    readonly property color hoverColor: Qt.alpha(Kirigami.Theme.hoverColor, 0.3)
+    readonly property color highlightColor: Kirigami.Theme.highlightColor
+    readonly property color normalColor: useAlternatingColors ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    // Workaround for QTBUG-113304
+    readonly property bool reallyFocus: control.visualFocus || (control.activeFocus && control.focusReason === Qt.OtherFocusReason)
 
-    visible: (highlightBorder || backgroundAnimationRunning || borderAnimationRunning || control instanceof T.SwipeDelegate)
-    active: visible
-    sourceComponent: Component {
-        Kirigami.ShadowedRectangle {
-            id: mainBackground
+    property real horizontalPadding: Kirigami.Units.smallSpacing
+    property real verticalPadding: Kirigami.Units.smallSpacing
+    property real cornerRadius: 3
 
-            implicitHeight: Impl.Units.mediumControlHeight
+    property color color: normalColor
 
-            radius: root.radius
+    Rectangle {
+        anchors {
+            fill: parent
+            leftMargin: background.horizontalPadding
+            rightMargin: background.horizontalPadding
+            // We want total spacing between consecutive list items to be
+            // verticalPadding. So use half that as top/bottom margin, separately
+            // ceiling/flooring them so that the total spacing is preserved.
+            topMargin: Math.ceil(root.verticalPadding / 2)
+            bottomMargin: Math.floor(root.verticalPadding / 2)
+        }
 
-            color: root.color
+        radius: root.cornerRadius
 
-            border {
-                width: root.border.width
-                color: root.border.color
+        color: {
+            if (root.highlight) {
+                return root.highlightColor
+            } else {
+                return (root.control.hovered || root.reallyFocus) ? root.hoverColor : root.normalColor
             }
+        }
 
-            Behavior on color {
-                enabled: control.down
-                ColorAnimation {
-                    duration: Kirigami.Units.shortDuration
-                    easing.type: Easing.OutCubic
-                    onRunningChanged: root.backgroundAnimationRunning = running
-                }
-            }
-            Behavior on border.color {
-                enabled: highlightBorder
-                ColorAnimation {
-                    duration: Kirigami.Units.shortDuration
-                    easing.type: Easing.OutCubic
-                    onRunningChanged: root.borderAnimationRunning = running
-                }
+        border.width: 1
+        border.color: {
+            if (root.highlight) {
+                return root.highlightColor
+            } else {
+                return (root.control.hovered || root.reallyFocus) ? Kirigami.Theme.hoverColor : "transparent"
             }
         }
     }
