@@ -65,7 +65,9 @@ QtObject {
 
     property int smallHorizontalPadding: Math.round(horizontalPaddingRatio * Kirigami.Units.smallSpacing)
 
-    property int  mediumHorizontalPadding: Math.round(horizontalPaddingRatio * Kirigami.Units.mediumSpacing)
+    property int mediumHorizontalPadding: Math.round(horizontalPaddingRatio * Kirigami.Units.mediumSpacing)
+
+    property int largeHorizontalPadding: Math.round(horizontalPaddingRatio * Kirigami.Units.largeSpacing)
 
     function symbolSize(size) {
         size -= size % 6

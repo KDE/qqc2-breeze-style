@@ -33,22 +33,36 @@ T.Button {
         Kirigami.Theme.inherit = false//Qt.binding(() => control.flat && !(control.down || control.checked))
     }
 
-    padding: Kirigami.Units.mediumSpacing
+    property int __minimumTextButtonWidth: Kirigami.Units.iconSizes.sizeForLabels * 5
+
+    padding: Kirigami.Units.largeSpacing
     leftPadding: {
+        let paddingValue = control.horizontalPadding;
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly
             || display == T.AbstractButton.TextUnderIcon) {
-            return Impl.Units.mediumHorizontalPadding
-        } else {
-            return control.horizontalPadding
+            paddingValue = Impl.Units.largeHorizontalPadding;
         }
+
+        if (text === "") {
+            return paddingValue;
+        }
+
+        // To match qqc2-desktop-style behavior, we enforce a minimum width for Buttons that have text
+        return Math.max(Math.round((__minimumTextButtonWidth - implicitContentWidth) / 2), paddingValue);
     }
     rightPadding: {
+        let paddingValue = control.horizontalPadding;
         if (contentItem.hasLabel && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
-            return Impl.Units.mediumHorizontalPadding
-        } else {
-            return control.horizontalPadding
+            paddingValue = Impl.Units.largeHorizontalPadding;
         }
+
+        if (text === "") {
+            return paddingValue;
+        }
+
+        // To match qqc2-desktop-style behavior, we enforce a minimum width for Buttons that have text
+        return Math.max(Math.round((__minimumTextButtonWidth - implicitContentWidth) / 2), paddingValue);
     }
 
     spacing: Kirigami.Units.mediumSpacing

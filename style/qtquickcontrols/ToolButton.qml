@@ -42,14 +42,14 @@ T.ToolButton {
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly
             || display == T.AbstractButton.TextUnderIcon) {
-            return Impl.Units.mediumHorizontalPadding
+            return Impl.Units.largeHorizontalPadding
         } else {
             return control.horizontalPadding
         }
     }
     rightPadding: {
         if (contentItem.hasLabel && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
-            return Impl.Units.mediumHorizontalPadding
+            return Impl.Units.largeHorizontalPadding
         } else {
             return control.horizontalPadding
         }
