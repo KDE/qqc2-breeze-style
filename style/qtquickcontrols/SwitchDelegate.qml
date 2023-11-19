@@ -43,9 +43,6 @@ T.SwitchDelegate {
     icon.width: Kirigami.Units.iconSizes.sizeForLabels
     icon.height: Kirigami.Units.iconSizes.sizeForLabels
 
-    Kirigami.Theme.colorSet: control.down || control.highlighted ? Kirigami.Theme.Button : -1
-    Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
-
     contentItem:Impl.IconLabelContent {
         control: control
         alignment: Qt.AlignLeft | Qt.AlignVCenter
