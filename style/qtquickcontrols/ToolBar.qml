@@ -30,8 +30,8 @@ T.ToolBar {
     bottomPadding: __isHeader && background && background.hasOwnProperty("separator") ?
         background.separator.height + verticalPadding : verticalPadding
 
-    Kirigami.Theme.inherit: !__isHeader
-    Kirigami.Theme.colorSet: Kirigami.Theme.Header
+    Kirigami.Theme.colorSet: __isHeader ? Kirigami.Theme.Header : Kirigami.Theme.Window
+    Kirigami.Theme.inherit: false
 
     background: Rectangle {
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
