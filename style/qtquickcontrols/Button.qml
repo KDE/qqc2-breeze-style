@@ -11,9 +11,19 @@ import org.kde.breeze.impl as Impl
 T.Button {
     id: control
 
-    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding,
-                            implicitIndicatorWidth + leftPadding + rightPadding)
+    implicitWidth: {
+        let contentAndPaddingWidth = implicitContentWidth + leftPadding + rightPadding;
+        const minimumTextButtonWidth = Kirigami.Units.iconSizes.sizeForLabels * 5;
+
+        // To match qqc2-desktop-style behavior, we enforce a minimum width for Buttons that have text
+        if (text !== "") {
+            contentAndPaddingWidth = Math.max(contentAndPaddingWidth, minimumTextButtonWidth);
+        }
+
+        Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                 contentAndPaddingWidth,
+                 implicitIndicatorWidth + leftPadding + rightPadding)
+    }
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
@@ -33,36 +43,20 @@ T.Button {
         Kirigami.Theme.inherit = false//Qt.binding(() => control.flat && !(control.down || control.checked))
     }
 
-    property int __minimumTextButtonWidth: Kirigami.Units.iconSizes.sizeForLabels * 5
-
     padding: Kirigami.Units.largeSpacing
     leftPadding: {
-        let paddingValue = control.horizontalPadding;
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
             || display == T.AbstractButton.TextOnly
             || display == T.AbstractButton.TextUnderIcon) {
-            paddingValue = Impl.Units.largeHorizontalPadding;
+            return Impl.Units.largeHorizontalPadding;
         }
-
-        if (text === "") {
-            return paddingValue;
-        }
-
-        // To match qqc2-desktop-style behavior, we enforce a minimum width for Buttons that have text
-        return Math.max(Math.round((__minimumTextButtonWidth - implicitContentWidth) / 2), paddingValue);
+        return control.horizontalPadding;
     }
     rightPadding: {
-        let paddingValue = control.horizontalPadding;
         if (contentItem.hasLabel && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
-            paddingValue = Impl.Units.largeHorizontalPadding;
+            return Impl.Units.largeHorizontalPadding;
         }
-
-        if (text === "") {
-            return paddingValue;
-        }
-
-        // To match qqc2-desktop-style behavior, we enforce a minimum width for Buttons that have text
-        return Math.max(Math.round((__minimumTextButtonWidth - implicitContentWidth) / 2), paddingValue);
+        return control.horizontalPadding;
     }
 
     spacing: Kirigami.Units.mediumSpacing
