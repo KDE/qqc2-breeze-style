@@ -12,20 +12,14 @@ T.ScrollView {
                              contentHeight + topPadding + bottomPadding)
 
     rightPadding: {
-        if (ScrollBar.vertical
-            && ScrollBar.vertical.background
-            && ScrollBar.vertical.background.visible
-        ) {
+        if (ScrollBar.vertical?.background?.visible) {
             return ScrollBar.vertical.background.width
         } else {
             return horizontalPadding
         }
     }
     bottomPadding: {
-        if (ScrollBar.horizontal
-            && ScrollBar.horizontal.background
-            && ScrollBar.horizontal.background.visible
-        ) {
+        if (ScrollBar.horizontal?.background?.visible) {
             return ScrollBar.horizontal.background.height
         } else {
             return verticalPadding
