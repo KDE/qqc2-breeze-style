@@ -5,7 +5,6 @@ import QtQuick.Templates as T
 
 T.ScrollView {
     id: control
-    clip: true //TODO: remove with Qt 6
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding)
