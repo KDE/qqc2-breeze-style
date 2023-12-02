@@ -14,7 +14,7 @@ Loader {
     id: root
     property Item target
     property bool isSelectionEnd: false
-    visible: Kirigami.Settings.tabletMode && target.activeFocus && (isSelectionEnd ? target.selectionStart !== target.selectionEnd : true)
+    visible: Kirigami.Settings.tabletMode && target.selectByMouse && target.activeFocus && (isSelectionEnd ? target.selectionStart !== target.selectionEnd : true)
     active: visible
     sourceComponent: Kirigami.ShadowedRectangle {
         id: handle

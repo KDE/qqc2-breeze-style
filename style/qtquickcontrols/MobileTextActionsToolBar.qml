@@ -14,7 +14,7 @@ import org.kde.breeze.impl as Impl
 Loader {
     id: root
     property Item target
-    visible: Kirigami.Settings.tabletMode && target.selectedText.length > 0
+    visible: Kirigami.Settings.tabletMode && target.selectByMouse && target.selectedText.length > 0
     active: visible
     sourceComponent: Popup {
         id: popup
