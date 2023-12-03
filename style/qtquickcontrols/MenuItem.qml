@@ -35,6 +35,10 @@ T.MenuItem {
 
 //     width: parent ? parent.width : implicitWidth
 
+    // Note: Binding height here to make sure menu items that are not visible are
+    // properly collapsed, otherwise they will still occupy space inside the menu.
+    height: visible ? undefined : 0
+
     icon.width: Kirigami.Units.iconSizes.sizeForLabels
     icon.height: Kirigami.Units.iconSizes.sizeForLabels
 
