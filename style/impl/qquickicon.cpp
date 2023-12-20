@@ -6,6 +6,9 @@
 
 #include "qquickicon_p.h"
 
+namespace Breeze
+{
+
 class QQuickIconPrivate : public QSharedData
 {
 public:
@@ -238,6 +241,8 @@ QQuickIcon QQuickIcon::resolve(const QQuickIcon &other) const
         resolved.d->cache = other.d->cache;
 
     return resolved;
+}
+
 }
 
 #include "moc_qquickicon_p.cpp"

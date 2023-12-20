@@ -65,7 +65,7 @@ class IconLabelLayout : public QQuickItem
     Q_PROPERTY(bool hasLabel READ hasLabel NOTIFY hasLabelChanged FINAL)
 
     // qqc2-breeze-style has its own copy/pasted implementation of QQuickIcon
-    Q_PROPERTY(QQuickIcon icon READ icon WRITE setIcon NOTIFY iconChanged FINAL)
+    Q_PROPERTY(Breeze::QQuickIcon icon READ icon WRITE setIcon NOTIFY iconChanged FINAL)
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
@@ -127,8 +127,8 @@ public:
     bool hasLabel() const;
     void setHasLabel();
 
-    QQuickIcon icon() const;
-    void setIcon(const QQuickIcon &icon);
+    Breeze::QQuickIcon icon() const;
+    void setIcon(const Breeze::QQuickIcon &icon);
 
     QString text() const;
     void setText(const QString &text);

@@ -14,6 +14,9 @@
 #include <QtGui/qcolor.h>
 #include <QtQml/qqml.h>
 
+namespace Breeze
+{
+
 class QQuickIconPrivate;
 
 class QQuickIcon
@@ -68,5 +71,7 @@ public:
 private:
     QExplicitlySharedDataPointer<QQuickIconPrivate> d;
 };
+
+}
 
 #endif // QQUICKICON_P_H
