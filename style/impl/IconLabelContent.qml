@@ -25,7 +25,14 @@ IconLabelLayout {
         return root.mirrored ? indicatorCenter <= controlCenter : indicatorCenter > controlCenter
     }
 
-    icon: control.icon
+    icon {
+        name: control.icon.name
+        source: control.icon.source
+        width: control.icon.width
+        height: control.icon.height
+        color: control.icon.color
+        cache: control.icon.cache
+    }
     text: control.text
     font: control.font
     color: Kirigami.Theme.textColor
