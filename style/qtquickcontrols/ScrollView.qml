@@ -3,6 +3,8 @@ import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Templates as T
 
+import org.kde.kirigami as Kirigami
+
 T.ScrollView {
     id: control
 
@@ -10,6 +12,12 @@ T.ScrollView {
                             contentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
+
+    data: [
+        Kirigami.WheelHandler {
+            target: control.contentItem
+        }
+    ]
 
     rightPadding: {
         if (ScrollBar.vertical?.background?.visible) {
