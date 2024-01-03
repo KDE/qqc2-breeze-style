@@ -27,20 +27,19 @@ Rectangle {
     readonly property bool vertical: root.control.vertical
 
 
-    implicitWidth: root.horizontal ? 200 : Impl.Units.grooveHeight
-    implicitHeight: root.vertical ? 200 : Impl.Units.grooveHeight
-
-
     //NOTE: Manually setting x,y,width,height because that's what the Basic, Fusion and Material QQC2 styles do.
     // Inset would be more idiomatic for QQC2, but this is easier to deal with for now since the behavior is expected by app devs.
-
-    width: root.horizontal ? control.availableWidth - root.handleWidth/2 - secondHandleWidth/2 + Impl.Units.grooveHeight : implicitWidth
-    height: root.vertical ? control.availableHeight - root.handleHeight/2 - secondHandleHeight/2 + Impl.Units.grooveHeight : implicitHeight
 
     x: control.leftPadding + (root.horizontal ?
         (control.mirrored ? root.secondHandleWidth/2 : root.handleWidth/2) - radius
         : (control.availableWidth - width) / 2)
     y: control.topPadding + (root.vertical ? root.secondHandleHeight/2 - radius : (control.availableHeight - height) / 2)
+
+    implicitWidth: root.horizontal ? 200 : Impl.Units.grooveHeight
+    implicitHeight: root.vertical ? 200 : Impl.Units.grooveHeight
+
+    width: root.horizontal ? control.availableWidth - root.handleWidth/2 - secondHandleWidth/2 + Impl.Units.grooveHeight : implicitWidth
+    height: root.vertical ? control.availableHeight - root.handleHeight/2 - secondHandleHeight/2 + Impl.Units.grooveHeight : implicitHeight
 
     radius: Impl.Units.grooveHeight/2
     color: Kirigami.Theme.backgroundColor
