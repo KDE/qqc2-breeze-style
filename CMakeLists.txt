@@ -1,5 +1,5 @@
 project(qqc2-breeze-style)
-set(PROJECT_VERSION "5.91.90")
+set(PROJECT_VERSION "5.92.0")
 
 cmake_minimum_required(VERSION 3.16)
 
