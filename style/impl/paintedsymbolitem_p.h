@@ -3,8 +3,9 @@
 
 #include "paintedsymbolitem.h"
 
-#include <array>
-#include <tuple>
+#include <QFontMetricsF>
+#include <QGuiApplication>
+#include <QPen>
 
 class PaintedSymbolItemPrivate
 {

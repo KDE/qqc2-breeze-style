@@ -5,8 +5,7 @@
 #ifndef PAINTEDSYMBOLITEM_H
 #define PAINTEDSYMBOLITEM_H
 
-#include <QtQuick>
-
+#include <QQuickPaintedItem>
 #include <climits>
 
 class PaintedSymbolItemPrivate;

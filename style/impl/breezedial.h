@@ -5,7 +5,8 @@
 #ifndef BREEZEDIAL_H
 #define BREEZEDIAL_H
 
-#include <QtQuick>
+#include <QColor>
+#include <QQuickPaintedItem>
 
 class BreezeDialPrivate;
 
