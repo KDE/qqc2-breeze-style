@@ -16,7 +16,7 @@ T.Button {
         const minimumTextButtonWidth = Kirigami.Units.iconSizes.sizeForLabels * 5;
 
         // To match qqc2-desktop-style behavior, we enforce a minimum width for Buttons that have text
-        if (text !== "") {
+        if (display !== AbstractButton.IconOnly && text !== "") {
             contentAndPaddingWidth = Math.max(contentAndPaddingWidth, minimumTextButtonWidth);
         }
 
