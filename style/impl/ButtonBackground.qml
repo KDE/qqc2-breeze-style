@@ -31,7 +31,7 @@ Kirigami.ShadowedRectangle {
         0
     )
     property bool highlightBackground: control.down || control.checked
-    property bool highlightBorder: control.enabled && control.down || control.checked || control.highlighted || control.visualFocus || control.hovered
+    property bool highlightBorder: control.enabled && (control.down || control.checked || control.highlighted || control.visualFocus || control.hovered)
 
     radius: Impl.Units.smallRadius
     corners {
@@ -61,7 +61,7 @@ Kirigami.ShadowedRectangle {
             if (highlightBorder) {
                 return Kirigami.Theme.focusColor
             } else {
-                return Impl.Theme.separatorColor()
+                return control.flat ? "transparent" : Impl.Theme.separatorColor()
             }
         }
         width: Impl.Units.smallBorder
