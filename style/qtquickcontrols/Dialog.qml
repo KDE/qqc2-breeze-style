@@ -43,14 +43,22 @@ T.Dialog {
         }
     }
 
-    background: Rectangle {
-        radius: Impl.Units.smallRadius
-        color: Kirigami.Theme.backgroundColor
-        border.color: Impl.Theme.separatorColor()
-        border.width: control.dim ? 0 : Impl.Units.smallBorder
+    background: Kirigami.ShadowedRectangle {
+        Kirigami.Theme.colorSet: Kirigami.Theme.View
+        Kirigami.Theme.inherit: false
 
-        Impl.LargeShadow {
-            radius: parent.radius
+        color: Kirigami.Theme.backgroundColor
+        radius: Kirigami.Units.cornerRadius
+
+        shadow {
+            size: radius * 2
+            color: Qt.rgba(0, 0, 0, 0.3)
+            yOffset: 1
+        }
+
+        border {
+            width: 1
+            color: Kirigami.ColorUtils.linearInterpolation(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, Kirigami.Theme.frameContrast);
         }
     }
 
