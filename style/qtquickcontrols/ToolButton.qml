@@ -57,8 +57,8 @@ T.ToolButton {
 
     spacing: Kirigami.Units.mediumSpacing
 
-    icon.width: Kirigami.Units.iconSizes.sizeForLabels
-    icon.height: Kirigami.Units.iconSizes.sizeForLabels
+    icon.width: Kirigami.Units.iconSizes.sizeForLabelsRoundedUp
+    icon.height: Kirigami.Units.iconSizes.sizeForLabelsRoundedUp
 
     Kirigami.MnemonicData.enabled: control.enabled && control.visible
     Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.ActionElement
