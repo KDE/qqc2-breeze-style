@@ -30,7 +30,7 @@ Rectangle {
 
     property real horizontalPadding: Kirigami.Units.smallSpacing
     property real verticalPadding: Kirigami.Units.smallSpacing
-    property real cornerRadius: 3
+    property real cornerRadius: Impl.Units.smallRadius
 
     color: normalColor
 

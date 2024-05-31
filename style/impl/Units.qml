@@ -26,7 +26,7 @@ QtObject {
     property int largeBorder: smallBorder * 4
 
     // The default corner radius
-    property int smallRadius: 3
+    property int smallRadius: Kirigami.Units.cornerRadius
     // Usually for larger surfaces like Cards
     property int largeRadius: smallRadius * 2
 
