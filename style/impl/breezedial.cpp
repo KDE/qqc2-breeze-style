@@ -182,7 +182,7 @@ bool BreezeDial::notchesVisible() const
     return d->notchesVisible;
 }
 
-void BreezeDial::setNotchesVisible(const qreal notchesVisible)
+void BreezeDial::setNotchesVisible(const bool notchesVisible)
 {
     Q_D(BreezeDial);
     if (d->notchesVisible == notchesVisible)

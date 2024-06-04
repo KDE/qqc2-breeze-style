@@ -674,13 +674,13 @@ void IconLabelLayout::setDisplay(IconLabelLayout::Display display)
     d->display = display;
     Q_EMIT displayChanged();
 
-    if (oldDisplay == iconOnly()) {
+    if (oldDisplay == Display::IconOnly || iconOnly()) {
         Q_EMIT iconOnlyChanged();
-    } else if (oldDisplay == textOnly()) {
+    } else if (oldDisplay == Display::TextOnly || textOnly()) {
         Q_EMIT textOnlyChanged();
-    } else if (oldDisplay == textBesideIcon()) {
+    } else if (oldDisplay == Display::TextBesideIcon || textBesideIcon()) {
         Q_EMIT textBesideIconChanged();
-    } else if (oldDisplay == textUnderIcon()) {
+    } else if (oldDisplay == Display::TextUnderIcon || textUnderIcon()) {
         Q_EMIT textUnderIconChanged();
     }
 

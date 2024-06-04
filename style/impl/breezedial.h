@@ -47,7 +47,7 @@ public:
     void setGrooveThickness(const qreal grooveThickness);
 
     bool notchesVisible() const;
-    void setNotchesVisible(const qreal notchesVisible);
+    void setNotchesVisible(const bool notchesVisible);
 
 Q_SIGNALS:
     void backgroundBorderColorChanged();
