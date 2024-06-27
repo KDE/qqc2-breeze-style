@@ -18,6 +18,9 @@ T.MenuSeparator {
     hoverEnabled: false
     focusPolicy: Qt.NoFocus
 
+    topPadding: Kirigami.Units.smallSpacing / 2
+    bottomPadding: Kirigami.Units.smallSpacing / 2
+
     contentItem: Kirigami.Separator {
         implicitWidth: Kirigami.Units.gridUnit * 8
         implicitHeight: 1
