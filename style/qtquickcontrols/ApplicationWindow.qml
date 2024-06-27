@@ -5,10 +5,46 @@
 import QtQuick
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
+import org.kde.guiaddons as GuiAddons
 
 T.ApplicationWindow {
     id: window
+
     // palette: Kirigami.Theme.palette
     Kirigami.Theme.colorSet: Kirigami.Theme.Window
     color: Kirigami.Theme.backgroundColor
+
+    Item {
+        id: headerColor
+
+        Kirigami.Theme.colorSet: Kirigami.Theme.Header
+        Kirigami.Theme.inherit: false
+
+        property color backgroundColor: Kirigami.Theme.backgroundColor
+        onBackgroundColorChanged: {
+            GuiAddons.WindowInsetsController.statusBarBackgroundColor = Kirigami.Theme.backgroundColor;
+            console.log("Header color", Kirigami.Theme.backgroundColor);
+        }
+    }
+
+    Item {
+        id: statusBarColor
+
+        readonly property color windowColor: window.Kirigami.Theme.backgroundColor
+        readonly property color footerColor: window.footer?.Kirigami.Theme.backgroundColor
+
+        onWindowColorChanged: {
+            if (!window.footer) {
+                GuiAddons.WindowInsetsController.navigationBarBackgroundColor = Kirigami.Theme.backgroundColor;
+                console.log("Footer color", Kirigami.Theme.backgroundColor)
+            }
+        }
+
+        onFooterColorChanged: {
+            if (window.footer) {
+                GuiAddons.WindowInsetsController.navigationBarBackgroundColor = window.footer.Kirigami.Theme.backgroundColor;
+                console.log("Footer color", window.footer.Kirigami.Theme.backgroundColor)
+            }
+        }
+    }
 }
