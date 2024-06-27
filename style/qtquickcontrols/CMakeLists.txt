@@ -6,6 +6,7 @@ ecm_add_qml_module(BreezeStyle URI "org.kde.breeze"
     "org.kde.kirigami"
     "org.kde.quickcharts"
     "org.kde.breeze.impl"
+    "org.kde.guiaddons"
 )
 
 ecm_target_qml_sources(BreezeStyle SOURCES
