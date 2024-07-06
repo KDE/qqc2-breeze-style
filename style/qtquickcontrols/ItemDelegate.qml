@@ -40,8 +40,8 @@ T.ItemDelegate {
 
     spacing: Kirigami.Units.mediumSpacing
 
-    icon.width: Kirigami.Units.iconSizes.sizeForLabelsRoundedUp
-    icon.height: Kirigami.Units.iconSizes.sizeForLabelsRoundedUp
+    icon.width: Kirigami.Units.iconSizes.sizeForLabels
+    icon.height: Kirigami.Units.iconSizes.sizeForLabels
 
     contentItem: Impl.IconLabelContent {
         control: control
