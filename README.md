@@ -42,7 +42,7 @@ The easiest way to make changes and test QQC2 Breeze Style during development is
 Like other projects in the KDE ecosystem, contributions are welcome from all. This repository is managed in [KDE Invent](https://invent.kde.org/plasma/qqc2-breeze-style), our GitLab instance.
 
 * Want to contribute code? See the [GitLab wiki page](https://community.kde.org/Infrastructure/GitLab) for a tutorial on how to send a merge request.
-* Reporting a bug? Please submit it on the [Issues page]https://invent.kde.org/plasma/qqc2-breeze-style/-/issues).
+* Reporting a bug? Please submit it on the [Issues page](https://invent.kde.org/plasma/qqc2-breeze-style/-/issues).
 
 If you get stuck or need help with anything at all, head over to the [KDE New Contributors room](https://go.kde.org/matrix/#/#kde-welcome:kde.org) on Matrix. For questions about QQC2 Desktop Style, please ask in the [KDE Development room](https://go.kde.org/matrix/#/#kde-devel:kde.org). See [Matrix](https://community.kde.org/Matrix) for more details.
 
