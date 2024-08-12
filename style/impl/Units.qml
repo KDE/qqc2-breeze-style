@@ -92,6 +92,7 @@ QtObject {
      * metrics used by the default font
      */
     property var fontMetrics: FontMetrics {
+        font: Kirigami.Theme.defaultFont
         property real fullWidthCharWidth: fontMetrics.tightBoundingRect('＿').width
     }
 }
