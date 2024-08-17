@@ -41,10 +41,9 @@ find_package(Qt6 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Core Gui Qml Qu
 
 if (NOT ANDROID)
     find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS DBus)
-    find_package(KF6IconThemes ${KF6_MIN_VERSION} REQUIRED)
 endif()
 
-find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform CoreAddons ColorScheme QuickCharts)
+find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform CoreAddons ColorScheme QuickCharts IconThemes)
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)

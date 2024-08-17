@@ -16,10 +16,11 @@ target_link_libraries(org.kde.breeze
         Qt::Quick
         KF6::GuiAddons
         KF6::ColorScheme
+        KF6::IconThemes
 )
 
 if(NOT ANDROID)
-    target_link_libraries(org.kde.breeze PRIVATE Qt::DBus KF6::IconThemes)
+    target_link_libraries(org.kde.breeze PRIVATE Qt::DBus)
 else()
     set_target_properties(org.kde.breeze PROPERTIES OUTPUT_NAME libplugins_kf6_kirigami_platform_org.kde.breeze)
 endif()
