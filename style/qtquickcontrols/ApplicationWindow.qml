@@ -20,28 +20,16 @@ T.ApplicationWindow {
         Kirigami.Theme.colorSet: Kirigami.Theme.Header
         Kirigami.Theme.inherit: false
 
-        property color backgroundColor: Kirigami.Theme.backgroundColor
-        onBackgroundColorChanged: {
-            GuiAddons.WindowInsetsController.statusBarBackgroundColor = Kirigami.Theme.backgroundColor;
+        Binding {
+            target: GuiAddons.WindowInsetsController
+            property: "statusBarBackgroundColor"
+            value: Kirigami.Theme.backgroundColor
         }
     }
 
-    QtObject {
-        id: statusBarColor
-
-        readonly property color windowColor: window.Kirigami.Theme.backgroundColor
-        readonly property color footerColor: window.footer?.Kirigami.Theme.backgroundColor
-
-        onWindowColorChanged: {
-            if (!window.footer) {
-                GuiAddons.WindowInsetsController.navigationBarBackgroundColor = Kirigami.Theme.backgroundColor;
-            }
-        }
-
-        onFooterColorChanged: {
-            if (window.footer) {
-                GuiAddons.WindowInsetsController.navigationBarBackgroundColor = window.footer.Kirigami.Theme.backgroundColor;
-            }
-        }
+    Binding {
+        target: GuiAddons.WindowInsetsController
+        property: "navigationBarBackgroundColor"
+        value: window.footer ? window.footer.Kirigami.Theme.backgroundColor : Kirigami.Theme.backgroundColor
     }
 }
