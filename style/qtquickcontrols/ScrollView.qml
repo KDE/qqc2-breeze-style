@@ -13,6 +13,9 @@ T.ScrollView {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding)
 
+    Kirigami.Theme.colorSet: Kirigami.Theme.View
+    Kirigami.Theme.inherit: !background || !background.visible
+
     data: [
         Kirigami.WheelHandler {
             target: control.contentItem
