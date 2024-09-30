@@ -157,7 +157,7 @@ T.ComboBox {
     delegate: Controls.MenuItem {
         implicitWidth: leftPadding + implicitContentWidth + rightPadding
         width: parent ? parent.width : implicitWidth
-        text: control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData
+        text: modelData[control.textRole]
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
         __reserveSpaceForIndicator: false
@@ -172,7 +172,7 @@ T.ComboBox {
         width: Math.max(control.width, implicitWidth)
         padding: Kirigami.Units.smallSpacing
 
-        delegate: null
+        delegate: control.delegate
 
         contentItem: ListView {
             id: listView
