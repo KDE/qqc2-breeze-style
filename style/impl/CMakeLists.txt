@@ -63,4 +63,4 @@ target_link_libraries(BreezeImpl PRIVATE
     KF6::GuiAddons
 )
 
-ecm_finalize_qml_module(BreezeImpl)
+ecm_finalize_qml_module(BreezeImpl EXPORT QQC2BreezeStyleTargets)

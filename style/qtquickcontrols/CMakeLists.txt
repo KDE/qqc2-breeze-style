@@ -68,4 +68,4 @@ ecm_target_qml_sources(BreezeStyle SOURCES
     VerticalHeaderView.qml
 )
 
-ecm_finalize_qml_module(BreezeStyle)
+ecm_finalize_qml_module(BreezeStyle EXPORT QQC2BreezeStyleTargets)

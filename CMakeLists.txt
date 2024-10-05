@@ -67,7 +67,24 @@ set_package_properties(ColorScheme PROPERTIES DESCRIPTION "KF6 ColorScheme frame
                        PURPOSE "Optional integration of Kirigami with KColorScheme for color palettes integration with Plasma Desktop"
                       )
 
+ecm_setup_version(PROJECT
+    VARIABLE_PREFIX QQC2BREEZESTYLE
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/QQC2BreezeStyleConfigVersion.cmake"
+    SOVERSION 5)
+
+add_definitions(-DQT_NO_FOREACH)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050d00)
+add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x054900)
+
+add_subdirectory(style)
+
+add_subdirectory(kirigami-plasmadesktop-integration)
+
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/QQC2BreezeStyle")
+
+if (NOT BUILD_SHARED_LIBS)
+    install(EXPORT QQC2BreezeStyleTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE QQC2BreezeStyleTargets.cmake)
+endif()
 
 configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/QQC2BreezeStyleConfig.cmake.in"
@@ -82,21 +99,6 @@ install(FILES
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )
-
-
-ecm_setup_version(PROJECT
-    VARIABLE_PREFIX QQC2BREEZESTYLE
-    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/QQC2BreezeStyleConfigVersion.cmake"
-    SOVERSION 5)
-
-#########################################################################
-add_definitions(-DQT_NO_FOREACH)
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050d00)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x054900)
-
-add_subdirectory(style)
-
-add_subdirectory(kirigami-plasmadesktop-integration)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
