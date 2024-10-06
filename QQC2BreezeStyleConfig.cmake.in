@@ -3,6 +3,11 @@
 include(CMakeFindDependencyMacro)
 find_dependency(KF6QuickCharts @KF6_MIN_VERSION@)
 
+if (NOT @BUILD_SHARED_LIBS@)
+    find_dependency(KF6IconThemes @KF6_MIN_VERSION@)
+    find_dependency(KF6ColorScheme @KF6_MIN_VERSION@)
+endif()
+
 # Any changes in this ".cmake" file will be overwritten by CMake, the source is the ".cmake.in" file.
 
 set(QQC2BreezeStyle_INSTALL_PREFIX "@PACKAGE_CMAKE_INSTALL_PREFIX@")

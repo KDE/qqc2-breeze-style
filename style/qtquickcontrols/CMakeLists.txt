@@ -68,4 +68,8 @@ ecm_target_qml_sources(BreezeStyle SOURCES
     VerticalHeaderView.qml
 )
 
+if (NOT BUILD_SHARED_LIBS)
+    target_link_libraries(BreezeStyle PRIVATE org.kde.breeze)
+endif()
+
 ecm_finalize_qml_module(BreezeStyle EXPORT QQC2BreezeStyleTargets)
