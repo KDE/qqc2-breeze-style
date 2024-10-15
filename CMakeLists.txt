@@ -49,11 +49,6 @@ if (NOT APPLE AND NOT WIN32)
     find_package(X11)
 endif()
 
-# When building as a static plugin, dependencies may add a -lQt5X11Extras
-# to the linker, in that case, it requires to have the proper variables
-# to exists.
-find_package(Qt6X11Extras ${QT_MIN_VERSION} NO_MODULE QUIET)
-
 set_package_properties(QuickCharts PROPERTIES DESCRIPTION "KF6 QuickCharts framework"
                        TYPE REQUIRED
                        PURPOSE "Used to implement the BusyIndicator style"
