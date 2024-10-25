@@ -2,6 +2,7 @@ ecm_add_qml_module(BreezeImpl URI "org.kde.breeze.impl"
     GENERATE_PLUGIN_SOURCE
     DEPENDENCIES
     "QtQuick.Controls"
+    "QtQuick.Window"
     "org.kde.kirigami"
 )
 
