@@ -19,9 +19,11 @@ T.DialogButtonBox {
     property bool __isInPopup: parent ? parent.toString().includes("QQuickPopupItem") : false
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            contentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-                             contentHeight + topPadding + bottomPadding)
+                             implicitContentHeight + topPadding + bottomPadding)
+
+    contentWidth: (contentItem as ListView)?.contentWidth ?? 0
 
     spacing: Kirigami.Units.smallSpacing
 
@@ -30,7 +32,13 @@ T.DialogButtonBox {
     alignment: Qt.AlignRight
 
     delegate: Button {
-        width: Math.round(Math.min(implicitWidth, (control.availableWidth / control.count) - (control.spacing * (control.count-1))))
+        // Round because fractional width values are possible.
+        width: Math.floor(Math.min(
+            implicitWidth,
+            // Divide availableWidth (width - leftPadding - rightPadding) by the number of buttons,
+            // then subtract the spacing between each button.
+            ((control.availableWidth - (control.spacing * (control.count - 1))) / control.count)
+        ))
         Kirigami.MnemonicData.controlType: Kirigami.MnemonicData.DialogButton
     }
 
