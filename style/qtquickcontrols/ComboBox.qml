@@ -155,9 +155,12 @@ T.ComboBox {
     }
 
     delegate: Controls.MenuItem {
+        required property var model
+        required property int index
+
         implicitWidth: leftPadding + implicitContentWidth + rightPadding
         width: parent ? parent.width : implicitWidth
-        text: modelData[control.textRole]
+        text: model[control.textRole]
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
         __reserveSpaceForIndicator: false
