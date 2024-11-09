@@ -77,9 +77,7 @@ add_subdirectory(kirigami-plasmadesktop-integration)
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/QQC2BreezeStyle")
 
-if (NOT BUILD_SHARED_LIBS)
-    install(EXPORT QQC2BreezeStyleTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE QQC2BreezeStyleTargets.cmake)
-endif()
+install(EXPORT QQC2BreezeStyleTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE QQC2BreezeStyleTargets.cmake)
 
 configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/QQC2BreezeStyleConfig.cmake.in"
