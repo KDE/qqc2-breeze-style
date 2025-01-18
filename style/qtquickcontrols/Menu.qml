@@ -31,6 +31,7 @@ T.Menu {
     padding: Kirigami.Units.smallSpacing
     margins: 0
     overlap: background && background.hasOwnProperty("border") ? background.border.width : 0
+    z: Kirigami.OverlayZStacking.z
 
     function __itemHasIcon(item) {
         const hasName = (item?.icon?.name ?? "") !== ""
