@@ -3,6 +3,7 @@
  */
 
 import QtQuick
+import QtQuick.Layouts
 import QtQuick.Templates as T
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
@@ -19,29 +20,28 @@ T.ItemDelegate {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    padding: Kirigami.Units.mediumSpacing
+    hoverEnabled: true
 
-    leftPadding: {
-        if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
-            || display == T.AbstractButton.TextOnly
-            || display == T.AbstractButton.TextUnderIcon) {
-            return Impl.Units.mediumHorizontalPadding
-        } else {
-            return control.horizontalPadding
-        }
-    }
-    rightPadding: {
-        if (contentItem.hasLabel && display != T.AbstractButton.IconOnly) { // False if contentItem has been replaced
-            return Impl.Units.mediumHorizontalPadding
-        } else {
-            return control.horizontalPadding
-        }
-    }
+    spacing: Kirigami.Units.smallSpacing
+    padding: Kirigami.Settings.tabletMode ? Kirigami.Units.largeSpacing : Kirigami.Units.mediumSpacing
+    horizontalPadding: Kirigami.Units.smallSpacing * 2
+    leftPadding: !mirrored ? horizontalPadding + (indicator ? implicitIndicatorWidth + spacing : 0) : horizontalPadding
+    rightPadding: mirrored ? horizontalPadding + (indicator ? implicitIndicatorWidth + spacing : 0) : horizontalPadding
 
-    spacing: Kirigami.Units.mediumSpacing
+    icon.width: Kirigami.Units.iconSizes.smallMedium
+    icon.height: Kirigami.Units.iconSizes.smallMedium
 
-    icon.width: Kirigami.Units.iconSizes.sizeForLabels
-    icon.height: Kirigami.Units.iconSizes.sizeForLabels
+    T.ToolTip.visible: (Kirigami.Settings.tabletMode ? down : hovered) && (contentItem.truncated ?? false)
+    T.ToolTip.text: text
+    T.ToolTip.delay: Kirigami.Units.toolTipDelay
+
+    leftInset: TableView.view ? 0 : horizontalPadding / 2
+    rightInset: TableView.view ? 0 : horizontalPadding / 2
+    // We want total spacing between consecutive list items to be
+    // verticalPadding. So use half that as top/bottom margin, separately
+    // ceiling/flooring them so that the total spacing is preserved.
+    topInset: TableView.view ? 0 : Math.ceil(verticalPadding / 2)
+    bottomInset: TableView.view ? 0 : Math.ceil(verticalPadding / 2)
 
     contentItem: Impl.IconLabelContent {
         control: control
@@ -49,6 +49,9 @@ T.ItemDelegate {
     }
 
     background: Impl.DelegateBackground {
+         // This is intentional and ensures the inset is not directly applied to
+        // the background, allowing it to determine how to handle the inset.
+        anchors.fill: parent
         control: control
     }
 }
