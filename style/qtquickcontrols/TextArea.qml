@@ -45,10 +45,9 @@ T.TextArea {
     mouseSelectionMode: Kirigami.Settings.tabletMode ?
         TextEdit.SelectWords : TextEdit.SelectCharacters
 
-    cursorDelegate: Loader {
+    cursorDelegate: Impl.CursorDelegate {
         visible: control.activeFocus && !control.readOnly && control.selectionStart === control.selectionEnd
-        active: visible
-        sourceComponent: Impl.CursorDelegate { target: control }
+        target: control
     }
 
     Controls.Label {
