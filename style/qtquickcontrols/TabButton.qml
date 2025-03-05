@@ -61,7 +61,7 @@ T.TabButton {
         }
     }
 
-    spacing: Kirigami.Units.mediumSpacing
+    spacing: Kirigami.Units.largeSpacing
 
     icon.width: Kirigami.Units.iconSizes.sizeForLabels
     icon.height: Kirigami.Units.iconSizes.sizeForLabels
