@@ -43,7 +43,7 @@ T.MenuBarItem {
         verticalAlignment: Text.AlignVCenter
     }
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         implicitWidth: 40
         implicitHeight: Kirigami.Units.gridUnit + 2 * Kirigami.Units.smallSpacing
         color: Kirigami.Theme.highlightColor

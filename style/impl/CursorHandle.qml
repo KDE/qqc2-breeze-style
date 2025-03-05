@@ -47,7 +47,7 @@ Loader {
             yOffset: 1
         }
 
-        Rectangle {
+        Impl.StandardRectangle {
             id: pointyBit
             x: (parent.width - width)/2
             y: -height/4 + 0.2 // magic number to get it to line up with the edge of the circle
@@ -65,7 +65,7 @@ Loader {
             anchors.margins: Impl.Units.smallBorder
             color: target.selectedTextColor
             radius: height/2
-            Rectangle {
+            Impl.StandardRectangle {
                 id: innerPointyBit
                 x: (parent.width - width)/2
                 y: -height/4 + 0.8 // magic number to get it to line up with the edge of the circle

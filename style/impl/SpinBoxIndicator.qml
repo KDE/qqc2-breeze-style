@@ -45,7 +45,7 @@ Item {
     implicitWidth: implicitHeight
     implicitHeight: Impl.Units.mediumControlHeight
 
-    Rectangle {
+    Impl.StandardRectangle {
         id: separator
         width: Impl.Units.smallBorder
         x: {
@@ -74,19 +74,17 @@ Item {
         }
     }
 
-    Kirigami.ShadowedRectangle {
+    Impl.StandardRectangle {
         id: pressedBg
         Kirigami.Theme.colorSet: Kirigami.Theme.Button
         Kirigami.Theme.inherit: false
         opacity: 0
         anchors.fill: parent
         color: Kirigami.Theme.alternateBackgroundColor
-        corners {
-            topLeftRadius: root.leftRadius
-            topRightRadius: root.rightRadius
-            bottomLeftRadius: root.leftRadius
-            bottomRightRadius: root.rightRadius
-        }
+        topLeftRadius: root.leftRadius
+        topRightRadius: root.rightRadius
+        bottomLeftRadius: root.leftRadius
+        bottomRightRadius: root.rightRadius
         border.color: Kirigami.Theme.focusColor
         border.width: Impl.Units.smallBorder
 

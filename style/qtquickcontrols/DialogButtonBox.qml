@@ -51,16 +51,15 @@ T.DialogButtonBox {
         snapMode: ListView.SnapToItem
     }
 
-    background: Kirigami.ShadowedRectangle {
+    background: Impl.StandardRectangle {
         property real topRadius: control.__isHeader ? radius : 0
         property real bottomRadius: control.__isFooter ? radius : 0
         radius: control.__isInPopup ? Impl.Units.smallRadius : 0
-        corners {
-            topLeftRadius: topRadius
-            topRightRadius: topRadius
-            bottomLeftRadius: bottomRadius
-            bottomRightRadius: bottomRadius
-        }
+        topLeftRadius: topRadius
+        topRightRadius: topRadius
+        bottomLeftRadius: bottomRadius
+        bottomRightRadius: bottomRadius
+
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
         implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2)
         color: control.__isInPopup ? "transparent" : Kirigami.Theme.backgroundColor

@@ -9,7 +9,7 @@ import org.kde.breeze
 
 import "." as Impl
 
-Rectangle {
+Impl.StandardRectangle {
     id: root
 
     property T.AbstractButton control: root.parent
@@ -97,7 +97,7 @@ Rectangle {
         width: root.symbolSize
         height: 2
 
-        Rectangle {
+        Impl.StandardRectangle {
             id: leftRect
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
@@ -106,7 +106,7 @@ Rectangle {
             color: Kirigami.Theme.textColor
         }
 
-        Rectangle {
+        Impl.StandardRectangle {
             id: middleRect
             anchors.centerIn: parent
             height: parent.height
@@ -114,7 +114,7 @@ Rectangle {
             color: Kirigami.Theme.textColor
         }
 
-        Rectangle {
+        Impl.StandardRectangle {
             id: rightRect
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
@@ -129,7 +129,7 @@ Rectangle {
         visible: control.visualFocus
     }
 
-    Rectangle {
+    Impl.StandardRectangle {
         id: sidewaysRevealRect
         antialiasing: true
         anchors {

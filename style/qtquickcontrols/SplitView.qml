@@ -47,7 +47,7 @@ T.SplitView {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    handle: Rectangle {
+    handle: Impl.StandardRectangle {
         implicitWidth: control.orientation === Qt.Horizontal ? 6 : control.width
         implicitHeight: control.orientation === Qt.Horizontal ? control.height : 6
         color: T.SplitHandle.pressed ? control.palette.mid

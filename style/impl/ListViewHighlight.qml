@@ -7,7 +7,7 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-Kirigami.ShadowedRectangle {
+Impl.StandardRectangle {
     id: root
     property int currentIndex: -1
     property int count: 0
@@ -18,12 +18,10 @@ Kirigami.ShadowedRectangle {
     Kirigami.Theme.colorSet: Kirigami.Theme.Selection
     Kirigami.Theme.inherit: false
 
-    corners {
-        topLeftRadius: root.topRadius
-        topRightRadius: root.topRadius
-        bottomLeftRadius: root.bottomRadius
-        bottomRightRadius: root.bottomRadius
-    }
+    topLeftRadius: root.topRadius
+    topRightRadius: root.topRadius
+    bottomLeftRadius: root.bottomRadius
+    bottomRightRadius: root.bottomRadius
 
     color: Kirigami.Theme.alternateBackgroundColor
     border {

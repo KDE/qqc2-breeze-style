@@ -9,8 +9,7 @@ import org.kde.kirigami as Kirigami
 import "." as Impl
 
 // TODO: Maybe use a loader here one day. Make sure nothing breaks.
-// Kirigami ShadowedRectangle doesn't have a gradient property, which could be an issue in some cases
-Kirigami.ShadowedRectangle {
+Impl.StandardRectangle {
     id: mainBackground
 
     property T.AbstractButton control: mainBackground.parent
@@ -34,12 +33,10 @@ Kirigami.ShadowedRectangle {
     property bool highlightBorder: control.enabled && (control.down || control.checked || control.highlighted || control.visualFocus || control.hovered)
 
     radius: Impl.Units.smallRadius
-    corners {
-        topLeftRadius: leftRadius
-        topRightRadius: rightRadius
-        bottomLeftRadius: leftRadius
-        bottomRightRadius: rightRadius
-    }
+    topLeftRadius: leftRadius
+    topRightRadius: rightRadius
+    bottomLeftRadius: leftRadius
+    bottomRightRadius: rightRadius
 
     implicitWidth: implicitHeight
     implicitHeight: Impl.Units.mediumControlHeight
@@ -87,7 +84,7 @@ Kirigami.ShadowedRectangle {
         visible: !control.editable && !control.flat && control.enabled
         radius: mainBackground.radius
     }
-    
+
     FocusRect {
         id: focusRect
         baseRadius: mainBackground.radius

@@ -16,7 +16,7 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-Rectangle {
+Impl.StandardRectangle {
     id: mainBackground
 
     property T.ComboBox control: mainBackground.parent

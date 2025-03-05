@@ -8,7 +8,7 @@ import org.kde.kirigami as Kirigami
 import "." as Impl
 
 // Simple box shadow which is ideal for subtle shadows, as it is very performant.
-Rectangle {
+Impl.StandardRectangle {
     id: root
     anchors.top: parent.top
     anchors.topMargin: 1

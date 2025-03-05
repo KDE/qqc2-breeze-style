@@ -21,7 +21,7 @@ T.Pane {
     // and no padding for Pages?
     padding: Impl.Units.veryLargeSpacing
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         color: Kirigami.Theme.backgroundColor
     }
 }

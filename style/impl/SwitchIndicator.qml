@@ -24,7 +24,7 @@ Item {
     Kirigami.Theme.colorSet: Kirigami.Theme.Button
     Kirigami.Theme.inherit: false
 
-    Rectangle {
+    Impl.StandardRectangle {
         id: background
         anchors {
             fill: parent
@@ -38,7 +38,7 @@ Item {
         }
     }
 
-    Rectangle {
+    Impl.StandardRectangle {
         id: fillEffectRect
         visible: width > handle.width/2
         color: Kirigami.Theme.alternateBackgroundColor
@@ -61,7 +61,7 @@ Item {
      * Except, it is a sibling. Even if I set `parent: root` on the fillEffectRect
      * and the handle, I get the error. (╯°□°）╯︵ ┻━┻
      */
-    Rectangle {
+    Impl.StandardRectangle {
         id: handle
         anchors {
             top: parent.top

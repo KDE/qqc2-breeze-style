@@ -36,7 +36,7 @@ T.ScrollBar {
         pressed: control.pressed
     }
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         visible: control.policy === T.ScrollBar.AlwaysOn
         color: "transparent"
         Kirigami.Separator {

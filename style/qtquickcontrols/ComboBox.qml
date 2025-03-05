@@ -70,7 +70,7 @@ T.ComboBox {
     background: Impl.ComboBoxBackground {
         control: control
 
-        Rectangle {
+        Impl.StandardRectangle {
             id: separator
             visible: control.editable
             width: Impl.Units.smallBorder
@@ -97,7 +97,7 @@ T.ComboBox {
             }
         }
 
-        Kirigami.ShadowedRectangle {
+        Impl.StandardRectangle {
             id: pressedBg
             property real leftRadius: control.mirrored ? radius : 0
             property real rightRadius: !control.mirrored ? radius : 0
@@ -115,12 +115,10 @@ T.ComboBox {
             color: Kirigami.Theme.alternateBackgroundColor
 
             radius: parent.radius
-            corners {
-                topLeftRadius: leftRadius
-                topRightRadius: rightRadius
-                bottomLeftRadius: leftRadius
-                bottomRightRadius: rightRadius
-            }
+            topLeftRadius: leftRadius
+            topRightRadius: rightRadius
+            bottomLeftRadius: leftRadius
+            bottomRightRadius: rightRadius
 
             border.color: Kirigami.Theme.focusColor
             border.width: Impl.Units.smallBorder

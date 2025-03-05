@@ -22,7 +22,7 @@ T.ProgressBar {
         implicitWidth: 200
         implicitHeight: Impl.Units.grooveHeight
         clip: true
-        Rectangle {
+        Impl.StandardRectangle {
             id: progressFill
             visible: !control.indeterminate && width > 0
             anchors {
@@ -65,7 +65,7 @@ T.ProgressBar {
 
                 Repeater {
                     model: Math.round(parent.width / (2 * indeterminateFill.__segmentLength))
-                    delegate: Rectangle {
+                    delegate: Impl.StandardRectangle {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         implicitWidth: indeterminateFill.__segmentLength
@@ -85,7 +85,7 @@ T.ProgressBar {
         }
     }
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         implicitWidth: 200
         implicitHeight: Impl.Units.grooveHeight
 

@@ -41,7 +41,7 @@ T.Popup {
         }
     }
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         radius: Impl.Units.smallRadius
 //         implicitHeight: Impl.Units.smallControlHeight
         //implicitWidth: Kirigami.Units.gridUnit * 12

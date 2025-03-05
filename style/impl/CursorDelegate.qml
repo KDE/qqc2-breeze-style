@@ -16,7 +16,7 @@ Loader {
     x: Math.floor(target.cursorRectangle.x)
     y: Math.floor(target.cursorRectangle.y)
     active: visible
-    sourceComponent: Rectangle {
+    sourceComponent: Impl.StandardRectangle {
         id: cursorLine
         implicitWidth: target.cursorRectangle.width
         implicitHeight: target.cursorRectangle.height

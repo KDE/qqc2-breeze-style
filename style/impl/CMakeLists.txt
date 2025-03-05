@@ -47,6 +47,7 @@ ecm_target_qml_sources(BreezeImpl SOURCES
     SliderHandle.qml
     SmallBoxShadow.qml
     SpinBoxIndicator.qml
+    StandardRectangle.qml
     SwitchIndicator.qml
     TextEditBackground.qml
     Theme.qml

@@ -9,7 +9,7 @@ import "." as Impl
 
 IconLabelContent {
     id: root
-    Rectangle {
+    Impl.StandardRectangle {
         z: -1
         x: root.labelRect.x
         y: root.labelRect.y + root.labelRect.height - height

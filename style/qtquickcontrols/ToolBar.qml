@@ -33,7 +33,7 @@ T.ToolBar {
     Kirigami.Theme.colorSet: __isHeader ? Kirigami.Theme.Header : Kirigami.Theme.Window
     Kirigami.Theme.inherit: false
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
         implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0)
         color: Kirigami.Theme.backgroundColor

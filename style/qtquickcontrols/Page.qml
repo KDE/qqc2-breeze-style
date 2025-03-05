@@ -5,6 +5,7 @@
 import QtQuick
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
+import org.kde.breeze.impl as Impl
 
 T.Page {
     id: control
@@ -18,7 +19,7 @@ T.Page {
                              + (implicitHeaderHeight > 0 ? implicitHeaderHeight + spacing : 0)
                              + (implicitFooterHeight > 0 ? implicitFooterHeight + spacing : 0))
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         color: Kirigami.Theme.backgroundColor
     }
 }

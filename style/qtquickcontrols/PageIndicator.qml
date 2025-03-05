@@ -20,8 +20,7 @@ T.PageIndicator {
     padding: Kirigami.Units.mediumSpacing
     spacing: Kirigami.Units.mediumSpacing
 
-    // Using ShadowedRectangle because it makes smoother circles than Rectangle
-    delegate: Kirigami.ShadowedRectangle {
+    delegate: Impl.StandardRectangle {
         implicitWidth: implicitHeight
         implicitHeight: {
             let h = Impl.Units.inlineControlHeight/2

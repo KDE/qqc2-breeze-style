@@ -8,7 +8,7 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-Rectangle {
+Impl.StandardRectangle {
     id: root
     property T.ItemDelegate control: root.parent
 
@@ -34,7 +34,7 @@ Rectangle {
 
     color: normalColor
 
-    Rectangle {
+    Impl.StandardRectangle {
         anchors {
             fill: parent
             leftMargin: background.horizontalPadding

@@ -13,7 +13,7 @@ Loader {
     active: visible
     anchors.fill: parent
     sourceComponent: Component {
-        Rectangle {
+        Impl.StandardRectangle {
             id: innerRing
             anchors {
                 fill: parent
@@ -29,7 +29,7 @@ Loader {
             )
             border.width: Impl.Units.mediumBorder/2
 
-            Rectangle {
+            Impl.StandardRectangle {
                 id: outerRing
                 anchors {
                     fill: parent

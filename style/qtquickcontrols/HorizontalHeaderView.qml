@@ -45,7 +45,7 @@ T.HorizontalHeaderView {
     implicitWidth: syncView ? syncView.width : 0
     implicitHeight: contentHeight
 
-    delegate: Rectangle {
+    delegate: Impl.StandardRectangle {
         // Qt6: add cellPadding (and font etc) as public API in headerview
         readonly property real cellPadding: 8
 

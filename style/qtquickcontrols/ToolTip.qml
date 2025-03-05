@@ -109,7 +109,7 @@ T.ToolTip {
         }
     }
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         implicitWidth: implicitHeight
         implicitHeight: Impl.Units.mediumControlHeight
         radius: Impl.Units.smallRadius

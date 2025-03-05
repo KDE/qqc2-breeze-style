@@ -27,7 +27,7 @@ T.MenuBar {
         }
     }
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         color: Kirigami.Theme.backgroundColor
     }
 }

@@ -38,6 +38,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Templates as T
+import org.kde.breeze.impl as Impl
 
 T.VerticalHeaderView {
     id: control
@@ -45,7 +46,7 @@ T.VerticalHeaderView {
     implicitWidth: contentWidth
     implicitHeight: syncView ? syncView.height : 0
 
-    delegate: Rectangle {
+    delegate: Impl.StandardRectangle {
         // Qt6: add cellPadding (and font etc) as public API in headerview
         readonly property real cellPadding: 8
 

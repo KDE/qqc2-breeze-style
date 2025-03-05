@@ -22,7 +22,7 @@ T.Frame {
 
     padding: Impl.Units.veryLargeSpacing + Impl.Units.smallBorder
 
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         color: Kirigami.Theme.backgroundColor
         radius: Impl.Units.smallRadius
         border.color: Impl.Theme.separatorColor()

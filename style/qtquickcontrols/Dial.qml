@@ -91,7 +91,7 @@ T.Dial {
                     //SmoothedAnimations have a hardcoded InOutQuad easing
                 }
             }
-            Rectangle {
+            Impl.StandardRectangle {
                 id: handleDot
                 radius: width/2
                 anchors.verticalCenter: parent.top
@@ -125,7 +125,7 @@ T.Dial {
             visible: control.visualFocus
         }
 
-        Rectangle {
+        Impl.StandardRectangle {
             radius: parent.radius
             opacity: control.pressed || control.hovered ? 0 : 1
             visible: control.enabled

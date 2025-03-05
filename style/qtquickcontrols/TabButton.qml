@@ -80,12 +80,12 @@ T.TabButton {
     }
 
     //TODO: tweak the appearance. This is just to have something usable and reasonably close to what we want.
-    background: Rectangle {
+    background: Impl.StandardRectangle {
         implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) // fill TabBar
         implicitWidth: implicitHeight
         color: control.checked ? Kirigami.Theme.backgroundColor : "transparent"
 
-        property Rectangle leftSeparatorLine: Rectangle {
+        property Rectangle leftSeparatorLine: Impl.StandardRectangle {
             parent: control.background
             visible: control.T.TabBar.index != 0 && control.checked
             Kirigami.Theme.colorSet: Kirigami.Theme.Button
@@ -104,7 +104,7 @@ T.TabButton {
             }
         }
 
-        property Rectangle rightSeparatorLine: Rectangle {
+        property Rectangle rightSeparatorLine: Impl.StandardRectangle {
             parent: control.background
             visible: control.__inTabBar && control.T.TabBar.index != control.T.TabBar.tabBar.count - 1 && control.checked
             Kirigami.Theme.colorSet: Kirigami.Theme.Button
@@ -117,7 +117,7 @@ T.TabButton {
             color: Impl.Theme.separatorColor()
         }
 
-        Rectangle {
+        Impl.StandardRectangle {
             id: thickHighlightLine
             anchors.left: parent.left
             anchors.right: parent.right
@@ -151,7 +151,7 @@ T.TabButton {
             }
         }
 
-        Rectangle {
+        Impl.StandardRectangle {
             id: thinHighlightLine
             anchors.left: parent.left
             anchors.right: parent.right

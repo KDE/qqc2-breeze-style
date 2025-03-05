@@ -7,7 +7,7 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-Rectangle {
+Impl.StandardRectangle {
     color: Qt.rgba(0,0,0,0.4)
     Behavior on opacity {
         OpacityAnimator {

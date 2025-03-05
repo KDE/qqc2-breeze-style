@@ -44,7 +44,7 @@ Loader {
     visible: (highlightBackground || backgroundAnimationRunning || borderAnimationRunning) && !listViewHasHighlight
     active: visible
     sourceComponent: Component {
-        Kirigami.ShadowedRectangle {
+        Impl.StandardRectangle {
             id: mainBackground
             readonly property bool isCurrentItem: root.isInListView && control.ListView.isCurrentItem
             readonly property int currentIndex: root.isInListView ? control.ListView.view.currentIndex : 0
@@ -57,12 +57,11 @@ Loader {
             readonly property real topRadius: !root.isInListView || (isCurrentItem && currentIndex == 0) ? radius : 0
             readonly property real bottomRadius: !root.isInListView || (isCurrentItem && currentIndex == control.ListView.view.count-1) ? radius : 0
 
-            corners {
-                topLeftRadius: topRadius
-                topRightRadius: topRadius
-                bottomLeftRadius: bottomRadius
-                bottomRightRadius: bottomRadius
-            }
+            topLeftRadius: topRadius
+            topRightRadius: topRadius
+            bottomLeftRadius: bottomRadius
+            bottomRightRadius: bottomRadius
+
 
             color: root.color
 

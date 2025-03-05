@@ -69,7 +69,7 @@ T.DelayButton {
         control: control
         color: control.palette.button
 
-        Kirigami.ShadowedRectangle {
+        Impl.StandardRectangle {
             id: progressFillRect
             property real radiusThreshold: parent.width - leftRadius
             property real leftRadius: Impl.Units.smallRadius
@@ -77,12 +77,10 @@ T.DelayButton {
 
             visible: width > 0
 
-            corners {
-                topLeftRadius: control.mirrored ? rightRadius : leftRadius
-                topRightRadius: control.mirrored ? leftRadius : rightRadius
-                bottomLeftRadius: control.mirrored ? rightRadius : leftRadius
-                bottomRightRadius: control.mirrored ? leftRadius : rightRadius
-            }
+            topLeftRadius: control.mirrored ? rightRadius : leftRadius
+            topRightRadius: control.mirrored ? leftRadius : rightRadius
+            bottomLeftRadius: control.mirrored ? rightRadius : leftRadius
+            bottomRightRadius: control.mirrored ? leftRadius : rightRadius
 
             x: control.mirrored ? (1 - control.progress) * parent.width : 0
             width: control.progress * parent.width

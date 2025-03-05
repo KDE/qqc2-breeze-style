@@ -9,7 +9,7 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-Rectangle {
+Impl.StandardRectangle {
     id: root
 
     property Templates.Control control
@@ -48,7 +48,7 @@ Rectangle {
         color: Impl.Theme.separatorColor()
     }
 
-    Rectangle {
+    Impl.StandardRectangle {
         id: fill
         anchors {
             fill: parent

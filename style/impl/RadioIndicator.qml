@@ -8,10 +8,7 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-// TODO: replace with ShadowedRectangle because it produces smoother circles.
-// Unfortunately I can't do it now because batching issues can cause all radio
-// buttons to show hover effects when only one is hovered
-Rectangle {
+Impl.StandardRectangle {
     id: root
 
     property T.AbstractButton control: root.parent
@@ -58,7 +55,7 @@ Rectangle {
         radius: parent.radius
     }
 
-    Rectangle {
+    Impl.StandardRectangle {
         id: mark
         anchors.centerIn: parent
         implicitHeight: {

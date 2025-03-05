@@ -8,7 +8,7 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-Rectangle {
+Impl.StandardRectangle {
     id: root
 
     property T.Control control: root.parent
