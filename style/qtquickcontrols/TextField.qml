@@ -42,10 +42,9 @@ T.TextField {
     mouseSelectionMode: Kirigami.Settings.tabletMode ?
         TextInput.SelectWords : TextInput.SelectCharacters
 
-    cursorDelegate: Loader {
+    cursorDelegate: Impl.CursorDelegate {
         visible: control.activeFocus && !control.readOnly && control.selectionStart === control.selectionEnd
-        active: visible
-        sourceComponent: Impl.CursorDelegate { target: control }
+        target: control
     }
 
     Controls.Label {

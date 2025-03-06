@@ -10,20 +10,16 @@ import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
-Item {
+Loader {
     id: root
-    property alias target: root.parent
-
-    Rectangle {
+    required property Item target
+    x: Math.floor(target.cursorRectangle.x)
+    y: Math.floor(target.cursorRectangle.y)
+    active: visible
+    sourceComponent: Rectangle {
         id: cursorLine
-        property real previousX: 0
-        property real previousY: 0
-        parent: target
         implicitWidth: target.cursorRectangle.width
         implicitHeight: target.cursorRectangle.height
-        x: Math.floor(target.cursorRectangle.x)
-        y: Math.floor(target.cursorRectangle.y)
-
         color: target.color
         SequentialAnimation {
             id: blinkAnimation
@@ -54,28 +50,11 @@ Item {
                 }
             }
         }
-        // NumberAnimations/SmoothedAnimations appear smoother than X/Y Animators for some reason
-        /*Behavior on x {
-            SmoothedAnimation {
-                velocity: 200
-                reversingMode: SmoothedAnimation.Immediate
-                duration: Kirigami.Settings.tabletMode ? Kirigami.Units.shortDuration : 0//Kirigami.Units.veryShortDuration
+        Connections {
+            target: root.target
+            function onCursorPositionChanged() {
+                blinkAnimation.restart()
             }
-        }
-        Behavior on y {
-            SmoothedAnimation {
-                velocity: 200
-                reversingMode: SmoothedAnimation.Immediate
-                duration: Kirigami.Settings.tabletMode ? Kirigami.Units.shortDuration : 0//Kirigami.Units.veryShortDuration
-            }
-        }
-        */
-    }
-
-    Connections {
-        target: root.target
-        function onCursorPositionChanged() {
-            blinkAnimation.restart()
         }
     }
 }
