@@ -1,4 +1,6 @@
-/* SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+/* SPDX-FileCopyrightText: 2018 The Qt Company Ltd.
+ * SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
+ * SPDX-FileCopyrightText: 2022 ivan tkachenko <me@ratijas.tk>
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
@@ -17,140 +19,89 @@ T.BusyIndicator {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
+    // BusyIndicator doesn't need padding since it has no background.
+    // A Control containing a BusyIndicator can have padding instead
+    // (e.g., a ToolBar, a Page or maybe a widget in a Plasma panel).
+    padding: 0
+
     hoverEnabled: false
 
-    padding: Kirigami.Units.mediumSpacing
+    contentItem: Item {
+        /* Binding on `visible` implicitly takes care of `control.visible`,
+         * `control.running` and `opacity > 0` at once.
+         * Also, don't animate at all if the user has disabled animations,
+         * and don't animate when window is hidden (which somehow does not
+         * affect items' visibility).
+         */
+        readonly property bool animationShouldBeRunning:
+            visible
+            && Window.visibility !== Window.Hidden
+            && Kirigami.Units.longDuration > 1
 
-    ListModel {
-        id: pieModel
-        dynamicRoles: true
+        /* implicitWidth and implicitHeight won't work unless they come
+         * from a child of the contentItem. No idea why.
+         */
+        implicitWidth: Kirigami.Units.gridUnit * 2
+        implicitHeight: Kirigami.Units.gridUnit * 2
 
-        property color oddColor: Kirigami.Theme.focusColor
-        property color evenColor: "transparent"
-
-        // The ends periodically appear to connect,
-        // forming a six sided asterisk-like shape with no center area
-
-        Component.onCompleted: {
-            append({ value: 1, color: oddColor })
-            append({ value: 2, color: evenColor })
-            append({ value: 2, color: oddColor })
-            append({ value: 2, color: evenColor })
-            append({ value: 2, color: oddColor })
-            append({ value: 2, color: evenColor })
-            append({ value: 2, color: oddColor })
-            append({ value: 2, color: evenColor })
-            append({ value: 2, color: oddColor })
-            append({ value: 2, color: evenColor })
-            append({ value: 2, color: oddColor })
-            append({ value: 2, color: evenColor })
-            append({ value: 1, color: oddColor })
-        }
-    }
-
-    contentItem: Loader {
-        sourceComponent: GraphicsInfo.api == GraphicsInfo.Software ?
-            lowPowerSpinnerComponent : fancySpinnerComponent
-    }
-
-    Component {
-        id: lowPowerSpinnerComponent
-        Kirigami.Icon {
-            id: lowPowerSpinner
-            implicitWidth: Kirigami.Units.iconSizes.sizeForLabels
-            implicitHeight: Kirigami.Units.iconSizes.sizeForLabels
-            source: "view-refresh"
-
-            opacity: control.visible && control.enabled && control.running ? 1 : 0
-            Behavior on opacity {
-                OpacityAnimator { duration: Kirigami.Units.shortDuration }
+        // We can't bind directly to opacity, as Animator won't update its value immediately.
+        visible: control.running || opacityAnimator.running
+        opacity: control.running ? 1 : 0
+        Behavior on opacity {
+            enabled: Kirigami.Units.shortDuration > 0
+            OpacityAnimator {
+                id: opacityAnimator
+                duration: Kirigami.Units.shortDuration
+                easing.type: Easing.OutCubic
             }
+        }
 
+        // sync all busy animations such that they start at a common place in the rotation
+        onAnimationShouldBeRunningChanged: startOrStopAnimation();
+
+        function startOrStopAnimation() {
+            if (rotationAnimator.running === animationShouldBeRunning) {
+                return;
+            }
+            if (animationShouldBeRunning) {
+                const date = new Date;
+                const ms = date.valueOf();
+                const startAngle = ((ms % rotationAnimator.duration) / rotationAnimator.duration) * 360;
+                rotationAnimator.from = startAngle;
+                rotationAnimator.to = startAngle + 360
+            }
+            rotationAnimator.running = animationShouldBeRunning;
+        }
+
+        Kirigami.Icon {
+            /* Do not use `anchors.fill: parent` in here or else
+             * the aspect ratio won't always be 1:1.
+             */
+            anchors.centerIn: parent
+            width: Math.min(parent.width, parent.height)
+            height: width
+
+            source: "process-working-symbolic"
             smooth: true
-            RotationAnimator {
-                target: lowPowerSpinner
-                running: control.visible && control.enabled && control.running
+
+            RotationAnimator on rotation {
+                id: rotationAnimator
                 from: 0
                 to: 360
+                // Not using a standard duration value because we don't want the
+                // animation to spin faster or slower based on the user's animation
+                // scaling preferences; it doesn't make sense in this context
+                duration: 2000
                 loops: Animation.Infinite
-                duration: 1500
+                // Initially false, will be set as appropriate after
+                // initialization. Can't be bound declaratively due to the
+                // procedural nature of to/from adjustments: order of
+                // assignments is crucial, as animator won't use new to/from
+                // values while running.
+                running: false
             }
         }
-    }
 
-    Component {
-        id: fancySpinnerComponent
-        Charts.PieChart {
-            id: fancySpinner
-            implicitWidth: Kirigami.Units.gridUnit
-            implicitHeight: Kirigami.Units.gridUnit
-
-            opacity: control.visible && control.enabled && control.running ? 1 : 0
-            Behavior on opacity {
-                OpacityAnimator { duration: Kirigami.Units.shortDuration }
-            }
-
-            valueSources: Charts.ModelSource { roleName: "value"; model: pieModel }
-            colorSource: Charts.ModelSource { roleName: "color"; model: pieModel }
-
-            fromAngle: 0
-            toAngle: 360
-            thickness: Math.max(Impl.Units.smallRadius * 2, Math.floor(Math.min(width, height)/6))
-            filled: false
-            //smoothEnds: true // Turns the segments into aesthetically pleasing round dots, but breaks the connected appearance when the ends meet :(
-
-            ParallelAnimation {
-                running: control.visible && control.enabled && control.running
-                SequentialAnimation {
-                    loops: Animation.Infinite
-                    NumberAnimation {
-                        target: fancySpinner
-                        property: "toAngle"
-                        from: 0
-                        to: 360
-                        duration: 1000
-                    }
-                    PauseAnimation {
-                        duration: 1000
-                    }
-                    NumberAnimation {
-                        target: fancySpinner
-                        property: "fromAngle"
-                        from: 0
-                        to: 360
-                        duration: 1000
-                    }
-                    PropertyAction {
-                        target: fancySpinner
-                        properties: "fromAngle,toAngle"
-                        value: 0
-                    }
-                }
-                SequentialAnimation {
-                    loops: Animation.Infinite
-                    RotationAnimator {
-                        target: fancySpinner
-                        from: 0
-                        to: 30
-                        duration: 1000
-                    }
-                    // This is meant to appear to rotate at the same rate as the other 2 animations.
-                    // In order to achieve this, the actual rotation rate has to be much higher than the other 2 animimations.
-                    // This is because the pie angles aren't being animated while this animation is running.
-                    RotationAnimator {
-                        target: fancySpinner
-                        from: 30
-                        to: 330
-                        duration: 1000
-                    }
-                    RotationAnimator {
-                        target: fancySpinner
-                        from: 330
-                        to: 360
-                        duration: 1000
-                    }
-                }
-            }
-        }
+        Component.onCompleted: startOrStopAnimation();
     }
 }
