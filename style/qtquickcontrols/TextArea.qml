@@ -105,7 +105,7 @@ T.TextArea {
         }
     }
 
-    onPressAndHold: {
+    onPressAndHold: event => {
         if (Kirigami.Settings.tabletMode && selectByMouse) {
             forceActiveFocus();
             cursorPosition = positionAt(event.x, event.y);
