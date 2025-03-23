@@ -19,8 +19,8 @@ Loader {
     sourceComponent: Popup {
         id: popup
 
-        property real xAlignHCenter: Math.round(Qt.inputMethod.anchorRectangle.x + (Qt.inputMethod.cursorRectangle.x - Qt.inputMethod.anchorRectangle.x - width)/2)
-        property real yAlignOver: Math.round(Qt.inputMethod.anchorRectangle.y - height - fontMetrics.descent)
+        property real xAlignHCenter: Math.round(InputMethod.anchorRectangle.x + (InputMethod.cursorRectangle.x - InputMethod.anchorRectangle.x - width)/2)
+        property real yAlignOver: Math.round(InputMethod.anchorRectangle.y - height - fontMetrics.descent)
 
         visible: false
         parent: T.Overlay.overlay
