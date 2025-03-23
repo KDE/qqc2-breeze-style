@@ -43,16 +43,12 @@ if (NOT ANDROID)
     find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS DBus)
 endif()
 
-find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform CoreAddons ColorScheme QuickCharts IconThemes)
+find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform CoreAddons ColorScheme IconThemes)
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)
 endif()
 
-set_package_properties(QuickCharts PROPERTIES DESCRIPTION "KF6 QuickCharts framework"
-                       TYPE REQUIRED
-                       PURPOSE "Used to implement the BusyIndicator style"
-                      )
 set_package_properties(IconThemes PROPERTIES DESCRIPTION "KF6 IconThemes framework"
                        TYPE OPTIONAL
                        PURPOSE "Optional integration of Kirigami with KIconLoader icons handling for a better integration with Plasma Desktop"

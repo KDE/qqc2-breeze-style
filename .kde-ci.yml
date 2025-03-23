@@ -11,7 +11,6 @@ Dependencies:
     'frameworks/kcoreaddons': '@latest-kf6'
     'frameworks/kguiaddons': '@latest-kf6'
     'frameworks/kirigami': '@latest-kf6'
-    'frameworks/kquickcharts': '@latest-kf6'
     'frameworks/kiconthemes': '@latest-kf6'
 
 Options:
