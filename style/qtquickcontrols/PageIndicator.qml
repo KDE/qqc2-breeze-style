@@ -21,6 +21,11 @@ T.PageIndicator {
     spacing: Kirigami.Units.mediumSpacing
 
     delegate: Impl.StandardRectangle {
+        // NOTE: these properties are injected into the delegate context, but cannot be
+        // declared as required properties
+        // required property int index
+        // required property bool pressed
+
         implicitWidth: implicitHeight
         implicitHeight: {
             let h = Impl.Units.inlineControlHeight/2
@@ -31,7 +36,7 @@ T.PageIndicator {
         radius: height / 2
         color: Kirigami.Theme.textColor
 
-        opacity: index === currentIndex ? 1 : pressed ? 0.67 : 0.33
+        opacity: index === control.currentIndex ? 1 : pressed ? 0.67 : 0.33
         Behavior on opacity { OpacityAnimator { duration: Kirigami.Units.shortDuration } }
     }
 

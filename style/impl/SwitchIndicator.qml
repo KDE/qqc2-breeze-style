@@ -72,7 +72,7 @@ Item {
             0,
             Math.min(
                 parent.width - width,
-                control.visualPosition * parent.width - (width / 2)
+                root.control.visualPosition * parent.width - (width / 2)
             )
         )
         width: height
@@ -80,12 +80,12 @@ Item {
         color: Kirigami.Theme.backgroundColor
         border {
             width: Impl.Units.smallBorder
-            color: control.down || control.visualFocus || control.hovered ?
+            color: root.control.down || root.control.visualFocus || root.control.hovered ?
                 Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
         }
 
         Behavior on border.color {
-            enabled: control.down || control.visualFocus || control.hovered
+            enabled: root.control.down || root.control.visualFocus || root.control.hovered
             ColorAnimation {
                 duration: Kirigami.Units.shortDuration
                 easing.type: Easing.OutCubic
@@ -103,14 +103,14 @@ Item {
 
         SmallBoxShadow {
             id: shadow
-            opacity: control.down ? 0 : 1
-            visible: control.enabled
+            opacity: root.control.down ? 0 : 1
+            visible: root.control.enabled
             radius: parent.radius
         }
 
         FocusRect {
             baseRadius: handle.radius
-            visible: control.visualFocus
+            visible: root.control.visualFocus
         }
 
         // Prevents animations from running when loaded

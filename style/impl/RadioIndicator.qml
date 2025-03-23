@@ -33,7 +33,7 @@ Impl.StandardRectangle {
     }
 
     Behavior on color {
-        enabled: control.down || control.checked
+        enabled: root.control.down || root.control.checked
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
@@ -41,7 +41,7 @@ Impl.StandardRectangle {
     }
 
     Behavior on border.color {
-        enabled: control.down || control.checked || control.visualFocus || control.hovered
+        enabled: root.control.down || root.control.checked || root.control.visualFocus || root.control.hovered
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
@@ -50,8 +50,8 @@ Impl.StandardRectangle {
 
     SmallBoxShadow {
         id: shadow
-        opacity: control.down ? 0 : 1
-        visible: control.enabled
+        opacity: root.control.down ? 0 : 1
+        visible: root.control.enabled
         radius: parent.radius
     }
 
@@ -67,25 +67,25 @@ Impl.StandardRectangle {
         implicitWidth: implicitHeight
         radius: height / 2
         color: Kirigami.Theme.textColor
-        visible: control.checked
+        visible: root.control.checked
         scale: 0.8
     }
 
     FocusRect {
         baseRadius: root.radius
-        visible: control.visualFocus
+        visible: root.control.visualFocus
     }
 
     states: [
         State {
-            when: !control.checked
+            when: !root.control.checked
             name: "unchecked"
             PropertyChanges {
                 mark.scale: 0.8
             }
         },
         State {
-            when: control.checked
+            when: root.control.checked
             name: "checked"
             PropertyChanges {
                 mark.scale: 1
