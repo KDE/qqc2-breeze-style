@@ -103,18 +103,16 @@ T.DelayButton {
                     name: "normalHeight"
                     when: progressFillRect.width >= progressFillRect.leftRadius
                     PropertyChanges {
-                        target: progressFillRect
-                        y: 0
-                        height: background.height
+                        progressFillRect.y: 0
+                        progressFillRect.height: background.height
                     }
                 },
                 State {
                     name: "reducedHeight"
                     when: progressFillRect.width < progressFillRect.leftRadius
                     PropertyChanges {
-                        target: progressFillRect
-                        y: progressFillRect.leftRadius/2
-                        height: background.height - progressFillRect.leftRadius
+                        progressFillRect.y: progressFillRect.leftRadius/2
+                        progressFillRect.height: background.height - progressFillRect.leftRadius
                     }
                 }
             ]
