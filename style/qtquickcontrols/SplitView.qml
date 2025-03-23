@@ -38,7 +38,6 @@
 import QtQuick
 import QtQuick.Templates as T
 import QtQuick.Controls
-import QtQuick.Controls.impl
 import org.kde.breeze.impl as Impl
 
 T.SplitView {
