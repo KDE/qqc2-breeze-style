@@ -12,7 +12,7 @@ import "." as Impl
 Impl.StandardRectangle {
     id: root
 
-    property T.AbstractButton control: root.parent
+    required property T.AbstractButton control
     property int checkState: control.checkState
     property int symbolSize: Impl.Units.symbolSize(Math.min(width, height))
     property bool mirrored: control.mirrored

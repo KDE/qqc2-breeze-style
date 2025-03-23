@@ -11,7 +11,7 @@ import "." as Impl
 Impl.StandardRectangle {
     id: root
 
-    property T.AbstractButton control: root.parent
+    required property T.AbstractButton control
     property bool mirrored: control.mirrored
     readonly property bool controlHasContent: control.contentItem && control.contentItem.width > 0
 

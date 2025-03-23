@@ -10,7 +10,7 @@ import "." as Impl
 
 Impl.StandardRectangle {
     id: root
-    property T.Control control: root.parent
+    required property T.Control control
     // ScrollIndicator does not have a policy property
     property int policy: T.ScrollBar.AsNeeded
     // ScrollIndicator does not have a pressed property
