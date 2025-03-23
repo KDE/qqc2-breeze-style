@@ -81,16 +81,14 @@ Impl.StandardRectangle {
             when: !control.checked
             name: "unchecked"
             PropertyChanges {
-                target: mark
-                scale: 0.8
+                mark.scale: 0.8
             }
         },
         State {
             when: control.checked
             name: "checked"
             PropertyChanges {
-                target: mark
-                scale: 1
+                mark.scale: 1
             }
         }
     ]
