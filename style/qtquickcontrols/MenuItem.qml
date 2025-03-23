@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: LicenseRef-KDE-Accepted-LGPL
  */
 
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Templates as T
@@ -89,14 +91,14 @@ T.MenuItem {
         Component {
             id: checkIndicator
             Impl.CheckIndicator {
-                control: __controlRoot
+                control: control.__controlRoot
                 checkState: control.checked ? Qt.Checked : Qt.Unchecked
             }
         }
         Component {
             id: radioIndicator
             Impl.RadioIndicator {
-                control: __controlRoot
+                control: control.__controlRoot
             }
         }
     }

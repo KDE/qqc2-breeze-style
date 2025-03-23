@@ -79,8 +79,8 @@ T.ComboBox {
                 top: parent.top
                 bottom: parent.bottom
                 rightMargin: (control.mirrored ? control.leftPadding : control.rightPadding) - width
-                topMargin: control.topPadding + (__isContentItemTextInput ? control.contentItem.topPadding : 0)
-                bottomMargin: control.bottomPadding + (__isContentItemTextInput ? control.contentItem.bottomPadding : 0)
+                topMargin: control.topPadding + (control.__isContentItemTextInput ? control.contentItem.topPadding : 0)
+                bottomMargin: control.bottomPadding + (control.__isContentItemTextInput ? control.contentItem.bottomPadding : 0)
             }
 
             color: control.down

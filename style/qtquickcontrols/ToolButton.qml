@@ -69,8 +69,6 @@ T.ToolButton {
 
     // Using a Loader here reduces the RAM usage
     indicator: Loader {
-        property alias iconHeight: control.icon.height
-        property alias iconWidth: control.icon.width
         anchors {
             right: control.right
             rightMargin: control.rightPadding
@@ -81,8 +79,8 @@ T.ToolButton {
         sourceComponent: Component {
             Kirigami.Icon {
                 anchors.centerIn: parent
-                implicitHeight: iconHeight
-                implicitWidth: iconWidth
+                implicitHeight: control.icon.height
+                implicitWidth: control.icon.width
                 source: "arrow-down"
             }
         }
