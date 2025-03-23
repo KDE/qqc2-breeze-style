@@ -18,10 +18,10 @@ Loader {
     active: visible
     sourceComponent: Kirigami.ShadowedRectangle {
         id: handle
-        property real selectionStartX: Math.floor(Qt.inputMethod.anchorRectangle.x + (Qt.inputMethod.cursorRectangle.width - width)/2)
-        property real selectionStartY: Math.floor(Qt.inputMethod.anchorRectangle.y + Qt.inputMethod.cursorRectangle.height + pointyBitVerticalOffset)
-        property real selectionEndX: Math.floor(Qt.inputMethod.cursorRectangle.x + (Qt.inputMethod.cursorRectangle.width - width)/2)
-        property real selectionEndY: Math.floor(Qt.inputMethod.cursorRectangle.y + Qt.inputMethod.cursorRectangle.height + pointyBitVerticalOffset)
+        property real selectionStartX: Math.floor(InputMethod.anchorRectangle.x + (InputMethod.cursorRectangle.width - width)/2)
+        property real selectionStartY: Math.floor(InputMethod.anchorRectangle.y + InputMethod.cursorRectangle.height + pointyBitVerticalOffset)
+        property real selectionEndX: Math.floor(InputMethod.cursorRectangle.x + (InputMethod.cursorRectangle.width - width)/2)
+        property real selectionEndY: Math.floor(InputMethod.cursorRectangle.y + InputMethod.cursorRectangle.height + pointyBitVerticalOffset)
         property real pointyBitVerticalOffset: Math.abs(pointyBit.y*2)
         parent: Overlay.overlay
         x: isSelectionEnd ? selectionEndX : selectionStartX
