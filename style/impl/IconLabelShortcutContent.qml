@@ -5,11 +5,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Templates as T
-import org.kde.kirigami as Kirigami
-
-import "." as Impl
 
 IconLabelContent {
     id: root

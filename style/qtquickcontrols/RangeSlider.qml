@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later OR LicenseRef-KDE-Accepted-LGPL OR LicenseRef-KFQF-Accepted-GPL
  */
 
-
-import QtQuick
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 import org.kde.breeze.impl as Impl
