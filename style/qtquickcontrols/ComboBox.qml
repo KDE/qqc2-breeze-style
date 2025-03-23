@@ -129,9 +129,8 @@ T.ComboBox {
                 name: "pressed"
                 when: control.down && control.editable
                 PropertyChanges {
-                    target: pressedBg
-                    opacity: 1
-                    visible: true
+                    pressedBg.opacity: 1
+                    pressedBg.visible: true
                 }
             }
             transitions: Transition {
