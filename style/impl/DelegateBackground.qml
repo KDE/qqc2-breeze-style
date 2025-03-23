@@ -10,7 +10,7 @@ import "." as Impl
 
 Impl.StandardRectangle {
     id: root
-    property T.ItemDelegate control: root.parent
+    required property T.ItemDelegate control
 
     readonly property bool highlight: control.highlighted || control.down
     readonly property bool useAlternatingColors: {

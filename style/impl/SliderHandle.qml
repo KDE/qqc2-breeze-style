@@ -11,7 +11,7 @@ import "." as Impl
 Impl.StandardRectangle {
     id: root
 
-    property T.Control control: root.parent
+    required property T.Control control
     property real position: control.position
     property real visualPosition: control.visualPosition
     property bool hovered: control.hovered

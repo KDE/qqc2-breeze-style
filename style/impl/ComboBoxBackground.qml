@@ -19,7 +19,7 @@ import "." as Impl
 Impl.StandardRectangle {
     id: mainBackground
 
-    property T.ComboBox control: mainBackground.parent
+    required property T.ComboBox control
 
     property color flatColor: Qt.rgba(
         Kirigami.Theme.backgroundColor.r,

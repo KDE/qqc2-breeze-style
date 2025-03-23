@@ -12,7 +12,7 @@ import "." as Impl
 Impl.StandardRectangle {
     id: mainBackground
 
-    property T.AbstractButton control: mainBackground.parent
+    required property T.AbstractButton control
 
     // Segmented button control group properties
     property T.ButtonGroup buttonGroup: control.T.ButtonGroup.group
