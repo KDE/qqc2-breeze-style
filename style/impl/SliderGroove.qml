@@ -12,7 +12,7 @@ import "." as Impl
 Impl.StandardRectangle {
     id: root
 
-    property Templates.Control control
+    required property Templates.Control control
     property real startPosition: isRangeSlider ? control.first.position : 0
     property real endPosition: isRangeSlider ? control.second.position : control.position
 

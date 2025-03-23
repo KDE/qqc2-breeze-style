@@ -10,7 +10,7 @@ import "." as Impl
 
 Loader {
     id: root
-    property T.MenuItem control: root.parent
+    required property T.MenuItem control
     // God, this code is ugly. Somehow this works, but `control.ListView.view && control.ListView.view.highlight` doesn't.
     property bool isInListView: control.ListView.view ?? false
     property bool listViewHasHighlight: isInListView && (control.ListView.view.highlight ?? false)
