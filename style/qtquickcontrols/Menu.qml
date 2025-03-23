@@ -8,9 +8,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Window
-import QtQuick.Controls.impl
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 
