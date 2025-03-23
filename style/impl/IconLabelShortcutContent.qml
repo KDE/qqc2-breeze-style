@@ -18,7 +18,7 @@ IconLabelContent {
         x: root.mirrored ? root.rightPadding : root.width - width - root.rightPadding
         y: root.labelRect.y
         width: Math.min(implicitWidth, Math.max(0, root.width - root.implicitWidth - root.spacing))
-        active: Qt.styleHints.showShortcutsInContextMenus
+        active: Application.styleHints.showShortcutsInContextMenus
                 && control.action
                 && control.action.hasOwnProperty("shortcut")
                 && control.action.shortcut !== undefined
