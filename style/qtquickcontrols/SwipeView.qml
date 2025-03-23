@@ -1,7 +1,6 @@
 //NOTE: replace this
 
 import QtQuick
-import QtQuick.Controls as Controls
 import QtQuick.Templates as T
 
 T.SwipeView {

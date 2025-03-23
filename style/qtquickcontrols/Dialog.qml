@@ -19,7 +19,7 @@ T.Dialog {
                              + (implicitHeaderHeight > 0 ? implicitHeaderHeight + spacing : 0)
                              + (implicitFooterHeight > 0 ? implicitFooterHeight + spacing : 0))
 
-    padding: contentItem instanceof QQC2.ScrollView ? 0 : Kirigami.Units.gridUnit
+    padding: contentItem instanceof T.ScrollView ? 0 : Kirigami.Units.gridUnit
     margins: Kirigami.Units.gridUnit
 
 //     anchors.centerIn: T.Overlay.overlay
