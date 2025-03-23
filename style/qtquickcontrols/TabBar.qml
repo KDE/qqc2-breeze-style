@@ -1,5 +1,7 @@
 //NOTE: replace this
 
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
