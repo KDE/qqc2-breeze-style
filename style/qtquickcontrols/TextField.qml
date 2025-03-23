@@ -103,7 +103,7 @@ T.TextField {
         }
     }
 
-    onPressAndHold: {
+    onPressAndHold: event => {
         if (Kirigami.Settings.tabletMode) {
             forceActiveFocus();
             cursorPosition = positionAt(event.x, event.y);
