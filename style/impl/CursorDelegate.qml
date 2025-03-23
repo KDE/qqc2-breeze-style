@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Window
 import QtQuick.Templates
@@ -18,9 +20,9 @@ Loader {
     active: visible
     sourceComponent: Impl.StandardRectangle {
         id: cursorLine
-        implicitWidth: target.cursorRectangle.width
-        implicitHeight: target.cursorRectangle.height
-        color: target.color
+        implicitWidth: root.target.cursorRectangle.width
+        implicitHeight: root.target.cursorRectangle.height
+        color: root.target.color
         SequentialAnimation {
             id: blinkAnimation
             running: root.visible && Application.styleHints.cursorFlashTime != 0 && target.selectionStart === target.selectionEnd

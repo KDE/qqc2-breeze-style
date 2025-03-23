@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Window
@@ -43,30 +45,30 @@ Loader {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-cut"
                 text: qsTr("Cut", "@action:inmenu Text editor action")
-                visible: target && target.selectedText.length > 0 && (!target.hasOwnProperty("echoMode") || target.echoMode === TextInput.Normal)
-                onClicked: target.cut();
+                visible: root.target && root.target.selectedText.length > 0 && (!root.target.hasOwnProperty("echoMode") || root.target.echoMode === TextInput.Normal)
+                onClicked: root.target.cut();
             }
 
             ToolButton {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-copy"
                 text: qsTr("Copy", "@action:inmenu Text editor action")
-                visible: target && target.selectedText.length > 0 && (!target.hasOwnProperty("echoMode") || target.echoMode === TextInput.Normal)
-                onClicked: target.copy();
+                visible: root.target && root.target.selectedText.length > 0 && (!root.target.hasOwnProperty("echoMode") || root.target.echoMode === TextInput.Normal)
+                onClicked: root.target.copy();
             }
 
             ToolButton {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-paste"
                 text: qsTr("Paste", "@action:inmenu Text editor action")
-                visible: target && target.canPaste
-                onClicked: target.paste();
+                visible: root.target && root.target.canPaste
+                onClicked: root.target.paste();
             }
         }
 
         FontMetrics {
             id: fontMetrics
-            font: target.font
+            font: root.target.font
         }
     }
 }
