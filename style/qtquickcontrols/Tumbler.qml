@@ -1,4 +1,7 @@
 // NOTE: replace this
+
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Controls.impl
@@ -13,6 +16,9 @@ T.Tumbler {
                              implicitContentHeight + topPadding + bottomPadding) || 200 // ### remove 200 in Qt 6
 
     delegate: Text {
+        required property int index
+        required property string modelData
+
         text: modelData
         color: control.visualFocus ? control.palette.highlight : control.palette.text
         font: control.font
