@@ -38,7 +38,7 @@ T.ToolBar {
         implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2) + (separator.visible ? separator.height : 0)
         color: Kirigami.Theme.backgroundColor
         property Item separator: Kirigami.Separator {
-            parent: background
+            parent: control.background
             visible: control.__isHeader || control.__isFooter
             width: parent.width
             y: control.__isFooter ? 0 : parent.height - height

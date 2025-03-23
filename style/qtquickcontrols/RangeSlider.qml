@@ -28,8 +28,8 @@ T.RangeSlider {
         control: control
         position: control.first.position
         visualPosition: control.first.visualPosition
-        hovered: first.hovered
-        pressed: first.pressed
+        hovered: control.first.hovered
+        pressed: control.first.pressed
         // For some reason, this doesn't need focusReason to work correctly even though focusReason doesn't work on this
         visualFocus: activeFocus
     }
@@ -38,15 +38,15 @@ T.RangeSlider {
         control: control
         position: control.second.position
         visualPosition: control.second.visualPosition
-        hovered: second.hovered
-        pressed: second.pressed
+        hovered: control.second.hovered
+        pressed: control.second.pressed
         // For some reason, this doesn't need focusReason to work correctly even though focusReason doesn't work on this
         visualFocus: activeFocus
     }
 
     background: Impl.SliderGroove {
         control: control
-        startPosition: first.position
-        endPosition: second.position
+        startPosition: control.first.position
+        endPosition: control.second.position
     }
 }

@@ -65,14 +65,14 @@ Impl.StandardRectangle {
     }
 
     Behavior on color {
-        enabled: highlightBackground
+        enabled: mainBackground.highlightBackground
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
         }
     }
     Behavior on border.color {
-        enabled: highlightBorder
+        enabled: mainBackground.highlightBorder
         ColorAnimation {
             duration: Kirigami.Units.shortDuration
             easing.type: Easing.OutCubic
@@ -80,14 +80,14 @@ Impl.StandardRectangle {
     }
 
     SmallBoxShadow {
-        opacity: control.down ? 0 : 1
-        visible: !control.editable && !control.flat && control.enabled
+        opacity: mainBackground.control.down ? 0 : 1
+        visible: !mainBackground.control.editable && !control.flat && control.enabled
         radius: mainBackground.radius
     }
 
     FocusRect {
         id: focusRect
         baseRadius: mainBackground.radius
-        visible: control.visualFocus
+        visible: mainBackground.control.visualFocus
     }
 }

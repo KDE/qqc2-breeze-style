@@ -84,7 +84,7 @@ Impl.StandardRectangle {
     SmallBoxShadow {
         id: shadow
         opacity: root.pressed ? 0 : 1
-        visible: control.enabled
+        visible: root.control.enabled
         radius: parent.radius
     }
 

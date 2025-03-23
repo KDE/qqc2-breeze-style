@@ -23,7 +23,7 @@ T.ToolSeparator {
 
     contentItem: Kirigami.Separator {
         readonly property int defaultHeight: Impl.Units.mediumControlHeight
-        implicitWidth: vertical ? 1 : defaultHeight
-        implicitHeight: vertical ? defaultHeight : 1
+        implicitWidth: control.vertical ? 1 : defaultHeight
+        implicitHeight: control.vertical ? defaultHeight : 1
     }
 }

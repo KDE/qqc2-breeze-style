@@ -24,8 +24,8 @@ Loader {
         property real selectionEndY: Math.floor(InputMethod.cursorRectangle.y + InputMethod.cursorRectangle.height + pointyBitVerticalOffset)
         property real pointyBitVerticalOffset: Math.abs(pointyBit.y*2)
         parent: Overlay.overlay
-        x: isSelectionEnd ? selectionEndX : selectionStartX
-        y: isSelectionEnd ? selectionEndY : selectionStartY
+        x: root.isSelectionEnd ? selectionEndX : selectionStartX
+        y: root.isSelectionEnd ? selectionEndY : selectionStartY
 
         // HACK: make it appear above most popups that show up in the
         // overlay in case any of them use TextField or TextArea
@@ -39,7 +39,7 @@ Loader {
         implicitWidth: implicitHeight
         radius: width/2
 
-        color: target.selectionColor
+        color: root.target.selectionColor
 
         shadow {
             color: Qt.rgba(0,0,0,0.2)
@@ -60,10 +60,10 @@ Loader {
 
         Kirigami.ShadowedRectangle {
             id: inner
-            visible: target.selectionStart !== target.selectionEnd && (handle.y < selectionStartY || handle.y < selectionEndY)
+            visible: root.root.target.selectionStart !== target.selectionEnd && (handle.y < selectionStartY || handle.y < selectionEndY)
             anchors.fill: parent
             anchors.margins: Impl.Units.smallBorder
-            color: target.selectedTextColor
+            color: root.target.selectedTextColor
             radius: height/2
             Impl.StandardRectangle {
                 id: innerPointyBit

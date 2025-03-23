@@ -86,7 +86,7 @@ T.DelayButton {
             width: control.progress * parent.width
 
             y: 0//leftRadius
-            height: background.height//parent.height - leftRadius*2
+            height: control.background.height//parent.height - leftRadius*2
 
             color: Kirigami.Theme.alternateBackgroundColor
             border {
@@ -122,10 +122,10 @@ T.DelayButton {
                 to: "normalHeight"
                 NumberAnimation {
                     property: "height"
-                    duration: control.delay * (progressFillRect.leftRadius/background.width)
+                    duration: control.delay * (progressFillRect.leftRadius/control.background.width)
                 }
                 YAnimator {
-                    duration: control.delay * (progressFillRect.leftRadius/background.width)
+                    duration: control.delay * (progressFillRect.leftRadius/control.background.width)
                 }
             }
         }

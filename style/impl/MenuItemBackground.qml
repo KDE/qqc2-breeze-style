@@ -34,7 +34,7 @@ Loader {
     }
     property real radius: Impl.Units.smallRadius
     property QtObject border: QtObject {
-        property real width: highlightBackground ? Impl.Units.smallBorder : 0
+        property real width: root.highlightBackground ? Impl.Units.smallBorder : 0
         property color color: Kirigami.Theme.focusColor
     }
 
@@ -71,7 +71,7 @@ Loader {
             }
 
             Behavior on color {
-                enabled: highlightBackground
+                enabled: root.highlightBackground
                 ColorAnimation {
                     duration: Kirigami.Units.shortDuration
                     easing.type: Easing.OutCubic
@@ -79,7 +79,7 @@ Loader {
                 }
             }
             Behavior on border.color {
-                enabled: highlightBackground
+                enabled: root.highlightBackground
                 ColorAnimation {
                     duration: Kirigami.Units.shortDuration
                     easing.type: Easing.OutCubic
