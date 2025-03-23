@@ -1,7 +1,6 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(KF6QuickCharts @KF6_MIN_VERSION@)
 
 if (NOT @BUILD_SHARED_LIBS@)
     find_dependency(KF6IconThemes @KF6_MIN_VERSION@)
