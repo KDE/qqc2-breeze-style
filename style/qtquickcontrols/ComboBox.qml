@@ -31,7 +31,7 @@ T.ComboBox {
 
     spacing: Kirigami.Units.mediumSpacing
 
-    hoverEnabled: Qt.styleHints.useHoverEffects
+    hoverEnabled: Application.styleHints.useHoverEffects
 
     leftPadding: horizontalPadding + (!control.mirrored ? 0 : __indicatorMargin)
     rightPadding: horizontalPadding + (control.mirrored ? 0 : __indicatorMargin)

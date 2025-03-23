@@ -23,14 +23,14 @@ Loader {
         color: target.color
         SequentialAnimation {
             id: blinkAnimation
-            running: root.visible && Qt.styleHints.cursorFlashTime != 0 && target.selectionStart === target.selectionEnd
+            running: root.visible && Application.styleHints.cursorFlashTime != 0 && target.selectionStart === target.selectionEnd
             PropertyAction {
                 target: cursorLine
                 property: "opacity"
                 value: 1
             }
             PauseAnimation {
-                duration: Qt.styleHints.cursorFlashTime/2
+                duration: Application.styleHints.cursorFlashTime/2
             }
             SequentialAnimation {
                 loops: Animation.Infinite
@@ -38,14 +38,14 @@ Loader {
                     target: cursorLine
                     from: 1
                     to: 0
-                    duration: Qt.styleHints.cursorFlashTime/2
+                    duration: Application.styleHints.cursorFlashTime/2
                     easing.type: Easing.OutCubic
                 }
                 OpacityAnimator {
                     target: cursorLine
                     from: 0
                     to: 1
-                    duration: Qt.styleHints.cursorFlashTime/2
+                    duration: Application.styleHints.cursorFlashTime/2
                     easing.type: Easing.OutCubic
                 }
             }

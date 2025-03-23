@@ -32,7 +32,7 @@ T.Button {
 
     // // palette: Kirigami.Theme.palette
 
-    hoverEnabled: Qt.styleHints.useHoverEffects
+    hoverEnabled: Application.styleHints.useHoverEffects
 
     Kirigami.Theme.colorSet: /*control.highlighted ? Kirigami.Theme.Selection :*/ Kirigami.Theme.Button
     Kirigami.Theme.inherit: false//control.flat && !control.down && !control.checked
