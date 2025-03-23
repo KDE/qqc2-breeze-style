@@ -22,7 +22,7 @@ T.CheckBox {
     horizontalPadding: Kirigami.Units.mediumSpacing
     spacing: Kirigami.Units.mediumSpacing
 
-    hoverEnabled: Qt.styleHints.useHoverEffects
+    hoverEnabled: Application.styleHints.useHoverEffects
 
     icon.width: Kirigami.Units.iconSizes.sizeForLabels
     icon.height: Kirigami.Units.iconSizes.sizeForLabels
