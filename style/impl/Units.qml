@@ -36,30 +36,30 @@ QtObject {
     property int highlightLineThickness: smallRadius
 
     property int grooveHeight: {
-        let h = Math.floor(fontMetrics.height / 3);
+        let h = Math.floor(Kirigami.Units.gridUnit / 3);
         h += h % 2;
         return h;
     }
 
     property int thickGrooveHeight: {
-        let h = Math.floor(fontMetrics.height / 1.5);
+        let h = Math.floor(Kirigami.Units.gridUnit / 1.5);
         h += h % 2;
         return h;
     }
 
     /// For things like checkboxes/radiobuttons/switches/slider handles
-    property int inlineControlHeight: fontMetrics.height
+    property int inlineControlHeight: Kirigami.Units.gridUnit
 
     // For small controls with a small amount of vertical padding
-    property int smallControlHeight: fontMetrics.height + Kirigami.Units.smallSpacing * 2
+    property int smallControlHeight: Kirigami.Units.gridUnit + Kirigami.Units.smallSpacing * 2
 
     // For medium controls with a medium amount of vertical padding
-    property int mediumControlHeight: fontMetrics.height + Kirigami.Units.mediumSpacing * 2
+    property int mediumControlHeight: Kirigami.Units.gridUnit + Kirigami.Units.mediumSpacing * 2
 
     // For large controls with a large amount of vertical padding
-    property int largeControlHeight: fontMetrics.height + Kirigami.Units.largeSpacing * 2
+    property int largeControlHeight: Kirigami.Units.gridUnit + Kirigami.Units.largeSpacing * 2
 
-    property real horizontalPaddingRatio: Math.max(fontMetrics.height / fontMetrics.fullWidthCharWidth, 1)
+    property real horizontalPaddingRatio: Math.max(Kirigami.Units.gridUnit / units.fullWidthCharWidth, 1)
 
     property int verySmallHorizontalPadding: Math.round(horizontalPaddingRatio * units.verySmallSpacing)
 
@@ -68,6 +68,17 @@ QtObject {
     property int mediumHorizontalPadding: Math.round(horizontalPaddingRatio * Kirigami.Units.mediumSpacing)
 
     property int largeHorizontalPadding: Math.round(horizontalPaddingRatio * Kirigami.Units.largeSpacing)
+
+    /**
+     * Measured using
+     * ```
+     * FontMetrics {
+     *      font: Kirigami.Theme.defaultFont
+     *      property real fullWidthCharWidth: fontMetrics.tightBoundingRect('＿').width
+     * }
+     * ```
+     */
+    property int fullWidthCharWidth: 18
 
     function symbolSize(size) {
         size -= size % 6
@@ -87,12 +98,4 @@ QtObject {
      * Units.veryLargeSpacing is the amount of spacing that should be used inside very big UI elements
      */
     property int veryLargeSpacing: Kirigami.Units.largeSpacing * 1.5
-
-    /**
-     * metrics used by the default font
-     */
-    property var fontMetrics: FontMetrics {
-        font: Kirigami.Theme.defaultFont
-        property real fullWidthCharWidth: fontMetrics.tightBoundingRect('＿').width
-    }
 }
