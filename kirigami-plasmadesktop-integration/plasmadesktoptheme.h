@@ -9,14 +9,13 @@
 #define KIRIGAMIPLASMATHEME_H
 
 #include <Kirigami/Platform/PlatformTheme>
+
 #include <QColor>
 #include <QIcon>
 #include <QObject>
 #include <QPointer>
 #include <QQuickItem>
 
-class PlasmaDesktopTheme;
-class KIconLoader;
 class StyleSingleton;
 
 class PlasmaDesktopTheme : public Kirigami::Platform::PlatformTheme

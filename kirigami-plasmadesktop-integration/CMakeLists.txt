@@ -22,9 +22,17 @@ target_link_libraries(org.kde.breeze
         KF6::IconThemes
 )
 
-if(NOT ANDROID)
-    target_link_libraries(org.kde.breeze PRIVATE Qt::DBus)
+if (HAVE_DBUS)
+    target_link_libraries(org.kde.breeze
+        PRIVATE
+        Qt6::DBus
+    )
+    target_compile_definitions(org.kde.breeze PRIVATE -DHAVE_QTDBUS=1)
 else()
+    target_compile_definitions(org.kde.breeze PRIVATE -DHAVE_QTDBUS=0)
+endif()
+
+if(ANDROID)
     set_target_properties(org.kde.breeze PROPERTIES OUTPUT_NAME libplugins_kf6_kirigami_platform_org.kde.breeze)
 endif()
 

@@ -6,23 +6,21 @@
 */
 
 #include "plasmadesktoptheme.h"
+
+#if HAVE_QTDBUS
+#include <QDBusConnection>
+#endif
+
+#include <QFontDatabase>
+#include <QGuiApplication>
+#include <QPalette>
+#include <QQuickRenderControl>
+#include <QQuickWindow>
+
 #include <KColorScheme>
 #include <KColorUtils>
 #include <KConfigGroup>
 #include <KIconColors>
-#include <KIconLoader>
-#include <QDebug>
-#include <QGuiApplication>
-#include <QPalette>
-#include <QQmlContext>
-#include <QQmlEngine>
-#include <QQuickRenderControl>
-#include <QQuickWindow>
-#include <QScopeGuard>
-
-#ifndef Q_OS_ANDROID
-#include <QDBusConnection>
-#endif
 
 class StyleSingleton : public QObject
 {
@@ -38,10 +36,9 @@ public:
     explicit StyleSingleton()
         : QObject()
         , buttonScheme(QPalette::Active, KColorScheme::ColorSet::Button)
+        , viewScheme(QPalette::Active, KColorScheme::ColorSet::View)
     {
-        connect(qGuiApp, &QGuiApplication::paletteChanged, this, &StyleSingleton::refresh);
-
-#ifndef Q_OS_ANDROID
+#if HAVE_QTDBUS
         // Use DBus in order to listen for settings changes directly, as the
         // QApplication doesn't expose the font variants we're looking for,
         // namely smallFont.
@@ -52,22 +49,21 @@ public:
                                               this,
                                               SLOT(notifyWatchersConfigurationChange()));
 #endif
-
         connect(qGuiApp, &QGuiApplication::fontDatabaseChanged, this, &StyleSingleton::notifyWatchersConfigurationChange);
-        connect(qGuiApp, &QGuiApplication::fontChanged, this, &StyleSingleton::notifyWatchersConfigurationChange);
+        qGuiApp->installEventFilter(this);
 
+#ifndef Q_OS_ANDROID
         /* QtTextRendering uses less memory, so use it in low power mode.
          *
          * For scale factors greater than 2, native rendering doesn't actually do much.
          * Does native rendering even work when scaleFactor >= 2?
-         *
-         * NativeTextRendering is still distorted sometimes with fractional scale
-         * factors, despite https://bugreports.qt.io/browse/QTBUG-67007 being closed.
-         * 1.5x scaling looks generally OK, but there are occasional and difficult to
-         * reproduce issues with all fractional scale factors.
          */
+
+        // NativeTextRendering is still distorted sometimes with fractional scale factors
+        // Given Qt disables all hinting with native rendering when any scaling is used anyway
+        // we can use Qt's rendering throughout
+        // QTBUG-126577
         qreal devicePixelRatio = qGuiApp->devicePixelRatio();
-#ifndef Q_OS_ANDROID
         QQuickWindow::TextRenderType defaultTextRenderType = (int(devicePixelRatio) == devicePixelRatio //
                                                                   ? QQuickWindow::NativeTextRendering
                                                                   : QQuickWindow::QtTextRendering);
@@ -82,39 +78,19 @@ public:
                 defaultTextRenderType = QQuickWindow::NativeTextRendering;
             }
         }
-
         QQuickWindow::setTextRenderType(defaultTextRenderType);
 #else
         // Native rendering on android is broken, so prefer Qt rendering in
         // this case.
         QQuickWindow::setTextRenderType(QQuickWindow::QtTextRendering);
 #endif
-
-        smallFont = loadSmallFont();
-    }
-
-    QFont loadSmallFont() const
-    {
-        KSharedConfigPtr ptr = KSharedConfig::openConfig();
-        KConfigGroup general(ptr->group("general"));
-
-        return general.readEntry("smallestReadableFont", []() {
-            auto smallFont = qApp->font();
-#ifndef Q_OS_WIN
-            if (smallFont.pixelSize() != -1) {
-                smallFont.setPixelSize(smallFont.pixelSize() - 2);
-            } else {
-                smallFont.setPointSize(smallFont.pointSize() - 2);
-            }
-#endif
-            return smallFont;
-        }());
     }
 
     void refresh()
     {
         m_cache.clear();
         buttonScheme = KColorScheme(QPalette::Active, KColorScheme::ColorSet::Button);
+        viewScheme = KColorScheme(QPalette::Active, KColorScheme::ColorSet::View);
 
         notifyWatchersPaletteChange();
     }
@@ -123,8 +99,9 @@ public:
     {
         const auto key = qMakePair(cs, group);
         auto it = m_cache.constFind(key);
-        if (it != m_cache.constEnd())
+        if (it != m_cache.constEnd()) {
             return *it;
+        }
 
         using Kirigami::Platform::PlatformTheme;
 
@@ -203,22 +180,39 @@ public:
 
     Q_SLOT void notifyWatchersConfigurationChange()
     {
-        smallFont = loadSmallFont();
         for (auto watcher : std::as_const(watchers)) {
-            watcher->setSmallFont(smallFont);
             watcher->setDefaultFont(qApp->font());
+            watcher->setSmallFont(QFontDatabase::systemFont(QFontDatabase::SmallestReadableFont));
+            watcher->setFixedWidthFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
         }
     }
 
     KColorScheme buttonScheme;
-    QFont smallFont;
+    KColorScheme viewScheme;
 
     QList<PlasmaDesktopTheme *> watchers;
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override
+    {
+        if (obj != qGuiApp) {
+            return false;
+        }
+
+        if (event->type() == QEvent::ApplicationFontChange) {
+            notifyWatchersConfigurationChange();
+        }
+        if (event->type() == QEvent::ApplicationPaletteChange) {
+            refresh();
+        }
+        return false;
+    }
 
 private:
     QHash<QPair<Kirigami::Platform::PlatformTheme::ColorSet, QPalette::ColorGroup>, Colors> m_cache;
 };
-Q_GLOBAL_STATIC(StyleSingleton, s_style)
+
+Q_GLOBAL_STATIC(StyleSingleton, s_style);
 
 PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
     : PlatformTheme(parent)
@@ -235,10 +229,13 @@ PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
     s_style->watchers.append(this);
 
     setDefaultFont(qGuiApp->font());
-    setSmallFont(s_style->smallFont);
+    setSmallFont(QFontDatabase::systemFont(QFontDatabase::SmallestReadableFont));
+    setFixedWidthFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
 
     syncWindow();
-    syncColors();
+    if (!m_window) {
+        syncColors();
+    }
 }
 
 PlasmaDesktopTheme::~PlasmaDesktopTheme()
@@ -263,7 +260,7 @@ void PlasmaDesktopTheme::syncWindow()
             window = qw;
         }
         if (qw) {
-            connect(qw, &QQuickWindow::sceneGraphInitialized, this, &PlasmaDesktopTheme::syncWindow);
+            connect(qw, &QQuickWindow::sceneGraphInitialized, this, &PlasmaDesktopTheme::syncWindow, Qt::UniqueConnection);
         }
     }
     m_window = window;
@@ -287,9 +284,16 @@ QIcon PlasmaDesktopTheme::iconFromTheme(const QString &name, const QColor &custo
 
 void PlasmaDesktopTheme::syncColors()
 {
+    if (QCoreApplication::closingDown()) {
+        return;
+    }
+
     QPalette::ColorGroup group = (QPalette::ColorGroup)colorGroup();
     auto parentItem = qobject_cast<QQuickItem *>(parent());
     if (parentItem) {
+        if (!parentItem->isVisible()) {
+            return;
+        }
         if (!parentItem->isEnabled()) {
             group = QPalette::Disabled;
         } else if (m_window && !m_window->isActive() && m_window->isExposed()) {
@@ -302,6 +306,8 @@ void PlasmaDesktopTheme::syncColors()
     }
 
     const auto colors = s_style->loadColors(colorSet(), group);
+
+    Kirigami::Platform::PlatformThemeChangeTracker tracker(this);
 
     // foreground
     setTextColor(colors.scheme.foreground(KColorScheme::NormalText).color());
@@ -358,6 +364,5 @@ bool PlasmaDesktopTheme::event(QEvent *event)
     return PlatformTheme::event(event);
 }
 
-#include "plasmadesktoptheme.moc"
-
 #include "moc_plasmadesktoptheme.cpp"
+#include "plasmadesktoptheme.moc"
