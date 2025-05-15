@@ -51,7 +51,7 @@ if(USE_DBUS)
   set(HAVE_DBUS ON)
 endif()
 
-find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform CoreAddons ColorScheme IconThemes)
+find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS GuiAddons Config KirigamiPlatform ColorScheme IconThemes)
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11)
