@@ -19,7 +19,8 @@ T.Dialog {
                              + (implicitHeaderHeight > 0 ? implicitHeaderHeight + spacing : 0)
                              + (implicitFooterHeight > 0 ? implicitFooterHeight + spacing : 0))
 
-    padding: Kirigami.Units.gridUnit
+    padding: contentItem instanceof QQC2.ScrollView ? 0 : Kirigami.Units.gridUnit
+    margins: Kirigami.Units.gridUnit
 
 //     anchors.centerIn: T.Overlay.overlay
 
@@ -73,6 +74,18 @@ T.Dialog {
 
     footer: DialogButtonBox {
         visible: count > 0
+
+        background: Item {
+            Kirigami.Separator {
+                visible: if (control.contentItem instanceof T.Pane || control.contentItem instanceof Flickable) {
+                    return control.contentItem.height < control.contentItem.contentHeight;
+                } else {
+                    return false;
+                }
+                width: parent.width
+                anchors.top: parent.top
+            }
+        }
     }
 
     T.Overlay.modal: Impl.OverlayModalBackground {}
