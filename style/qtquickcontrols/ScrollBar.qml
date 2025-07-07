@@ -28,8 +28,6 @@ T.ScrollBar {
 
     interactive: !Kirigami.Settings.hasTransientTouchInput
 
-    policy: Kirigami.Settings.isMobile || !control.interactive ? T.ScrollBar.AsNeeded : T.ScrollBar.AlwaysOn
-
     contentItem: Impl.ScrollHandle {
         control: control
         policy: control.policy
