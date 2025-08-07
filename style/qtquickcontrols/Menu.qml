@@ -48,8 +48,7 @@ T.Menu {
         // Cannot use `contentWidth` as this only accounts for Actions, not MenuItems or MenuSeparators
         implicitWidth: contentItem.visibleChildren.reduce((maxWidth, child) => Math.max(maxWidth, child.implicitWidth), 0)
         model: control.contentModel
-        highlightMoveDuration: Kirigami.Units.shortDuration
-        highlightMoveVelocity: 800
+        highlightMoveDuration: 0
         highlight: Impl.ListViewHighlight {
             currentIndex: control.currentIndex
             count: control.count
@@ -65,6 +64,20 @@ T.Menu {
         currentIndex: control.currentIndex || 0
 
         ScrollBar.vertical: Controls.ScrollBar {}
+
+        // Mimic qtwidgets behaviour regarding menu highlighting
+        // Unselect item when unhover
+        Connections {
+            target: control.contentItem.currentItem
+
+            function onHoveredChanged(): void {
+                const item = control.contentItem.currentItem;
+                if (item instanceof T.MenuItem && item.highlighted
+                        && !item.subMenu && !item.hovered) {
+                    control.currentIndex = -1
+                }
+            }
+        }
     }
 
     enter: Transition {
@@ -92,6 +105,8 @@ T.Menu {
     }
 
     background: Impl.StandardRectangle {
+        id: backgroundRect
+
         radius: Impl.Units.smallRadius
         implicitHeight: Impl.Units.mediumControlHeight
         implicitWidth: Kirigami.Units.gridUnit * 8
@@ -102,8 +117,12 @@ T.Menu {
             width: Impl.Units.smallBorder
         }
 
-        Impl.LargeShadow {
-            radius: parent.radius
+        // Only load background shadow if menu is not a window, otherwise shadow gets cut off
+        Loader {
+            active: control.popupType === Controls.Popup.Item
+            sourceComponent: Impl.LargeShadow {
+                radius: backgroundRect.radius
+            }
         }
     }
 }
