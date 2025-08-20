@@ -172,6 +172,10 @@ T.ComboBox {
         implicitWidth: contentWidth + leftPadding + rightPadding
         width: Math.max(control.width, implicitWidth)
         padding: Kirigami.Units.smallSpacing
+        topMargin: control.Controls.Overlay.overlay?.SafeArea.margins.top
+        leftMargin: control.Controls.Overlay.overlay?.SafeArea.margins.left
+        rightMargin: control.Controls.Overlay.overlay?.SafeArea.margins.right
+        bottomMargin: control.Controls.Overlay.overlay?.SafeArea.margins.bottom
 
         delegate: control.delegate
 
