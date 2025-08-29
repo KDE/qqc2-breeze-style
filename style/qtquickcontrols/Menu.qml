@@ -9,7 +9,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Window
-import QtQuick.Controls as Controls
 import QtQuick.Controls.impl
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
@@ -41,7 +40,7 @@ T.Menu {
 
     // The default contentItem is a ListView, which has its own contentItem property,
     // so delegates will be created as children of control.contentItem.contentItem
-    delegate: Controls.MenuItem {}
+    delegate: MenuItem {}
 
     contentItem: ListView {
         implicitHeight: contentHeight
@@ -63,7 +62,7 @@ T.Menu {
         clip: interactive // Only needed when the ListView can be dragged/flicked
         currentIndex: control.currentIndex || 0
 
-        ScrollBar.vertical: Controls.ScrollBar {}
+        ScrollBar.vertical: ScrollBar {}
 
         // Mimic qtwidgets behaviour regarding menu highlighting
         // Unselect item when unhover
@@ -119,7 +118,7 @@ T.Menu {
 
         // Only load background shadow if menu is not a window, otherwise shadow gets cut off
         Loader {
-            active: control.popupType === Controls.Popup.Item
+            active: control.popupType === T.Popup.Item
             sourceComponent: Impl.LargeShadow {
                 radius: backgroundRect.radius
             }

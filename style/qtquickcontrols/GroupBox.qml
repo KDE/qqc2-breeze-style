@@ -3,9 +3,7 @@
  */
 
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Templates as T
-import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 
 import org.kde.breeze.impl as Impl
@@ -26,7 +24,7 @@ T.GroupBox {
     padding: Impl.Units.veryLargeSpacing
     topPadding: padding + (implicitLabelWidth > 0 ? implicitLabelHeight + spacing : 0)
 
-    label: Controls.Label {
+    label: Label {
         x: control.leftPadding
         width: control.availableWidth
 

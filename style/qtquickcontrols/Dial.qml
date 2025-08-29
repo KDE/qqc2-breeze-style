@@ -4,7 +4,6 @@
 
 import QtQuick
 import QtQml
-import QtQuick.Controls as Controls
 import QtQuick.Controls.impl
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami

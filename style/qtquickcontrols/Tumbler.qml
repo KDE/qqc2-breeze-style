@@ -1,6 +1,5 @@
 // NOTE: replace this
 import QtQuick
-import QtQuick.Controls as Controls
 import QtQuick.Controls.impl
 import QtQuick.Templates as T
 

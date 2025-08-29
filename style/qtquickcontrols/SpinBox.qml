@@ -3,7 +3,6 @@
  */
 
 import QtQuick
-import QtQuick.Controls as Controls
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 import org.kde.breeze.impl as Impl
@@ -61,7 +60,7 @@ T.SpinBox {
      * contentItem will be the part that takes the focus.
      */
 
-    contentItem: Controls.TextField {
+    contentItem: TextField {
         palette: control.palette
         leftPadding: control.spacing
         rightPadding: control.spacing

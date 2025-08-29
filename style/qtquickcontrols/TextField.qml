@@ -4,7 +4,6 @@
  */
 
 import QtQuick
-import QtQuick.Controls as Controls
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 import org.kde.breeze.impl as Impl
@@ -47,7 +46,7 @@ T.TextField {
         target: control
     }
 
-    Controls.Label {
+    Label {
         id: placeholder
         anchors {
             fill: parent

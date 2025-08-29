@@ -5,7 +5,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Window
-import QtQuick.Controls as Controls
 import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 import org.kde.breeze.impl as Impl
@@ -79,7 +78,7 @@ T.ToolTip {
         }
     }
 
-    contentItem: Controls.Label {
+    contentItem: Label {
         text: control.text
         font: control.font
         wrapMode: Text.WordWrap

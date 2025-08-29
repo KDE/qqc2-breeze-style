@@ -1,6 +1,5 @@
 // NOTE: check this
 import QtQuick
-import QtQuick.Controls as Controls
 import QtQuick.Templates as T
 
 import org.kde.kirigami as Kirigami

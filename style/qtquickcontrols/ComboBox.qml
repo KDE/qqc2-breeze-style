@@ -7,7 +7,7 @@
 import QtQuick
 import QtQuick.Window
 import QtQuick.Templates as T
-import QtQuick.Controls as Controls
+
 import org.kde.kirigami as Kirigami
 
 import org.kde.breeze.impl as Impl
@@ -36,7 +36,7 @@ T.ComboBox {
     leftPadding: horizontalPadding + (!control.mirrored ? 0 : __indicatorMargin)
     rightPadding: horizontalPadding + (control.mirrored ? 0 : __indicatorMargin)
 
-    contentItem: Controls.TextField {
+    contentItem: TextField {
         id: textField
         palette: control.palette
         // TextField padding doesn't automatically mirror
@@ -152,7 +152,7 @@ T.ComboBox {
         }
     }
 
-    delegate: Controls.MenuItem {
+    delegate: MenuItem {
         required property var model
         required property int index
 
@@ -166,7 +166,7 @@ T.ComboBox {
         __reserveSpaceForArrow: false
     }
 
-    popup: Controls.Menu {
+    popup: Menu {
         y: control.height
         x: (control.width - width)/2
         implicitWidth: contentWidth + leftPadding + rightPadding
@@ -195,7 +195,7 @@ T.ComboBox {
             interactive: Window.window ? contentHeight + control.topPadding + control.bottomPadding > Window.window.height : false
             clip: interactive // Only needed when the ListView can be dragged/flicked
             keyNavigationWraps: true
-            ScrollBar.vertical: Controls.ScrollBar {}
+            ScrollBar.vertical: ScrollBar {}
         }
     }
 
