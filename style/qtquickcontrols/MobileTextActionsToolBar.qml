@@ -6,6 +6,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Window
+import QtQuick.Templates as T
 import org.kde.kirigami as Kirigami
 
 import org.kde.breeze.impl as Impl
@@ -22,7 +23,7 @@ Loader {
         property real yAlignOver: Math.round(Qt.inputMethod.anchorRectangle.y - height - fontMetrics.descent)
 
         visible: false
-        parent: Overlay.overlay
+        parent: T.Overlay.overlay
         modal: false
         focus: false
         margins: Impl.Units.verySmallSpacing
@@ -41,7 +42,7 @@ Loader {
             ToolButton {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-cut"
-                text: i18nc("@action:inmenu Text editor action", "Cut")
+                text: qsTr("Cut", "@action:inmenu Text editor action")
                 visible: target && target.selectedText.length > 0 && (!target.hasOwnProperty("echoMode") || target.echoMode === TextInput.Normal)
                 onClicked: target.cut();
             }
@@ -49,7 +50,7 @@ Loader {
             ToolButton {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-copy"
-                text: i18nc("@action:inmenu Text editor action", "Copy")
+                text: qsTr("Copy", "@action:inmenu Text editor action")
                 visible: target && target.selectedText.length > 0 && (!target.hasOwnProperty("echoMode") || target.echoMode === TextInput.Normal)
                 onClicked: target.copy();
             }
@@ -57,7 +58,7 @@ Loader {
             ToolButton {
                 focusPolicy: Qt.NoFocus
                 icon.name: "edit-paste"
-                text: i18nc("@action:inmenu Text editor action", "Paste")
+                text: qsTr("Paste", "@action:inmenu Text editor action")
                 visible: target && target.canPaste
                 onClicked: target.paste();
             }
