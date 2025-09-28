@@ -117,11 +117,9 @@ T.Menu {
         }
 
         // Only load background shadow if menu is not a window, otherwise shadow gets cut off
-        Loader {
-            active: control.popupType === T.Popup.Item
-            sourceComponent: Impl.LargeShadow {
-                radius: backgroundRect.radius
-            }
+        Impl.LargeShadow {
+            visible: control.popupType === T.Popup.Item
+            radius: backgroundRect.radius
         }
     }
 }
