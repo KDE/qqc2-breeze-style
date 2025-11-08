@@ -75,7 +75,7 @@ T.ProgressBar {
                 }
             }
 
-            XAnimator on x {
+            NumberAnimation on x {
                 from: - 2 * indeterminateFill.__segmentLength
                 to: 0
                 duration: 3 * Kirigami.Units.veryLongDuration
