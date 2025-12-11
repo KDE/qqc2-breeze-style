@@ -12,8 +12,6 @@ target_sources(BreezeImpl PRIVATE
     iconlabellayout.cpp
     iconlabellayout.h
     iconlabellayout_p.h
-    kcolorutilssingleton.cpp
-    kcolorutilssingleton.h
     paintedsymbolitem.cpp
     paintedsymbolitem.h
     paintedsymbolitem_p.h
