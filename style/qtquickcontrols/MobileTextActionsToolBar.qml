@@ -15,9 +15,26 @@ import org.kde.breeze.impl as Impl
 
 Loader {
     id: root
-    property Item target
-    visible: Kirigami.Settings.tabletMode && target.selectByMouse && target.selectedText.length > 0
+    property TextInput target
+    visible: false
     active: visible
+
+    Connections {
+        target: root.target
+
+        function onPressAndHold(event) {
+            if (Kirigami.Settings.tabletMode) {
+                root.visible = true;
+            }
+        }
+
+        function onSelectByMouseChanged() {
+            if (target.selectByMouse) {
+                root.visible = true;
+            }
+        }
+    }
+
     sourceComponent: Popup {
         id: popup
 
