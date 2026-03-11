@@ -40,8 +40,7 @@ T.TextField {
     horizontalAlignment: TextInput.AlignLeft
 
     selectByMouse: true
-    mouseSelectionMode: Kirigami.Settings.tabletMode ?
-        TextInput.SelectWords : TextInput.SelectCharacters
+    mouseSelectionMode: TextInput.SelectCharacters
 
     cursorDelegate: Impl.CursorDelegate {
         visible: control.activeFocus && !control.readOnly && control.selectionStart === control.selectionEnd
