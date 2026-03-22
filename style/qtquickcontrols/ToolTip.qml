@@ -23,20 +23,14 @@ T.ToolTip {
     // This value is basically arbitrary. It just looks nice.
     property real __preferredWidth: Screen.pixelDensity * 63.5 * Screen.devicePixelRatio
 
-    contentWidth: {
-        // Always ceil text widths since they're usually not integers.
-        // Using round or floor can cause text to wrap or elide.
-        let implicitContentOrFirstChildWidth = Math.ceil(implicitContentWidth || (contentChildren.length === 1 ? contentChildren[0].implicitWidth : 0))
-
-        /* HACK: Adding 1 prevents the right side from sometimes having an
-         * unnecessary amount of padding. This could fail to fix the issue
-         * in some contexts, but it seems to work with Noto Sans at 10pts,
-         * 10.5pts and 11pts.
-         */
-        // If contentWidthSource isn't available, cWidth = 0
-        let cWidth = Math.ceil(contentWidthSource.contentWidth ?? -1) + 1
-        return cWidth > 0 ? cWidth : implicitContentOrFirstChildWidth
-    }
+    // Always ceil text widths since they're usually not integers.
+    // Using round or floor can cause text to wrap or elide.
+    /* HACK: Adding 1 prevents the right side from sometimes having an
+     * unnecessary amount of padding. This could fail to fix the issue
+     * in some contexts, but it seems to work with Noto Sans at 10pts,
+     * 10.5pts and 11pts.
+     */
+    contentWidth: Math.ceil(contentWidthSource?.contentWidth ?? 0) + 1
 
     // palette: Kirigami.Theme.palette
     Kirigami.Theme.colorSet: Kirigami.Theme.Tooltip
