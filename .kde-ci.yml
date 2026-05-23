@@ -13,6 +13,6 @@ Dependencies:
     'frameworks/kiconthemes': '@latest-kf6'
 
 Options:
- require-passing-tests-on: ['Linux', 'FreeBSD']
+ require-passing-tests-on: ['@all']
  run-qmllint: true
  enable-lsan: True
