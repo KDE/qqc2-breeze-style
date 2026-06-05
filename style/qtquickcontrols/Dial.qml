@@ -19,16 +19,13 @@ T.Dial {
 
     inputMode: !Kirigami.Settings.tabletMode ? Dial.Vertical : Dial.Circular
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
-
     background: Impl.BreezeDial {
         implicitWidth: 100
         implicitHeight: 100
         backgroundBorderColor: Impl.Theme.separatorColor()
-        backgroundColor: Kirigami.Theme.backgroundColor
-        fillBorderColor: Kirigami.Theme.focusColor
-        fillColor: Kirigami.Theme.alternateBackgroundColor
+        backgroundColor: palette.button
+        fillBorderColor: palette.highlight
+        fillColor: palette.highlight
         angle: control.angle
         grooveThickness: Impl.Units.grooveHeight
         Behavior on angle {
@@ -61,12 +58,12 @@ T.Dial {
         }
         radius: height/2
 
-        color: Kirigami.Theme.backgroundColor
+        color: palette.button
 
         border {
             width: Impl.Units.smallBorder
             color: control.hovered || control.pressed || control.visualFocus
-                ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
+                ? palette.highlight : Impl.Theme.separatorColor()
         }
 
         shadow {
@@ -97,7 +94,7 @@ T.Dial {
                 anchors.verticalCenterOffset: height
                 width: 4
                 height: 4
-                color: control.enabled ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
+                color: control.enabled ? palette.highlight : Impl.Theme.separatorColor()
             }
         }
 

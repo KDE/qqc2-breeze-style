@@ -28,9 +28,6 @@ T.SpinBox {
 
     hoverEnabled: Application.styleHints.useHoverEffects
 
-    Kirigami.Theme.colorSet: control.editable ? Kirigami.Theme.View : Kirigami.Theme.Button
-    Kirigami.Theme.inherit: !Boolean(background)
-
     editable: true
     inputMethodHints: Qt.ImhDigitsOnly
     wheelEnabled: true
@@ -70,9 +67,9 @@ T.SpinBox {
         // control padding can be used like it normally would
         text: control.displayText
         font: control.font
-        color: Kirigami.Theme.textColor
-        selectionColor: Kirigami.Theme.highlightColor
-        selectedTextColor: Kirigami.Theme.highlightedTextColor
+        color: control.editable ? palette.text : palette.buttonText
+        selectionColor: palette.highlight
+        selectedTextColor: palette.highlightedText
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
 

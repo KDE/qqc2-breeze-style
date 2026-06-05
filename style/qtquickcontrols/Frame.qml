@@ -3,7 +3,6 @@
  */
 
 import QtQuick.Templates as T
-import org.kde.kirigami as Kirigami
 
 import org.kde.breeze.impl as Impl
 
@@ -21,7 +20,7 @@ T.Frame {
     padding: Impl.Units.veryLargeSpacing + Impl.Units.smallBorder
 
     background: Impl.StandardRectangle {
-        color: Kirigami.Theme.backgroundColor
+        color: palette.window
         radius: Impl.Units.smallRadius
         border.color: Impl.Theme.separatorColor()
         border.width: Impl.Units.smallBorder

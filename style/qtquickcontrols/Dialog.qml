@@ -45,10 +45,7 @@ T.Dialog {
     }
 
     background: Kirigami.ShadowedRectangle {
-        Kirigami.Theme.colorSet: Kirigami.Theme.View
-        Kirigami.Theme.inherit: false
-
-        color: Kirigami.Theme.backgroundColor
+        color: palette.base
         radius: Kirigami.Units.cornerRadius
 
         shadow {
@@ -59,7 +56,7 @@ T.Dialog {
 
         border {
             width: 1
-            color: Kirigami.ColorUtils.linearInterpolation(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, Kirigami.Theme.frameContrast);
+            color: Kirigami.ColorUtils.linearInterpolation(palette.base, palette.text, Kirigami.Theme.frameContrast);
         }
     }
 

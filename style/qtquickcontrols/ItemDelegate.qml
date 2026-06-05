@@ -44,7 +44,7 @@ T.ItemDelegate {
     contentItem: Impl.IconLabelContent {
         control: control
         alignment: Qt.AlignLeft | Qt.AlignVCenter
-        color: control.highlighted || control.down ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+        color: control.highlighted || control.down ? palette.highlightedText : palette.text
         icon.color: color
     }
 

@@ -17,9 +17,6 @@ T.ProgressBar {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
-
     contentItem: Item {
         implicitWidth: 200
         implicitHeight: Impl.Units.grooveHeight
@@ -35,10 +32,10 @@ T.ProgressBar {
             width: control.position * parent.width
 
             radius: Impl.Units.grooveHeight/2
-            color: Kirigami.Theme.alternateBackgroundColor
+            color: palette.highlight
             border {
                 width: Impl.Units.smallBorder
-                color: Kirigami.Theme.focusColor
+                color: palette.highlight
             }
         }
 
@@ -72,7 +69,7 @@ T.ProgressBar {
                         anchors.bottom: parent.bottom
                         implicitWidth: indeterminateFill.__segmentLength
                         radius: Impl.Units.grooveHeight/2
-                        color: Kirigami.Theme.alternateBackgroundColor
+                        color: palette.highlight
                     }
                 }
             }
@@ -92,7 +89,7 @@ T.ProgressBar {
         implicitHeight: Impl.Units.grooveHeight
 
         radius: Impl.Units.grooveHeight/2
-        color: Kirigami.Theme.backgroundColor
+        color: palette.button
         border {
             width: Impl.Units.smallBorder
             color: Impl.Theme.separatorColor()

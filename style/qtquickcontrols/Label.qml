@@ -8,6 +8,6 @@ import org.kde.kirigami as Kirigami
 T.Label {
     id: control
 
-    color: Kirigami.Theme.textColor
-    linkColor: Kirigami.Theme.linkColor
+    color: palette.text
+    linkColor: palette.link
 }

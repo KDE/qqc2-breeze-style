@@ -28,16 +28,14 @@ Impl.StandardRectangle {
     implicitWidth: implicitHeight
     implicitHeight: Impl.Units.inlineControlHeight
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
-    color: highlightBackground ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    color: highlightBackground ? palette.highlight : palette.button
 
     radius: Impl.Units.smallRadius
 
     border {
         width: Impl.Units.smallBorder
         color: highlightBorder ?
-            Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
+            palette.highlight : Impl.Theme.separatorColor()
             //Kirigami.ColorUtils.tintWithAlpha(root.color, Kirigami.Theme.textColor, 0.3)
     }
 
@@ -69,7 +67,7 @@ Impl.StandardRectangle {
         // Should reliably create pixel aligned checkmarks that don't get cut off on the sides.
         height: root.symbolSize + penWidth*2
         width: height
-        color: Kirigami.Theme.textColor
+        color: palette.buttonText
         symbolType: PaintedSymbol.Checkmark
         visible: root.checkState === Qt.Checked
 
@@ -102,7 +100,7 @@ Impl.StandardRectangle {
             anchors.verticalCenter: parent.verticalCenter
             height: parent.height
             width: height
-            color: Kirigami.Theme.textColor
+            color: palette.buttonText
         }
 
         Impl.StandardRectangle {
@@ -110,7 +108,7 @@ Impl.StandardRectangle {
             anchors.centerIn: parent
             height: parent.height
             width: height
-            color: Kirigami.Theme.textColor
+            color: palette.buttonText
         }
 
         Impl.StandardRectangle {
@@ -119,7 +117,7 @@ Impl.StandardRectangle {
             anchors.verticalCenter: parent.verticalCenter
             height: parent.height
             width: height
-            color: Kirigami.Theme.textColor
+            color: palette.buttonText
         }
     }
 

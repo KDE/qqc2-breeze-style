@@ -17,9 +17,6 @@ T.RangeSlider {
                              Math.max(first.implicitHandleHeight,
                                       second.implicitHandleHeight) + topPadding + bottomPadding)
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
-
     padding: Kirigami.Settings.tabletMode ? Kirigami.Units.mediumSpacing : 0
 
     first.handle: Impl.SliderHandle {

@@ -32,10 +32,6 @@ T.ToolTip {
      */
     contentWidth: Math.ceil(contentWidthSource?.contentWidth ?? 0) + 1
 
-    // palette: Kirigami.Theme.palette
-    Kirigami.Theme.colorSet: Kirigami.Theme.Tooltip
-    Kirigami.Theme.inherit: false
-
     x: parent ? Math.round((parent.width - implicitWidth) / 2) : 0
     y: -implicitHeight - Kirigami.Units.smallSpacing
     // Always show the tooltip on top of everything else
@@ -81,6 +77,7 @@ T.ToolTip {
         Text {
             id: contentWidthSource
             visible: false
+            color: palette.toolTipText
             width: control.__preferredWidth
             text: parent.text
             font: parent.font
@@ -105,7 +102,7 @@ T.ToolTip {
         implicitWidth: implicitHeight
         implicitHeight: Impl.Units.mediumControlHeight
         radius: Impl.Units.smallRadius
-        color: Kirigami.Theme.backgroundColor
+        color: palette.toolTipBase
         border.width: Impl.Units.smallBorder
         border.color: Impl.Theme.separatorColor()
 

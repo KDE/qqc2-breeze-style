@@ -64,7 +64,7 @@ T.DialogButtonBox {
 
         // Enough height for Buttons/ComboBoxes/TextFields with smallSpacing padding on top and bottom
         implicitHeight: Impl.Units.mediumControlHeight + (Kirigami.Units.smallSpacing * 2)
-        color: control.__isInPopup ? "transparent" : Kirigami.Theme.backgroundColor
+        color: control.__isInPopup ? "transparent" : palette.window
     }
 
     // Standard buttons are destroyed and then recreated every time

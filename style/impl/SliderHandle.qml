@@ -51,10 +51,10 @@ Impl.StandardRectangle {
     rotation: root.vertical && usePreciseHandle ? -90 : 0
 
     radius: height / 2
-    color: Kirigami.Theme.backgroundColor
+    color: palette.button
     border {
         width: Impl.Units.smallBorder
-        color: root.pressed || root.visualFocus || root.hovered ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
+        color: root.pressed || root.visualFocus || root.hovered ? palette.highlight : Impl.Theme.separatorColor()
     }
 
     Behavior on border.color {

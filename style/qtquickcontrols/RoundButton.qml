@@ -22,10 +22,6 @@ T.RoundButton {
 
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
-    // palette: Kirigami.Theme.palette
-    Kirigami.Theme.colorSet: control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button
-    Kirigami.Theme.inherit: control.flat && !control.down && !control.checked
-
     padding: Kirigami.Units.mediumSpacing
     spacing: Kirigami.Units.mediumSpacing
 
@@ -45,6 +41,7 @@ T.RoundButton {
     contentItem:Impl.IconLabelContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
+        color: palette.buttonText
     }
 
     background: Impl.ButtonBackground {

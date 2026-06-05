@@ -30,12 +30,7 @@ T.Button {
 
     flat: false
 
-    // // palette: Kirigami.Theme.palette
-
     hoverEnabled: Application.styleHints.useHoverEffects
-
-    Kirigami.Theme.colorSet: /*control.highlighted ? Kirigami.Theme.Selection :*/ Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false//control.flat && !control.down && !control.checked
 
     padding: Kirigami.Units.largeSpacing
     leftPadding: {
@@ -71,6 +66,7 @@ T.Button {
     contentItem: Impl.IconLabelContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
+        color: palette.buttonText
     }
 
     background: Impl.ButtonBackground {

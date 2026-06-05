@@ -23,13 +23,11 @@ Impl.StandardRectangle {
 
     radius: width / 2
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
-    color: control.down || control.checked ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    color: control.down || control.checked ? palette.highlight : palette.button
 
     border {
         width: Impl.Units.smallBorder
-        color: control.down || control.checked || control.visualFocus || control.hovered ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor();
+        color: control.down || control.checked || control.visualFocus || control.hovered ? palette.highlight : Impl.Theme.separatorColor();
     }
 
     Behavior on color {
@@ -66,7 +64,7 @@ Impl.StandardRectangle {
         }
         implicitWidth: implicitHeight
         radius: height / 2
-        color: Kirigami.Theme.textColor
+        color: palette.buttonText
         visible: root.control.checked
         scale: 0.8
     }

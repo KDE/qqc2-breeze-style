@@ -23,12 +23,6 @@ Impl.StandardRectangle {
     property real leftRadius: !isInButtonGroup || (isLastInButtonGroup && zeroOrLessSpacing) ? radius : 0
     property real rightRadius: !isInButtonGroup || (isFirstInButtonGroup && zeroOrLessSpacing) ? radius : 0
 
-    property color flatColor: Qt.rgba(
-        Kirigami.Theme.backgroundColor.r,
-        Kirigami.Theme.backgroundColor.g,
-        Kirigami.Theme.backgroundColor.b,
-        0
-    )
     property bool highlightBackground: control.down || control.checked
     property bool highlightBorder: control.enabled && (control.down || control.checked || control.highlighted || control.visualFocus || control.hovered)
 
@@ -45,18 +39,16 @@ Impl.StandardRectangle {
 
     color: {
         if (highlightBackground) {
-            return Kirigami.Theme.alternateBackgroundColor
-        } else if (control.flat) {
-            return flatColor
+            return palette.highlight
         } else {
-            return Kirigami.Theme.backgroundColor
+            return palette.button
         }
     }
 
     border {
         color: {
             if (highlightBorder) {
-                return Kirigami.Theme.focusColor
+                return palette.highlight
             } else {
                 return control.flat ? "transparent" : Impl.Theme.separatorColor()
             }

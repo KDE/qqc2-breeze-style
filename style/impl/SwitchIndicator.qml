@@ -21,9 +21,6 @@ Item {
     x: controlHasContent ? (root.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
     y: control.topPadding + (control.availableHeight - height) / 2
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
-
     Impl.StandardRectangle {
         id: background
         anchors {
@@ -31,7 +28,7 @@ Item {
             margins: Math.floor(parent.height / 6)
         }
         radius: height / 2
-        color: Kirigami.Theme.backgroundColor
+        color: palette.button
         border {
             width: Impl.Units.smallBorder
             color: Impl.Theme.separatorColor()
@@ -41,10 +38,10 @@ Item {
     Impl.StandardRectangle {
         id: fillEffectRect
         visible: width > handle.width/2
-        color: Kirigami.Theme.alternateBackgroundColor
+        color: palette.highlight
         border {
             width: Impl.Units.smallBorder
-            color: Kirigami.Theme.focusColor
+            color: palette.highlight
         }
         radius: height/2
         anchors {
@@ -77,11 +74,11 @@ Item {
         )
         width: height
         radius: height / 2
-        color: Kirigami.Theme.backgroundColor
+        color: palette.button
         border {
             width: Impl.Units.smallBorder
             color: root.control.down || root.control.visualFocus || root.control.hovered ?
-                Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
+                palette.highlight : Impl.Theme.separatorColor()
         }
 
         Behavior on border.color {

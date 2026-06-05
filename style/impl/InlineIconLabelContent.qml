@@ -2,8 +2,6 @@
  * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
-import org.kde.kirigami as Kirigami
-
 import "." as Impl
 
 IconLabelContent {
@@ -15,6 +13,6 @@ IconLabelContent {
         width: root.labelRect.width//root.hasIcon && root.hasLabel ? root.availableWidth - root.icon.width - root.spacing : root.availableWidth
         height: Impl.Units.focusUnderlineThickness
         visible: control.visualFocus
-        color: Kirigami.Theme.focusColor
+        color: palette.highlight
     }
 }

@@ -3,7 +3,6 @@
  */
 
 import QtQuick
-import org.kde.kirigami as Kirigami
 
 import "." as Impl
 
@@ -15,17 +14,14 @@ Impl.StandardRectangle {
     readonly property real topRadius: (alwaysCurveCorners || root.currentIndex == 0) ? Impl.Units.smallRadius : 0
     readonly property real bottomRadius: (alwaysCurveCorners || root.currentIndex == Math.max(root.count-1, 0)) ? Impl.Units.smallRadius : 0
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Selection
-    Kirigami.Theme.inherit: false
-
     topLeftRadius: root.topRadius
     topRightRadius: root.topRadius
     bottomLeftRadius: root.bottomRadius
     bottomRightRadius: root.bottomRadius
 
-    color: Kirigami.Theme.alternateBackgroundColor
+    color: palette.highlight
     border {
         width: Impl.Units.smallBorder
-        color: Kirigami.Theme.focusColor
+        color: palette.highlight
     }
 }

@@ -22,9 +22,9 @@ Impl.StandardRectangle {
         return false
     }
 
-    readonly property color hoverColor: Qt.alpha(Kirigami.Theme.hoverColor, 0.3)
-    readonly property color highlightColor: Kirigami.Theme.highlightColor
-    readonly property color normalColor: useAlternatingColors ? Kirigami.Theme.alternateBackgroundColor : Kirigami.Theme.backgroundColor
+    readonly property color hoverColor: Qt.alpha(palette.highlight, 0.3)
+    readonly property color highlightColor: palette.highlight
+    readonly property color normalColor: useAlternatingColors ? palette.alternateBase : palette.base
     // Workaround for QTBUG-113304
     readonly property bool reallyFocus: control.visualFocus || (control.activeFocus && control.focusReason === Qt.OtherFocusReason)
 
@@ -61,7 +61,7 @@ Impl.StandardRectangle {
             if (root.highlight) {
                 return root.highlightColor
             } else {
-                return (root.control.hovered || root.reallyFocus) ? Kirigami.Theme.hoverColor : "transparent"
+                return (root.control.hovered || root.reallyFocus) ? palette.highlight : "transparent"
             }
         }
     }

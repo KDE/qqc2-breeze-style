@@ -17,9 +17,9 @@ T.DelayButton {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    // palette: Kirigami.Theme.palette
-    Kirigami.Theme.colorSet: control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
+    // // palette: Kirigami.Theme.palette
+    // Kirigami.Theme.colorSet: control.highlighted ? Kirigami.Theme.Selection : Kirigami.Theme.Button
+    // Kirigami.Theme.inherit: false
 
     padding: Kirigami.Units.mediumSpacing
     leftPadding: {

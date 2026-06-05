@@ -34,13 +34,10 @@ T.TextArea {
     topPadding: verticalPadding
     bottomPadding: verticalPadding
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.View
-    Kirigami.Theme.inherit: background == null
-
-    color: Kirigami.Theme.textColor
-    selectionColor: Kirigami.Theme.highlightColor
-    selectedTextColor: Kirigami.Theme.highlightedTextColor
-    placeholderTextColor: Kirigami.Theme.disabledTextColor
+    color: palette.text
+    selectionColor: palette.highlight
+    selectedTextColor: palette.highlightedText
+    placeholderTextColor: palette.placeholderText
 
     selectByMouse: true
     mouseSelectionMode: TextEdit.SelectCharacters

@@ -23,9 +23,6 @@ T.MenuItem {
     property bool __reserveSpaceForIcon: menu?.__hasIcons ?? false
     property bool __reserveSpaceForArrow: menu?.__hasArrows ?? false
 
-    Kirigami.Theme.colorSet: control.down || control.highlighted ? Kirigami.Theme.Button : -1
-    Kirigami.Theme.inherit: !background || !background.visible && !(control.highlighted || control.down)
-
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding,
                             implicitIndicatorWidth + leftPadding + rightPadding)
@@ -116,6 +113,7 @@ T.MenuItem {
     }
 
     contentItem: Impl.IconLabelShortcutContent {
+        color: palette.buttonText
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
         alignment: Qt.AlignLeft | Qt.AlignVCenter

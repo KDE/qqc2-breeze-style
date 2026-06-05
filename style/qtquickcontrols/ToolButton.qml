@@ -28,9 +28,6 @@ T.ToolButton {
 
     hoverEnabled: Application.styleHints.useHoverEffects
 
-    Kirigami.Theme.colorSet: /*control.highlighted ? Kirigami.Theme.Selection :*/ Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false//control.flat && !control.down && !control.checked
-
     padding: Kirigami.Units.largeSpacing
     leftPadding: {
         if ((!contentItem.hasIcon && contentItem.textBesideIcon) // False if contentItem has been replaced
@@ -67,6 +64,7 @@ T.ToolButton {
     contentItem:Impl.IconLabelContent {
         control: control
         text: control.Kirigami.MnemonicData.richTextLabel
+        color: palette.buttonText
     }
 
     // Using a Loader here reduces the RAM usage

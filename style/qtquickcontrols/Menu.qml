@@ -21,7 +21,6 @@ T.Menu {
     readonly property bool __hasIcons: contentItem.contentItem.visibleChildren.some(menuItem => __itemHasIcon(menuItem))
     readonly property bool __hasArrows: contentItem.contentItem.visibleChildren.some(menuItem => menuItem?.arrow?.visible ?? false)
 
-    // palette: Kirigami.Theme.palette
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
@@ -108,7 +107,7 @@ T.Menu {
         radius: Impl.Units.smallRadius
         implicitHeight: Impl.Units.mediumControlHeight
         implicitWidth: Kirigami.Units.gridUnit * 8
-        color: Kirigami.Theme.backgroundColor
+        color: palette.window
 
         border {
             color: Impl.Theme.separatorColor()

@@ -42,7 +42,7 @@ Impl.StandardRectangle {
     height: root.vertical ? control.availableHeight - root.handleHeight/2 - secondHandleHeight/2 + Impl.Units.grooveHeight : implicitHeight
 
     radius: Impl.Units.grooveHeight/2
-    color: Kirigami.Theme.backgroundColor
+    color: palette.button
     border {
         width: Impl.Units.smallBorder
         color: Impl.Theme.separatorColor()
@@ -59,10 +59,10 @@ Impl.StandardRectangle {
         }
 
         radius: parent.radius
-        color: Kirigami.Theme.alternateBackgroundColor
+        color: palette.highlight
         border {
             width: Impl.Units.smallBorder
-            color: Kirigami.Theme.focusColor
+            color: palette.highlight
         }
 
         Behavior on anchors.leftMargin {

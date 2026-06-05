@@ -15,9 +15,6 @@ T.Slider {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitHandleHeight + topPadding + bottomPadding)
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
-
     hoverEnabled: Application.styleHints.useHoverEffects
 
     padding: Kirigami.Settings.tabletMode ? Kirigami.Units.mediumSpacing : 0

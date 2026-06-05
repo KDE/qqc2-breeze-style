@@ -36,7 +36,7 @@ T.MenuBarItem {
     contentItem: Label {
         text: controlRoot.Kirigami.MnemonicData.richTextLabel
         font: controlRoot.font
-        color: controlRoot.hovered && !controlRoot.pressed ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+        color: controlRoot.hovered && !controlRoot.pressed ? palette.highlightedText : palette.text
         elide: Text.ElideRight
         visible: controlRoot.text
         horizontalAlignment: Text.AlignHCenter
@@ -46,7 +46,7 @@ T.MenuBarItem {
     background: Impl.StandardRectangle {
         implicitWidth: 40
         implicitHeight: Kirigami.Units.gridUnit + 2 * Kirigami.Units.smallSpacing
-        color: Kirigami.Theme.highlightColor
+        color: palette.highlight
         opacity: controlRoot.down || controlRoot.highlighted ? 0.7 : 0
 
         Behavior on opacity {

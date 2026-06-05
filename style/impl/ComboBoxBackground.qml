@@ -21,12 +21,6 @@ Impl.StandardRectangle {
 
     required property T.ComboBox control
 
-    property color flatColor: Qt.rgba(
-        Kirigami.Theme.backgroundColor.r,
-        Kirigami.Theme.backgroundColor.g,
-        Kirigami.Theme.backgroundColor.b,
-        0
-    )
     property bool highlightBackground: control.down
     property bool highlightBorder: control.down || control.visualFocus || control.hovered
 
@@ -37,17 +31,15 @@ Impl.StandardRectangle {
 
     color: {
         if (highlightBackground) {
-            return Kirigami.Theme.alternateBackgroundColor
-        } else if (control.flat) {
-            return flatColor
+            return palette.highlight
         } else {
-            return Kirigami.Theme.backgroundColor
+            return palette.button
         }
     }
 
     border {
         color: highlightBorder ?
-            Kirigami.Theme.focusColor : Impl.Theme.buttonSeparatorColor()
+            palette.highlight : Impl.Theme.buttonSeparatorColor()
         width: Impl.Units.smallBorder
     }
 

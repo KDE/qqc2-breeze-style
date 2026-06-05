@@ -27,9 +27,8 @@ T.ComboBox {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    // palette: Kirigami.Theme.palette
-    Kirigami.Theme.colorSet: control.editable ? Kirigami.Theme.View : Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false
+    // Kirigami.Theme.colorSet: control.editable ? Kirigami.Theme.View : Kirigami.Theme.Button
+    // Kirigami.Theme.inherit: false
 
     spacing: Kirigami.Units.mediumSpacing
 
@@ -40,7 +39,7 @@ T.ComboBox {
 
     contentItem: TextField {
         id: textField
-        palette: control.palette
+        // palette: control.palette
         // TextField padding doesn't automatically mirror
         leftPadding: control.mirrored ? 0 : Impl.Units.mediumHorizontalPadding
         rightPadding: !control.mirrored ? 0 : Impl.Units.mediumHorizontalPadding
@@ -56,7 +55,7 @@ T.ComboBox {
         // Using control.Kirigami.Theme.textColor instead of directly using
         // Kirigami.Theme.textColor because the latter always uses the disabled
         // palette when textField.enabled == false
-        color: control.Kirigami.Theme.textColor
+        color: control.Kirigami.Theme.textColor // ???
 
         background: null
     }
@@ -88,7 +87,7 @@ T.ComboBox {
             color: control.down
                 || ((control.hovered || control.visualFocus)
                     && !(control.contentItem && control.contentItem.hasOwnProperty("hovered") && control.contentItem.hovered))
-                ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
+                ? palette.highlight : Impl.Theme.separatorColor()
 
             Behavior on color {
                 enabled: control.down || control.hovered
@@ -112,9 +111,7 @@ T.ComboBox {
                 bottom: parent.bottom
             }
 
-            Kirigami.Theme.colorSet: Kirigami.Theme.Button
-            Kirigami.Theme.inherit: false
-            color: Kirigami.Theme.alternateBackgroundColor
+            color: palette.highlight
 
             radius: parent.radius
             topLeftRadius: leftRadius
@@ -122,7 +119,7 @@ T.ComboBox {
             bottomLeftRadius: leftRadius
             bottomRightRadius: rightRadius
 
-            border.color: Kirigami.Theme.focusColor
+            border.color: palette.highlight
             border.width: Impl.Units.smallBorder
 
             opacity: 0

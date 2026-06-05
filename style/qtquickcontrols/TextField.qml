@@ -29,13 +29,10 @@ T.TextField {
     leftPadding: Impl.Units.mediumHorizontalPadding
     rightPadding: Impl.Units.mediumHorizontalPadding
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.View
-    Kirigami.Theme.inherit: !background || !background.visible
-
-    color: Kirigami.Theme.textColor
-    selectionColor: Kirigami.Theme.highlightColor
-    selectedTextColor: Kirigami.Theme.highlightedTextColor
-    placeholderTextColor: Kirigami.Theme.disabledTextColor
+    color: palette.text
+    selectionColor: palette.highlight
+    selectedTextColor: palette.highlightedText
+    placeholderTextColor: palette.placeholderText
     verticalAlignment: TextInput.AlignVCenter
     horizontalAlignment: TextInput.AlignLeft
 

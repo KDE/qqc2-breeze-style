@@ -63,7 +63,7 @@ Item {
             bottomMargin: Kirigami.Units.smallSpacing
         }
 
-        color: button.pressed || button.hovered ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
+        color: button.pressed || button.hovered ? palette.highlight : Impl.Theme.separatorColor()
 
         Behavior on color {
             enabled: button.pressed || button.hovered
@@ -76,16 +76,16 @@ Item {
 
     Impl.StandardRectangle {
         id: pressedBg
-        Kirigami.Theme.colorSet: Kirigami.Theme.Button
-        Kirigami.Theme.inherit: false
+        // Kirigami.Theme.colorSet: Kirigami.Theme.Button
+        // Kirigami.Theme.inherit: false
         opacity: 0
         anchors.fill: parent
-        color: Kirigami.Theme.alternateBackgroundColor
+        color: palette.highlight
         topLeftRadius: root.leftRadius
         topRightRadius: root.rightRadius
         bottomLeftRadius: root.leftRadius
         bottomRightRadius: root.rightRadius
-        border.color: Kirigami.Theme.focusColor
+        border.color: palette.highlight
         border.width: Impl.Units.smallBorder
 
         states: State {

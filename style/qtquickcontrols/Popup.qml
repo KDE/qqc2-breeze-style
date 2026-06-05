@@ -45,7 +45,7 @@ T.Popup {
         radius: Impl.Units.smallRadius
 //         implicitHeight: Impl.Units.smallControlHeight
         //implicitWidth: Kirigami.Units.gridUnit * 12
-        color: Kirigami.Theme.backgroundColor
+        color: palette.window
 
         border {
             color: Impl.Theme.separatorColor()

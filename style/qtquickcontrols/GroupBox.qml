@@ -30,7 +30,7 @@ T.GroupBox {
 
         text: control.title
         font: control.font
-        color: Kirigami.Theme.textColor
+        color: palette.text
         elide: Text.ElideRight
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter

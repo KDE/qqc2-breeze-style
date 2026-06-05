@@ -11,8 +11,7 @@ import org.kde.guiaddons as GuiAddons
 T.ApplicationWindow {
     id: window
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Window
-    color: Kirigami.Theme.backgroundColor
+    color: palette.window
 
     Item {
         id: headerColor
@@ -23,13 +22,13 @@ T.ApplicationWindow {
         Binding {
             target: GuiAddons.WindowInsetsController
             property: "statusBarBackgroundColor"
-            value: Kirigami.Theme.backgroundColor
+            value: window.palette.window
         }
     }
 
     Binding {
         target: GuiAddons.WindowInsetsController
         property: "navigationBarBackgroundColor"
-        value: window.footer ? window.footer.Kirigami.Theme.backgroundColor : Kirigami.Theme.backgroundColor
+        value: window.footer ? window.footer.palette.window : window.palette.window
     }
 }

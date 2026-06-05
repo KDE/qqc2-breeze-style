@@ -19,6 +19,6 @@ T.Page {
                              + (implicitFooterHeight > 0 ? implicitFooterHeight + spacing : 0))
 
     background: Impl.StandardRectangle {
-        color: Kirigami.Theme.backgroundColor
+        color: palette.window
     }
 }

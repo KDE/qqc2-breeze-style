@@ -34,7 +34,7 @@ T.PageIndicator {
         }
 
         radius: height / 2
-        color: Kirigami.Theme.textColor
+        color: palette.text
 
         opacity: index === control.currentIndex ? 1 : pressed ? 0.67 : 0.33
         Behavior on opacity { OpacityAnimator { duration: Kirigami.Units.shortDuration } }

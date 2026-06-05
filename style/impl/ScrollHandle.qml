@@ -25,9 +25,7 @@ Impl.StandardRectangle {
 
     opacity: root.policy === T.ScrollBar.AsNeeded ? 0 : 1
 
-    Kirigami.Theme.inherit: false
-    Kirigami.Theme.colorSet: Kirigami.Theme.Button
-    color: root.pressed ? Kirigami.Theme.focusColor : Impl.Theme.separatorColor()
+    color: root.pressed ? palette.highlight : Impl.Theme.separatorColor()
 
     Behavior on color {
         enabled: root.pressed

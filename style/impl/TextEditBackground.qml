@@ -20,11 +20,11 @@ Impl.StandardRectangle {
     implicitWidth: implicitHeight
     implicitHeight: Impl.Units.mediumControlHeight
 
-    color: Kirigami.Theme.backgroundColor
+    color: palette.base
     radius: Impl.Units.smallRadius
     border {
         color: control.activeFocus || control.hovered ?
-            Kirigami.Theme.focusColor : Impl.Theme.buttonSeparatorColor()
+            palette.highlight : Impl.Theme.buttonSeparatorColor()
         width: Impl.Units.smallBorder
     }
 
