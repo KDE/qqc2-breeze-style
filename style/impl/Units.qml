@@ -59,7 +59,7 @@ QtObject {
     // For large controls with a large amount of vertical padding
     property int largeControlHeight: fontMetrics.height + Kirigami.Units.largeSpacing * 2
 
-    property real horizontalPaddingRatio: Math.max(fontMetrics.height / fontMetrics.fullWidthCharWidth, 1)
+    property real horizontalPaddingRatio: Math.max(fontMetrics.height / (fontMetrics.fullWidthCharWidth || fontMetrics.height), 1)
 
     property int verySmallHorizontalPadding: Math.round(horizontalPaddingRatio * units.verySmallSpacing)
 
