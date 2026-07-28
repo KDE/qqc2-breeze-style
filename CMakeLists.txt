@@ -47,7 +47,7 @@ if(UNIX AND NOT APPLE AND NOT ANDROID AND NOT HAIKU)
 endif()
 option(USE_DBUS "Build components using DBus" ${USE_DBUS_DEFAULT})
 if(USE_DBUS)
-  find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus)
+  find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED DBus)
   set(HAVE_DBUS ON)
 endif()
 
