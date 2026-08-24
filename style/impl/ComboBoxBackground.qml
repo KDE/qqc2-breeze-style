@@ -30,7 +30,6 @@ Impl.StandardRectangle {
     property bool highlightBackground: control.down
     property bool highlightBorder: control.down || control.visualFocus || control.hovered
 
-    implicitWidth: 200
     implicitHeight: Impl.Units.mediumControlHeight
 
     visible: !control.flat || control.editable || control.down || control.visualFocus || control.hovered
