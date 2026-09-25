@@ -21,42 +21,21 @@ Loader {
         implicitWidth: root.target.cursorRectangle.width
         implicitHeight: root.target.cursorRectangle.height
         color: root.target.color
-        SequentialAnimation {
-            id: blinkAnimation
-            running: root.visible && Application.styleHints.cursorFlashTime != 0 && target.selectionStart === target.selectionEnd
-            PropertyAction {
-                target: cursorLine
-                property: "opacity"
-                value: 1
-            }
-            PauseAnimation {
-                duration: Application.styleHints.cursorFlashTime/2
-            }
-            SequentialAnimation {
-                loops: Animation.Infinite
-                OpacityAnimator {
-                    target: cursorLine
-                    from: 1
-                    to: 0
-                    duration: Application.styleHints.cursorFlashTime/2
-                    easing.type: Easing.OutCubic
-                }
-                OpacityAnimator {
-                    target: cursorLine
-                    from: 0
-                    to: 1
-                    duration: Application.styleHints.cursorFlashTime/2
-                    easing.type: Easing.OutCubic
-                }
-            }
+        Timer {
+            id: blinkTimer
+            interval: Application.styleHints.cursorFlashTime / 2
+            running: root.visible && interval > 0 && root.target.selectionStart === root.target.selectionEnd
+            repeat: true
+            onTriggered: cursorLine.opacity = cursorLine.opacity === 1 ? 0 : 1
+            onRunningChanged: if (!running) cursorLine.opacity = 1
         }
         Connections {
             target: root.target
             function onCursorPositionChanged() {
-                blinkAnimation.restart()
+                cursorLine.opacity = 1
+                blinkTimer.restart()
             }
         }
     }
 }
-
 
