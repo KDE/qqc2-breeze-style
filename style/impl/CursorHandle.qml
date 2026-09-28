@@ -62,7 +62,7 @@ Loader {
 
         Kirigami.ShadowedRectangle {
             id: inner
-            visible: root.root.target.selectionStart !== target.selectionEnd && (handle.y < selectionStartY || handle.y < selectionEndY)
+            visible: root.target.selectionStart !== root.target.selectionEnd && (handle.y < selectionStartY || handle.y < selectionEndY)
             anchors.fill: parent
             anchors.margins: Impl.Units.smallBorder
             color: root.target.selectedTextColor
