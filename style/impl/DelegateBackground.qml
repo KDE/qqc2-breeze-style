@@ -16,7 +16,7 @@ Impl.StandardRectangle {
     readonly property bool useAlternatingColors: {
         if (control.TableView.view?.alternatingRows && row % 2) {
             return true
-        } else if (control.Kirigami.Theme.useAlternateBackgroundColor && index % 2) {
+        } else if (control.Kirigami.StyleHints.useAlternateBackgroundColor && index % 2) {
             return true
         }
         return false

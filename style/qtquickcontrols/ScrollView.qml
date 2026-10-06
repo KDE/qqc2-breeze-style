@@ -3,6 +3,7 @@
 import QtQuick.Templates as T
 
 import org.kde.kirigami as Kirigami
+import org.kde.breeze.impl as Impl
 
 T.ScrollView {
     id: control
@@ -15,6 +16,16 @@ T.ScrollView {
     Kirigami.Theme.colorSet: Kirigami.Theme.View
     Kirigami.Theme.inherit: !background || !background.visible
 
+    background: Impl.StandardRectangle {
+        visible: control.Kirigami.StyleHints.showFramedBackground
+        color: Kirigami.Theme.backgroundColor
+        radius: Impl.Units.smallRadius
+        border.color: Impl.Theme.separatorColor()
+        border.width: Impl.Units.smallBorder
+    }
+
+    padding: background?.visible ? Impl.Units.smallBorder : 0
+
     data: [
         Kirigami.WheelHandler {
             target: control.contentItem
@@ -23,14 +34,14 @@ T.ScrollView {
 
     rightPadding: {
         if (ScrollBar.vertical?.background?.visible) {
-            return ScrollBar.vertical.background.width
+            return ScrollBar.vertical.background.width + horizontalPadding
         } else {
             return horizontalPadding
         }
     }
     bottomPadding: {
         if (ScrollBar.horizontal?.background?.visible) {
-            return ScrollBar.horizontal.background.height
+            return ScrollBar.horizontal.background.height + verticalPadding
         } else {
             return verticalPadding
         }

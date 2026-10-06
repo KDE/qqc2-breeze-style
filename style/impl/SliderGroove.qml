@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-or-later OR LicenseRef-KDE-Accepted-LGPL OR LicenseRef-KFQF-Accepted-GPL
  */
 
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Templates as Templates
 import org.kde.kirigami as Kirigami
@@ -108,58 +110,44 @@ Impl.StandardRectangle {
         }
     }
 
-    //NOTE: this code has problems when large from/to ranges are used.
-    // Keeping it here to work on it later.
-    /*
-    Loader {
-        id: tickmarkLoader
-        visible: root.control.stepSize > 0
-        active: visible
-        anchors {
-            left: root.horizontal ? parent.left : parent.right
-            top: root.vertical ? parent.top : parent.bottom
-            leftMargin: root.horizontal ? parent.radius : Impl.Units.smallBorder
-            topMargin: root.vertical ? parent.radius : Impl.Units.smallBorder
+    // Limit tick density while retaining multiples of the requested step size.
+    readonly property real tickRange: Math.abs(control.to - control.from)
+    readonly property real tickLength: Math.max(0, (horizontal ? width : height) - 2 * radius)
+    readonly property real tickStep: {
+        const hint = control.Kirigami.StyleHints.tickMarkStepSize;
+        const step = hint === 0 ? control.stepSize : hint;
+        if (step <= 0 || tickRange <= 0 || tickLength <= 0) {
+            return 0;
         }
-        width: root.vertical ? implicitWidth : root.width - parent.radius
-        height: root.horizontal ? implicitHeight : root.height - parent.radius
-        sourceComponent: markGridComponent
+        return step * Math.max(1, Math.ceil((tickRange / step) / Math.max(1, Math.floor(tickLength / 5))));
     }
 
-    Loader {
-        id: tickmarkLoader2
-        visible: tickmarkLoader.visible
-        active: visible
-        anchors {
-            left: parent.left
-            top: parent.top
-            leftMargin: root.horizontal ? parent.radius : -width - Impl.Units.smallBorder
-            topMargin: root.vertical ? parent.radius : -height - Impl.Units.smallBorder
-        }
-        width: tickmarkLoader.width
-        height: tickmarkLoader.height
-        sourceComponent: markGridComponent
-    }
+    Repeater {
+        model: root.tickStep > 0 ? Math.floor(root.tickRange / root.tickStep) + 1 : 0
+        delegate: Item {
+            id: tick
+            required property int index
+            readonly property real position: index * root.tickStep / root.tickRange
+            readonly property real visualPosition: root.vertical || root.control.mirrored ? 1 - position : position
+            x: root.horizontal ? Math.round(root.radius + visualPosition * root.tickLength - width / 2) : 0
+            y: root.vertical ? Math.round(root.radius + visualPosition * root.tickLength - height / 2) : 0
+            width: root.horizontal ? Impl.Units.mediumBorder : root.width
+            height: root.vertical ? Impl.Units.mediumBorder : root.height
 
-    Component {
-        id: markGridComponent
-        Grid {
-            id: markGrid
-            rows: root.vertical ? markRepeater.model : 1
-            columns: root.horizontal ? markRepeater.model : 1
-            spacing: (root.vertical ? height/(markRepeater.model-1) : width/(markRepeater.model-1)) - Impl.Units.smallBorder*2
-            Repeater {
-                id: markRepeater
-                model: (root.control.to - root.control.from)/root.control.stepSize + 1
-                delegate: Rectangle {
-                    implicitWidth: root.vertical ? root.x - Impl.Units.smallBorder : Impl.Units.smallBorder
-                    implicitHeight: root.horizontal ? root.y - Impl.Units.smallBorder : Impl.Units.smallBorder
-                    color: (root.horizontal && x >= fill.x && x <= fill.x + fill.width)
-                        || (root.vertical && y >= fill.y && y <= fill.y + fill.height)
-                        ? Kirigami.Theme.focusColor
-                        : Impl.Theme.separatorColor()
-                }
+            Rectangle {
+                x: root.horizontal ? 0 : -Kirigami.Units.mediumSpacing
+                y: root.vertical ? 0 : -Kirigami.Units.mediumSpacing
+                width: root.horizontal ? tick.width : Kirigami.Units.smallSpacing
+                height: root.vertical ? tick.height : Kirigami.Units.smallSpacing
+                color: Impl.Theme.separatorColor()
+            }
+            Rectangle {
+                x: root.horizontal ? 0 : tick.width + Kirigami.Units.smallSpacing / 2
+                y: root.vertical ? 0 : tick.height + Kirigami.Units.smallSpacing / 2
+                width: root.horizontal ? tick.width : Kirigami.Units.smallSpacing
+                height: root.vertical ? tick.height : Kirigami.Units.smallSpacing
+                color: Impl.Theme.separatorColor()
             }
         }
-    }*/
+    }
 }

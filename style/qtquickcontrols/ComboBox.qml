@@ -18,6 +18,7 @@ T.ComboBox {
     id: control
 
     property real __indicatorMargin: control.indicator && control.indicator.visible && control.indicator.width > 0 ? control.spacing + indicator.width + control.spacing : 0
+    readonly property real __iconWidth: contentIcon.source.toString().length > 0 ? contentIcon.width + spacing : 0
     readonly property bool __isContentItemTextInput: contentItem instanceof TextInput
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
@@ -41,8 +42,8 @@ T.ComboBox {
         id: textField
         palette: control.palette
         // TextField padding doesn't automatically mirror
-        leftPadding: control.mirrored ? 0 : Impl.Units.mediumHorizontalPadding
-        rightPadding: !control.mirrored ? 0 : Impl.Units.mediumHorizontalPadding
+        leftPadding: control.mirrored ? 0 : Impl.Units.mediumHorizontalPadding + control.__iconWidth
+        rightPadding: !control.mirrored ? 0 : Impl.Units.mediumHorizontalPadding + control.__iconWidth
 
         text: control.editable ? control.editText : control.displayText
 
@@ -58,6 +59,19 @@ T.ComboBox {
         color: control.Kirigami.Theme.textColor
 
         background: null
+    }
+
+    Kirigami.Icon {
+        id: contentIcon
+        parent: textField
+        source: control.Kirigami.StyleHints.iconName || control.Kirigami.StyleHints.iconSource
+        visible: source.toString().length > 0
+        width: Kirigami.Units.iconSizes.sizeForLabels
+        height: width
+        x: control.mirrored ? parent.width - width - Impl.Units.mediumHorizontalPadding : Impl.Units.mediumHorizontalPadding
+        y: (parent.height - height) / 2
+        color: control.Kirigami.Theme.textColor
+        enabled: control.enabled
     }
 
     indicator: Kirigami.Icon {
@@ -243,7 +257,7 @@ T.ComboBox {
         for (let i = 0; i < control.count; ++i)
             w = Math.max(w, fontMetrics.boundingRect(control.textAt(i)).width)
 
-        textField.implicitWidth = Math.ceil(w)
+        textField.implicitWidth = Math.ceil(w) + control.__iconWidth
     }
 
     FontMetrics {
@@ -256,6 +270,7 @@ T.ComboBox {
     }
 
     onCountChanged: setTextFieldWidth(false)
+    on__IconWidthChanged: setTextFieldWidth(implicitContentWidthPolicy !== ComboBox.ContentItemImplicitWidth)
 
     Component.onCompleted: {
         if (implicitContentWidthPolicy === ComboBox.WidestTextWhenCompleted)
