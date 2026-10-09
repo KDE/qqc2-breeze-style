@@ -28,8 +28,8 @@ T.ToolButton {
 
     hoverEnabled: Application.styleHints.useHoverEffects
 
-    Kirigami.Theme.colorSet: /*control.highlighted ? Kirigami.Theme.Selection :*/ Kirigami.Theme.Button
-    Kirigami.Theme.inherit: false//control.flat && !control.down && !control.checked
+    Kirigami.Theme.colorSet: Kirigami.Theme.Button
+    Kirigami.Theme.inherit: control.flat && !control.down && !control.checked
 
     padding: Kirigami.Units.largeSpacing
     leftPadding: {
