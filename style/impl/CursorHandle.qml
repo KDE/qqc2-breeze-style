@@ -20,10 +20,10 @@ Loader {
     active: visible
     sourceComponent: Kirigami.ShadowedRectangle {
         id: handle
-        property real selectionStartX: Math.floor(InputMethod.anchorRectangle.x + (InputMethod.cursorRectangle.width - width)/2)
-        property real selectionStartY: Math.floor(InputMethod.anchorRectangle.y + InputMethod.cursorRectangle.height + pointyBitVerticalOffset)
-        property real selectionEndX: Math.floor(InputMethod.cursorRectangle.x + (InputMethod.cursorRectangle.width - width)/2)
-        property real selectionEndY: Math.floor(InputMethod.cursorRectangle.y + InputMethod.cursorRectangle.height + pointyBitVerticalOffset)
+        property real selectionStartX: Math.floor(Qt.inputMethod.anchorRectangle.x + (Qt.inputMethod.cursorRectangle.width - width)/2)
+        property real selectionStartY: Math.floor(Qt.inputMethod.anchorRectangle.y + Qt.inputMethod.cursorRectangle.height + pointyBitVerticalOffset)
+        property real selectionEndX: Math.floor(Qt.inputMethod.cursorRectangle.x + (Qt.inputMethod.cursorRectangle.width - width)/2)
+        property real selectionEndY: Math.floor(Qt.inputMethod.cursorRectangle.y + Qt.inputMethod.cursorRectangle.height + pointyBitVerticalOffset)
         property real pointyBitVerticalOffset: Math.abs(pointyBit.y*2)
         parent: Overlay.overlay
         x: root.isSelectionEnd ? selectionEndX : selectionStartX
@@ -80,15 +80,16 @@ Loader {
         }
 
         MouseArea {
+            id: mouseArea
             enabled: handle.visible
             anchors.fill: parent
     //         preventStealing: true
-            onPositionChanged: {
-                let pos = mapToItem(root.target, mouse.x, mouse.y);
+            onPositionChanged: mouse => {
+                let pos = mouseArea.mapToItem(root.target, mouse.x, mouse.y);
                 pos = root.target.positionAt(pos.x, pos.y - handle.height - handle.pointyBitVerticalOffset);
 
-                if (target.selectionStart !== target.selectionEnd) {
-                    if (!isSelectionEnd) {
+                if (root.target.selectionStart !== root.target.selectionEnd) {
+                    if (!root.isSelectionEnd) {
                         root.target.select(Math.min(pos, root.target.selectionEnd - 1), root.target.selectionEnd);
                     } else {
                         root.target.select(root.target.selectionStart, Math.max(pos, root.target.selectionStart + 1));
