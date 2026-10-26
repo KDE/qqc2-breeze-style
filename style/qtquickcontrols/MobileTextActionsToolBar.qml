@@ -63,7 +63,10 @@ Loader {
                 icon.name: "edit-cut"
                 text: qsTr("Cut", "@action:inmenu Text editor action")
                 visible: root.target && root.target.selectedText.length > 0 && (!root.target.hasOwnProperty("echoMode") || root.target.echoMode === TextInput.Normal)
-                onClicked: root.target.cut();
+                onClicked: {
+                    root.target.cut();
+                    popup.close();
+                }
             }
 
             ToolButton {
@@ -71,7 +74,10 @@ Loader {
                 icon.name: "edit-copy"
                 text: qsTr("Copy", "@action:inmenu Text editor action")
                 visible: root.target && root.target.selectedText.length > 0 && (!root.target.hasOwnProperty("echoMode") || root.target.echoMode === TextInput.Normal)
-                onClicked: root.target.copy();
+                onClicked: {
+                    root.target.copy();
+                    popup.close();
+                }
             }
 
             ToolButton {
@@ -79,7 +85,10 @@ Loader {
                 icon.name: "edit-paste"
                 text: qsTr("Paste", "@action:inmenu Text editor action")
                 visible: root.target && root.target.canPaste
-                onClicked: root.target.paste();
+                onClicked: {
+                    root.target.paste();
+                    popup.close();
+                }
             }
         }
 
